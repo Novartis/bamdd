@@ -1,0 +1,9 @@
+\providecommand{\Binomial}{\mbox{Binomial}}
+\providecommand{\logit}{\mbox{logit}}
+\providecommand{\N}{\mbox{Normal}}
+\providecommand{\HN}{\mbox{Normal}^+}
+\providecommand{\Ns}{\mbox{N}}
+\providecommand{\MVN}{\mbox{MultiNormal}}
+\providecommand{\HNs}{\mbox{N}^+}
+\providecommand{\student}{\mbox{Student-t}}
+\providecommand{\invgamma}{\mbox{Inverse-Gamma}}

@@ -1,0 +1,6 @@
+project:
+   title: "."
+
+execute:
+   cache: true
+   freeze: false

@@ -1,2 +1,3 @@
-# bamdd
-Applied modelling in drug development: flexible Bayesian regression modelling in Stan via brms
+# (Bayesian) Applied Modelling in Drug Development (BAMDD)
+
+Flexible Bayesian regression modelling in Stan via `brms`

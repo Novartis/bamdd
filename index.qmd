@@ -1,0 +1,46 @@
+---
+format:
+  html:
+    author-title: "Editors"
+---
+
+# Preface {.unnumbered}
+
+This website contains materials that were developed to accompany a series of 
+workshops held in the Analytics department at Novartis over 2022-2024,
+illustrating the utility of the R package `brms` for solving drug-
+development problems. In order to highlight the versatility of that package,
+we have developed a collection of case studies covering a diverse set of 
+clinical questions that were addressed via Bayesian modelling with the `brms` package. 
+
+## Navigating the site
+
+The material is organized as follows:
+
+- @sec-introduction introduces `brms` and the objectives of these vignettes
+- @sec-basic-workflow highlights the basic workflow (analysis steps and 
+syntax) for carrying out an analysis with `brms`
+- The next series of sections contain the case
+studies. You can find a [listing with descriptions on this page](src/02_case_studies.qmd).
+- Sections @sec-stan-code and @sec-parallel cover more technical topics, such
+as exposing and injecting custom stan code to `brms` models,
+and efficient parallel computation to support sampling in `brms`.
+
+## Updates
+
+This web-site is intended as a live document with updates as
+appropiate. Key changes to the web-site are tracked here:
+
+
+
+::: {.content-visible when-profile="public"}
+- 5th January 2024: Release course web-site in more modern quarto book
+  based format.
+- 26th April 2023: Second edition course from Paul Bürkner with the
+  new case studies on MMRM, time-to-event data, surrogate endpoint
+  meta-regression and network meta-analysis
+- 27th April 2022: First release with course from Paul Bürkner
+:::
+
+
+

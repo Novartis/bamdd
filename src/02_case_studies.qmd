@@ -1,0 +1,29 @@
+---
+format:
+  html:
+    html-math-method: mathjax
+---
+
+# Case studies {#sec-case-studies}
+
+
+
+::: {.content-visible when-profile="public"}
+```{r, echo = FALSE}
+overview <- dplyr::tribble(
+                       ~Problem, ~Technique,
+                       "[Use of historical control data](02a_meta_analysis.qmd)", "nested random effects",
+                       "[Meta-analysis to estimate treatment effects](02ab_meta_analysis_trtdiff.qmd)", "aggregate data modeling & varying exposure times of count data",
+                       "[Dose finding](02b_dose_finding.qmd)", "non-linear models",
+                       "[Oncology dose escalation](02c_dose_escalation.qmd)",  "constrained parameters",
+                       "[Variable selection](02d_horseshoe.qmd)", "shrinkage priors & monotonic effects of ordinal variables",
+                       "[Multiple imputation](02e_multiple_imputation.qmd)", "multi-variate outcome modeling",
+                       "[Longitudinal data](02g_longitudinal.qmd)", "longitudinal modeling with different covariance structures (MMRM)",
+                       "[Bayesian Mixed effects Model for Repeated Measures (MMRM)](02h_mmrm.qmd)", "unstructured MMRM for a continuous endpoint",
+                       "[Time-to-event data](02i_time_to_event.qmd)", "parametric time-to-event modeling with customized parametrization by using user-defined contrasts",
+                       "[Network meta-analysis](02j_network_meta_analysis.qmd)", "arm based network meta-analysis"
+                   )
+knitr::kable(overview)
+```
+:::
+

@@ -1,0 +1,19 @@
+---
+author:
+  - Sebastian Weber - <sebastian.weber@novartis.com>
+---
+
+# Exposing stan code {#sec-stan-code}
+
+In some situations it can be useful to make use of the Stan functions
+`brms` uses inside the Stan programs it creates. This is for example
+the case when creating a custom family as described in the [vignette
+on custom response
+distributions](https://cran.r-project.org/web/packages/brms/vignettes/brms_customfamilies.html). Whenever
+defining a custom family, one does provide Stan code snippets to
+`brms` which are used to setup the respective Stan model. Since the
+same functions are then useful for post-proccessing of the model
+posterior, the created functions can be used in R as well using the
+`expose_functions` from `brms`. Please refer to the vignette on custom
+families and the help on the expose function utility function
+`?expose_functions`.

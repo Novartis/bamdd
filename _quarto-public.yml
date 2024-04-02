@@ -1,0 +1,36 @@
+project:
+  output-dir: docs/public
+  post-render: src/move_videos.R # workaround for Quarto issue https://github.com/quarto-dev/quarto-cli/issues/3892
+
+book:
+  repo-url: https://github.com/Novartis/RBesT/ # TO BE REPLACED
+  site-url: https://opensource.nibr.com/RBesT/ # TO BE REPLACED
+  chapters:
+    - index.qmd
+    - part: "Getting started"
+      chapters:
+      - src/01a_introduction.qmd
+      - src/01b_basic_workflow.qmd
+    - part: src/02_case_studies.qmd
+      chapters:
+      - src/02a_meta_analysis.qmd
+      - src/02ab_meta_analysis_trtdiff.qmd
+      - src/02b_dose_finding.qmd
+      - src/02c_dose_escalation.qmd
+      - src/02d_horseshoe.qmd
+      - src/02e_multiple_imputation.qmd
+      - src/02h_mmrm.qmd
+      - src/02i_time_to_event.qmd
+      - src/02j_network_meta_analysis.qmd
+    - part: "Advanced topics"
+      chapters:
+      - src/03a_stan_code.qmd
+      - src/03b_parallel.qmd
+
+format:
+  pdf:
+    documentclass: scrreport
+    pdf-engine: xelatex
+    include-in-header:
+      - text: |
+         \usepackage{colortbl}

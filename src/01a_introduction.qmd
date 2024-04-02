@@ -1,0 +1,114 @@
+---
+author:
+  - Sebastian Weber - <sebastian.weber@novartis.com>
+---
+
+# Introduction {#sec-introduction}
+
+```{r, include = FALSE}
+source(here::here("src/setup.R"))
+```
+
+Applied modeling can facilitate interpretation of clinical data and is
+hence a valuable too for drug development. However, clinical data is
+very diverse in nature (e.g. endpoints) and brings along various
+statistical challenges (e.g. longitudinal type data, censoring or
+missingness). As a result building models may require a great deal of
+flexibility in terms of the statistical model being applied. Generally
+models should be kept as simple as possible, but they need to be as
+complex as needed. For this reason it is of great advantage to any
+applied modeller to use a flexible modeling framework capable of
+easily expanding simple models towards more complex models whenever
+that is required.
+
+The R package `brms` (Bayesian regression models using Stan) provides
+a powerful and flexible modeling framework. The package is essentially
+an easy to use frontend for the Stan statistical modeling
+platform. This allows `brms` to leverage the full flexibility of the
+feature rich statistical modeling language Stan. However, users of
+`brms` only need to specify R formulas to define their models. By
+design `brms` is written in a modular manner and offers many advanced
+features. Given the modular design most features can be combined
+arbitrarly.
+
+While `brms` (and Stan) is intended primarily for Bayesian analyses
+neither the use of prior information is strictly required nor is it a
+requirement to use MCMC sampling (Stan supports penalized maximum
+likelihood based on L-BFGS). However, using MCMC sampling used for
+Bayesian problems brings a number of advantages for applied modelers:
+
+* Easy-to-communicate interpretation via probabilistic statements
+  about estimands of interest (unknown model parameters, future
+  observations, etc.)
+* Natural measures of uncertainty: all inference flows from the
+  posterior (no need for large-sample approximations, even for complex
+  nonlinear models)
+* Good small sample properties including when evaluated by frequentist
+  operating characteristics
+* Ability to synthesize data from multiple sources
+* Ability to incorporate weakly-informative prior information
+  reflecting physical constraints
+* Ability to incorporate informative prior information from historical
+  trials or even experts
+
+However, a key obstacle to wide adoption of Bayesian methods is the
+availability of and knowledge about easy-to-use software to carry out
+inference. In the following vignettes of case studies, we introduce
+the powerful package `brms`, created by Paul Bürkner, which we believe
+can help break down this obstacle. The package includes a very
+flexible syntax for model specification (both likelihood and prior)
+that can be done entirely in R; these specifications are translated
+into [Stan](https://mc-stan.org/) code, and fit using Stan as a
+powerful backend for MCMC. One major advantage of `brms` is that its
+formula syntax is already familiar to most R users from functions like
+`lm` and `glm`, as well as the popular `lme4` package for mixed
+models.
+
+The purpose of the case studies are to illustrate the wide variety of
+drug-development applications, which can all be solved using a single
+R package - `brms`. The example case studies have been selected to
+demonstrate specific features of `brms` as summarized in the overview
+table below. For colleagues who are not familiar with the package or
+its syntax, the example code presented here may also be very
+useful.
+
+This document envisioned as a living document. Please reach out to the
+team in case you find that some material can be improved or added. In
+case you have used `brms` in your work and would like to include the
+material here, then you are very welcome to contribute to the
+document!
+
+## Public documentation
+
+There are many resources available online for learning about
+`brms`. We list a few:
+
+* The homepage for the package,
+  [https://paul-buerkner.github.io/brms/](https://paul-buerkner.github.io/brms/)
+* Bürkner, P.-C. (2017). brms: An R Package for Bayesian Multilevel
+  Models Using Stan. Journal of Statistical Software, 80(1),
+  1–28. [https://doi.org/10.18637/jss.v080.i01](https://doi.org/10.18637/jss.v080.i01)
+* Paul-Christian Bürkner, Advanced Bayesian Multilevel Modeling with
+  the R Package. The R Journal (2018) 10:1, pages
+  395-411. [https://journal.r-project.org/archive/2018/RJ-2018-017/index.html](https://journal.r-project.org/archive/2018/RJ-2018-017/index.html)
+
+An excellent place to ask questions on `brms` in the public is the
+[Stan discourse forum](https://discourse.mc-stan.org).
+
+More useful ressources from the Stan community:
+
+* FAQ on
+  [cross-validation](https://mc-stan.org/loo/articles/online-only/faq.html)
+* Stan [runtime warnings and convergence problems explained](https://mc-stan.org/misc/warnings.html)
+
+
+
+#### Introduction video from the workshop with Paul Bürkner
+
+
+
+::: {.content-visible when-profile="public"}
+{{< video videos/brms-1-intro.mp4 >}}
+:::
+
+

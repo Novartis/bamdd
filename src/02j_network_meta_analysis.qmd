@@ -1,0 +1,694 @@
+---
+author:
+  - Björn Holzhauer - <bjoern.holzhauer@novartis.com>
+  - Andrew Bean - <andrew.bean@novartis.com>
+---
+
+# Network meta-analysis
+
+This case study covers:
+
+* Using `brms` to perform arm-based network meta-analysis using a "two-way mixed model" approach (as opposed to the also popular contrast-based or baseline-contrast model)
+* Visualizing networks of evidence using function from the `multinma` package
+* Setting up over-parameterized models to avoid specifying prior distributions for differences relative to a reference study or treatment (by collating two design matrices created using `model.matrix()`), and how to estimate desired contrasts in this context
+* ` r | trials(n) ~ ...` for binomial outcomes (`r` out of `n` patients)
+* Ranking treatments based on samples from the posterior distribution
+
+```{r, include=FALSE}
+source(here::here("src", "setup.R"))
+```
+
+To run the R code of this section please ensure to load these
+libraries and options first:
+
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(brms)
+library(posterior)
+library(here)
+library(knitr)
+library(gt)
+library(multinma) # for graphing the network & other NMA utils
+# instruct brms to use cmdstanr as backend and cache all Stan binaries
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+# create cache directory if not yet available
+dir.create(here("_brms-cache"), FALSE)
+set.seed(5675798)
+# allow for wider printouts without line-breaking
+options(width=120)
+
+control_args <- list(adapt_delta=0.95)
+```
+
+```{r include=FALSE}
+# invisible to the reader we move the cache directory
+options(cmdstanr_write_stan_file_dir=brms_cache_dir)
+# speedup things by lowering adapt_delta for now, which speeds up things a lot
+# do this only if caching is on (which is when we want things go fast)
+control_args <- list(adapt_delta=0.8)
+```
+
+## Overview Video
+
+
+
+::: {.content-visible when-profile="public"}
+{{< video videos/brms-20230426-4-network-meta.mp4 >}}
+:::
+
+
+### Background: Why network meta-analysis?
+
+Network (or multi-treatment) meta-analysis (NMA) is a term for analyses
+that combine the results of studies that compared several treatments and
+in which not all studies included all comparisons [@LuAdes2004]. This is a
+frequent situation, because new drugs are often only compared to a placebo or to
+one commonly used current standard of care, but not to all existing
+current treatment options. As a result, physicians that want to choose
+between two treatment options often find that there are no or very few
+studies directly comparing them. NMA tries to address this issue by
+combining evidence from direct comparisons within each trial with
+indirect chains of comparisons across multiple trials.
+
+Network meta-analyses have their limitations. One particular concern
+would be factors that modify the effects of treatments resulting in
+treatment by trial interactions, e.g. if pathogens developing resistance
+to some drugs over time, if the presence of some background therapies
+has a synergistic or antagonistic interaction with a drug, or if some
+drugs work better or worse depending on disease severity.
+
+
+## Data
+
+We will use smoking cessation data [@Hasselblad1998], which consists
+of the number of patients $r$ amongst the total in an study arm $n$ that
+manage to stop smoking. There are 24 studies, in which different
+combinations of 4 interventions (no contact, self-help, individual
+counseling and group counseling) were tested. The aim of a network
+meta-analysis here would be to compare these different treatment in
+terms of the odds of patients managing to stop smoking.
+
+```{r smoking_cessation_data}
+trt_levels <- c("No intervention", "Self-help",
+                "Individual counselling", "Group counselling")
+
+smoking <- multinma::smoking %>%
+  mutate(study = factor(studyn),
+         trtc = factor(trtc, trt_levels))
+
+levels(smoking$trtc) <- gsub(" ", "_", trt_levels)
+levels(smoking$trtc) <- gsub("-", "_", levels(smoking$trtc))
+
+gt_preview(smoking)
+```
+
+```{r}
+smoking %>%
+  ggplot(aes(x=study, y=r/n, fill=trtc, group=trtc,
+             ymin=qbeta(p=0.025, shape1=r, shape2=1+n-r),
+             ymax=qbeta(p=0.975, shape1=r+1, shape2=n-r))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_errorbar(position = "dodge", alpha=0.3) +
+  theme(legend.position="bottom")
+```
+
+The totality of evidence about the treatments and their relative efficacy is 
+commonly known as the *evidence network*. A common graphical representation, 
+shown below, visualizes this network of treatments (the nodes) along with
+edges indicating the presence or absence of direct evidence comparing pairs 
+of treatments from randomized trials. Below, the thickness of the edges 
+is determined by the number of trials comparing each pair of treatments.
+
+```{r}
+network <- multinma::set_agd_arm(
+  data = smoking,
+  study = study,
+  trt = trtc,
+  r = r,
+  n = n,
+  trt_ref = "No_intervention"
+)
+
+plot(network)
+```
+
+## Model description
+
+We will first describe the arm-based (aka "two-way mixed model")
+approach to NMA advocated by
+Piepho [@Piepho2012]. It has some
+advantages over more commonly used NMA approach that analyzes
+treatment contrasts [@LuAdes2004], in terms of ease of use and familiarity (the
+two-way linear mixed model is of course very familiar). The latter approach,
+however, is widely used in health technology assessments, for example by the UK 
+NICE. The NICE decision support unit has published methodological guidance on 
+how to use this method in practice [@dias2014]. 
+
+
+
+Suppose we had individual patient data for patients $k=1,\ldots,N_{ij}$ 
+randomly assigned to treatment $j$ in trial $i$, for $i = 1,\ldots, n$ and
+$j = 1,\ldots, m$. A two-way linear mixed model would model the outcome of
+interest $Y_{ijk}$ as
+$$ g(E(Y_{ijk})) = \underbrace{\alpha_i}_{\text{fixed main effect of trial }i} + \underbrace{\beta_j}_{\text{fixed main effect of treatment }j} + \underbrace{u_{ij}}_{\text{random effect of trial on treatment}},$$
+where $g$ is a link function such as the logit link in case of bernoulli data.
+
+The random effects $u_{ij}$ have mean zero and describe that the effect
+of treatments is allowed to vary across trials. If we wanted to assume
+the same effect of all treatment across all trials, we could instead
+omit this term. When we include it, we will ideally want to allow for
+the possibility that if one treatment has better outcomes in a trial,
+then other treatments might also. To achieve that we assume that for the
+trials $i=1,\ldots,n$ there is a multivariate normal random effect
+$\boldsymbol{U}_i \sim \text{MVN}(\boldsymbol{0}, \boldsymbol{\Sigma})$,
+where $\Sigma$ is some covariance matrix that is either unstructured or
+has some particular structure (e.g. compound symmetric). In other words,
+the components of the random vector $\boldsymbol{U}_i$ for a trial $i$
+are correlated.
+
+
+### Network meta-analysis with summaries for each arm
+
+In case we have summary information by treatment arm, we will (just as
+for traditional arm-based meta-analyses) often be able to assume a
+normal sampling distribution for least squares means for each arm from
+linear models, log-odds, log-rates or log-hazard rates. We will denote
+these estimates for each arm by $\hat{\theta}_{ij}$ and their standard
+error by $\text{SE}(\hat{\theta}_{ij})$. We then assume
+$\theta_{ij} = \alpha_i + \beta_j + u_{ij}$ as above and that
+$\hat{\theta}_{ij} \sim N(\theta_{ij}, \text{SE}(\hat{\theta}_{ij}))$.
+
+Alternatively, for a binary outcome, we can use that the number of
+patients with a success follows a binomial distribution and we would use
+a regression equation like above for the logit-probability
+$\theta_{ij} = \alpha_i + \beta_j + u_{ij}$ for each arm.
+
+TO BE DETERMINE WHAT TO DO FOR SURVIAL: Less clear, could one work with
+log-cumulative-hazard function (under a parametric model?)? Maybe one
+could get that from KM curves? Log-(or logit-?)survival probabilities at 
+fixed points of time (e.g. 1-year)? Discussed by some papers such as 
+this one [@Combescure_2012]. Perhaps models fitted to 
+reconstructed patient-level data/KM curves via, standard parametric models,
+fractional polynomial models and/or spline-based models? What about 
+non-proportional hazards?
+
+### Patient-, arm- or trial-level covariates
+
+As needed, the regression equation $\alpha_i + \beta_j + u_{ij}$ can be
+extended by allowing for patient level covariates $\boldsymbol{x}_{ijk}$
+(in case we work with individual patient data), arm-level covariates
+$\boldsymbol{x}_{ij}$ or study-level covariates $\boldsymbol{x}_i$.
+
+
+### Borrowing information from real-world data or other trials
+
+If we have a fixed effect for the $\alpha_i$, then borrowing information
+between trials runs into the identifiability issues between the
+$\alpha_i$ and the $u_{ij}$. In a frequentist approach we cannot resolve
+these issues. When we take a Bayesian approach, this identifiability
+issue will still severely limit how much information we can obtain about
+the distribution of the $u_{ij}$ (while we would by definition not
+borrow information about the $\alpha_i$) and the results will be
+sensitive to the choice of prior distributions.
+
+We could borrow information across trials, we replace the trial main
+effect by an intercept term and a random trial effect on the intercept.
+However, then we will be conducting a meta-analysis, in which the causal
+effects of treatments are no longer just judged based on randomized
+within-trial comparisons. We would then also to an extent do comparisons
+across treatment arms from different trials. Besides the limitations any
+NMA is subject to, such comparisons are additionally affected by any
+prognostic factors that change the expected outcomes for a treatment in
+different trials. Such prognostic factors are much more common than effect
+modifiers that would cause trial by treatment interactions, and we know that
+to some extent such differences across trials will exist. Examples
+include improving (or worsening) patient outcomes due to better
+treatments or access to healthcare, different inclusion/exclusion
+criteria of different trials, and differences in recruited patient
+populations in terms of e.g. background therapy, disease severity,
+country/region and comorbidities. While we may hope that a random trial
+effect on the intercept would capture random variation in these aspects
+across trials, we have to be concerned that there could be a systematic
+bias in favor of some treatments in a NMA - especially if studies for
+some treatments were conducted later in time than for other treatments.
+
+
+## Implementation
+
+In this case, we have a binomial outcome. 
+`brms` provides the `y | trials(n)` notation to indicate `y` successes out of 
+`n` trials, while in `stats::glm` the way of specifying this is a little less 
+intuitive: `glm( cbind(y, n-y)~... )`. 
+
+We will now try implement the network meta-analysis model we described
+above. In the process, we will discover some things that did not make a
+difference in a frequentist setting, but matter in the Bayesian setting
+with respect to how we can the most easily specify our prior knowledge
+(or lack thereof).
+
+### Reference categories matter for setting priors
+
+Firstly, before we even think too much about any prior distributions, let see how `brms` 
+parameterizes the model, if we specify it in the most obvious way by just 
+writing `0 + study + trtc + (0 + trtc |study)`:
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+brmfit <- brm(
+  data = smoking,
+  formula = r | trials(n) ~ 0 + study + trtc + (0 + trtc || study),
+  family = binomial(),
+  control = control_args,
+  prior = prior(class = b, normal(0, 3.14)),
+  silent = 2,
+  refresh = 0
+)
+```
+
+As we can see from the summary of the fitted model, there are coefficients for
+all study main effects, but not for all treatments: treatment 1 is omitted, and
+the coefficients for remaining treatments now represent contrasts against treatment
+1. (Conversely, if we had instead written 
+`0 + trtc + study + (0+trtc|study)`, then there would have been a 
+coefficient for all treatments, but the study effects would have been 
+parametrized in terms of contrasts with study 1.
+
+```{r}
+summary(brmfit)
+```
+
+Is this a problem? In the frequentist context, this issue with the form of the
+design matrix for population-level effects is not important, because the pairwise treatment contrasts are uniquely estimable regardless of whether constraints such as $\beta_1 = 0$ are employed.
+
+However, if we wanted to imply some prior information or lack thereof, it may
+impact our preference for the specification of the population-level terms. For
+example, if we had some prior information (external to the likelihood) on a 
+particular contrast between a pair of treatments, we would favor the parametrization
+above, in which the treatment terms are parametrized in terms of contrasts.
+
+### Setting priors is easier in an over-parameterized model
+
+Another possibility is to over-parametrize the model and have a main effect for each study 
+(i.e. main effects for all studies `study1` to `study24` are present) and each 
+treatment. The main rationale for this would be symmetry in how we
+set our prior distributions. I.e. we do not want to set our priors in a
+way that would somehow favor one treatment (or study - which will have
+studied some subset of treatments = might again favor somehow treatment)
+over any of the others. Unlike the specification above, the marginal variance
+of the each arm of each study will be constant in this approach.
+
+This can be achieved by creating dummy variables for each treatment group and 
+thereby enforcing the paramterization. 
+We then specify our model as 
+`0 + study + trtcA + trtcB + trtcC + trtcD + (0 + trtc | study)`.
+The code below constructs the dummy variables and corresponding formula in an 
+automated way. 
+
+```{r piepho_model2, results='hide', message=FALSE, warning=FALSE}
+B <- model.matrix(~ 0 + trtc, data = smoking)
+S <- model.matrix(~ 0 + study, data = smoking)
+
+smoking_with_dummies <- bind_cols(
+  dplyr::select(smoking, r, n, study, trtc),
+  as_tibble(B),
+  as_tibble(S)
+)
+
+f <- as.formula(paste(
+  "r | trials(n) ~ 0 + study +",
+  paste(colnames(B), collapse = " + "),
+  "+ (0 + trtc || study)"
+))
+
+# could also do:
+# f <- as.formula(paste(
+#     "r | trials(n) ~ 0 + trtc +",
+#     paste(colnames(S), collapse = " + "),
+#     "+ (0 + trtc || study)"
+# ))
+
+brmfit_with_dummies <- brm(data = smoking_with_dummies,
+                           formula = f,
+                           family = binomial(),
+                           control = control_args,
+                           prior = prior(class=b, normal(0, 3.14)),
+                           silent = 2,
+                           refresh = 0)
+```
+
+When we now summarize the model fit, we have regression coefficients for all 
+treatment groups and studies.
+
+```{r piepho_results2}
+summary(brmfit_with_dummies)
+```
+
+While the coefficients for each treatment have changed compared to the previous
+section, we should not actually look at the coefficients for each treament main
+effect, but at their contrasts. When we look at those, we see that the models
+lead to very similar inference (despite us not even setting any priors for 
+Model 0).
+
+```{r}
+# utility function to estimate all pairwise contrasts between the main effects
+# for the variable named "trtc"
+contrast_draws <- function(brmfit, variable = "trtc"){
+  
+  trts <- levels(brmfit$data[[variable]])
+  ntrt <- nlevels(brmfit$data[[variable]])
+  
+  all_pairs <- combn(1:ntrt, 2)
+  L_trt <- t(apply(
+    all_pairs, 2, function(x){
+      out <- numeric(ntrt)
+      out[x[1]] <- 1
+      out[x[2]] <- -1
+      out
+    }
+  ))
+  colnames(L_trt) <- paste0(variable, trts)
+  
+  X <- standata(brmfit)$X
+  L_study <- matrix(0, nrow = nrow(L_trt), ncol = sum(!grepl(variable, colnames(X))))
+
+  # if the treatment variable is not dummy coded for every level then
+  # we need to drop the base category as this is masked by study
+  if(ncol(L_trt) == sum(grepl(variable, colnames(X)))){
+    L <- cbind(L_study, L_trt)
+  } else{
+    L <- cbind(L_study, L_trt[,-1])
+  }
+  
+  colnames(L) <- colnames(X)
+  
+  # labels for the contrasts
+  labs <- apply(combn(trts, 2), 2, paste, collapse = " vs ")
+  rownames(L) <- labs
+  
+  B <- as_draws_matrix(brmfit, variable = "^b_", regex = TRUE)
+  
+  gamma_draws <- B %*% t(L)
+  
+  # convert to posterior object
+  as_draws_matrix(gamma_draws)
+  
+}
+
+summarize_contrasts <- function(brmfit, model_name = "model", variable = "trtc", ...){
+  relocate(
+    mutate(summarize_draws(contrast_draws(brmfit, variable = variable), ...), model = model_name),
+    model
+  )
+}
+
+bind_rows(
+  summarize_contrasts(brmfit, "Full-rank model"),
+  summarize_contrasts(brmfit_with_dummies, "Overparametrized model")
+) %>%
+    gt() %>%
+    fmt_number(where(is.numeric), decimals=2)
+```
+
+Note also that it is hard to interpret the study main effects in these models.
+We could try to make them a little more interpretable by making them represent
+something like the average expected outcome across treatment groups 
+(i.e. if we leave out the treatment main effects, we get a predicted outcome
+that is between the predicted outcomes for the treatment groups). For this 
+purpose we encode the dummy for each treatment group as $0.5$ vs. $-0.5$ 
+(if it is not that treatment group). However, treatment main effect
+coefficients should still be looked at in contrast to each other.
+
+```{r piepho_model3, results='hide', message=FALSE, warning=FALSE, eval = TRUE}
+smoking_with_centered_dummies <- bind_cols(
+  dplyr::select(smoking, r, n, study, trtc),
+  as_tibble(B - 0.5),
+  as_tibble(S)
+)
+
+brmfit_with_centered_dummies <- brm(
+    data = smoking_with_centered_dummies,
+    formula = f,
+    family = binomial(),
+    control = control_args,
+    prior = prior(class=b, normal(0, 3.14)),
+    silent = 2,
+    refresh = 0
+)
+```
+
+With the relatively low-information priors we've chosen here, all three of these models produce similar results
+
+```{r}
+all_contrasts <- tibble(
+  model_name = c("Full-rank model",
+                 "Overparametrized model",
+                 "Overparametrized model with centering"),
+  brmfit = list(brmfit, brmfit_with_dummies, brmfit_with_centered_dummies)
+) %>%
+    mutate(contrasts = map2(brmfit, model_name, summarize_contrasts)) %>%
+    select(-brmfit) %>%
+    unnest(contrasts)
+
+all_contrasts %>%
+    mutate(model=str_remove_all(model, " model"),
+           model=str_replace_all(model, "with", "\nwith"),
+           variable=str_replace_all(variable, "vs", "\nvs\n"),
+           variable=str_replace_all(variable, "counselling", "couns."),
+           variable=str_replace_all(variable, "Individual", "Indiv."),
+           ) %>%
+    ggplot(aes(x=median, y=model, xmin=q5, xmax=q95)) +
+    geom_vline(xintercept=0, color="darkred", linetype=2) +
+    geom_point() +
+    geom_errorbarh() +
+    xlab("log-odds ratio") +
+    facet_wrap(~variable)
+```
+
+
+### Ranking treatments and the probability of being the best treatment
+
+Probability that each treatment is best is straightforward in any of these approaches. To illustrate:
+
+```{r}
+B <- as_draws_matrix(brmfit_with_dummies, variable = "b_trtc", regex = TRUE)
+best_idx <- apply(B, 1, which.max)
+trts <- levels(smoking$trtc)
+best_trt <- factor(trts, levels=trts)[best_idx]
+prob_best <- prop.table(table(best_trt))
+
+gt(arrange(as.data.frame(prob_best), -Freq)) %>% fmt_percent(Freq)
+```
+
+### Detailed look at a pairwise contrast
+
+In some situations, there may be a particular treatment contrast that is of special interest. In some such scenarios, where we have several 
+This is to illustrate that by including indirect evidence, we can enhance our inference for a pairwise contrast of interest, relative to a simple pairwise meta-analysis.
+
+The following analyses are compared, in terms of their estimates of the relative effect (log odds ratio) of individual counselling versus no intervention:
+
+* Network meta-analysis model (`brmfit1` above)
+* Pairwise meta-analysis model (currently `RBesT` is used here, but we could equally use `brms`)
+* "Stratified" analysis of the contrast separately in each study, using independent beta-binomial models
+
+
+```{r fig.height=7}
+#| code-fold: true
+#| code-summary: "Show the code"
+# identify the A vs C studies
+ac_studies <- smoking %>%
+  filter(trtc %in% c("No_intervention", "Individual_counselling")) %>%
+  add_count(study, name = "num_treatments") %>%
+  filter(num_treatments == 2) %>%
+  arrange(study, trtc)
+
+# summarize the A vs C log odds ratio using Beta-Binomial models independently
+# across studies and arms
+arm_level_beta_binom <- ac_studies %>%
+  rowwise() %>%
+  mutate(p = map2(r, n, ~ rbeta(10000, r + 0.5, n - r + 0.5))) %>%
+  dplyr::select(study, trtc, p) %>%
+  pivot_wider(names_from = trtc, values_from = p)
+
+study_effects <- arm_level_beta_binom %>%
+  mutate(log_odds_ratio = map2(No_intervention, Individual_counselling,
+                               ~ log(.x) + log(1 - .y) - log(1 - .x) - log(.y)),
+         out = map(log_odds_ratio, ~ summarize_draws(matrix(.), mean, sd, ~ quantile(., probs = c(0.025, 0.5, 0.975))))) %>%
+  transmute(study = factor(study), out) %>%
+  unnest(out) %>%
+  dplyr::select(-variable)
+
+# pairwise meta-analysis of the log odds ratios based on summary statistics
+rbest_fit <- RBesT::gMAP(cbind(mean, sd) ~ 1 | study,
+                         data = study_effects,
+                         tau.dist = "HalfNormal",
+                         tau.prior = 1,
+                         beta.prior = cbind(0,2))
+
+# study-level treatment-effect estimates from RBesT
+fitted_rbest <- bind_cols(dplyr::select(study_effects, study), fitted(rbest_fit))
+
+# study-level treatment effect estimates from the NMA model
+nd <- inner_join(smoking_with_dummies,
+                 dplyr::select(ac_studies, study, trtc),
+                 c("study", "trtc")) %>%
+  mutate(n = 1)
+
+lp <- posterior_epred(brmfit, newdata = nd)
+lpA <- lp[,nd$trtc == "No_intervention"]
+lpC <- lp[,nd$trtc == "Individual_counselling"]
+lor <- log(lpA) + log(1 - lpC) - log(1 - lpA) - log(lpC)
+
+fitted_nma <- bind_cols(
+  dplyr::select(study_effects, study),
+  dplyr::select(summarize_draws(lor, mean, sd, ~ quantile(., probs = c(0.025, 0.5, 0.975))), -variable)
+)
+
+# mean and MAP treatment effect estimates from RBesT
+mean_rbest <- summary(rbest_fit, type="response")[c("theta.pred", "theta")] %>% 
+  do.call(what = "rbind") %>%
+  as_tibble(rownames = "study") %>% 
+  mutate(type = "pairwise meta",
+         study = c("theta_resp_pred" = "MAP", "theta_resp" = "Mean")[study])
+
+# mean treatment effect estimate from NMA model
+mean_nma <- summarize_contrasts(brmfit, variable = "trtc", model_name = "nma", mean, sd,
+                                ~ quantile(., probs = c(0.025, 0.5, 0.975))) %>%
+  filter(variable == "No_intervention vs Individual_counselling") %>%
+  mutate(study = "Mean", type = "network meta")
+
+all_ests <- bind_rows(
+  mutate(study_effects, type = "stratified", estimate_type = "Study-level"),
+  mutate(fitted_rbest, type = "pairwise meta", estimate_type = "Study-level"),
+  mutate(fitted_nma, type = "network meta", estimate_type = "Study-level"),
+  mutate(mean_rbest, estimate_type = "Mean"),
+  mutate(mean_nma, estimate_type = "Mean")
+)
+
+ggplot(all_ests, aes(y = study, x = mean, xmin = `2.5%`, xmax = `97.5%`,
+                     group = type, color = type)) +
+    geom_pointrange(position = position_dodge(0.4)) +
+    facet_grid(estimate_type ~ ., space = "free", scales = "free") +
+    geom_vline(xintercept = 0, linetype = "dashed") +
+    scale_x_continuous(breaks=seq(-5,1,by=1)) +
+    coord_cartesian(xlim=c(-5,0.5)) +
+    labs(x = "Log odds ratio for individual counselling vs no intervention",
+         y = "Study", color = "Analysis\nmethod") +
+    theme(legend.pos = "bottom")
+```
+
+
+## Conclusion
+
+Arm-based (network-)meta-analysis approaches compare favorably with contrast
+based approaches in many situations and fit very easily into the Bayesian
+regression modeling machinery provided by `brms`. The main challenge we face
+is how one should parametrize the model in order to be able to specify prior 
+distributions easily, for which we showed several options. 
+
+For NMA, Bayesian approaches are very popular due to the ease with which 
+one can obtain inference about various quantities of interest (e.g. ranking of
+treatments, probability that a treatment is the best one) via transformations of
+the MCMC samples from the posterior distribution.
+
+TBD: Further topics might include including observational data (aka real-world 
+Exploiting that some drugs are in the same class, that some arms are different
+doses of the same drug, or when we have subgroup results from the same study.
+
+
+## Exercises
+
+### Excercise 1
+
+We will use the data on the occurrence of malignancy anti-tumour necrosis 
+factor (anti-TNF) drugs used in the paper by @Warren2014. We have information 
+for each arm of 13 studies of three different anti-TNF drugs (etanercept, 
+adalimumab and infliximab) on how many patients developed a malignancy `y` out
+of the total number of patients in an arm `n`. It is common in drug development
+to simplistically reduce what is in truth a time-to-event process of adverse
+event occurrence into a binomial problem. In practice, we should be cautious
+about this simplification, because differential drop-out could lead to biased
+conclusions and we will by necessaity get variation in effect measures for
+binomial outcomes across studies of different duration even if the time-to-event
+distributions are identical across studies.
+
+```{r}
+antiTNF <- tibble(
+  study = c("Ericson (1999)", "Ericson (1999)", "Ericson (1999)", 
+            "Moreland (1999)", "Moreland (1999)", "Moreland (1999)", 
+            "Genovese (2002)", "Genovese (2002)", "Genovese (2002)", 
+            "Combe (2006)", "Combe (2006)", "Van der Heijde (2006)", 
+            "Van der Heijde (2006)", "Weisman (2007)/Baumgartner (2004)", 
+            "Weisman (2007)/Baumgartner (2004)", "Furst (2003)", "Furst (2003)", 
+            "Weinblatt (2003)", "Weinblatt (2003)", "Weinblatt (2003)", 
+            "Weinblatt (2003)", "Keystone (2004)", "Keystone (2004)", 
+            "Van de Putte (2004)", "Van de Putte (2004)", "Van de Putte (2004)", 
+            "Van de Putte (2004)", "Breedveld (2006)", "Breedveld (2006)", 
+            "Maini (2004)", "Maini (2004)", "Maini (2004)", "St Clair (2004)", 
+            "St Clair (2004)", "St Clair (2004)"), 
+  treatment = c("Control", "Etanercept", "Etanercept", "Control", "Etanercept", 
+                "Etanercept", "Control", "Etanercept", "Etanercept", "Control", 
+                "Etanercept", "Control", "Etanercept", "Control", "Etanercept", 
+                "Control", "Adalimumab", "Control", "Adalimumab", "Adalimumab", 
+                "Adalimumab", "Control", "Adalimumab", "Control", "Adalimumab", 
+                "Adalimumab", "Adalimumab", "Control", "Adalimumab", 
+                "Control", "Infliximab", "Infliximab", "Control", "Infliximab", 
+                "Infliximab"), 
+  regimen = c(NA, "25 mg biw", "10 mg qw or 25 mg qw or 10 mg biw", NA, 
+              "25 mg biw", "10 mg biw", NA, "25 mg biw", "10 mg biw", NA, 
+              "25 mg biw", NA, "25 mg biw", NA, "25 mg biw", NA, "40 mg eow", 
+              NA, "40 mg eow", "20 mg eow", "80 mg eow", NA, 
+              "20 mg qw or 40 mg eow", NA, "20 mg qw or 40 mg eow", 
+              "20 mg eow", "40 mg qw", NA, "40 mg eow", NA, "3 mg/kg q8w", 
+              "3 mg/kg q4w or 10 mg/kg q8w or 10 mg/kg q4w", NA, "3 mg/kg q8w", 
+              "6 mg/q8w"), 
+  dose = c(NA, "Rec", "Low", NA, "Rec", "Low", NA, "Rec", "Low", NA, "Rec", NA, 
+           "Rec", NA, "Rec", NA, "Rec", NA, "Rec", "Low", "High", NA, "Rec", NA, 
+           "Rec", "Low", "High", NA, "Rec", NA, "Rec", "High", NA, "Rec", 
+           "High"), 
+  n = c(105L, 111L, 343L, 80L, 78L, 76L, 217L, 207L, 208L, 50L, 204L, 228L, 
+        454L, 269L, 266L, 318L, 318L, 62L, 67L, 69L, 73L, 200L, 419L, 110L, 
+        225L, 106L, 103L, 257L, 542L, 88L, 86L, 254L, 291L, 372L, 377L), 
+  y = c(0L, 0L, 2L, 0L, 1L, 0L, 4L, 5L, 5L, 0L, 1L, 1L, 10L, 2L, 2L, 0L, 4L, 0L, 
+        0L, 0L, 1L, 1L, 8L, 1L, 2L,  1L, 1L, 4L, 6L, 1L, 1L, 8L, 0L, 0L, 4L))
+
+```
+
+If we look at the data, we can see that the proportion of patients with an 
+event is quite low (<4\%) across all studies and arms. I.e. we are in a rare
+event setting, where a Bayesian approach with sensibly chosen priors might be 
+helpful.
+
+```{r}
+antiTNF %>%
+  mutate(study = factor(study),
+         arm = paste0(treatment, ifelse(is.na(dose),"",paste0(" ",dose)))) %>%
+  ggplot(aes(x=study, y=y/n, 
+             fill=arm, 
+             group=arm,
+             ymin=qbeta(p=0.025, shape1=y, shape2=1+n-y),
+             ymax=qbeta(p=0.975, shape1=y+1, shape2=n-y))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_errorbar(position = "dodge", alpha=0.3) +
+  theme(legend.position="bottom") +
+  guides(fill=guide_legend(ncol=2)) +
+  coord_flip()
+```
+
+Try fitting models of increasing complexity (slightly different to those done 
+in the @Warren2014 paper, which you could also choose to reproduce):
+
+1. A simple meta-analysis of anti-TNF therapy vs. non-anti-TNF controls. 
+2. A network meta-analysis with each anti-TNF drug having a separate fixed 
+treatment effects parameter, but ignoring informaiton on doses and regimens.
+3. A network meta-analysis that treats all unique combinations of drug and
+dose/regimen as a separate treatment.
+4. A network meta-analysis that assumes that each drug may have a different 
+effect on malignancy with this effect being monotonic across doses. Note
+the `mo()` notation provided by `brms` to define monotonic effects. Look
+into borrowing information about the maximum effect across drugs.
+
+<!---
+### Excercise 2
+
+**It would be good to have another example that does not involve binomial data.**
+
+--->

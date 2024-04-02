@@ -1,0 +1,51 @@
+profile:
+   default: novartis
+   group:
+     - [novartis, public]
+
+project:
+   type: book
+   execute-dir: project
+   pre-render: src/install_dependencies.R
+
+execute:
+   cache: true
+   freeze: false
+
+book:
+  title: "(Bayesian) Applied Modelling in Drug Development (BAMDD)"
+  subtitle: "Flexible regression modelling in Stan via `brms`"
+  repo-actions: [issue]
+  repo-branch: master
+#  downloads: [pdf]
+  output-file: bamdd
+  author:
+  - Sebastian Weber - <sebastian.weber@novartis.com>
+  - Björn Holzhauer - <bjoern.holzhauer@novartis.com>
+  - Lukas Widmer - <lukas_andreas.widmer@novartis.com>
+  - Andrew Bean - <andrew.bean@novartis.com>
+  date: today
+
+# we use per chapter references
+bibliography:
+  - src/references.bib
+  - src/packages.bib
+
+format:
+  html:
+    theme: cosmo
+#    code-fold: true
+    code-tools: true
+#    code-summary: "Show the code"
+    source: repo
+#    html-math-method: katex
+
+#  pdf:
+#    documentclass: scrreport
+#    pdf-engine: xelatex
+#    include-in-header:
+#      - file: _macros.qmd # TODO: need to check how the macros can be include with a different format
+#      - text: |
+#         \usepackage{colortbl}
+	  #  epub: default ## maybe enable this via the profiles feature in a production run only (takes time)
+    
