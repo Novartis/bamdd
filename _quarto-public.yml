@@ -17,7 +17,6 @@ book:
       - src/02ab_meta_analysis_trtdiff.qmd
       - src/02b_dose_finding.qmd
       - src/02c_dose_escalation.qmd
-      - src/02d_horseshoe.qmd
       - src/02e_multiple_imputation.qmd
       - src/02h_mmrm.qmd
       - src/02i_time_to_event.qmd

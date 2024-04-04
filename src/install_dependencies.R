@@ -3,6 +3,7 @@
 # dependencies <- sort(unique(renv::dependencies()$Package))
 dependencies <- c(
   "bayesplot", 
+  "BOIN",
   "brms", 
   "checkmate", 
   "clustermq", 
@@ -14,6 +15,7 @@ dependencies <- c(
   "emmeans", 
   "future", 
   "GGally", 
+  "ggfortify",
   "ggplot2", 
   "ggpubr", 
   "ggrepel", 
@@ -22,6 +24,7 @@ dependencies <- c(
   "knitr", 
   "lme4", 
   "MASS", 
+  "Matrix",
   "meta", 
   "mmrm", 
   "multinma", 

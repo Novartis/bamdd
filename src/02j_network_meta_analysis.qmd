@@ -572,7 +572,7 @@ ggplot(all_ests, aes(y = study, x = mean, xmin = `2.5%`, xmax = `97.5%`,
     coord_cartesian(xlim=c(-5,0.5)) +
     labs(x = "Log odds ratio for individual counselling vs no intervention",
          y = "Study", color = "Analysis\nmethod") +
-    theme(legend.pos = "bottom")
+    theme(legend.position = "bottom")
 ```
 
 
