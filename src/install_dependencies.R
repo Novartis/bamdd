@@ -35,6 +35,7 @@ dependencies <- c(
   "parallelly", 
   "patchwork", 
   "posterior", 
+  "prettyunits",
   "purrr", 
   "RBesT", 
   "readr", 

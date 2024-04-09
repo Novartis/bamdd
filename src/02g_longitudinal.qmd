@@ -425,7 +425,7 @@ ggplot(
   facet_grid(mean_model ~ corr_model, labeller = label_both) +
   scale_color_discrete("Treatment group") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
-        legend.pos = "bottom")
+        legend.position = "bottom")
 ```
 
 
@@ -461,7 +461,7 @@ ggplot(
   scale_x_discrete(labels = levels(pasi_data$AVISIT)) +
   scale_color_discrete("Mean model") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
-        legend.pos = "bottom")
+        legend.position = "bottom")
 ```
 
 
@@ -478,7 +478,7 @@ contrast_results %>%
   labs(x = "Modeling approach",
        y = "PASI change from baseline\nTreatment - Control\nDifference in Estimated Marginal Means") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
-        legend.pos = "bottom")
+        legend.position = "bottom")
 ```
 
 
@@ -560,7 +560,7 @@ pp_checks <- lapply(
       labs(x = "Weeks post baseline",
            y = "Week 12 PASI change from baseline",
            title = paste("Quartile", unique(nd$base_catn), "of Baseline PASI")) +
-      theme(legend.pos = "bottom") +
+      theme(legend.position = "bottom") +
       ylim(-50, 30)
     
     p2 <- brms::pp_check(lm_fit, type = "ribbon_grouped", group = "TRT01P", x = "AVISITN",
@@ -569,7 +569,7 @@ pp_checks <- lapply(
       labs(x = "Weeks post baseline",
            y = "Week 12 PASI change from baseline",
            title = paste("Quartile", unique(nd$base_catn), "of Baseline PASI")) +
-      theme(legend.pos = "bottom") +
+      theme(legend.position = "bottom") +
       ylim(-50, 30)
     
     list(
@@ -750,7 +750,7 @@ qplot(
   color = cbind(rep("control", length(marginal_rr_treatment)),
                 rep("treatment", length(marginal_rr_treatment))),
   geom = "density"
-) + scale_color_discrete(NULL) + theme(legend.pos = "bottom") +
+) + scale_color_discrete(NULL) + theme(legend.position = "bottom") +
   labs(x = "Marginal mean response rate",
        y = "Posterior density")
 
