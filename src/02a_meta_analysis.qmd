@@ -10,7 +10,7 @@ source(here::here("src", "setup.R"))
 ##knitr::opts_chunk$set(cache=FALSE) 
 ```
 
-{{< Include _macros.qmd >}}
+{{< include _macros.qmd >}}
 
 Here we will demonstrate the use of historical control data as an
 example for a meta-analytic predictive (MAP) prior approach based on

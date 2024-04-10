@@ -8,11 +8,9 @@ Authors@R:
         person("Lukas", "Widmer", , "lukas.widmer@novartis.com", role = "aut"),
         person("Andrew", "Bean", , "andrew.bean@novartis.com", role = "aut")
     )
-Description: What the package does (one paragraph).
+Description: Applied modelling in drug development: flexible Bayesian regression modelling in Stan via brms
 License: `use_gpl3_license()`
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.0
 Imports:
   bayesplot,
   BOIN,

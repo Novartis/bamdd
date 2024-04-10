@@ -63,4 +63,3 @@ if(length(missing_dependencies) > 0) {
     install.packages(pkg)
   }
 }
-

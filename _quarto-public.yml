@@ -3,7 +3,7 @@ project:
   post-render: src/move_videos.R # workaround for Quarto issue https://github.com/quarto-dev/quarto-cli/issues/3892
 
 book:
-  repo-url: https://github.com/Novartis/RBesT/ # TO BE REPLACED
+  repo-url: https://github.com/Novartis/bamdd/
   site-url: https://opensource.nibr.com/RBesT/ # TO BE REPLACED
   chapters:
     - index.qmd
