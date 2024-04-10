@@ -1,0 +1,45 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on: [push, pull_request]
+
+name: build-book
+
+jobs:
+  build-book:
+    runs-on: ubuntu-latest
+
+    name: build-book
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+
+      - name: Repos
+        run: |
+          cat("\noptions(repos=c(stan='https://mc-stan.org/r-packages/',CRAN ='https://cloud.r-project.org'))\n", file = "~/.Rprofile", append = TRUE)
+        shell: Rscript {0}
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+
+      - name: Install CmdStan
+        shell: Rscript {0}
+        run: |
+          cmdstanr::check_cmdstan_toolchain(fix = TRUE)
+          cmdstanr::install_cmdstan()
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      # - uses: quarto-dev/quarto-actions/render@v2
+      #   with:
+      #     to: html # If set, it will be equivalent to `quarto render --to html`
+      
+      - name: build BAMDD book
+        run: make website QUARTO_PROFILE=public
