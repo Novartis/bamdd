@@ -16,7 +16,6 @@ overview <- dplyr::tribble(
                        "[Meta-analysis to estimate treatment effects](02ab_meta_analysis_trtdiff.qmd)", "aggregate data modeling & varying exposure times of count data",
                        "[Dose finding](02b_dose_finding.qmd)", "non-linear models",
                        "[Oncology dose escalation](02c_dose_escalation.qmd)",  "constrained parameters",
-                       "[Variable selection](02d_horseshoe.qmd)", "shrinkage priors & monotonic effects of ordinal variables",
                        "[Multiple imputation](02e_multiple_imputation.qmd)", "multi-variate outcome modeling",
                        "[Longitudinal data](02g_longitudinal.qmd)", "longitudinal modeling with different covariance structures (MMRM)",
                        "[Bayesian Mixed effects Model for Repeated Measures (MMRM)](02h_mmrm.qmd)", "unstructured MMRM for a continuous endpoint",

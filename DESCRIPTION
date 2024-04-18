@@ -1,0 +1,65 @@
+Package: bamdd
+Title: (Bayesian) Applied Modelling in Drug Development
+Version: 0.0.0.9000
+Authors@R: 
+    c(
+        person("Sebastian", "Weber", , "sebastian.weber@novartis.com", role = c("aut", "cre")),
+        person("Björn", "Holzhauer", , "bjorn.holzhauer@novartis.com", role = "aut"),
+        person("Lukas", "Widmer", , "lukas.widmer@novartis.com", role = "aut"),
+        person("Andrew", "Bean", , "andrew.bean@novartis.com", role = "aut")
+    )
+Description: Applied modelling in drug development: flexible Bayesian regression modelling in Stan via brms
+License: `use_gpl3_license()`
+Encoding: UTF-8
+Imports:
+  bayesplot,
+  BOIN,
+  brms, 
+  checkmate, 
+  clustermq, 
+  cmdstanr, 
+  digest, 
+  directlabels, 
+  dplyr, 
+  dqrng, 
+  emmeans, 
+  future, 
+  GGally, 
+  ggfortify,
+  ggplot2, 
+  ggpubr, 
+  ggrepel, 
+  gt, 
+  here, 
+  knitr, 
+  lme4, 
+  MASS, 
+  Matrix,
+  meta, 
+  mmrm, 
+  multinma, 
+  mvtnorm, 
+  nlme, 
+  OncoBayes2, 
+  parallel, 
+  parallelly, 
+  patchwork, 
+  posterior, 
+  prettyunits,
+  purrr, 
+  RBesT, 
+  readr, 
+  rlang, 
+  rmarkdown, 
+  rstan, 
+  scales, 
+  simsurv, 
+  stringr, 
+  survival, 
+  survminer, 
+  tidybayes, 
+  tidyr, 
+  tidyverse, 
+  utils, 
+  vctrs, 
+  viridis

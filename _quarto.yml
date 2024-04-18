@@ -34,6 +34,9 @@ bibliography:
 format:
   html:
     theme: cosmo
+# embedding of resources would be desirable to avoid using google fonts, but deno does not
+# work nice with the company SSL certificate setup
+    embed-resources: false
 #    code-fold: true
     code-tools: true
 #    code-summary: "Show the code"
