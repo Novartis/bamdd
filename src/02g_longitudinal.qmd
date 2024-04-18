@@ -1,0 +1,766 @@
+---
+author:
+  - Andrew Bean - <andrew.bean@novartis.com>
+---
+
+# Longitudinal data
+
+```{r setup, echo = FALSE, include = FALSE}
+source(here::here("src", "setup.R"))
+set.seed(254335)
+```
+
+## Background
+
+Many clinical trials assess efficacy and other endpoints at numerous timepoints post-baseline. For example, consider the case where a continuous response endpoint is assessed every 2 weeks post baseline (Week 2, Week 4, ..., Week 12). Although clinical interest may focus on the response rate at a particular visit (e.g. at Week 12), efficacy data at other visits is of course still of interest, either in its own right, to build understanding of the full time vs. efficacy profile, or as a means to increase statistical power for estimation at Week 12.
+
+There are multiple approaches for proceeding with estimation of the Week 12 treatment effect. Adopting a *cross-sectional approach* , one could ignoring all other post-baseline assessments except Week 12. If certain patients missed the Week 12 assessment, this missing data would need to be handled using an appropriate pre-defined strategy (e.g. for response rate endpoints, imputing missing outcomes with nonresponder status, carrying the last observation forward, multiple imputation approaches, or even dropping missing data altogether). Such approaches may lose signifcant power or incur bias if there is substantial missing data.
+
+Alternatively *longitudinal models* incorporate the full post-baseline set of assessments to facilitate modeling of efficacy at all visits. In some cases, these may substantially increase statistical power.
+
+The `brms` package contains a deep suite of modelling tools for longitudinal data, including many options for modelling the mean trajectory across visits/time, and for modelling autocorrelated errors within patients across time. In this section we illustrate some potential uses of these tools in a clinical trial setting.
+
+## Overview Video
+
+
+
+::: {.content-visible when-profile="public"}
+{{< video videos/brms-case-3-longitudinal-data.mp4 >}}
+:::
+
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+library(dplyr)
+library(brms)
+library(emmeans)
+library(tidyr)
+library(readr)
+library(purrr)
+library(ggplot2)
+library(patchwork)
+library(here)
+# instruct brms to use cmdstanr as backend and cache all Stan binaries
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+# create cache directory if not yet available
+dir.create(here("_brms-cache"), FALSE)
+set.seed(8904568)
+control_args <- list(adapt_delta = 0.95)
+```
+
+```{r include=FALSE}
+# invisible to the reader we move the cache directory
+options(cmdstanr_write_stan_file_dir=brms_cache_dir)
+```
+
+```{r get_data, echo = TRUE}
+adpasi <- readr::read_csv(here::here("data", "longitudinal.csv"), show_col_types = FALSE) %>%
+  dplyr::filter(TRT01P %in% c("PBO", "TRT")) %>%
+  mutate(AVISIT = factor(AVISIT, paste("Week", c(1, 2 * (1:6)))),
+         TRT01P = factor(TRT01P, c("PBO", "TRT")))
+
+pasi_data <- filter(adpasi, PARAMCD == "PASITSCO")
+```
+
+## Data
+
+The example involves simulated results of a hypothetical Phase-II study of an experimental treatment for Psoriasis. Synthetic data are generated using the `mmrm` package. We consider a subset of the study involving 100 patients, 50 of whom were randomized to receive placebo, and 50 of whom received treatment. 
+
+
+
+Efficacy was assessed using the Psoriasis Area and Severity Index (PASI), a numerical score which measures the severity and extent of psoriasis. This is assessed at baseline, and again at 7 post-baseline timepoints.
+
+```{r plot_pasi, echo = FALSE, fig.width = 10, fig.height = 10/1.62, echo = FALSE}
+adp_with_base <- bind_rows(
+  adpasi %>%
+    filter(PARAMCD == "PASITSCO") %>%
+    transmute(SUBJID, TRT01P, AVISIT, AVAL, PCHG),
+  adpasi %>%
+    filter(PARAMCD == "PASITSCO") %>%
+    transmute(SUBJID, TRT01P, AVISIT = "Baseline", AVAL = BASE, PCHG = 0) %>%
+    distinct()
+) %>%
+  mutate(AVISIT = factor(AVISIT, c("Baseline", levels(adpasi$AVISIT))))
+
+ggplot(adp_with_base,
+       aes(x = TRT01P, y = AVAL, fill = TRT01P)) +
+  geom_boxplot() +
+  facet_grid(. ~ AVISIT) +
+  labs(y = "PASI score", x = NULL,
+       title = "Boxplots of PASI score by treatment group and visit") +
+  scale_fill_discrete("Treatment group") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
+        legend.position = "bottom")
+```
+
+Two endpoints of interest based on the PASI score are (1) PASI change from baseline, and (2) the binary endpoint PASI 75, which defines a responder as any patient with at least a 75% change from baseline in PASI. 
+
+```{r plot_pasi75, echo = FALSE, fig.width = 10, fig.height = 7}
+N <- adpasi %>%
+  select(SUBJID, TRT01P) %>%
+  distinct() %>%
+  count(TRT01P, name = "N")
+
+p1 <- adp_with_base %>%
+  transmute(SUBJID, TRT01P, AVISIT, AVAL = PCHG) %>%
+  arrange(SUBJID, AVISIT) %>%
+  ggplot(aes(x = AVISIT, y = AVAL, color = TRT01P, group = SUBJID)) +
+  geom_path() + geom_point() +
+  labs(x = NULL, y = "PASI %\nchange from baseline") +
+  guides(color = "none") +
+  theme(axis.text.x = element_blank()) +
+  scale_y_continuous(labels = scales::percent) +
+  geom_hline(yintercept = -0.75, linetype = "dashed")
+
+p2 <- adpasi %>%
+  dplyr::filter(PARAMCD == "PSRS75", NRFL, AVAL == 1) %>%
+  mutate(AVISIT = factor(AVISIT, c("Baseline", levels(adpasi$AVISIT)))) %>%
+  count(TRT01P, AVISIT) %>%
+  complete(TRT01P, AVISIT, fill = list(n = 0)) %>%
+  left_join(N, "TRT01P") %>%
+  ggplot(aes(x = AVISIT, y = n / N, group = TRT01P, fill = TRT01P)) +
+  geom_col(position = "dodge", width = 0.8) +
+  labs(x = NULL, y = "PASI 75 response rate\n(Nonresponder imputation)") +
+  scale_fill_discrete("Treatment group") +
+  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
+        legend.position = "bottom")
+
+
+p1 / p2
+```
+
+The data has been transformed to follow a typical CDISC Analysis Data Model (ADaM) format.
+
+
+## Models
+
+There are a few key ingredients to a longitudinal model for the PASI score outcomes.
+
+1. A *mean model* which describes the expected value of the response over time, across treatments, and across values of any other relevant covariates.
+
+2. A *correlation model* which describes the correlation structure of the error terms.
+
+`brms` offers many modelling options for each component.
+
+### Mean models
+
+#### Cell-means model
+
+The most common approach for modeling the mean in clinical trial practice is to adopt a specification which allows the mean to vary freely across visits, without any parametric specification of the trajectory of the mean over time. Here we will call this the "cell-means" model, where levels of the treatment group and visit comprise the cells.
+
+In this approach, we include all treatment-by-visit interactions. In `brms`, the formula specification would be:
+
+```{r cell_means_formula, echo = FALSE}
+CHG ~ BASE + TRT01P * AVISIT
+```
+
+#### Linear-in-time model
+
+A far stronger assumption would be to assume the mean response is linear in time (i.e. the number of weeks post baseline for visit). In this case, the formula specification would be
+
+```{r linear_formula, echo = FALSE}
+CHG ~ BASE + TRT01P * AVISITN
+```
+
+Note the key difference is the use of `AVISITN` (a numeric variable indicating the number of weeks post baseline) rather than `AVISIT` (a factor variable for the visit id).
+
+Such a model should be considered only for exploratory modelling purposes, and not for confirmatory analyses, the main reason being that the linearity assumption cannot be assessed at the trial design stage before having collected the data.
+
+Even if the linearity assumption appeared reasonable over the time range explored in the trial, it should not be used to extrapolate outside the observed time period.
+
+#### Quadratic-in-time model
+
+In the previous section, we saw there was a hint of curvature in the sample mean response over time:
+
+```{r plot_curvature, fig.width = 6, fig.height = 6/1.62, echo = FALSE}
+adp_with_base %>%
+  group_by(TRT01P, AVISIT) %>%
+  summarize(AVAL = mean(PCHG), .groups = "drop") %>%
+  ggplot(aes(x = AVISIT, y = AVAL, group = TRT01P, color = TRT01P)) +
+  geom_point() +
+  geom_path() +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_discrete("Treatment group") +
+  labs(x = "Visit",
+       y = "PASI % change from baseline") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
+        legend.position = "bottom")
+```
+
+Hence one might consider a mean model that assumes the mean response is quadratic in time rather than linear:
+
+```{r quadratic_formula, echo = FALSE}
+CHG ~ BASE + TRT01P * AVISITN + TRT01P * AVISITN ^ 2
+```
+
+This model should similarly not be used to extrapolate outside the week 1-12 window.
+
+
+#### Gaussian process prior
+
+An interesting nonparametric alternative to the just-discussed specifications is based on a Gaussian process prior for the mean across visits within treatments. As in the case of the cell-means model, this model does not assume any parametric shape for the mean response over time. It assumes only that the mean response over time follows a continuous curve which is assigned a Gaussian process (GP) prior.
+
+While the GP itself is a continuous-time process, the joint distribution of a realization at any discrete set of timepoints is multivariate normal. 
+
+In `brms`, the formula specification would be as follows:
+
+```{r gp_formula, echo = FALSE}
+CHG ~ BASE + TRT01P + gp(AVISITN, by = TRT01P)
+```
+
+The implication of this model is that there is a correlation between the mean response at any collection of visits, and the correlation between any pair of visits decays as the time between them increases, according to an exponential covariance function. See `?gp` for additional details on the `brms` implementation. 
+
+### Correlation models
+
+The repeated measurement of an endpoint over time on the same patient induces *autocorrelation* between the within-patient measurements. To illustrate, consider if we ignored the correlations and fit a model with uncorrelated errors. Below are scatterplots and correlation coefficients for the residuals of such a fitted model. The correlations are quite strong, especially between visits that are closer in time.
+
+```{r corr_plot, echo = TRUE, message = FALSE, warning = FALSE}
+pasi_data <- filter(adpasi, PARAMCD == "PASITSCO")
+lm_fit <- lm(CHG ~ BASE + TRT01P * AVISIT, data = pasi_data)
+res <- residuals(lm_fit)
+pasi_data %>%
+  mutate(res = res) %>%
+  select(SUBJID, AVISIT, res) %>%
+  pivot_wider(id_cols = SUBJID, names_from = AVISIT, values_from = res) %>%
+  select(-SUBJID) %>%
+  GGally::ggpairs()
+```
+
+Failing to model these within-subject correlations will result in a loss of statistical power (wider confidence intervals, less powerful tests). `brms` offers several options for modelling within-subject correlations.
+
+#### Subject-level random effects
+
+One way to achieve within-subject correlation is to use a model that includes a subject-level random effect. When the resulting mean response function is averaged over the distribution of the random effect terms ("integrating them out"), a uniform correlation is induced between all measurements on the same patient. The magnitude of the correlation is determined by the relative size of the random-effect variance and the error variance. (See exercise 1.)
+
+In `brms`, a subject-level random intercept can be easily added in the formula specification. For example:
+
+```{r raneff, echo = FALSE}
+CHG ~ BASE + TRT01P * AVISIT + (1 | SUBJID)
+```
+
+#### Autoregressive correlation structures
+
+A very common model for serial correlation is based on an *autoregressive process*. Under such a process, the error term $\varepsilon_t$ at a timepoint $t$ is explicitly dependent on some collection of preceeding error terms. Under a first-order autoregressive process, for example, it is dependent only on one of its predecessors:
+$$ \varepsilon_t = \alpha\varepsilon_{t-1} + Z_t,$$
+for $t\geq 2$, where $Z_t$ are iid $\mathrm N(0, \sigma^2)$. The process is initialized with $\varepsilon_1 \sim \mathrm N(0, \sigma^2 / (1 - \alpha^2))$.
+
+The resulting covariance matrix of a collection $(\varepsilon_1,\ldots,\varepsilon_T)$ has a simple form; the reader is referred to the SAS paper ["Guidelines for Selecting the Covariance Structure in Mixed Model Analysis" by Chuck Kincaid](https://support.sas.com/resources/papers/proceedings/proceedings/sugi30/198-30.pdf) for detail on the AR structure (c.f. page 2), and other covariance structures.
+
+The `autocor` argument of `brm()` and `brmsformula()` is used to set an autoregressive correlation strucutre. For order-1 autoregressive. Below is a choice of AR(1) autocorrelation that we might consider in the psoriasis example:
+
+```{r ar, echo = FALSE}
+~ ar(time = AVISIT, gr = SUBJID, p = 1)
+```
+
+This choice implies that autocorrelation exists across visits within subjects.
+
+
+#### Compound symmetry
+
+Another choice offered by `brms` is that of compound symmetry. The reader is again referred to the SAS paper linked above and `?cosy` for more information.
+
+```{r cosy, echo = FALSE}
+~ cosy(time = AVISIT, gr = SUBJID)
+```
+
+#### Other choices
+
+`brms` offers several other choices for autocorrelation models. See `?'autocor-terms'` for more a listing.
+
+We note that currently, *unstructured* correlation models (a standard choice for MMRM specifications in clinical trial protocols) re not supported by `brms`. 
+
+However, fixed correlation structures are, and one could consider plugging in for this an unstructured correlation estimate from a frequentist MMRM. For example,
+
+```{r gls_fit, echo = TRUE}
+# fit a MMRM using gls
+gls_fit <- nlme::gls(CHG ~ BASE + TRT01P * AVISIT,
+                     data = pasi_data,
+                     correlation = nlme::corSymm(form = ~ 1 | SUBJID))
+
+# estimated correlation matrices by subject
+Sig_subj <- nlme::corMatrix(gls_fit$modelStruct[[1]])
+Sig_subj[1]
+```
+
+A block-diagonal matrix containing these estimated within-subject correlations could be plugged in as the `M` argument of the `fcor()` function in `brms`.
+
+### Cross-sectional approaches
+
+For modeling a continuous endpoint such as PASI, the cross-sectional analogue of the longitudinal models we've discussed is the *ANCOVA* model, in which a linear regression model (conditioning as before on the baseline PASI covariate) is fit to the Week-12 cross section of data. 
+
+```{r ancova_syntax, echo = TRUE, eval = FALSE, message = FALSE}
+# analysis data includes only the Week 12 cross section
+ancova_data <- filter(adpasi, PARAMCD == "PASITSCO", DROPFL, AVISITN == 12)
+
+# formula specification for ANCOVA
+ancova_formula <- bf(
+  CHG ~ BASE + TRT01P,
+  family = gaussian(),
+  center = FALSE,
+  nl = FALSE
+)
+
+ancova_prior <- get_prior(
+  ancova_formula,
+  data = ancova_data
+)
+
+ancova_fit <- brm(
+  ancova_formula,
+  prior = ancova_prior,
+	data = ancova_data,
+	seed = 46474576,
+	control = control_args,
+	refresh = 0
+)
+```
+
+In the next section, this model is also explored for the purposes of comparing to the longitudinal approaches
+
+## Results
+
+A typical estimand for longitudinal or ANCOVA involve Least Squares means (LS means) or estimated marginal means (EMM). Inference for EMMs is extremely convenient with `brms` due to its integration with the `emmeans` R package. The EMM can be roughly understood as the average, stratified by treatment group and visit, of the mean prediction across subjects in the trial.
+
+We begin by briefly illustrating how `emmeans` can be used with a `brmsfit` object to estimate LS means and their contrasts. 
+
+```{r cell_mean_example, echo = TRUE, message = FALSE}
+analysis_data <- filter(adpasi, PARAMCD == "PASITSCO", DROPFL)
+
+brms_formula <- bf(
+  CHG ~ BASE + TRT01P * AVISIT,
+  autocor = ~ cosy(time = AVISIT, gr = SUBJID),
+  family = gaussian(),
+  center = FALSE,
+  nl = FALSE
+)
+
+prior <- get_prior(
+  brms_formula,
+  data = analysis_data
+)
+
+fit <- brm(
+  brms_formula,
+  prior = prior,
+	data = analysis_data,
+	seed = 46474576,
+	control = control_args,
+	refresh = 0
+)
+
+fit
+
+# estimate the EMMs
+emm <- emmeans(fit, c("TRT01P", "AVISIT"), nesting = list())
+emm
+
+# estimate EMM contrasts
+emm_contrasts <- contrast(emm, method = "revpairwise", by = "AVISIT")
+emm_contrasts
+```
+
+### Fitting several models
+
+In order to understand the impact of possible choices for the mean model 
+and correlation model, we fit a series of models in loop.
+
+Code to prepare a list of models to be fit:
+
+```{r setup_analyses}
+#| eval: !expr '!file.exists(here::here("reports/longitudinal_fits.rds"))'
+#| warning: FALSE
+#| message: FALSE
+#| output: FALSE
+#| code-fold: TRUE
+#| file: !expr 'here::here("src/longitudinal/setup_analyses.R")'
+
+```
+
+Code to fit the models in a loop using `clustermq`:
+
+```{r fit_models}
+#| eval: !expr '!file.exists(here::here("reports/longitudinal_fits.rds"))'
+#| warning: FALSE
+#| message: FALSE
+#| output: FALSE
+#| code-fold: TRUE
+#| file: !expr 'here::here("src/longitudinal/fit_models.R")'
+
+```
+
+```{r load_fits}
+#| eval: !expr '!exists("analyses")'
+#| echo: FALSE
+analyses <- readRDS(here::here("reports", "longitudinal_analyses.rds"))
+analyses$emm <- readRDS(here::here("reports", "longitudinal_fits.rds"))
+
+analyses <- filter(analyses, endpoint == "PASI")
+```
+
+### PASI change from baseline: EMMs by visit
+
+```{r emm_by_visit, echo = FALSE, fig.width = 14, fig.height = 9}
+
+emm_results <- analyses %>%
+  select(formula_name, autocor_name, emm) %>%
+  unnest(emm) %>%
+  dplyr::filter(!is.na(TRT01P)) %>%
+  mutate(formula_name = factor(formula_name, unique(formula_name)),
+         autocor_name = factor(autocor_name, unique(autocor_name))) %>%
+  rename(
+    mean_model = formula_name,
+    corr_model = autocor_name
+  )
+
+blank <- mutate(slice(group_by(emm_results, mean_model, corr_model), 1), emmean = 0)
+
+ggplot(
+  data = emm_results,
+  mapping = aes(x = AVISIT, group = TRT01P, color = TRT01P,
+                y = median, ymin = q5, ymax = q95)
+) +
+  geom_pointrange(position = position_dodge(0.5)) +
+  geom_path(position = position_dodge(0.5)) +
+  labs(x = "Visit", y = "PASI score change from baseline\nEstimated Marginal Mean") +
+  geom_blank(data = blank) +
+  facet_grid(mean_model ~ corr_model, labeller = label_both) +
+  scale_color_discrete("Treatment group") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
+        legend.position = "bottom")
+```
+
+
+
+### PASI change from baseline: EMM contrasts with placebo by visit
+
+```{r emm_contrasts_by_visit, fig.width = 14, fig.height = 6}
+
+contrast_results <- analyses %>%
+  select(formula_name, autocor_name, emm) %>%
+  unnest(emm) %>%
+  dplyr::filter(!is.na(contrast)) %>%
+  mutate(formula_name = factor(formula_name, unique(formula_name)),
+         autocor_name = factor(autocor_name, unique(autocor_name)),
+         contrast = factor(contrast, unique(contrast))) %>%
+  rename(
+    mean_model = formula_name,
+    corr_model = autocor_name
+  )
+
+blank <- mutate(slice(group_by(contrast_results, mean_model, corr_model), 1), estimate = 0)
+
+ggplot(
+  data = contrast_results,
+  mapping = aes(x = AVISIT, group = mean_model, color = mean_model,
+                y = median, ymin = q5, ymax = q95)
+) +
+  geom_pointrange(position = position_dodge(0.5)) +
+  geom_path(position = position_dodge(0.5)) +
+  labs(x = "Visit", y = "PASI change from baseline\nTreatment - Control\nDifference in Estimated Marginal Means") +
+  geom_blank(data = blank) +
+  facet_grid(. ~ corr_model, labeller = label_both) +
+  scale_x_discrete(labels = levels(pasi_data$AVISIT)) +
+  scale_color_discrete("Mean model") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
+        legend.position = "bottom")
+```
+
+
+### Estimates of Week 12 efficacy
+
+```{r wk12_compare, fig.width = 9, fig.height = 9 / 1.62}
+contrast_results %>%
+  dplyr::filter(AVISITN == 12,
+         !mean_model %in% c("linear", "quadratic"),
+         corr_model %in% c("COSY", "none")) %>%
+  mutate(method = paste("mean model:", mean_model, "\ncorrelation model:", corr_model)) %>%
+  ggplot(aes(x = method, y = median, ymin = q5, ymax = q95)) +
+  geom_pointrange(position = position_dodge(0.6)) +
+  labs(x = "Modeling approach",
+       y = "PASI change from baseline\nTreatment - Control\nDifference in Estimated Marginal Means") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1),
+        legend.position = "bottom")
+```
+
+
+### Assessing model fit
+
+In this section we illustrate the use of side-by-side posterior predictive checks to compare the fit of two models: one with a GP prior for the mean structure and one with a linear-in-time model for the mean, each with compound-symmetric autocorration models.
+
+The checks are done across timepoint (# of weeks since baseline), by treatment group and quartile of the distribution of baseline PASI.
+
+```{r gp_lm_comparison, eval = TRUE, echo = TRUE}
+# Gaussian process model -------------------------------------
+gp_formula <- bf(
+  CHG ~ BASE + TRT01P + gp(AVISITN, by = TRT01P),
+  autocor = ~ cosy(time = AVISIT, gr = SUBJID),
+  family = gaussian(),
+  center = FALSE,
+  nl = FALSE
+)
+
+gp_prior <- get_prior(
+  gp_formula,
+  data = analysis_data
+)
+
+gp_fit <- brm(
+  gp_formula,
+  prior = gp_prior,
+	data = analysis_data,
+	seed = 46474576,
+	control = control_args,
+	refresh = 0
+)
+
+# Linear mean model -------------------------------------
+lm_formula <- bf(
+  CHG ~ BASE + TRT01P * AVISITN,
+  autocor = ~ cosy(time = AVISIT, gr = SUBJID),
+  family = gaussian(),
+  center = FALSE,
+  nl = FALSE
+)
+
+lm_prior <- get_prior(
+  lm_formula,
+  data = analysis_data
+)
+
+lm_fit <- brm(
+  lm_formula,
+  prior = lm_prior,
+	data = analysis_data,
+	seed = 46474576,
+	control = control_args,
+	refresh = 0
+)
+
+base_quartiles <- pasi_data %>%
+  select(SUBJID, BASE) %>%
+  distinct() %>%
+  pull(BASE) %>%
+  quantile(c(0, 0.25, 0.5, 0.75, 1))
+
+quartile_center <- (base_quartiles[1:4] + base_quartiles[2:5]) / 2
+
+full_newdata <- pasi_data %>%
+  select(SUBJID, BASE) %>%
+  distinct() %>%
+  mutate(base_catn = as.numeric(cut(BASE, base_quartiles)),
+         base_cat = paste("Baseline PASI quartile", base_catn),
+         BASE = quartile_center[base_catn])
+
+pp_checks <- lapply(
+  split(full_newdata, full_newdata$base_catn),
+  function(nd){
+    
+    p1 <- brms::pp_check(gp_fit, type = "ribbon_grouped", group = "TRT01P", x = "AVISITN",
+                         newdata = inner_join(nd, select(pasi_data, -BASE), "SUBJID", multiple = "all"),
+                         y_draw = "points") +
+      labs(x = "Weeks post baseline",
+           y = "Week 12 PASI change from baseline",
+           title = paste("Quartile", unique(nd$base_catn), "of Baseline PASI")) +
+      theme(legend.position = "bottom") +
+      ylim(-50, 30)
+    
+    p2 <- brms::pp_check(lm_fit, type = "ribbon_grouped", group = "TRT01P", x = "AVISITN",
+                         newdata = inner_join(nd, select(pasi_data, -BASE), "SUBJID", multiple = "all"),
+                         y_draw = "points") +
+      labs(x = "Weeks post baseline",
+           y = "Week 12 PASI change from baseline",
+           title = paste("Quartile", unique(nd$base_catn), "of Baseline PASI")) +
+      theme(legend.position = "bottom") +
+      ylim(-50, 30)
+    
+    list(
+      gp = p1,
+      lm = p2
+    )
+    
+  }
+)
+
+```
+
+Now we visualize the posterior predictive distribution against the observed data, first for the *Gaussian process* model:
+```{r gp_pp, warning = FALSE, fig.height = 15, fig.width = 8}
+#| code-fold: TRUE
+pp_checks[[1]]$gp / pp_checks[[2]]$gp / pp_checks[[3]]$gp / pp_checks[[4]]$gp
+```
+
+and next for the *linear-in-time* model:
+```{r lm_pp, warning = FALSE, fig.height = 15, fig.width = 8}
+#| code-fold: TRUE
+pp_checks[[1]]$lm / pp_checks[[2]]$lm / pp_checks[[3]]$lm / pp_checks[[4]]$lm
+```
+
+Another useful visualization for assessing model involves approximate leave-one-out (LOO) cross-validation techniques.
+
+One can numerically compare the approximate expected log predictive density (ELPD) for holdout observations using `loo_compare`.
+
+```{r loo_comparison}
+loo_gp <- loo(gp_fit)
+loo_lm <- loo(lm_fit)
+loo_compare(loo_gp, loo_lm)
+```
+
+This suggests the Gaussian-process based model has a superior model fit.
+
+To visualize the predictive densities versus observed values, `pp_check()` with type `"loo_pit"`. In these visualizations, the observed outcomes are compared with their respective leave-one-out predictive distributions using the probability integral transformation (PIT). In an ideal model fit, the resulting PIT-transformed values would be uniformly distributed: i.e. the blue points and dashed lines would align with the distribution function of a Uniform(0,1) variable (solid line).
+
+```{r plot_loo_pit}
+#| warning: FALSE
+gp_loo <- pp_check(gp_fit, type = "loo_pit") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: GP model")
+lm_loo <- pp_check(lm_fit, type = "loo_pit") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: linear-in-time model")
+gp_loo + lm_loo
+```
+
+
+
+## Exercises
+
+1. Using `brms`, fit a cross-sectional (non longitudinal) logistic regression model to the binary PASI 75 endpoint at Week 12. The only covariate term should be the treatment effect. Use the following analysis data (which uses only the Week 12 outcomes, and uses nonresponder imputation for any missing outcomes at Week 12). Use the `emmeans` package and function to estimate the marginal mean Week 12 response rates by treatment. Use `emmeans::contrast` to estimate the treatment-vs-control contrasts in response rates.
+
+
+```{r ex1_data, echo = TRUE, eval = FALSE}
+adpasi <- readr::read_csv(here("data", "longitudinal.csv"), show_col_types = FALSE) %>%
+  dplyr::filter(TRT01P %in% c("PBO", "TRT")) %>%
+  mutate(AVISIT = factor(AVISIT, paste("Week", c(1, 2 * (1:6)))),
+         TRT01P = factor(TRT01P, c("PBO", "TRT")))
+
+analysis_data1 <- filter(adpasi, PARAMCD == "PSRS75", NRFL, AVISIT == "Week 12")
+```
+
+```{r ex1_sol, echo = TRUE, eval = FALSE}
+#| code-fold: TRUE
+
+# solution
+fit1 <- brm(AVAL ~ TRT01P, family = bernoulli(), data = analysis_data1,
+            silent = 2, refresh = 0)
+emm1 <- emmeans(fit1, c("TRT01P"), transform = "response")
+emm1
+contrast(emm1, method = "revpairwise")
+```
+
+
+2. Fit a longitudinal model to the binary PASI 75 endpoint. Use a Gaussian process prior (stratified by treatment arm) for the mean across weeks and an AR(1) process to model autocorrelation in the residuals. Use the following analysis data (in which any missing assessments are not imputed). Use the `emmeans` package and function to estimate the marginal mean response rates by treatment and visit. Use `emmeans::contrast` to estimate the treatment-vs-control contrasts in response rates by visit. How does the inference for Week 12 response rate difference compare to the cross-sectional model fit from 1?
+
+```{r, echo = TRUE, eval = FALSE}
+analysis_data2 <- filter(adpasi, PARAMCD == "PSRS75", !MISSFL)
+```
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-fold: TRUE
+
+# solution
+fit2 <- brm(
+  bf(
+    AVAL ~ TRT01P + gp(AVISITN, by = TRT01P),
+    autocor = ~ cosy(time = AVISIT, gr = SUBJID)
+  ),
+  data = analysis_data2,
+  silent = 2,
+  refresh = 0
+)
+emm2 <- emmeans(fit2, c("TRT01P", "AVISITN"), cov.keep = c("TRT01P", "AVISITN"), nesting = list("AVISTN" = "AVISIT"), transform = "response")
+emm2
+contrast(emm2, method = "revpairwise", by = "AVISITN")
+```
+
+3. Use Leave-One-Out cross validation to compare the model fits to the observed Week 12 data. (Hint: use `loo(fit, newdata = newdata)` with the below choice of newdata, then use `loo_compare`). Which model has better predictive power?
+
+```{r, echo = TRUE, eval = FALSE}
+newdata <- filter(adpasi, PARAMCD == "PSRS75", !MISSFL, AVISIT == "Week 12")
+```
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-fold: TRUE
+
+# solution
+loo1 <- loo(fit1, newdata = newdata)
+loo2 <- loo(fit2, newdata = newdata)
+loo_compare(loo1, loo2)
+```
+
+4. (Advanced) In this exercise, we will use a model fit to the continuous PASI change from baseline to do inference on the binary 75 response rate. First, fit a GP-based model to the PASI endpoint using the following code:
+
+```{r, echo = TRUE, eval = FALSE}
+pasi_fit <- brm(
+  bf(
+    CHG ~ BASE + TRT01P + gp(AVISITN, by = TRT01P),
+    autocor = ~ cosy(time = AVISIT, gr = SUBJID)
+  ),
+  data = pasi_data,
+  family = gaussian()
+)
+```
+
+Next, create two sets of covariate values that includes "counterfactuals" for each patient as if they received both treatment and control. The following code is convenient:
+
+```{r, echo = TRUE, eval = FALSE}
+x_treatment <- mutate(filter(pasi_data, AVISIT == "Week 12"),
+                      TRT01P = factor("TRT", levels(pasi_data$TRT01P)))
+x_control <- mutate(filter(pasi_data, AVISIT == "Week 12"),
+                    TRT01P = factor("PBO", levels(pasi_data$TRT01P)))
+```
+
+Next, for each of `x_treatment` and `x_control`:
+
+* use `posterior_predict` using the `newdata` argument to sample from the posterior predictive distribution for PASI change from baseline at each level `x_treatment` and `x_control`, respectively. The result of `posterior_predict` whose columns are posterior predictions of PASI change from baseline for individual patients. 
+* Divide these predictions by the baseline PASI for the respective patients to obtain predictive draws for PASI % change from baseline. 
+* Convert the result to binary indicators of PASI % change from baseline being below $-75\%$.
+* For each MCMC iteration, compute the percentage of responders to obtain a vector of posterior draws for the marginal mean response rates for `x_treatment` and `x_control`, respectively. 
+* How do the median and credible intervals for the marginal mean response rates compare to the results of `emmeans` from exercises 1 and 2?
+* Graph the posterior density for the difference in marginal mean response rates for treatment minus control. 
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-fold: TRUE
+
+# solution
+
+# predicted change from baseline
+pasi_chg_treatment <- posterior_predict(pasi_fit, newdata = x_treatment)
+pasi_chg_control <- posterior_predict(pasi_fit, newdata = x_control)
+
+# predicted % change from baseline
+pasi_pchg_treatment <- sweep(pasi_chg_treatment, 2, x_treatment$BASE, '/')
+pasi_pchg_control <- sweep(pasi_chg_control, 2, x_control$BASE, '/')
+
+# predicted PASI 75 response
+pasi_rr_treatment <- pasi_pchg_treatment < -0.75
+pasi_rr_control <- pasi_pchg_control < -0.75
+
+# marginal PASI 75 response rates
+marginal_rr_treatment <- rowMeans(pasi_rr_treatment)
+marginal_rr_control <- rowMeans(pasi_rr_control)
+
+# How do the median and credible intervals compare to emm1 and emm2?
+apply(cbind(trt = marginal_rr_treatment,
+            ctrl = marginal_rr_control), 2, median)
+coda::HPDinterval(coda::as.mcmc(cbind(trt = marginal_rr_treatment,
+                                      ctrl = marginal_rr_control)))
+emm1
+emm2
+
+# visualize posterior distribution for marginal mean response rates by treatment
+qplot(
+  x = cbind(marginal_rr_control, marginal_rr_treatment),
+  group = cbind(rep("control", length(marginal_rr_treatment)),
+                rep("treatment", length(marginal_rr_treatment))),
+  color = cbind(rep("control", length(marginal_rr_treatment)),
+                rep("treatment", length(marginal_rr_treatment))),
+  geom = "density"
+) + scale_color_discrete(NULL) + theme(legend.position = "bottom") +
+  labs(x = "Marginal mean response rate",
+       y = "Posterior density")
+
+# visualize posterior distribution for difference in response rates
+qplot(
+  x = marginal_rr_treatment - marginal_rr_control,
+  geom = "density"
+) + 
+  labs(x = "Difference in marginal mean response rate",
+       y = "Posterior density")
+```
+
+
