@@ -43,4 +43,11 @@ appropiate. Key changes to the web-site are tracked here:
 :::
 
 
+::: {.content-visible when-profile="public"}
+## License information
+
+- The material on this website is provided under a CC BY 4.0 [license](https://github.com/Novartis/bamdd/tree/main/docs/public/LICENSE)
+- The source code is provided under a GPL-2 [license](https://github.com/Novartis/bamdd/tree/main/LICENSE)
+:::
+
 

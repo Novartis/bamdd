@@ -16,4 +16,14 @@ with the `brms` package.
 
 - quarto 
 - cmdstanr and cmdstan (`cmdstanr::install_cmdstan()`)
-- other R package dependencies `src/install_dependencies.R`
+- other R package dependencies (see Imports under the dummy `DESCRIPTION` file)
+
+## License
+
+### Code 
+
+The code is licensed under GPL-2 ([LICENSE])
+
+### Materials
+
+The book itself is licensed under CC BY 4.0 ([docs/public/LICENSE])
