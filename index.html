@@ -217,20 +217,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -247,13 +253,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -325,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="src/01a_introduction.html" class="quarto-xref"><span>1&nbsp; Introduction</span></a> introduces <code>brms</code> and the objectives of these vignettes</li>
 <li><a href="src/01b_basic_workflow.html" class="quarto-xref"><span>2&nbsp; Basic workflow</span></a> highlights the basic workflow (analysis steps and syntax) for carrying out an analysis with <code>brms</code></li>
 <li>The next series of sections contain the case studies. You can find a <a href="./src/02_case_studies.html">listing with descriptions on this page</a>.</li>
-<li>Sections <a href="src/03a_stan_code.html" class="quarto-xref"><span>11&nbsp; Exposing stan code</span></a> and <a href="src/03b_parallel.html" class="quarto-xref"><span>12&nbsp; Parallel computation</span></a> cover more technical topics, such as exposing and injecting custom stan code to <code>brms</code> models, and efficient parallel computation to support sampling in <code>brms</code>.</li>
+<li>Sections <a href="src/03a_stan_code.html" class="quarto-xref"><span>12&nbsp; Exposing stan code</span></a> and <a href="src/03b_parallel.html" class="quarto-xref"><span>13&nbsp; Parallel computation</span></a> cover more technical topics, such as exposing and injecting custom stan code to <code>brms</code> models, and efficient parallel computation to support sampling in <code>brms</code>.</li>
 </ul>
 </section>
 <section id="updates" class="level2">
@@ -484,7 +490,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/opensource\.nibr\.com\/RBesT\/");
+      var filterRegex = new RegExp("https:\/\/opensource\.nibr\.com\/bamdd\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

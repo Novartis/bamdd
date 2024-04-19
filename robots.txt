@@ -1,1 +1,1 @@
-Sitemap: https://opensource.nibr.com/RBesT/sitemap.xml
+Sitemap: https://opensource.nibr.com/bamdd/sitemap.xml
