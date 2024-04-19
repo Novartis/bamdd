@@ -2,58 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://opensource.nibr.com/RBesT/index.html</loc>
-    <lastmod>2024-04-18T22:31:52.399Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.226Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/01a_introduction.html</loc>
-    <lastmod>2024-04-18T22:31:52.403Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.230Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/01b_basic_workflow.html</loc>
-    <lastmod>2024-04-18T22:31:52.403Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.230Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02_case_studies.html</loc>
-    <lastmod>2024-04-18T22:31:52.403Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.230Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02a_meta_analysis.html</loc>
-    <lastmod>2024-04-18T22:31:52.403Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.230Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02ab_meta_analysis_trtdiff.html</loc>
-    <lastmod>2024-04-18T22:31:52.403Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02b_dose_finding.html</loc>
-    <lastmod>2024-04-18T22:31:52.403Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02c_dose_escalation.html</loc>
-    <lastmod>2024-04-18T22:31:52.403Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02e_multiple_imputation.html</loc>
-    <lastmod>2024-04-18T22:31:52.403Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02h_mmrm.html</loc>
-    <lastmod>2024-04-18T22:31:52.407Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02i_time_to_event.html</loc>
-    <lastmod>2024-04-18T22:31:52.407Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/02j_network_meta_analysis.html</loc>
-    <lastmod>2024-04-18T22:31:52.407Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/03a_stan_code.html</loc>
-    <lastmod>2024-04-18T22:31:52.407Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/RBesT/src/03b_parallel.html</loc>
-    <lastmod>2024-04-18T22:31:52.407Z</lastmod>
+    <lastmod>2024-04-19T15:04:18.234Z</lastmod>
   </url>
 </urlset>

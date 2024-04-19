@@ -20,11 +20,13 @@ Alternatively *longitudinal models* incorporate the full post-baseline set of as
 
 The `brms` package contains a deep suite of modelling tools for longitudinal data, including many options for modelling the mean trajectory across visits/time, and for modelling autocorrelated errors within patients across time. In this section we illustrate some potential uses of these tools in a clinical trial setting.
 
+
+
+
+
+::: {.content-visible when-profile="dummy"}
 ## Overview Video
 
-
-
-::: {.content-visible when-profile="public"}
 {{< video videos/brms-case-3-longitudinal-data.mp4 >}}
 :::
 
