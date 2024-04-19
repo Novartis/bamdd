@@ -69,11 +69,13 @@ dir.create(file.path(brms_cache_dir, "tte"), FALSE)
 ##knitr::opts_chunk$set(cache=TRUE, cache.path = file.path(brms_cache_dir, "tte"))
 ```
 
+
+
+
+
+::: {.content-visible when-profile="dummy"}
 ## Overview Video
 
-
-
-::: {.content-visible when-profile="public"}
 {{< video videos/brms-20230426-2-tte.mp4 >}}
 :::
 

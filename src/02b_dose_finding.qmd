@@ -24,11 +24,13 @@ There are a number of methods for analyzing such trials that exploit that the tr
 However, we typically do not know what smooth function best approximates the true underlying dose response function. 
 Obvious candidate functions include monotone functions that eventually plateau, and functions that initially achieve a maximum and then decline.
 
+
+
+
+
+::: {.content-visible when-profile="dummy"}
 ## Overview Video
 
-
-
-::: {.content-visible when-profile="public"}
 {{< video videos/brms-case-2-dose-finding.mp4 >}}
 :::
 
@@ -729,7 +731,7 @@ Taking a Bayesian approach to dose response modeling is attractive for a number 
 
 
 
-::: {.content-visible when-profile="public"}
+::: {.content-visible when-profile="dummy"}
 ### Exercise: Antipneumococcus serum in mice
 :::
 

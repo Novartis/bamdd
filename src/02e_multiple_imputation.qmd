@@ -8,11 +8,13 @@ author:
 ```{r, include=FALSE}
 source(here::here("src", "setup.R"))
 ```
+
+
+
+
+::: {.content-visible when-profile="dummy"}
 ## Overview Video
 
-
-
-::: {.content-visible when-profile="public"}
 {{< video videos/brms-case-4-multiple-imputation.mp4 >}}
 :::
 

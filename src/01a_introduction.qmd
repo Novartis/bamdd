@@ -103,11 +103,13 @@ More useful ressources from the Stan community:
 
 
 
+
+
+
+
+::: {.content-visible when-profile="dummy"}
 #### Introduction video from the workshop with Paul Bürkner
 
-
-
-::: {.content-visible when-profile="public"}
 {{< video videos/brms-1-intro.mp4 >}}
 :::
 

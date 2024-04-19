@@ -104,7 +104,8 @@ blrm_prior <- prior(normal(logit(0.33), 2), nlpar = "logalpha") +
 blrm_fit <- brm(blrm_model,
                 data = dlt_data,
                 family = "binomial",
-                prior = blrm_prior)
+                prior = blrm_prior,
+                refresh = 0, silent = 0)
 ```
 
 ## Results

@@ -91,11 +91,13 @@ at one particular visit (e.g. the final visit at the end of the planned
 treatment period) or we might want to combine (e.g. average) treatment effects
 across multiple visits.
 
+
+
+
+
+::: {.content-visible when-profile="dummy"}
 ## Overview Video
 
-
-
-::: {.content-visible when-profile="public"}
 {{< video videos/brms-20230426-1-mmrm.mp4 >}}
 :::
 

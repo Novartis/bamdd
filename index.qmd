@@ -34,8 +34,9 @@ appropiate. Key changes to the web-site are tracked here:
 
 
 ::: {.content-visible when-profile="public"}
-- 5th January 2024: Release course web-site in more modern quarto book
-  based format.
+- 19th April 2024: First public version at [opensource.nibr.com/bamdd](http://opensource.nibr.com/bamdd)
+- 5th January 2024: Release web-site in more modern quarto book
+  based format
 - 26th April 2023: Second edition course from Paul Bürkner with the
   new case studies on MMRM, time-to-event data, surrogate endpoint
   meta-regression and network meta-analysis

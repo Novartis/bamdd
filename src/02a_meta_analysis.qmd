@@ -73,11 +73,13 @@ and
 - Schmidli et al. (2014) [doi:10.1111/biom.12242](https://doi.org/10.1111/biom.12242) for
 details on the MAP methodology.
 
+
+
+
+
+::: {.content-visible when-profile="dummy"}
 ## Overview Video
 
-
-
-::: {.content-visible when-profile="public"}
 {{< video videos/brms-case-1-historical-data-MAP.mp4 >}}
 :::
 

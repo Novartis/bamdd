@@ -48,11 +48,13 @@ options(cmdstanr_write_stan_file_dir=brms_cache_dir)
 control_args <- list(adapt_delta=0.8)
 ```
 
+
+
+
+
+::: {.content-visible when-profile="dummy"}
 ## Overview Video
 
-
-
-::: {.content-visible when-profile="public"}
 {{< video videos/brms-20230426-4-network-meta.mp4 >}}
 :::
 
