@@ -5,11 +5,11 @@ Authors@R:
     c(
         person("Sebastian", "Weber", , "sebastian.weber@novartis.com", role = c("aut", "cre")),
         person("Björn", "Holzhauer", , "bjorn.holzhauer@novartis.com", role = "aut"),
-        person("Lukas", "Widmer", , "lukas.widmer@novartis.com", role = "aut"),
+        person("Lukas", "Widmer", , "lukas_andreas.widmer@novartis.com", role = "aut"),
         person("Andrew", "Bean", , "andrew.bean@novartis.com", role = "aut")
     )
 Description: Applied modelling in drug development: flexible Bayesian regression modelling in Stan via brms
-License: `use_gpl3_license()`
+License: `use_gpl2_license()`
 Encoding: UTF-8
 Imports:
   bayesplot,

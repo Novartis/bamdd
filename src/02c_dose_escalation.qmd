@@ -1,7 +1,7 @@
 ---
 author:
   - Andrew Bean - <andrew.bean@novartis.com>
-  - Lukas Widmer - <lukas.widmer@novartis.com>
+  - Lukas Widmer - <lukas_andreas.widmer@novartis.com>
 ---
 
 # Oncology dose escalation
