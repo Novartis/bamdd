@@ -4,7 +4,7 @@ author:
   - Lukas Widmer - <lukas_andreas.widmer@novartis.com>
 ---
 
-# Oncology dose escalation
+# Oncology dose escalation {#sec-onc-escalation}
 
 ```{r, include=FALSE}
 source(here::here("src", "setup.R"))

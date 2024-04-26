@@ -4,7 +4,7 @@ author:
   - Sebastian Weber - <sebastian.weber@novartis.com>
 ---
 
-# Meta-analysis to estimate treatment effects
+# Meta-analysis to estimate treatment effects {#sec-map-treat-effects}
 
 ```{r, include=FALSE}
 source(here::here("src", "setup.R"))

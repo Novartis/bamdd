@@ -6,7 +6,7 @@ author:
 
 {{< include _macros.qmd >}}
 
-# Bayesian Mixed effects Model for Repeated Measures
+# Bayesian Mixed effects Model for Repeated Measures {#sec-mmrm}
 
 This case study covers
 

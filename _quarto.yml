@@ -13,7 +13,7 @@ execute:
    freeze: false
 
 book:
-  title: "(Bayesian) Applied Modelling in Drug Development (BAMDD)"
+  title: "Applied Modelling in Drug Development"
   subtitle: "Flexible regression modelling in Stan via `brms`"
   repo-actions: [issue]
   repo-branch: master
@@ -25,6 +25,8 @@ book:
   - Lukas Widmer - <lukas_andreas.widmer@novartis.com>
   - Andrew Bean - <andrew.bean@novartis.com>
   date: today
+  sidebar:
+    logo: bamdd_logo.png
 
 # we use per chapter references
 bibliography:

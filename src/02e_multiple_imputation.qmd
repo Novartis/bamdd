@@ -3,7 +3,7 @@ author:
   - Björn Holzhauer - <bjoern.holzhauer@novartis.com>
 ---
 
-# Multiple imputation
+# Multiple imputation {#sec-multiple-imputation}
 
 ```{r, include=FALSE}
 source(here::here("src", "setup.R"))

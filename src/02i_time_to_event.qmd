@@ -4,7 +4,7 @@ author:
   - Sebastian Weber - <sebastian.weber@novartis.com>
 ---
 
-# Time-to-event data
+# Time-to-event data {#sec-tte-data}
 
 In this case study the design of a time-to-event trial is
 presented. The trial evaluates a combination treatment of an active

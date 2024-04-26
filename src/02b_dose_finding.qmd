@@ -3,7 +3,7 @@ author:
   - Björn Holzhauer - <bjoern.holzhauer@novartis.com>
 ---
 
-# Dose finding
+# Dose finding {#sec-dose-finding}
 
 ```{r, include=FALSE}
 source(here::here("src", "setup.R"))
