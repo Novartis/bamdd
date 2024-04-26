@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>(Bayesian) Applied Modelling in Drug Development (BAMDD) - Case studies</title>
+<title>Applied Modelling in Drug Development - Case studies</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../src/02a_meta_analysis.html" rel="next">
-<link href="../src/01b_basic_workflow.html" rel="prev">
+<link href="../src/01c_priors.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -128,9 +128,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">(Bayesian) Applied Modelling in Drug Development (BAMDD)</a> 
+      <a href="../">Applied Modelling in Drug Development</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Novartis/bamdd/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -170,6 +173,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basic workflow</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/01c_priors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model setup &amp; priors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -184,55 +193,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02a_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02ab_meta_analysis_trtdiff.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02ac_meta_analysis_strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -249,13 +270,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -293,6 +314,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 78%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Problem</th>
@@ -301,39 +326,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><a href="../src/02a_meta_analysis.html">Use of historical control data</a></td>
+<td style="text-align: left;"><a href="02a_meta_analysis.html" class="quarto-xref"><span>4&nbsp; Use of historical control data</span></a></td>
 <td style="text-align: left;">nested random effects</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../src/02ab_meta_analysis_trtdiff.html">Meta-analysis to estimate treatment effects</a></td>
+<td style="text-align: left;"><a href="02ab_meta_analysis_trtdiff.html" class="quarto-xref"><span>5&nbsp; Meta-analysis to estimate treatment effects</span></a></td>
 <td style="text-align: left;">aggregate data modeling &amp; varying exposure times of count data</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../src/02b_dose_finding.html">Dose finding</a></td>
+<td style="text-align: left;"><a href="02b_dose_finding.html" class="quarto-xref"><span>7&nbsp; Dose finding</span></a></td>
 <td style="text-align: left;">non-linear models</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../src/02c_dose_escalation.html">Oncology dose escalation</a></td>
+<td style="text-align: left;"><a href="02c_dose_escalation.html" class="quarto-xref"><span>8&nbsp; Oncology dose escalation</span></a></td>
 <td style="text-align: left;">constrained parameters</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../src/02e_multiple_imputation.html">Multiple imputation</a></td>
+<td style="text-align: left;"><a href="02e_multiple_imputation.html" class="quarto-xref"><span>10&nbsp; Multiple imputation</span></a></td>
 <td style="text-align: left;">multi-variate outcome modeling</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../src/02g_longitudinal.html">Longitudinal data</a></td>
+<td style="text-align: left;"><a href="02g_longitudinal.html" class="quarto-xref"><span>11&nbsp; Longitudinal data</span></a></td>
 <td style="text-align: left;">longitudinal modeling with different covariance structures (MMRM)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../src/02h_mmrm.html">Bayesian Mixed effects Model for Repeated Measures (MMRM)</a></td>
+<td style="text-align: left;"><a href="02h_mmrm.html" class="quarto-xref"><span>12&nbsp; Bayesian Mixed effects Model for Repeated Measures</span></a></td>
 <td style="text-align: left;">unstructured MMRM for a continuous endpoint</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><a href="../src/02i_time_to_event.html">Time-to-event data</a></td>
+<td style="text-align: left;"><a href="02i_time_to_event.html" class="quarto-xref"><span>13&nbsp; Time-to-event data</span></a></td>
 <td style="text-align: left;">parametric time-to-event modeling with customized parametrization by using user-defined contrasts</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a href="../src/02j_network_meta_analysis.html">Network meta-analysis</a></td>
+<td style="text-align: left;"><a href="02j_network_meta_analysis.html" class="quarto-xref"><span>14&nbsp; Network meta-analysis</span></a></td>
 <td style="text-align: left;">arm based network meta-analysis</td>
 </tr>
 </tbody>
@@ -808,13 +833,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../src/01b_basic_workflow.html" class="pagination-link" aria-label="Basic workflow">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basic workflow</span></span>
+      <a href="../src/01c_priors.html" class="pagination-link" aria-label="Model setup &amp; priors">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model setup &amp; priors</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../src/02a_meta_analysis.html" class="pagination-link" aria-label="Use of historical control data">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -832,15 +857,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE}</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="in">overview &lt;- dplyr::tribble(</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="in">                       ~Problem, ~Technique,</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Use of historical control data](02a_meta_analysis.qmd)", "nested random effects",</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Meta-analysis to estimate treatment effects](02ab_meta_analysis_trtdiff.qmd)", "aggregate data modeling &amp; varying exposure times of count data",</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Dose finding](02b_dose_finding.qmd)", "non-linear models",</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Oncology dose escalation](02c_dose_escalation.qmd)",  "constrained parameters",</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Multiple imputation](02e_multiple_imputation.qmd)", "multi-variate outcome modeling",</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Longitudinal data](02g_longitudinal.qmd)", "longitudinal modeling with different covariance structures (MMRM)",</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Bayesian Mixed effects Model for Repeated Measures (MMRM)](02h_mmrm.qmd)", "unstructured MMRM for a continuous endpoint",</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Time-to-event data](02i_time_to_event.qmd)", "parametric time-to-event modeling with customized parametrization by using user-defined contrasts",</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="in">                       "[Network meta-analysis](02j_network_meta_analysis.qmd)", "arm based network meta-analysis"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-use-hist-control-data", "nested random effects",</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-map-treat-effects", "aggregate data modeling &amp; varying exposure times of count data",</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-dose-finding", "non-linear models",</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-onc-escalation",  "constrained parameters",</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-multiple-imputation", "multi-variate outcome modeling",</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-longitudinal-data", "longitudinal modeling with different covariance structures (MMRM)",</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-mmrm", "unstructured MMRM for a continuous endpoint",</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-tte-data", "parametric time-to-event modeling with customized parametrization by using user-defined contrasts",</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="in">                       "@sec-network-meta", "arm based network meta-analysis"</span></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="in">                   )</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::kable(overview)</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>

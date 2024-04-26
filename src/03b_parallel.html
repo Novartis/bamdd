@@ -8,7 +8,7 @@
 
 <meta name="author" content="Sebastian Weber - sebastian.weber@novartis.com">
 
-<title>(Bayesian) Applied Modelling in Drug Development (BAMDD) - 13&nbsp; Parallel computation</title>
+<title>Applied Modelling in Drug Development - 16&nbsp; Parallel computation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,7 +144,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/03a_stan_code.html">Advanced topics</a></li><li class="breadcrumb-item"><a href="../src/03b_parallel.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/03a_stan_code.html">Advanced topics</a></li><li class="breadcrumb-item"><a href="../src/03b_parallel.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -157,9 +157,12 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">(Bayesian) Applied Modelling in Drug Development (BAMDD)</a> 
+      <a href="../">Applied Modelling in Drug Development</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Novartis/bamdd/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -199,6 +202,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basic workflow</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/01c_priors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model setup &amp; priors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -213,55 +222,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02a_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02ab_meta_analysis_trtdiff.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02ac_meta_analysis_strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -278,13 +299,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -299,16 +320,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#implementation-of-cmq_brm" id="toc-implementation-of-cmq_brm" class="nav-link active" data-scroll-target="#implementation-of-cmq_brm"><span class="header-section-number">13.1</span> Implementation of <code>cmq_brm</code></a></li>
+  <li><a href="#implementation-of-cmq_brm" id="toc-implementation-of-cmq_brm" class="nav-link active" data-scroll-target="#implementation-of-cmq_brm"><span class="header-section-number">16.1</span> Implementation of <code>cmq_brm</code></a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Novartis/bamdd/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/03a_stan_code.html">Advanced topics</a></li><li class="breadcrumb-item"><a href="../src/03b_parallel.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/03a_stan_code.html">Advanced topics</a></li><li class="breadcrumb-item"><a href="../src/03b_parallel.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-parallel" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-parallel" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -332,7 +353,7 @@ window.Quarto = {
 
 
 <p>For large data-sets MCMC sampling can become very slow. The computational cost of any Stan program is dominated by the calculation of the gradient of the log likelihood function of the model. Most statistical models involve the summation over many independent contributions to the log likelihood. As the sum is associative - the result is invariant to re-orderings of individual terms of the sum - the log likelihood evaluation can be parallelized over multiple CPU cores.</p>
-<p><code>brms</code> supports the within-chain parallelization feature of Stan in a way which is fully automatic for the user. However, it does require to request threading support when calling the <code>brm</code> command, since then the Stan model is written in a different manner using the <code>reduce_sum</code> feature in Stan. Furthermore, the <code>reduce_sum</code> feature is part of the Stan modeling language since version 2.23.0. In these vignettes, we use a <code>cmdstan</code> installation with a sufficiently high Stan version of 2.34.1.</p>
+<p><code>brms</code> supports the within-chain parallelization feature of Stan in a way which is fully automatic for the user. However, it does require to request threading support when calling the <code>brm</code> command, since then the Stan model is written in a different manner using the <code>reduce_sum</code> feature in Stan. Furthermore, the <code>reduce_sum</code> feature is part of the Stan modeling language since version 2.23.0. In these vignettes, we use a <code>cmdstan</code> installation with a sufficiently high Stan version of 2.32.2.</p>
 <p>Thus, for a user to take advantage of within-chain parallelization means to slightly change the call to <code>brm</code> like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
@@ -373,8 +394,8 @@ window.Quarto = {
 </div>
 <p>It is important to note that between-chain parallelization is always more efficient than within-chain parallelization. Moreover, with increasing number of cores per chain, the efficiency of the parallelisation decreases. For a detailed discussion and instructions on how to tune the number of cores for a given problem, please refer to the <a href="https://cran.r-project.org/web/packages/brms/vignettes/brms_threading.html">vignette from <code>brms</code> on threading available on CRAN</a>.</p>
 <p>Finally, an important remark on exact reproducibility of the results: In the default setting of threading exact reproducibility is <strong>not maintained</strong>! This stems from the fact that the large log likelihood sums are partitioned into blocks of varying size and these sums are moreover accumulated in a random order. Due to the limited floating point precision of CPU cores this leads to slightly varying results at the order of the machine precision (<span class="math inline">\(10^{-16}\)</span> commonly). In case exactly reproducible results are required, Stan offers a <em>static</em> version of <code>reduce_sum</code>. This variant can be requested by using the <code>static=TRUE</code> argument of the threading function. However, when doing so, it is recommended to also provide a so-called <code>grainsize</code>. The <code>grainsize</code> is the number of terms which are included in every partial sum. This size should be large enough such that each partial sum formed represents a considerable amount of work, while being small enough to allow for good load balancing between the CPUs. The threading vignette linked above discusses strategies on how to define a reasonable <code>grainsize</code>. The call with <code>static</code> sum partitioning may then look like <code>threading(2, 80, TRUE)</code>, which will request 2 threads per chain, a grainsize of <span class="math inline">\(80\)</span> and <code>static</code> sum partitioning.</p>
-<section id="implementation-of-cmq_brm" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="implementation-of-cmq_brm"><span class="header-section-number">13.1</span> Implementation of <code>cmq_brm</code></h2>
+<section id="implementation-of-cmq_brm" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="implementation-of-cmq_brm"><span class="header-section-number">16.1</span> Implementation of <code>cmq_brm</code></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># executes brm with parallelization via clustermq</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cmq_brm <span class="ot">&lt;-</span> <span class="cf">function</span>(..., seed, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.9</span>), cores, file, <span class="at">chains=</span><span class="dv">4</span>, <span class="at">.log_worker=</span><span class="cn">FALSE</span>) {</span>
@@ -916,7 +937,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../src/03a_stan_code.html" class="pagination-link" aria-label="Exposing stan code">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Björn Holzhauer - bjoern.holzhauer@novartis.com">
 
-<title>(Bayesian) Applied Modelling in Drug Development (BAMDD) - 5&nbsp; Dose finding</title>
+<title>Applied Modelling in Drug Development - 7&nbsp; Dose finding</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../src/02c_dose_escalation.html" rel="next">
-<link href="../src/02ab_meta_analysis_trtdiff.html" rel="prev">
+<link href="../src/02ac_meta_analysis_strata.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -145,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02b_dose_finding.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02b_dose_finding.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -158,9 +158,12 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">(Bayesian) Applied Modelling in Drug Development (BAMDD)</a> 
+      <a href="../">Applied Modelling in Drug Development</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Novartis/bamdd/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -200,6 +203,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basic workflow</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/01c_priors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model setup &amp; priors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -214,55 +223,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02a_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02ab_meta_analysis_trtdiff.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02ac_meta_analysis_strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -279,13 +300,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -300,35 +321,35 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">5.1</span> Background</a></li>
-  <li><a href="#what-role-does-dose-response-modeling-play-in-drug-development" id="toc-what-role-does-dose-response-modeling-play-in-drug-development" class="nav-link" data-scroll-target="#what-role-does-dose-response-modeling-play-in-drug-development"><span class="header-section-number">5.2</span> What role does dose response modeling play in drug development?</a></li>
-  <li><a href="#data-pathway-asthma-example" id="toc-data-pathway-asthma-example" class="nav-link" data-scroll-target="#data-pathway-asthma-example"><span class="header-section-number">5.3</span> Data: PATHWAY asthma example</a></li>
-  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">5.4</span> Model description</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">7.1</span> Background</a></li>
+  <li><a href="#what-role-does-dose-response-modeling-play-in-drug-development" id="toc-what-role-does-dose-response-modeling-play-in-drug-development" class="nav-link" data-scroll-target="#what-role-does-dose-response-modeling-play-in-drug-development"><span class="header-section-number">7.2</span> What role does dose response modeling play in drug development?</a></li>
+  <li><a href="#data-pathway-asthma-example" id="toc-data-pathway-asthma-example" class="nav-link" data-scroll-target="#data-pathway-asthma-example"><span class="header-section-number">7.3</span> Data: PATHWAY asthma example</a></li>
+  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">7.4</span> Model description</a>
   <ul class="collapse">
-  <li><a href="#the-likelihood-function-into-which-we-put-the-dose-response-model" id="toc-the-likelihood-function-into-which-we-put-the-dose-response-model" class="nav-link" data-scroll-target="#the-likelihood-function-into-which-we-put-the-dose-response-model"><span class="header-section-number">5.4.1</span> The likelihood function into which we put the dose response model</a></li>
-  <li><a href="#the-sigmoid-emax-and-the-emax-model" id="toc-the-sigmoid-emax-and-the-emax-model" class="nav-link" data-scroll-target="#the-sigmoid-emax-and-the-emax-model"><span class="header-section-number">5.4.2</span> The sigmoid-Emax and the Emax model</a></li>
-  <li><a href="#the-modified-beta-model" id="toc-the-modified-beta-model" class="nav-link" data-scroll-target="#the-modified-beta-model"><span class="header-section-number">5.4.3</span> The modified beta model</a></li>
-  <li><a href="#exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose" id="toc-exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose" class="nav-link" data-scroll-target="#exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose"><span class="header-section-number">5.4.4</span> Exponential model, and linear and quadratic functions of dose or log-dose</a></li>
-  <li><a href="#bayesian-model-averaging" id="toc-bayesian-model-averaging" class="nav-link" data-scroll-target="#bayesian-model-averaging"><span class="header-section-number">5.4.5</span> Bayesian Model averaging</a></li>
+  <li><a href="#the-likelihood-function-into-which-we-put-the-dose-response-model" id="toc-the-likelihood-function-into-which-we-put-the-dose-response-model" class="nav-link" data-scroll-target="#the-likelihood-function-into-which-we-put-the-dose-response-model"><span class="header-section-number">7.4.1</span> The likelihood function into which we put the dose response model</a></li>
+  <li><a href="#the-sigmoid-emax-and-the-emax-model" id="toc-the-sigmoid-emax-and-the-emax-model" class="nav-link" data-scroll-target="#the-sigmoid-emax-and-the-emax-model"><span class="header-section-number">7.4.2</span> The sigmoid-Emax and the Emax model</a></li>
+  <li><a href="#the-modified-beta-model" id="toc-the-modified-beta-model" class="nav-link" data-scroll-target="#the-modified-beta-model"><span class="header-section-number">7.4.3</span> The modified beta model</a></li>
+  <li><a href="#exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose" id="toc-exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose" class="nav-link" data-scroll-target="#exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose"><span class="header-section-number">7.4.4</span> Exponential model, and linear and quadratic functions of dose or log-dose</a></li>
+  <li><a href="#bayesian-model-averaging" id="toc-bayesian-model-averaging" class="nav-link" data-scroll-target="#bayesian-model-averaging"><span class="header-section-number">7.4.5</span> Bayesian Model averaging</a></li>
   </ul></li>
-  <li><a href="#implementation-and-results" id="toc-implementation-and-results" class="nav-link" data-scroll-target="#implementation-and-results"><span class="header-section-number">5.5</span> Implementation and results</a>
+  <li><a href="#implementation-and-results" id="toc-implementation-and-results" class="nav-link" data-scroll-target="#implementation-and-results"><span class="header-section-number">7.5</span> Implementation and results</a>
   <ul class="collapse">
-  <li><a href="#fitting-dose-response-models-with-brms-sigmoid-emax-model" id="toc-fitting-dose-response-models-with-brms-sigmoid-emax-model" class="nav-link" data-scroll-target="#fitting-dose-response-models-with-brms-sigmoid-emax-model"><span class="header-section-number">5.5.1</span> Fitting dose response models with <code>brms</code>: sigmoid-Emax model</a></li>
-  <li><a href="#fitting-dose-response-models-with-brms-modified-beta-model" id="toc-fitting-dose-response-models-with-brms-modified-beta-model" class="nav-link" data-scroll-target="#fitting-dose-response-models-with-brms-modified-beta-model"><span class="header-section-number">5.5.2</span> Fitting dose response models with <code>brms</code>: modified beta model</a></li>
-  <li><a href="#perform-bayesian-model-averaging" id="toc-perform-bayesian-model-averaging" class="nav-link" data-scroll-target="#perform-bayesian-model-averaging"><span class="header-section-number">5.5.3</span> Perform Bayesian model averaging</a></li>
-  <li><a href="#going-beyond-the-default-mcp-mod-models" id="toc-going-beyond-the-default-mcp-mod-models" class="nav-link" data-scroll-target="#going-beyond-the-default-mcp-mod-models"><span class="header-section-number">5.5.4</span> Going beyond the default MCP-Mod models</a></li>
+  <li><a href="#fitting-dose-response-models-with-brms-sigmoid-emax-model" id="toc-fitting-dose-response-models-with-brms-sigmoid-emax-model" class="nav-link" data-scroll-target="#fitting-dose-response-models-with-brms-sigmoid-emax-model"><span class="header-section-number">7.5.1</span> Fitting dose response models with <code>brms</code>: sigmoid-Emax model</a></li>
+  <li><a href="#fitting-dose-response-models-with-brms-modified-beta-model" id="toc-fitting-dose-response-models-with-brms-modified-beta-model" class="nav-link" data-scroll-target="#fitting-dose-response-models-with-brms-modified-beta-model"><span class="header-section-number">7.5.2</span> Fitting dose response models with <code>brms</code>: modified beta model</a></li>
+  <li><a href="#perform-bayesian-model-averaging" id="toc-perform-bayesian-model-averaging" class="nav-link" data-scroll-target="#perform-bayesian-model-averaging"><span class="header-section-number">7.5.3</span> Perform Bayesian model averaging</a></li>
+  <li><a href="#going-beyond-the-default-mcp-mod-models" id="toc-going-beyond-the-default-mcp-mod-models" class="nav-link" data-scroll-target="#going-beyond-the-default-mcp-mod-models"><span class="header-section-number">7.5.4</span> Going beyond the default MCP-Mod models</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5.6</span> Conclusion</a></li>
-  <li><a href="#excercises" id="toc-excercises" class="nav-link" data-scroll-target="#excercises"><span class="header-section-number">5.7</span> Excercises</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.6</span> Conclusion</a></li>
+  <li><a href="#excercises" id="toc-excercises" class="nav-link" data-scroll-target="#excercises"><span class="header-section-number">7.7</span> Excercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Novartis/bamdd/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02b_dose_finding.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02b_dose_finding.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-dose-finding" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -351,16 +372,16 @@ window.Quarto = {
 </header>
 
 
-<section id="background" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="background"><span class="header-section-number">5.1</span> Background</h2>
+<section id="background" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="background"><span class="header-section-number">7.1</span> Background</h2>
 </section>
-<section id="what-role-does-dose-response-modeling-play-in-drug-development" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="what-role-does-dose-response-modeling-play-in-drug-development"><span class="header-section-number">5.2</span> What role does dose response modeling play in drug development?</h2>
+<section id="what-role-does-dose-response-modeling-play-in-drug-development" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="what-role-does-dose-response-modeling-play-in-drug-development"><span class="header-section-number">7.2</span> What role does dose response modeling play in drug development?</h2>
 <p>In clinical drug development, one key question is what dose of a drug should be used to treat a disease. Ideally, we would want a dose that achieves (nearly) optimal efficacy, while at the same time minimizing side effects to optimize the benefit-risk balance. In many therapeutic areas the relationship between dose and efficacy is characterized in Phase IIb clinical trials that randomize patients to received either one of several doses of a drug or a matching placebo.</p>
 <p>In such studies, it would be inefficient to try a lot of doses and just look at the performance of each dose in isolation. Instead, we know that biologically there should be some smooth function that describes the relationship between dose and efficacy. We can exploit this knowledge to make the analysis of such studies more efficient. There are a number of methods for analyzing such trials that exploit that the true expected difference to placebo will follow some smooth function of the dose. However, we typically do not know what smooth function best approximates the true underlying dose response function. Obvious candidate functions include monotone functions that eventually plateau, and functions that initially achieve a maximum and then decline.</p>
 </section>
-<section id="data-pathway-asthma-example" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="data-pathway-asthma-example"><span class="header-section-number">5.3</span> Data: PATHWAY asthma example</h2>
+<section id="data-pathway-asthma-example" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="data-pathway-asthma-example"><span class="header-section-number">7.3</span> Data: PATHWAY asthma example</h2>
 <p>We will use the PATHWAY trial as an example. This was a placebo-controlled randomized trial of three different tezepelumab dosing regimens compared with placebo in severe asthma. Two of the tezepelumab dosing regimens were given every 4 weeks. We will treat the third regimen of 280 mg every 2 weeks as if it had been 560 mg every 4 weeks. The primary endpoint of PATHWAY was the annualized rate of asthma exacerbations. The plot below shows the published estimates with 95% confidence intervals per dose. Many standard dose response modeling approaches do not require access to individual patient data - which in this case is not publically available -, but can be conducted given estimates and standard error for each dose.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -439,18 +460,18 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="model-description" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="model-description"><span class="header-section-number">5.4</span> Model description</h2>
+<section id="model-description" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="model-description"><span class="header-section-number">7.4</span> Model description</h2>
 <p>To conduct dose response analyses under model uncertainty a number of approaches such as the <a href="https://doi.org/10.1002/sim.3802">Multiple Comparison Procedures and Modeling (MCP-Mod)</a>, the <a href="https://doi.org/10.1002/sim.6052">generalized MCP-Mod approach</a> and Gaussian process based approaches are popular. Within the generalized MCP-Mod framework <a href="https://doi.org/10.1002/pst.1671">model averaging is an attractive approach</a> for dealing with model uncertainty that has <a href="https://doi.org/10.1002/sim.6991">performed well in simulation studies</a>. Here, we take a Bayesian approach to model averaging in the MCP-Mod framework, which <a href="https://doi.org/10.1002/bimj.201700211">Gould (2018)</a> called BMA-Mod (BMA stands for Bayesian model averaging).</p>
 <p>While more complex mechanistic pharmacokinetic/pharmacodynamic (PK/PD) models are often important, here, we discuss directly modelling the relationship between dose and some clinical outcome in patients.</p>
 <p>BMA-Mod, just as MCP-Mod, uses a set of candidate models that might describe dose response relationships. In the subsections that follow, we describe each model.</p>
-<section id="the-likelihood-function-into-which-we-put-the-dose-response-model" class="level3" data-number="5.4.1">
-<h3 data-number="5.4.1" class="anchored" data-anchor-id="the-likelihood-function-into-which-we-put-the-dose-response-model"><span class="header-section-number">5.4.1</span> The likelihood function into which we put the dose response model</h3>
+<section id="the-likelihood-function-into-which-we-put-the-dose-response-model" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="the-likelihood-function-into-which-we-put-the-dose-response-model"><span class="header-section-number">7.4.1</span> The likelihood function into which we put the dose response model</h3>
 <p>No matter whether we use summary data consiting of estimates with standard errors with each treatment group, or whether we have individual patient data (IPD) for a continuous, binary, count, time-to-event or ordinal outcome, our regression model will be one of the dose response models we will describe in the subsequent sections.</p>
 <p>What will differ is the likelihood function, into which we insert the dose response function. In the PATHWAY example, we will use that the estimates for log-mean-event-rate for each dose level <span class="math inline">\(i=1,\ldots,I\)</span> are approximately indpendent with <span class="math inline">\(\hat{\theta}_i \sim N(\theta_i, \text{SE}(\hat{\theta}_i))\)</span> distributions. Thus, we can use a Gaussian likelihood with known standard deviation. In case of IPD, we would instead use suitable IPD-likelihoods. This only requires minimal changes in the code for the examples.</p>
 </section>
-<section id="the-sigmoid-emax-and-the-emax-model" class="level3" data-number="5.4.2">
-<h3 data-number="5.4.2" class="anchored" data-anchor-id="the-sigmoid-emax-and-the-emax-model"><span class="header-section-number">5.4.2</span> The sigmoid-Emax and the Emax model</h3>
+<section id="the-sigmoid-emax-and-the-emax-model" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="the-sigmoid-emax-and-the-emax-model"><span class="header-section-number">7.4.2</span> The sigmoid-Emax and the Emax model</h3>
 <p>A very popular dose response model is the <strong>sigmoid-Emax model</strong>. This model assumes that the outcome for each dose group can be described by a function of the form <span class="math display">\[f(\text{dose}; \text{parameters}) = \text{E}_0 + \text{E}_\text{max} \times \frac{\text{dose}^h}{\text{dose}^h + \text{ED}_{50}^h}.\]</span> This is a monotone curve that starts at no difference to placebo at dose 0 (the expected placebo response is <span class="math inline">\(\text{E}_0\)</span>) and plateaus at a maximum effect of size <span class="math inline">\(\text{E}_\text{max} \in (-\infty, \infty)\)</span>. 50% of the maximum effect is reached at the dose <span class="math inline">\(\text{ED}_{50} \in (0, \infty)\)</span>. The steepness of the curve is determined by the so-called Hill parameter <span class="math inline">\(h \in (0, \infty)\)</span>. For <span class="math inline">\(h=1\)</span>, we have the simple <strong>Emax model</strong>, for <span class="math inline">\(h&gt;1\)</span> the dose response curve is steeper around <span class="math inline">\(\text{ED}_{50}\)</span> (and plateaus faster) than for a simple Emax model, while for <span class="math inline">\(h&lt;1\)</span> the curve is less steep. Typical values of <span class="math inline">\(h\)</span> are smaller than 5 and usually at most 3, so assigning a prior that puts most of the prior weight for <span class="math inline">\(\log h\)</span> between <span class="math inline">\(-\log 5\)</span> and <span class="math inline">\(\log 5\)</span> makes sense.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -463,26 +484,26 @@ window.Quarto = {
 </div>
 <p>The Emax model is a simple model with some biological plausibility. It is the equation that results from assuming the drug concentrations at the site of drug action are proportional to the administered dose, that drug binds to and unbinds from a receptor at a rate proportional to the drug concentration, and that drugs effects are proportional to receptor occupancy. And, it assumes that all these relationships are exactly the same for all patients. All of these assumptions can be relaxed/avoided when individual patient data (and even better, if also the necessary data for PK/PD modeling) are available.</p>
 </section>
-<section id="the-modified-beta-model" class="level3" data-number="5.4.3">
-<h3 data-number="5.4.3" class="anchored" data-anchor-id="the-modified-beta-model"><span class="header-section-number">5.4.3</span> The modified beta model</h3>
+<section id="the-modified-beta-model" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="the-modified-beta-model"><span class="header-section-number">7.4.3</span> The modified beta model</h3>
 <p>Another possible dose response model is the modified beta model. <span class="math display">\[f(\text{dose}; \text{parameters}) = \text{E}_0 + \text{E}_{\text{max }2} \times \frac{(\delta_1 + \delta_2)^{\delta_1 + \delta_2}}{\delta_1^{\delta_1} + \delta_2^{\delta_2}} \times (\frac{\text{dose}}{S})^{\delta_1} \times (1-\frac{\text{dose}}{S})^{\delta_2}\]</span> This model is capable of describing a non-monotone dose response.</p>
 </section>
-<section id="exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose" class="level3" data-number="5.4.4">
-<h3 data-number="5.4.4" class="anchored" data-anchor-id="exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose"><span class="header-section-number">5.4.4</span> Exponential model, and linear and quadratic functions of dose or log-dose</h3>
+<section id="exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose" class="level3" data-number="7.4.4">
+<h3 data-number="7.4.4" class="anchored" data-anchor-id="exponential-model-and-linear-and-quadratic-functions-of-dose-or-log-dose"><span class="header-section-number">7.4.4</span> Exponential model, and linear and quadratic functions of dose or log-dose</h3>
 <p>The exponential model <span class="math display">\[f(\text{dose}; \text{parameters}) = b_1 + b_2 (\exp(b_3 \times \text{dose})-1)\]</span> with <span class="math inline">\(b_3&lt;0\)</span> was also discussed by <a href="https://doi.org/10.1002/bimj.201700211">Gould</a>.</p>
 <p><a href="https://doi.org/10.1002/bimj.201700211">Gould</a> also considered linear and quadratic functions of dose or log-dose. I.e. <span class="math display">\[f(\text{dose}; \text{parameters}) = \text{E}_0 + \beta \times \text{dose},\]</span> <span class="math display">\[f(\text{dose}; \text{parameters}) = \text{E}_0 + \beta \times \log (\text{dose}),\]</span> <span class="math display">\[f(\text{dose}; \text{parameters}) = \text{E}_0 + \beta_1 \times \text{dose} + \beta_2 \times \text{dose}^2\]</span> or <span class="math display">\[f(\text{dose}; \text{parameters}) = \text{E}_0 + \beta_1 \times \log (\text{dose}) + \beta_2 \times (\log (\text{dose}))^2.\]</span> These models are perhaps better suited towards modeling the dose-response relationship within the range of tested dose and would not necessarily be expected to extrapolate well beyond the data range. Nevertheless, they may be useful for providing a more flexible set of models.</p>
 </section>
-<section id="bayesian-model-averaging" class="level3" data-number="5.4.5">
-<h3 data-number="5.4.5" class="anchored" data-anchor-id="bayesian-model-averaging"><span class="header-section-number">5.4.5</span> Bayesian Model averaging</h3>
+<section id="bayesian-model-averaging" class="level3" data-number="7.4.5">
+<h3 data-number="7.4.5" class="anchored" data-anchor-id="bayesian-model-averaging"><span class="header-section-number">7.4.5</span> Bayesian Model averaging</h3>
 <p>If we have multiple models that are similarly plausible given our prior information and the data we observed, then picking a single model out of these ignores the model uncertainty. For this reason, model averaging is known to be a good approach for dealing with model uncertainty. It assigns greater weight to more plausible models and can - given enough evidence - give all weight to a single clearly best model (and also give near-zero weight to clearly inappropriate models). So, - given enough data - it effectively results in model selection, but as long as we only have limited information multiple models will contribute to our inference.</p>
 <p><a href="https://doi.org/10.1002/bimj.201700211">Gould</a> proposes to use a weighted combination of the predictions for each dose level from each of the candidate models and suggests to base the posterior model weigths on <a href="https://doi.org/10.1016/j.ijforecast.2009.08.001">predictive likelihood weights</a>.</p>
 </section>
 </section>
-<section id="implementation-and-results" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="implementation-and-results"><span class="header-section-number">5.5</span> Implementation and results</h2>
+<section id="implementation-and-results" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="implementation-and-results"><span class="header-section-number">7.5</span> Implementation and results</h2>
 <p>We will now fit the various dose response models introduced in the statistical model section using <code>brms</code>. We will start with the sigmoid-Emax model and look at the things <code>brms</code> let us do easily with a single fitted model. We will not repeat that level of exploration for other models, but you may wish to do so in practice.</p>
-<section id="fitting-dose-response-models-with-brms-sigmoid-emax-model" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored" data-anchor-id="fitting-dose-response-models-with-brms-sigmoid-emax-model"><span class="header-section-number">5.5.1</span> Fitting dose response models with <code>brms</code>: sigmoid-Emax model</h3>
+<section id="fitting-dose-response-models-with-brms-sigmoid-emax-model" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="fitting-dose-response-models-with-brms-sigmoid-emax-model"><span class="header-section-number">7.5.1</span> Fitting dose response models with <code>brms</code>: sigmoid-Emax model</h3>
 <p>We use the capabilities of <code>brms</code> for fitting non-linear models. For example, a sigmoid-Emax model can be fitted as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting a sigmoid Emax model</span></span>
@@ -674,8 +695,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="fitting-dose-response-models-with-brms-modified-beta-model" class="level3" data-number="5.5.2">
-<h3 data-number="5.5.2" class="anchored" data-anchor-id="fitting-dose-response-models-with-brms-modified-beta-model"><span class="header-section-number">5.5.2</span> Fitting dose response models with <code>brms</code>: modified beta model</h3>
+<section id="fitting-dose-response-models-with-brms-modified-beta-model" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="fitting-dose-response-models-with-brms-modified-beta-model"><span class="header-section-number">7.5.2</span> Fitting dose response models with <code>brms</code>: modified beta model</h3>
 <p>We now fit the modified beta model that can capture non-monotone dose response relationships.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try a modified beta model</span></span>
@@ -771,8 +792,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="perform-bayesian-model-averaging" class="level3" data-number="5.5.3">
-<h3 data-number="5.5.3" class="anchored" data-anchor-id="perform-bayesian-model-averaging"><span class="header-section-number">5.5.3</span> Perform Bayesian model averaging</h3>
+<section id="perform-bayesian-model-averaging" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="perform-bayesian-model-averaging"><span class="header-section-number">7.5.3</span> Perform Bayesian model averaging</h3>
 <p>Now we have two fitted model. We can see both of them together below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -876,7 +897,7 @@ Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.3 seconds.
-Total execution time: 1.7 seconds.
+Total execution time: 1.6 seconds.
 
 Running MCMC with 4 sequential chains...
 
@@ -920,7 +941,7 @@ Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.3 seconds.
-Total execution time: 1.5 seconds.
+Total execution time: 1.4 seconds.
 
 Running MCMC with 4 sequential chains...
 
@@ -937,12 +958,12 @@ Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.5 seconds.
-Chain 3 finished in 0.5 seconds.
+Chain 3 finished in 0.4 seconds.
 Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.4 seconds.
-Total execution time: 2.0 seconds.</code></pre>
+Total execution time: 1.9 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -963,8 +984,8 @@ brmfit1  0.0       0.0
 brmfit2 -1.6       0.8   </code></pre>
 </div>
 </div>
-<section id="approach-1-manual-without-brms" class="level4" data-number="5.5.3.1">
-<h4 data-number="5.5.3.1" class="anchored" data-anchor-id="approach-1-manual-without-brms"><span class="header-section-number">5.5.3.1</span> Approach 1 (manual without <code>brms</code>)</h4>
+<section id="approach-1-manual-without-brms" class="level4" data-number="7.5.3.1">
+<h4 data-number="7.5.3.1" class="anchored" data-anchor-id="approach-1-manual-without-brms"><span class="header-section-number">7.5.3.1</span> Approach 1 (manual without <code>brms</code>)</h4>
 <p>Let us say that we a-priori assign a 75% probability to the SigEmax model and 25% to the modified beta model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># follows: </span></span>
@@ -1018,11 +1039,11 @@ brmfit2 -1.6       0.8   </code></pre>
 </div>
 </div>
 </section>
-<section id="approach-2-using-brms-functions" class="level4" data-number="5.5.3.2">
-<h4 data-number="5.5.3.2" class="anchored" data-anchor-id="approach-2-using-brms-functions"><span class="header-section-number">5.5.3.2</span> Approach 2: Using brms functions</h4>
+<section id="approach-2-using-brms-functions" class="level4" data-number="7.5.3.2">
+<h4 data-number="7.5.3.2" class="anchored" data-anchor-id="approach-2-using-brms-functions"><span class="header-section-number">7.5.3.2</span> Approach 2: Using brms functions</h4>
 <p>Before, we needed to do a lot of manual work to get model-averaged predictions, but the below using <code>brms::pp_average</code> would be a lot simpler, if we could rely on the approximate LOO-CV.</p>
-<section id="approach-2a-not-appropriate-here" class="level5" data-number="5.5.3.2.1">
-<h5 data-number="5.5.3.2.1" class="anchored" data-anchor-id="approach-2a-not-appropriate-here"><span class="header-section-number">5.5.3.2.1</span> Approach 2a: Not appropriate here</h5>
+<section id="approach-2a-not-appropriate-here" class="level5" data-number="7.5.3.2.1">
+<h5 data-number="7.5.3.2.1" class="anchored" data-anchor-id="approach-2a-not-appropriate-here"><span class="header-section-number">7.5.3.2.1</span> Approach 2a: Not appropriate here</h5>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>bma_brms_curve <span class="ot">=</span> dr_curve_data <span class="sc">%&gt;%</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>stderr) <span class="sc">%&gt;%</span></span>
@@ -1045,8 +1066,8 @@ brmfit2 -1.6       0.8   </code></pre>
 <span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dose, .sample, logRR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="approach-2b-using-leave-one-dose-out-cv" class="level5" data-number="5.5.3.2.2">
-<h5 data-number="5.5.3.2.2" class="anchored" data-anchor-id="approach-2b-using-leave-one-dose-out-cv"><span class="header-section-number">5.5.3.2.2</span> Approach 2b: Using leave-one-dose-out CV</h5>
+<section id="approach-2b-using-leave-one-dose-out-cv" class="level5" data-number="7.5.3.2.2">
+<h5 data-number="7.5.3.2.2" class="anchored" data-anchor-id="approach-2b-using-leave-one-dose-out-cv"><span class="header-section-number">7.5.3.2.2</span> Approach 2b: Using leave-one-dose-out CV</h5>
 <p>Because we want to avoid using approximate LOO-CV in this case, we first replace the internally calculated approximate LOO-CV results with our own</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>brmfit1<span class="sc">$</span>criteria<span class="sc">$</span>loo <span class="ot">&lt;-</span> loo_exact_brmfit1</span>
@@ -1105,8 +1126,8 @@ brmfit2 -1.6       0.8   </code></pre>
 </div>
 </section>
 </section>
-<section id="why-did-we-do-this-form-of-bayesian-model-averaging" class="level4" data-number="5.5.3.3">
-<h4 data-number="5.5.3.3" class="anchored" data-anchor-id="why-did-we-do-this-form-of-bayesian-model-averaging"><span class="header-section-number">5.5.3.3</span> Why did we do this form of Bayesian model averaging?</h4>
+<section id="why-did-we-do-this-form-of-bayesian-model-averaging" class="level4" data-number="7.5.3.3">
+<h4 data-number="7.5.3.3" class="anchored" data-anchor-id="why-did-we-do-this-form-of-bayesian-model-averaging"><span class="header-section-number">7.5.3.3</span> Why did we do this form of Bayesian model averaging?</h4>
 <p>Why are we doing it like this? Can we not just fit a single model like this (as an example where we average a sigmoid-Emax and a modified beta model)? <span class="math display">\[
 \begin{aligned}
 f(\text{dose}; \text{parameters}) = &amp; \text{E}_0 + w \times \text{E}_{\text{max }1} \times \frac{\text{dose}^h}{\text{dose}^h + \text{ED}_{50}^h} \\
@@ -1135,8 +1156,8 @@ f(\text{dose}; \text{parameters}) = &amp; \text{E}_0 + w \times \text{E}_{\text{
 <p>If you run this code, it produces a lot of severe warnings (which you should not ignore) about divergent transitions after warmup and a very high largest R-hat. Additionally, “Bulk Effective Samples Size” and “Tail Effective Samples Size (ESS)” are too low, and a lot of transitions after warmup that exceeded the maximum treedepth.</p>
 </section>
 </section>
-<section id="going-beyond-the-default-mcp-mod-models" class="level3" data-number="5.5.4">
-<h3 data-number="5.5.4" class="anchored" data-anchor-id="going-beyond-the-default-mcp-mod-models"><span class="header-section-number">5.5.4</span> Going beyond the default MCP-Mod models</h3>
+<section id="going-beyond-the-default-mcp-mod-models" class="level3" data-number="7.5.4">
+<h3 data-number="7.5.4" class="anchored" data-anchor-id="going-beyond-the-default-mcp-mod-models"><span class="header-section-number">7.5.4</span> Going beyond the default MCP-Mod models</h3>
 <p>So far, a lot of what we did could also be done in a frequentist manner using the MCP-Mod approach. However, with <code>brms</code> it is easy to make our models more complex when necessary. For example, we assumed that a 280 mg q2w dose is equivalent to a 560 mg q4w dose. This is of course only the case in terms of the total amount of drug injected over the trial period. However, the two dose regimens differ in terms of their blood concentrations over time as shown in the plot below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>sim_1st_order_pk <span class="ot">=</span> <span class="cf">function</span>(<span class="at">injected=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">28</span><span class="sc">*</span><span class="dv">5</span>)), <span class="at">dose=</span><span class="dv">1</span>, <span class="at">thalf=</span><span class="dv">28</span><span class="sc">*</span><span class="dv">24</span>, <span class="at">V=</span><span class="dv">10</span>){</span>
@@ -1246,12 +1267,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>As we can see, we can fit such a model, but the marginal posterior for the log-regimen factor is still a N(0, 0.67) distribution. Thus, the data do not inform this parameter very well - which should not surprise us. However, if we had information external to the PATHWAY trial, such as the elicited judgments of experts, we could incorporate it via this type of model.</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.6</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.6</span> Conclusion</h2>
 <p>As we could see <code>brms</code> makes it surprisingly easy to fit non-linear dose response models and to perform model averaging. Taking a Bayesian approach to dose response modeling is attractive for a number of reasons: * using prior information e.g.&nbsp;on expected placebo outcomes, the maximum plausible treatment effect and typical dose response patterns, * (weakly-)informative priors avoid issues with maximum likelihood estimation such as infinitely steep sigmoid Emax models (common when the lowest tested dose has the best point estimate), * the convenience of obtaining predictions about things that are transformations of the model parameters (e.g.&nbsp;the dose with at least a certain effect), and * the straightforward way, in which we can extend the basic models to account for the specifics of our dose finding study.</p>
 </section>
-<section id="excercises" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="excercises"><span class="header-section-number">5.7</span> Excercises</h2>
+<section id="excercises" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="excercises"><span class="header-section-number">7.7</span> Excercises</h2>
 <p>The data below are from a non-clinical study published by Goodner and Horsfall in 1935 (Goodner, K. and Horsfall Jr, F.L., 1935. The protective action of type I antipneumococcus serum in mice: I. The quantitative aspects of the mouse protection test. The Journal of Experimental Medicine, 62(3), pp.359-374.). Mice were given injections of different amounts from a pneumococcus culture, which at the doses given would in the absence of treatment be invariably fatal, mixed together with different doses of type I antipenumococcus horse and rabbit sera. Over several days it was recorded whether each mouse survived or died. This is an example of a dose response curve that appears to have been accepted to be truly non-monotonic in the scientific literature.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>mice <span class="ot">=</span> <span class="fu">tibble</span>(</span>
@@ -1768,13 +1789,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../src/02ab_meta_analysis_trtdiff.html" class="pagination-link" aria-label="Meta-analysis to estimate treatment effects">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span>
+      <a href="../src/02ac_meta_analysis_strata.html" class="pagination-link" aria-label="Use of historical control data with stratification">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../src/02c_dose_escalation.html" class="pagination-link" aria-label="Oncology dose escalation">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1783,7 +1804,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co">  - Björn Holzhauer - &lt;bjoern.holzhauer@novartis.com&gt;</span></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Dose finding</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Dose finding {#sec-dose-finding}</span></span>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE}</span></span>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("src", "setup.R"))</span></span>

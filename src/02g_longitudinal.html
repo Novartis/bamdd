@@ -8,7 +8,7 @@
 
 <meta name="author" content="Andrew Bean - andrew.bean@novartis.com">
 
-<title>(Bayesian) Applied Modelling in Drug Development (BAMDD) - 8&nbsp; Longitudinal data</title>
+<title>Applied Modelling in Drug Development - 11&nbsp; Longitudinal data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -145,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02g_longitudinal.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02g_longitudinal.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -158,9 +158,12 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">(Bayesian) Applied Modelling in Drug Development (BAMDD)</a> 
+      <a href="../">Applied Modelling in Drug Development</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Novartis/bamdd/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -200,6 +203,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basic workflow</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/01c_priors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model setup &amp; priors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -214,55 +223,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02a_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02ab_meta_analysis_trtdiff.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02ac_meta_analysis_strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -279,13 +300,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -300,32 +321,32 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">8.1</span> Background</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">8.2</span> Data</a></li>
-  <li><a href="#models" id="toc-models" class="nav-link" data-scroll-target="#models"><span class="header-section-number">8.3</span> Models</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">11.1</span> Background</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">11.2</span> Data</a></li>
+  <li><a href="#models" id="toc-models" class="nav-link" data-scroll-target="#models"><span class="header-section-number">11.3</span> Models</a>
   <ul class="collapse">
-  <li><a href="#mean-models" id="toc-mean-models" class="nav-link" data-scroll-target="#mean-models"><span class="header-section-number">8.3.1</span> Mean models</a></li>
-  <li><a href="#correlation-models" id="toc-correlation-models" class="nav-link" data-scroll-target="#correlation-models"><span class="header-section-number">8.3.2</span> Correlation models</a></li>
-  <li><a href="#cross-sectional-approaches" id="toc-cross-sectional-approaches" class="nav-link" data-scroll-target="#cross-sectional-approaches"><span class="header-section-number">8.3.3</span> Cross-sectional approaches</a></li>
+  <li><a href="#mean-models" id="toc-mean-models" class="nav-link" data-scroll-target="#mean-models"><span class="header-section-number">11.3.1</span> Mean models</a></li>
+  <li><a href="#correlation-models" id="toc-correlation-models" class="nav-link" data-scroll-target="#correlation-models"><span class="header-section-number">11.3.2</span> Correlation models</a></li>
+  <li><a href="#cross-sectional-approaches" id="toc-cross-sectional-approaches" class="nav-link" data-scroll-target="#cross-sectional-approaches"><span class="header-section-number">11.3.3</span> Cross-sectional approaches</a></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">8.4</span> Results</a>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">11.4</span> Results</a>
   <ul class="collapse">
-  <li><a href="#fitting-several-models" id="toc-fitting-several-models" class="nav-link" data-scroll-target="#fitting-several-models"><span class="header-section-number">8.4.1</span> Fitting several models</a></li>
-  <li><a href="#pasi-change-from-baseline-emms-by-visit" id="toc-pasi-change-from-baseline-emms-by-visit" class="nav-link" data-scroll-target="#pasi-change-from-baseline-emms-by-visit"><span class="header-section-number">8.4.2</span> PASI change from baseline: EMMs by visit</a></li>
-  <li><a href="#pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit" id="toc-pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit" class="nav-link" data-scroll-target="#pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit"><span class="header-section-number">8.4.3</span> PASI change from baseline: EMM contrasts with placebo by visit</a></li>
-  <li><a href="#estimates-of-week-12-efficacy" id="toc-estimates-of-week-12-efficacy" class="nav-link" data-scroll-target="#estimates-of-week-12-efficacy"><span class="header-section-number">8.4.4</span> Estimates of Week 12 efficacy</a></li>
-  <li><a href="#assessing-model-fit" id="toc-assessing-model-fit" class="nav-link" data-scroll-target="#assessing-model-fit"><span class="header-section-number">8.4.5</span> Assessing model fit</a></li>
+  <li><a href="#fitting-several-models" id="toc-fitting-several-models" class="nav-link" data-scroll-target="#fitting-several-models"><span class="header-section-number">11.4.1</span> Fitting several models</a></li>
+  <li><a href="#pasi-change-from-baseline-emms-by-visit" id="toc-pasi-change-from-baseline-emms-by-visit" class="nav-link" data-scroll-target="#pasi-change-from-baseline-emms-by-visit"><span class="header-section-number">11.4.2</span> PASI change from baseline: EMMs by visit</a></li>
+  <li><a href="#pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit" id="toc-pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit" class="nav-link" data-scroll-target="#pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit"><span class="header-section-number">11.4.3</span> PASI change from baseline: EMM contrasts with placebo by visit</a></li>
+  <li><a href="#estimates-of-week-12-efficacy" id="toc-estimates-of-week-12-efficacy" class="nav-link" data-scroll-target="#estimates-of-week-12-efficacy"><span class="header-section-number">11.4.4</span> Estimates of Week 12 efficacy</a></li>
+  <li><a href="#assessing-model-fit" id="toc-assessing-model-fit" class="nav-link" data-scroll-target="#assessing-model-fit"><span class="header-section-number">11.4.5</span> Assessing model fit</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">8.5</span> Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">11.5</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Novartis/bamdd/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02g_longitudinal.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02g_longitudinal.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-longitudinal-data" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -348,8 +369,8 @@ window.Quarto = {
 </header>
 
 
-<section id="background" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="background"><span class="header-section-number">8.1</span> Background</h2>
+<section id="background" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="background"><span class="header-section-number">11.1</span> Background</h2>
 <p>Many clinical trials assess efficacy and other endpoints at numerous timepoints post-baseline. For example, consider the case where a continuous response endpoint is assessed every 2 weeks post baseline (Week 2, Week 4, …, Week 12). Although clinical interest may focus on the response rate at a particular visit (e.g.&nbsp;at Week 12), efficacy data at other visits is of course still of interest, either in its own right, to build understanding of the full time vs.&nbsp;efficacy profile, or as a means to increase statistical power for estimation at Week 12.</p>
 <p>There are multiple approaches for proceeding with estimation of the Week 12 treatment effect. Adopting a <em>cross-sectional approach</em> , one could ignoring all other post-baseline assessments except Week 12. If certain patients missed the Week 12 assessment, this missing data would need to be handled using an appropriate pre-defined strategy (e.g.&nbsp;for response rate endpoints, imputing missing outcomes with nonresponder status, carrying the last observation forward, multiple imputation approaches, or even dropping missing data altogether). Such approaches may lose signifcant power or incur bias if there is substantial missing data.</p>
 <p>Alternatively <em>longitudinal models</em> incorporate the full post-baseline set of assessments to facilitate modeling of efficacy at all visits. In some cases, these may substantially increase statistical power.</p>
@@ -380,8 +401,8 @@ window.Quarto = {
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>pasi_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(adpasi, PARAMCD <span class="sc">==</span> <span class="st">"PASITSCO"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="data" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="data"><span class="header-section-number">8.2</span> Data</h2>
+<section id="data" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="data"><span class="header-section-number">11.2</span> Data</h2>
 <p>The example involves simulated results of a hypothetical Phase-II study of an experimental treatment for Psoriasis. Synthetic data are generated using the <code>mmrm</code> package. We consider a subset of the study involving 100 patients, 50 of whom were randomized to receive placebo, and 50 of whom received treatment.</p>
 <p>Efficacy was assessed using the Psoriasis Area and Severity Index (PASI), a numerical score which measures the severity and extent of psoriasis. This is assessed at baseline, and again at 7 post-baseline timepoints.</p>
 <div class="cell">
@@ -405,18 +426,18 @@ window.Quarto = {
 </div>
 <p>The data has been transformed to follow a typical CDISC Analysis Data Model (ADaM) format.</p>
 </section>
-<section id="models" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="models"><span class="header-section-number">8.3</span> Models</h2>
+<section id="models" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="models"><span class="header-section-number">11.3</span> Models</h2>
 <p>There are a few key ingredients to a longitudinal model for the PASI score outcomes.</p>
 <ol type="1">
 <li><p>A <em>mean model</em> which describes the expected value of the response over time, across treatments, and across values of any other relevant covariates.</p></li>
 <li><p>A <em>correlation model</em> which describes the correlation structure of the error terms.</p></li>
 </ol>
 <p><code>brms</code> offers many modelling options for each component.</p>
-<section id="mean-models" class="level3" data-number="8.3.1">
-<h3 data-number="8.3.1" class="anchored" data-anchor-id="mean-models"><span class="header-section-number">8.3.1</span> Mean models</h3>
-<section id="cell-means-model" class="level4" data-number="8.3.1.1">
-<h4 data-number="8.3.1.1" class="anchored" data-anchor-id="cell-means-model"><span class="header-section-number">8.3.1.1</span> Cell-means model</h4>
+<section id="mean-models" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="mean-models"><span class="header-section-number">11.3.1</span> Mean models</h3>
+<section id="cell-means-model" class="level4" data-number="11.3.1.1">
+<h4 data-number="11.3.1.1" class="anchored" data-anchor-id="cell-means-model"><span class="header-section-number">11.3.1.1</span> Cell-means model</h4>
 <p>The most common approach for modeling the mean in clinical trial practice is to adopt a specification which allows the mean to vary freely across visits, without any parametric specification of the trajectory of the mean over time. Here we will call this the “cell-means” model, where levels of the treatment group and visit comprise the cells.</p>
 <p>In this approach, we include all treatment-by-visit interactions. In <code>brms</code>, the formula specification would be:</p>
 <div class="cell">
@@ -425,8 +446,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="linear-in-time-model" class="level4" data-number="8.3.1.2">
-<h4 data-number="8.3.1.2" class="anchored" data-anchor-id="linear-in-time-model"><span class="header-section-number">8.3.1.2</span> Linear-in-time model</h4>
+<section id="linear-in-time-model" class="level4" data-number="11.3.1.2">
+<h4 data-number="11.3.1.2" class="anchored" data-anchor-id="linear-in-time-model"><span class="header-section-number">11.3.1.2</span> Linear-in-time model</h4>
 <p>A far stronger assumption would be to assume the mean response is linear in time (i.e.&nbsp;the number of weeks post baseline for visit). In this case, the formula specification would be</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -437,8 +458,8 @@ window.Quarto = {
 <p>Such a model should be considered only for exploratory modelling purposes, and not for confirmatory analyses, the main reason being that the linearity assumption cannot be assessed at the trial design stage before having collected the data.</p>
 <p>Even if the linearity assumption appeared reasonable over the time range explored in the trial, it should not be used to extrapolate outside the observed time period.</p>
 </section>
-<section id="quadratic-in-time-model" class="level4" data-number="8.3.1.3">
-<h4 data-number="8.3.1.3" class="anchored" data-anchor-id="quadratic-in-time-model"><span class="header-section-number">8.3.1.3</span> Quadratic-in-time model</h4>
+<section id="quadratic-in-time-model" class="level4" data-number="11.3.1.3">
+<h4 data-number="11.3.1.3" class="anchored" data-anchor-id="quadratic-in-time-model"><span class="header-section-number">11.3.1.3</span> Quadratic-in-time model</h4>
 <p>In the previous section, we saw there was a hint of curvature in the sample mean response over time:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -457,8 +478,8 @@ window.Quarto = {
 </div>
 <p>This model should similarly not be used to extrapolate outside the week 1-12 window.</p>
 </section>
-<section id="gaussian-process-prior" class="level4" data-number="8.3.1.4">
-<h4 data-number="8.3.1.4" class="anchored" data-anchor-id="gaussian-process-prior"><span class="header-section-number">8.3.1.4</span> Gaussian process prior</h4>
+<section id="gaussian-process-prior" class="level4" data-number="11.3.1.4">
+<h4 data-number="11.3.1.4" class="anchored" data-anchor-id="gaussian-process-prior"><span class="header-section-number">11.3.1.4</span> Gaussian process prior</h4>
 <p>An interesting nonparametric alternative to the just-discussed specifications is based on a Gaussian process prior for the mean across visits within treatments. As in the case of the cell-means model, this model does not assume any parametric shape for the mean response over time. It assumes only that the mean response over time follows a continuous curve which is assigned a Gaussian process (GP) prior.</p>
 <p>While the GP itself is a continuous-time process, the joint distribution of a realization at any discrete set of timepoints is multivariate normal.</p>
 <p>In <code>brms</code>, the formula specification would be as follows:</p>
@@ -470,8 +491,8 @@ window.Quarto = {
 <p>The implication of this model is that there is a correlation between the mean response at any collection of visits, and the correlation between any pair of visits decays as the time between them increases, according to an exponential covariance function. See <code>?gp</code> for additional details on the <code>brms</code> implementation.</p>
 </section>
 </section>
-<section id="correlation-models" class="level3" data-number="8.3.2">
-<h3 data-number="8.3.2" class="anchored" data-anchor-id="correlation-models"><span class="header-section-number">8.3.2</span> Correlation models</h3>
+<section id="correlation-models" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="correlation-models"><span class="header-section-number">11.3.2</span> Correlation models</h3>
 <p>The repeated measurement of an endpoint over time on the same patient induces <em>autocorrelation</em> between the within-patient measurements. To illustrate, consider if we ignored the correlations and fit a model with uncorrelated errors. Below are scatterplots and correlation coefficients for the residuals of such a fitted model. The correlations are quite strong, especially between visits that are closer in time.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pasi_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(adpasi, PARAMCD <span class="sc">==</span> <span class="st">"PASITSCO"</span>)</span>
@@ -492,8 +513,8 @@ window.Quarto = {
 </div>
 </div>
 <p>Failing to model these within-subject correlations will result in a loss of statistical power (wider confidence intervals, less powerful tests). <code>brms</code> offers several options for modelling within-subject correlations.</p>
-<section id="subject-level-random-effects" class="level4" data-number="8.3.2.1">
-<h4 data-number="8.3.2.1" class="anchored" data-anchor-id="subject-level-random-effects"><span class="header-section-number">8.3.2.1</span> Subject-level random effects</h4>
+<section id="subject-level-random-effects" class="level4" data-number="11.3.2.1">
+<h4 data-number="11.3.2.1" class="anchored" data-anchor-id="subject-level-random-effects"><span class="header-section-number">11.3.2.1</span> Subject-level random effects</h4>
 <p>One way to achieve within-subject correlation is to use a model that includes a subject-level random effect. When the resulting mean response function is averaged over the distribution of the random effect terms (“integrating them out”), a uniform correlation is induced between all measurements on the same patient. The magnitude of the correlation is determined by the relative size of the random-effect variance and the error variance. (See exercise 1.)</p>
 <p>In <code>brms</code>, a subject-level random intercept can be easily added in the formula specification. For example:</p>
 <div class="cell">
@@ -502,8 +523,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="autoregressive-correlation-structures" class="level4" data-number="8.3.2.2">
-<h4 data-number="8.3.2.2" class="anchored" data-anchor-id="autoregressive-correlation-structures"><span class="header-section-number">8.3.2.2</span> Autoregressive correlation structures</h4>
+<section id="autoregressive-correlation-structures" class="level4" data-number="11.3.2.2">
+<h4 data-number="11.3.2.2" class="anchored" data-anchor-id="autoregressive-correlation-structures"><span class="header-section-number">11.3.2.2</span> Autoregressive correlation structures</h4>
 <p>A very common model for serial correlation is based on an <em>autoregressive process</em>. Under such a process, the error term <span class="math inline">\(\varepsilon_t\)</span> at a timepoint <span class="math inline">\(t\)</span> is explicitly dependent on some collection of preceeding error terms. Under a first-order autoregressive process, for example, it is dependent only on one of its predecessors: <span class="math display">\[ \varepsilon_t = \alpha\varepsilon_{t-1} + Z_t,\]</span> for <span class="math inline">\(t\geq 2\)</span>, where <span class="math inline">\(Z_t\)</span> are iid <span class="math inline">\(\mathrm N(0, \sigma^2)\)</span>. The process is initialized with <span class="math inline">\(\varepsilon_1 \sim \mathrm N(0, \sigma^2 / (1 - \alpha^2))\)</span>.</p>
 <p>The resulting covariance matrix of a collection <span class="math inline">\((\varepsilon_1,\ldots,\varepsilon_T)\)</span> has a simple form; the reader is referred to the SAS paper <a href="https://support.sas.com/resources/papers/proceedings/proceedings/sugi30/198-30.pdf">“Guidelines for Selecting the Covariance Structure in Mixed Model Analysis” by Chuck Kincaid</a> for detail on the AR structure (c.f. page 2), and other covariance structures.</p>
 <p>The <code>autocor</code> argument of <code>brm()</code> and <code>brmsformula()</code> is used to set an autoregressive correlation strucutre. For order-1 autoregressive. Below is a choice of AR(1) autocorrelation that we might consider in the psoriasis example:</p>
@@ -514,8 +535,8 @@ window.Quarto = {
 </div>
 <p>This choice implies that autocorrelation exists across visits within subjects.</p>
 </section>
-<section id="compound-symmetry" class="level4" data-number="8.3.2.3">
-<h4 data-number="8.3.2.3" class="anchored" data-anchor-id="compound-symmetry"><span class="header-section-number">8.3.2.3</span> Compound symmetry</h4>
+<section id="compound-symmetry" class="level4" data-number="11.3.2.3">
+<h4 data-number="11.3.2.3" class="anchored" data-anchor-id="compound-symmetry"><span class="header-section-number">11.3.2.3</span> Compound symmetry</h4>
 <p>Another choice offered by <code>brms</code> is that of compound symmetry. The reader is again referred to the SAS paper linked above and <code>?cosy</code> for more information.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -523,8 +544,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="other-choices" class="level4" data-number="8.3.2.4">
-<h4 data-number="8.3.2.4" class="anchored" data-anchor-id="other-choices"><span class="header-section-number">8.3.2.4</span> Other choices</h4>
+<section id="other-choices" class="level4" data-number="11.3.2.4">
+<h4 data-number="11.3.2.4" class="anchored" data-anchor-id="other-choices"><span class="header-section-number">11.3.2.4</span> Other choices</h4>
 <p><code>brms</code> offers several other choices for autocorrelation models. See <code>?'autocor-terms'</code> for more a listing.</p>
 <p>We note that currently, <em>unstructured</em> correlation models (a standard choice for MMRM specifications in clinical trial protocols) re not supported by <code>brms</code>.</p>
 <p>However, fixed correlation structures are, and one could consider plugging in for this an unstructured correlation estimate from a frequentist MMRM. For example,</p>
@@ -560,8 +581,8 @@ window.Quarto = {
 <p>A block-diagonal matrix containing these estimated within-subject correlations could be plugged in as the <code>M</code> argument of the <code>fcor()</code> function in <code>brms</code>.</p>
 </section>
 </section>
-<section id="cross-sectional-approaches" class="level3" data-number="8.3.3">
-<h3 data-number="8.3.3" class="anchored" data-anchor-id="cross-sectional-approaches"><span class="header-section-number">8.3.3</span> Cross-sectional approaches</h3>
+<section id="cross-sectional-approaches" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="cross-sectional-approaches"><span class="header-section-number">11.3.3</span> Cross-sectional approaches</h3>
 <p>For modeling a continuous endpoint such as PASI, the cross-sectional analogue of the longitudinal models we’ve discussed is the <em>ANCOVA</em> model, in which a linear regression model (conditioning as before on the baseline PASI covariate) is fit to the Week-12 cross section of data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># analysis data includes only the Week 12 cross section</span></span>
@@ -592,8 +613,8 @@ window.Quarto = {
 <p>In the next section, this model is also explored for the purposes of comparing to the longitudinal approaches</p>
 </section>
 </section>
-<section id="results" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="results"><span class="header-section-number">8.4</span> Results</h2>
+<section id="results" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="results"><span class="header-section-number">11.4</span> Results</h2>
 <p>A typical estimand for longitudinal or ANCOVA involve Least Squares means (LS means) or estimated marginal means (EMM). Inference for EMMs is extremely convenient with <code>brms</code> due to its integration with the <code>emmeans</code> R package. The EMM can be roughly understood as the average, stratified by treatment group and visit, of the mean prediction across subjects in the trial.</p>
 <p>We begin by briefly illustrating how <code>emmeans</code> can be used with a <code>brmsfit</code> object to estimate LS means and their contrasts.</p>
 <div class="cell">
@@ -623,14 +644,14 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 12.3 seconds.
-Chain 2 finished in 12.1 seconds.
-Chain 3 finished in 12.6 seconds.
+Chain 1 finished in 12.2 seconds.
+Chain 2 finished in 11.9 seconds.
+Chain 3 finished in 12.5 seconds.
 Chain 4 finished in 11.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 12.1 seconds.
-Total execution time: 48.8 seconds.</code></pre>
+Mean chain execution time: 12.0 seconds.
+Total execution time: 48.4 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -747,8 +768,8 @@ Point estimate displayed: median
 HPD interval probability: 0.95 </code></pre>
 </div>
 </div>
-<section id="fitting-several-models" class="level3" data-number="8.4.1">
-<h3 data-number="8.4.1" class="anchored" data-anchor-id="fitting-several-models"><span class="header-section-number">8.4.1</span> Fitting several models</h3>
+<section id="fitting-several-models" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="fitting-several-models"><span class="header-section-number">11.4.1</span> Fitting several models</h3>
 <p>In order to understand the impact of possible choices for the mean model and correlation model, we fit a series of models in loop.</p>
 <p>Code to prepare a list of models to be fit:</p>
 <div class="cell">
@@ -933,8 +954,8 @@ HPD interval probability: 0.95 </code></pre>
 </details>
 </div>
 </section>
-<section id="pasi-change-from-baseline-emms-by-visit" class="level3" data-number="8.4.2">
-<h3 data-number="8.4.2" class="anchored" data-anchor-id="pasi-change-from-baseline-emms-by-visit"><span class="header-section-number">8.4.2</span> PASI change from baseline: EMMs by visit</h3>
+<section id="pasi-change-from-baseline-emms-by-visit" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="pasi-change-from-baseline-emms-by-visit"><span class="header-section-number">11.4.2</span> PASI change from baseline: EMMs by visit</h3>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_path()`: Each group consists of only one observation.
@@ -949,8 +970,8 @@ HPD interval probability: 0.95 </code></pre>
 </div>
 </div>
 </section>
-<section id="pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit" class="level3" data-number="8.4.3">
-<h3 data-number="8.4.3" class="anchored" data-anchor-id="pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit"><span class="header-section-number">8.4.3</span> PASI change from baseline: EMM contrasts with placebo by visit</h3>
+<section id="pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="pasi-change-from-baseline-emm-contrasts-with-placebo-by-visit"><span class="header-section-number">11.4.3</span> PASI change from baseline: EMM contrasts with placebo by visit</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>contrast_results <span class="ot">&lt;-</span> analyses <span class="sc">%&gt;%</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(formula_name, autocor_name, emm) <span class="sc">%&gt;%</span></span>
@@ -989,8 +1010,8 @@ HPD interval probability: 0.95 </code></pre>
 </div>
 </div>
 </section>
-<section id="estimates-of-week-12-efficacy" class="level3" data-number="8.4.4">
-<h3 data-number="8.4.4" class="anchored" data-anchor-id="estimates-of-week-12-efficacy"><span class="header-section-number">8.4.4</span> Estimates of Week 12 efficacy</h3>
+<section id="estimates-of-week-12-efficacy" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="estimates-of-week-12-efficacy"><span class="header-section-number">11.4.4</span> Estimates of Week 12 efficacy</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>contrast_results <span class="sc">%&gt;%</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(AVISITN <span class="sc">==</span> <span class="dv">12</span>,</span>
@@ -1012,8 +1033,8 @@ HPD interval probability: 0.95 </code></pre>
 </div>
 </div>
 </section>
-<section id="assessing-model-fit" class="level3" data-number="8.4.5">
-<h3 data-number="8.4.5" class="anchored" data-anchor-id="assessing-model-fit"><span class="header-section-number">8.4.5</span> Assessing model fit</h3>
+<section id="assessing-model-fit" class="level3" data-number="11.4.5">
+<h3 data-number="11.4.5" class="anchored" data-anchor-id="assessing-model-fit"><span class="header-section-number">11.4.5</span> Assessing model fit</h3>
 <p>In this section we illustrate the use of side-by-side posterior predictive checks to compare the fit of two models: one with a GP prior for the mean structure and one with a linear-in-time model for the mean, each with compound-symmetric autocorration models.</p>
 <p>The checks are done across timepoint (# of weeks since baseline), by treatment group and quartile of the distribution of baseline PASI.</p>
 <div class="cell">
@@ -1045,14 +1066,14 @@ HPD interval probability: 0.95 </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 35.9 seconds.
-Chain 2 finished in 39.7 seconds.
-Chain 3 finished in 36.9 seconds.
-Chain 4 finished in 39.8 seconds.
+Chain 1 finished in 34.7 seconds.
+Chain 2 finished in 39.0 seconds.
+Chain 3 finished in 35.7 seconds.
+Chain 4 finished in 38.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 38.1 seconds.
-Total execution time: 152.8 seconds.</code></pre>
+Mean chain execution time: 37.0 seconds.
+Total execution time: 148.4 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 10 of 4000 (0.0%) transitions ended with a divergence.
@@ -1086,14 +1107,14 @@ See https://mc-stan.org/misc/warnings for details.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 7.2 seconds.
-Chain 2 finished in 7.7 seconds.
+Chain 1 finished in 7.0 seconds.
+Chain 2 finished in 7.6 seconds.
 Chain 3 finished in 7.0 seconds.
-Chain 4 finished in 7.3 seconds.
+Chain 4 finished in 7.1 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 7.3 seconds.
-Total execution time: 29.6 seconds.</code></pre>
+Mean chain execution time: 7.2 seconds.
+Total execution time: 29.1 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>base_quartiles <span class="ot">&lt;-</span> pasi_data <span class="sc">%&gt;%</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SUBJID, BASE) <span class="sc">%&gt;%</span></span>
@@ -1208,8 +1229,8 @@ lm_fit -20.8       5.2  </code></pre>
 </div>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="exercises"><span class="header-section-number">8.5</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="exercises"><span class="header-section-number">11.5</span> Exercises</h2>
 <ol type="1">
 <li>Using <code>brms</code>, fit a cross-sectional (non longitudinal) logistic regression model to the binary PASI 75 endpoint at Week 12. The only covariate term should be the treatment effect. Use the following analysis data (which uses only the Week 12 outcomes, and uses nonresponder imputation for any missing outcomes at Week 12). Use the <code>emmeans</code> package and function to estimate the marginal mean Week 12 response rates by treatment. Use <code>emmeans::contrast</code> to estimate the treatment-vs-control contrasts in response rates.</li>
 </ol>
@@ -1820,12 +1841,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../src/02e_multiple_imputation.html" class="pagination-link" aria-label="Multiple imputation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../src/02h_mmrm.html" class="pagination-link" aria-label="Bayesian Mixed effects Model for Repeated Measures">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1834,7 +1855,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co">  - Andrew Bean - &lt;andrew.bean@novartis.com&gt;</span></span>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Longitudinal data</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Longitudinal data {#sec-longitudinal-data}</span></span>
 <span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, echo = FALSE, include = FALSE}</span></span>
 <span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("src", "setup.R"))</span></span>

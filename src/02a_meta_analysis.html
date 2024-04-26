@@ -8,7 +8,7 @@
 
 <meta name="author" content="Sebastian Weber - sebastian.weber@novartis.com">
 
-<title>(Bayesian) Applied Modelling in Drug Development (BAMDD) - 3&nbsp; Use of historical control data</title>
+<title>Applied Modelling in Drug Development - 4&nbsp; Use of historical control data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -145,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02a_meta_analysis.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02a_meta_analysis.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -158,9 +158,12 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">(Bayesian) Applied Modelling in Drug Development (BAMDD)</a> 
+      <a href="../">Applied Modelling in Drug Development</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Novartis/bamdd/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -200,6 +203,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basic workflow</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/01c_priors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model setup &amp; priors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -214,55 +223,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02a_meta_analysis.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02ab_meta_analysis_trtdiff.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02ac_meta_analysis_strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -279,13 +300,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -300,22 +321,22 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">3.1</span> Background</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">3.2</span> Data</a></li>
-  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">3.3</span> Model description</a></li>
-  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">3.4</span> Implementation</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">3.5</span> Results</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.6</span> Conclusion</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.7</span> Exercises</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">4.1</span> Background</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">4.2</span> Data</a></li>
+  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">4.3</span> Model description</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">4.4</span> Implementation</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4.5</span> Results</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.6</span> Conclusion</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.7</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Novartis/bamdd/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02a_meta_analysis.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02a_meta_analysis.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-use-hist-control-data" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-use-hist-control-data" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -361,8 +382,8 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="background" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="background"><span class="header-section-number">3.1</span> Background</h2>
+<section id="background" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="background"><span class="header-section-number">4.1</span> Background</h2>
 <p>Given the relevance of the use of historical control data problem for drug development, a full R package <code>RBesT</code> (R Bayesian evidence synthesis tools) is available on <a href="https://cran.r-project.org/package=RBesT">CRAN</a>. Here we will re-implement the example of the vignette of <code>RBesT</code> for the <a href="https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html">binary case</a> and will illustrate how <code>brms</code> can be used in a more complex setting as a case study. In particular, we are going to assume as a complication that the historical trial data has been collected in specific regions of the world and how this can be used to borrow strength between regions. As a simplifying assumption it is assumed that trials are nested within regions thereby implying that trials are conducting exclusively in specific regions.</p>
 <p>For details on the <code>RBesT</code> R package, please refer to</p>
 <ul>
@@ -371,8 +392,8 @@ window.Quarto = {
 <li>Schmidli et al.&nbsp;(2014) <a href="https://doi.org/10.1111/biom.12242">doi:10.1111/biom.12242</a> for details on the MAP methodology.</li>
 </ul>
 </section>
-<section id="data" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="data"><span class="header-section-number">3.2</span> Data</h2>
+<section id="data" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="data"><span class="header-section-number">4.2</span> Data</h2>
 <p>A Phase II study is planned to evaluate the efficacy of a test treatment in a randomized comparison with placebo in the disease ankylosing spondilityis. At the design stage of the trial control group data were available from a total of eight historical studies.</p>
 <p>This data-set is part of the <code>RBesT</code> package as the <code>AS</code> data-set and here we add as additional column a randomly assigned <code>region</code> variable:</p>
 <div class="cell">
@@ -444,8 +465,8 @@ window.Quarto = {
 </div>
 <p>The total number of 513 patients in the 8 trials is quite substantial.</p>
 </section>
-<section id="model-description" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="model-description"><span class="header-section-number">3.3</span> Model description</h2>
+<section id="model-description" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="model-description"><span class="header-section-number">4.3</span> Model description</h2>
 <p>The <code>RBesT</code> package implements the MAP approach following a standard generalized linear modeling framework for a random-effects meta-analysis:</p>
 <ul>
 <li><p><span class="math inline">\(Y\)</span> is the (control) group summary data for <span class="math inline">\(H\)</span> historical trials</p></li>
@@ -471,8 +492,8 @@ window.Quarto = {
 </ul>
 <p>In our case study we make a simplifying assumption that any trial <span class="math inline">\(h\)</span> is run entirely within a given region <span class="math inline">\(j\)</span>. Therefore we have a nested structure (trials within regions) such that no correlation is modeled between region and trial. This would be different if some trials were run across different regions and trial results would be reported by region.</p>
 </section>
-<section id="implementation" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">3.4</span> Implementation</h2>
+<section id="implementation" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">4.4</span> Implementation</h2>
 <p>With the <code>gMAP</code> command in <code>RBesT</code> we can obtain MCMC samples from posterior for the first model as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34767</span>)</span>
@@ -582,7 +603,7 @@ Total execution time: 0.6 seconds.</code></pre>
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 0.1 seconds.
-Chain 2 finished in 0.1 seconds.
+Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.1 seconds.
 Chain 4 finished in 0.1 seconds.
 
@@ -602,11 +623,11 @@ Formula: r | trials(n) ~ 1 + (1 | study)
 Multilevel Hyperparameters:
 ~study (Number of levels: 8) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.38      0.22     0.03     0.89 1.00      787      667
+sd(Intercept)     0.38      0.22     0.04     0.89 1.00      978     1021
 
 Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -1.10      0.19    -1.48    -0.74 1.00     1512     1537
+Intercept    -1.10      0.19    -1.48    -0.70 1.01     1059     1173
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -629,7 +650,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's have a look at what we got:</span></span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(post_map_mc_brms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> num [1:4000, 1] 0.352 0.412 0.195 0.305 0.331 ...</code></pre>
+<pre><code> num [1:4000, 1] 0.258 0.221 0.218 0.236 0.278 ...</code></pre>
 </div>
 </div>
 <p>Model outputs are returned in the standard format of a matrix which contains the model simulations. While the rows label the draws, the columns go along with the rows of the input data set. As in this case we have as input data set a 1-row data frame <code>AS_region_new</code> corresponding to predictions for a (single) new study, the output is a 1 column matrix with 4000 rows, since 4000 draws in total were obtained from the sampler run with 4 chains and 1000 draws per chain from the sampling phase.</p>
@@ -646,7 +667,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code># A tibble: 1 × 10
   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 ...1     0.258  0.250 0.0859 0.0650 0.134 0.408  1.00    2688.    2727.</code></pre>
+1 ...1     0.259  0.249 0.0864 0.0663 0.135 0.415  1.00    2552.    2242.</code></pre>
 </div>
 </div>
 <p>These estimates are now very similar to the results reported from <code>RBesT</code> reported above (up to sampling error).</p>
@@ -689,7 +710,7 @@ Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.3 seconds.
-Total execution time: 1.7 seconds.</code></pre>
+Total execution time: 1.6 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>post_region_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">newdata=</span>AS_region_new,</span>
@@ -703,13 +724,13 @@ Total execution time: 1.7 seconds.</code></pre>
 <pre><code># A tibble: 1 × 10
   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 ...1     0.262  0.257 0.0666 0.0568 0.162 0.381  1.00    3236.    3586.</code></pre>
+1 ...1     0.263  0.256 0.0676 0.0552 0.164 0.380  1.00    3243.    3960.</code></pre>
 </div>
 </div>
 <p>The key difference to the previous model is the nested random effect specification term <code>(1 | region/study)</code> of the model formula. This syntax denotes a random intercept term for <code>region</code> and <code>study</code> in a way which assumes a nested data structure in that a given study is only run in a single region.</p>
 </section>
-<section id="results" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="results"><span class="header-section-number">3.5</span> Results</h2>
+<section id="results" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="results"><span class="header-section-number">4.5</span> Results</h2>
 <p>Once the MAP prior is obtained in MCMC form a model check of is recommended. In <code>RBesT</code> a forest plot augmented with model shrinkage estimates is suggested for this purpose:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map_mc_rbest)<span class="sc">$</span>forest_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -801,10 +822,10 @@ Total execution time: 1.7 seconds.</code></pre>
 <tr class="even">
 <td style="text-align: left;">brms</td>
 <td style="text-align: right;">0.259</td>
-<td style="text-align: right;">0.086</td>
+<td style="text-align: right;">0.087</td>
 <td style="text-align: right;">0.111</td>
-<td style="text-align: right;">0.249</td>
-<td style="text-align: right;">0.465</td>
+<td style="text-align: right;">0.248</td>
+<td style="text-align: right;">0.479</td>
 </tr>
 </tbody>
 </table>
@@ -861,35 +882,35 @@ Total execution time: 1.7 seconds.</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">asia</td>
-<td style="text-align: right;">0.264</td>
-<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">0.265</td>
+<td style="text-align: right;">0.068</td>
 <td style="text-align: right;">0.147</td>
 <td style="text-align: right;">0.258</td>
-<td style="text-align: right;">0.426</td>
+<td style="text-align: right;">0.431</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">europe</td>
 <td style="text-align: right;">0.248</td>
-<td style="text-align: right;">0.064</td>
-<td style="text-align: right;">0.139</td>
-<td style="text-align: right;">0.242</td>
-<td style="text-align: right;">0.411</td>
+<td style="text-align: right;">0.061</td>
+<td style="text-align: right;">0.136</td>
+<td style="text-align: right;">0.244</td>
+<td style="text-align: right;">0.391</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">north_america</td>
 <td style="text-align: right;">0.255</td>
-<td style="text-align: right;">0.071</td>
-<td style="text-align: right;">0.135</td>
-<td style="text-align: right;">0.248</td>
-<td style="text-align: right;">0.431</td>
+<td style="text-align: right;">0.069</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: right;">0.249</td>
+<td style="text-align: right;">0.427</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">other</td>
-<td style="text-align: right;">0.260</td>
-<td style="text-align: right;">0.088</td>
-<td style="text-align: right;">0.112</td>
-<td style="text-align: right;">0.251</td>
-<td style="text-align: right;">0.487</td>
+<td style="text-align: right;">0.263</td>
+<td style="text-align: right;">0.091</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.253</td>
+<td style="text-align: right;">0.502</td>
 </tr>
 </tbody>
 </table>
@@ -900,17 +921,17 @@ Total execution time: 1.7 seconds.</code></pre>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(map_region, ess)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         asia        europe north_america         other 
-     51.22837      61.71589      46.61322      33.76255 </code></pre>
+     52.57311      56.77707      49.12890      32.85157 </code></pre>
 </div>
 </div>
 <p>At this point the tools from <code>RBesT</code> can be used to assess further properties of trial designs which use these MAP priors. Please refer to the <a href="https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html">getting started vignette</a> of <code>RBesT</code>.</p>
 </section>
-<section id="conclusion" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.6</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.6</span> Conclusion</h2>
 <p>The random-effects meta-analysis model implemented in <code>RBesT</code> has been re-implemented with <code>brms</code>. In a second step the meta-analysis has been extended to account for trial regions. This enables stronger borrowing within regions and hence a more informative MAP prior as can be seen by the effective sample size measure. Moreover, the case study also demonstrates how posterior samples produced with <code>brms</code> can be used as an input to <code>RBesT</code> such that both tools can be used in combination.</p>
 </section>
-<section id="exercises" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.7</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">4.7</span> Exercises</h2>
 <ol type="1">
 <li>Create a posterior predictive check based on the predictive distribution for the response rate.<br>
 Steps:
@@ -1412,7 +1433,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="../src/02ab_meta_analysis_trtdiff.html" class="pagination-link" aria-label="Meta-analysis to estimate treatment effects">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

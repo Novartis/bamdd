@@ -9,7 +9,7 @@
 <meta name="author" content="Björn Holzhauer - bjoern.holzhauer@novartis.com">
 <meta name="author" content="Sebastian Weber - sebastian.weber@novartis.com">
 
-<title>(Bayesian) Applied Modelling in Drug Development (BAMDD) - 4&nbsp; Meta-analysis to estimate treatment effects</title>
+<title>Applied Modelling in Drug Development - 5&nbsp; Meta-analysis to estimate treatment effects</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../src/02b_dose_finding.html" rel="next">
+<link href="../src/02ac_meta_analysis_strata.html" rel="next">
 <link href="../src/02a_meta_analysis.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -146,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02ab_meta_analysis_trtdiff.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02ab_meta_analysis_trtdiff.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -159,9 +159,12 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">(Bayesian) Applied Modelling in Drug Development (BAMDD)</a> 
+      <a href="../">Applied Modelling in Drug Development</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/Novartis/bamdd/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -201,6 +204,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basic workflow</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/01c_priors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model setup &amp; priors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -215,55 +224,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02a_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02ab_meta_analysis_trtdiff.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02ac_meta_analysis_strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -280,13 +301,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -301,30 +322,30 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">4.1</span> Background</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">4.2</span> Data</a></li>
-  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">4.3</span> Model description</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">5.1</span> Background</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">5.2</span> Data</a></li>
+  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">5.3</span> Model description</a>
   <ul class="collapse">
-  <li><a href="#fixed--and-random-effects-meta-analysis" id="toc-fixed--and-random-effects-meta-analysis" class="nav-link" data-scroll-target="#fixed--and-random-effects-meta-analysis"><span class="header-section-number">4.3.1</span> Fixed- and random-effects meta-analysis</a></li>
-  <li><a href="#with-data-from-each-arm-as-an-input" id="toc-with-data-from-each-arm-as-an-input" class="nav-link" data-scroll-target="#with-data-from-each-arm-as-an-input"><span class="header-section-number">4.3.2</span> With data from each arm as an input</a></li>
-  <li><a href="#what-to-do-when-a-normal-approximation-is-not-appropriate" id="toc-what-to-do-when-a-normal-approximation-is-not-appropriate" class="nav-link" data-scroll-target="#what-to-do-when-a-normal-approximation-is-not-appropriate"><span class="header-section-number">4.3.3</span> What to do when a normal approximation is not appropriate?</a></li>
+  <li><a href="#fixed--and-random-effects-meta-analysis" id="toc-fixed--and-random-effects-meta-analysis" class="nav-link" data-scroll-target="#fixed--and-random-effects-meta-analysis"><span class="header-section-number">5.3.1</span> Fixed- and random-effects meta-analysis</a></li>
+  <li><a href="#with-data-from-each-arm-as-an-input" id="toc-with-data-from-each-arm-as-an-input" class="nav-link" data-scroll-target="#with-data-from-each-arm-as-an-input"><span class="header-section-number">5.3.2</span> With data from each arm as an input</a></li>
+  <li><a href="#what-to-do-when-a-normal-approximation-is-not-appropriate" id="toc-what-to-do-when-a-normal-approximation-is-not-appropriate" class="nav-link" data-scroll-target="#what-to-do-when-a-normal-approximation-is-not-appropriate"><span class="header-section-number">5.3.3</span> What to do when a normal approximation is not appropriate?</a></li>
   </ul></li>
-  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">4.4</span> Implementation</a>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">5.4</span> Implementation</a>
   <ul class="collapse">
-  <li><a href="#meta-analysis-with-treatment-effects-as-inputs" id="toc-meta-analysis-with-treatment-effects-as-inputs" class="nav-link" data-scroll-target="#meta-analysis-with-treatment-effects-as-inputs"><span class="header-section-number">4.4.1</span> Meta-analysis with treatment effects as inputs</a></li>
-  <li><a href="#meta-analysis-with-data-from-each-arm-as-inputs" id="toc-meta-analysis-with-data-from-each-arm-as-inputs" class="nav-link" data-scroll-target="#meta-analysis-with-data-from-each-arm-as-inputs"><span class="header-section-number">4.4.2</span> Meta-analysis with data from each arm as inputs</a></li>
+  <li><a href="#meta-analysis-with-treatment-effects-as-inputs" id="toc-meta-analysis-with-treatment-effects-as-inputs" class="nav-link" data-scroll-target="#meta-analysis-with-treatment-effects-as-inputs"><span class="header-section-number">5.4.1</span> Meta-analysis with treatment effects as inputs</a></li>
+  <li><a href="#meta-analysis-with-data-from-each-arm-as-inputs" id="toc-meta-analysis-with-data-from-each-arm-as-inputs" class="nav-link" data-scroll-target="#meta-analysis-with-data-from-each-arm-as-inputs"><span class="header-section-number">5.4.2</span> Meta-analysis with data from each arm as inputs</a></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4.5</span> Results</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.6</span> Conclusion</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">5.5</span> Results</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5.6</span> Conclusion</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Novartis/bamdd/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02ab_meta_analysis_trtdiff.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02ab_meta_analysis_trtdiff.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-map-treat-effects" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Meta-analysis to estimate treatment effects</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -362,15 +383,15 @@ window.Quarto = {
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">979356</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="background" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="background"><span class="header-section-number">4.1</span> Background</h2>
+<section id="background" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="background"><span class="header-section-number">5.1</span> Background</h2>
 <p>Meta-analyses have become a key tool of evidence based medicine (<a href="https://training.cochrane.org/handbook/current/chapter-01#section-1-2">Higgins and Green, 2011, Section 1.2.2</a>) for when we have multiple studies that address the same (or closely related) question(s). Each study may not be able to conclusively answer these questions on its own or the results may vary across the studies. In this scenario, a meta-analysis can quantitatively combine the results of these multiple studies to provide an overall result. Literally, a meta-analysis is a statistical analysis of the analysis results from individual studies (for the purpose of combining the results) (<a href="https://doi.org/10.3102%2F0013189X005010003">Glass, 1976</a>).</p>
 <p>One of most common types of meta-analysis in evidence based medicine is that of treatment effects estimated from randomized controlled trials. Meta-analyses of treatment effects from randomized controlled trials importantly respect within study randomization (“analyze as you randomize”). In contrast, simply pooling data from all trial arms ignoring from what study they come, is usually inappropriate and can lead to wildly inappropriate conclusions.</p>
 <p>In this section we focus on meta-analyses for assessing treatment effects, but meta-analytic methods can be used for combining data across studies for many other purposes. For example, in the next section we willcover predicting control group outcomes for new trials from historical control groups of historical trials. Meta-analyses can be conducted using treatment differences, using outcomes from each trial arm or using individual patient data. We will illustrate all of these approaches.</p>
 <p>In this section we focus on how to conduct meta-analysis in <code>brms</code>, but ignore a wide range of other important topics. These include the selection of trials for inclusion in meta-analyses, how to handle unavailabile study results, the potential for there to be studies that we are not aware of, and indirect treatment comparisons using network meta-analysis. These topics are covered in-depth in the <a href="https://training.cochrane.org/handbook/current/">Cochrane handbook for systematic reviews of interventions</a>, as well as in the <a href="https://dx.doi.org/10.1002/9780470743386">book by Borenstein et al.&nbsp;(2009)</a>.</p>
 </section>
-<section id="data" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="data"><span class="header-section-number">4.2</span> Data</h2>
+<section id="data" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="data"><span class="header-section-number">5.2</span> Data</h2>
 <p>Let us look at a meta-analysis for the effect of <a href="https://en.wikipedia.org/wiki/SGLT2_inhibitor">sodium-glucose transport protein 2 (SGLT-2) inhibitors</a> on major adverse cardiovascular events (MACE). MACE is a composite endpoint defined by the occurrence of either cardiovascular death, myocardial infarction or stroke. It is usually analyzed using time-to-first-event methods. We will use the data from all 7 SGLT-2 inhibitor trials in the <a href="https://doi.org/10.1007/s10741-021-10083-z">meta-analysis of Barbarawi et al.</a>, for which MACE results have been published. This example lets us try out different approaches and input data formats.</p>
 <p>The first way of inputting data that we will look at is using estimated treatment differences from each study and their standard erorrs. Here, the treatment effect estimate from each study is a hazard ratio from a Cox regression model. The figure below shows the estimate hazard ratios with their 95% confidence intervals from each of the 7 studies with a log-scaled x-axis. For hazard ratios (and similarly for odds and rate ratios) it is preferable to work on the log-scale, because using a normal approximation to the sampling distribution of the estimator works a lot better for smaller sample sizes. Thus, we work with log-hazard ratios and their standard errors.</p>
 <div class="cell">
@@ -479,10 +500,10 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="model-description" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="model-description"><span class="header-section-number">4.3</span> Model description</h2>
-<section id="fixed--and-random-effects-meta-analysis" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="fixed--and-random-effects-meta-analysis"><span class="header-section-number">4.3.1</span> Fixed- and random-effects meta-analysis</h3>
+<section id="model-description" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="model-description"><span class="header-section-number">5.3</span> Model description</h2>
+<section id="fixed--and-random-effects-meta-analysis" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="fixed--and-random-effects-meta-analysis"><span class="header-section-number">5.3.1</span> Fixed- and random-effects meta-analysis</h3>
 <p>Taking a Bayesian approach with at least weakly informative priors tends to be very useful to avoid various issues that arise with frequentist methods e.g.&nbsp;when there are very few studies, or no events in one or all arms of a study in a meta-analysis of event occurrence. Commonly, two types of meta-analysis model are distinguished: fixed- and random-effects meta-analysis models. Both can expressed as regression models. Fitting such regression models is straightforward in <code>brms</code>. While this is even arguably useful in simple situations due to the understanding and insights it provides, its true value lies in making it easier to deal with more complex situations. E.g. when we wish to adjust estimates or predictions for some study-level covariates (“meta-regression”), we simply add an additional term to our meta-analytic regression model.</p>
 <p>A “fixed-effects meta analysis” assumes that there is a single fixed parameter that describes the treatment effect in all trials. For example, the very simple inverse-variance approach uses estimates <span class="math inline">\(\hat{\delta}_i\)</span> from each trial <span class="math inline">\(i=1,\ldots,I\)</span> and their standard errors <span class="math inline">\(\text{SE}(\hat{\delta}_i)\)</span> as its inputs, and results in an estimate that is the weighted mean of the estimates from each study with the weights of each study proportional to the inverse of the squared standard errors <span class="math display">\[\hat{\delta}_\text{inv.-var.} = \frac{1}{{\sum_{j=1}^I \frac{1}{\text{SE}(\hat{\delta}_j)^{2}}}} \times \sum_{i=1}^I \frac{\hat{\delta}_i}{\text{SE}(\hat{\delta}_i)^2}.\]</span></p>
 <p>Expressed as a regression model, the inverse-variance approach corresponds to a regression model for the observed treatment effect estimates that only has an intercept term, i.e.: <span class="math display">\[\text{E} \hat{\delta}_i = \delta\]</span> with <span class="math inline">\(\hat{\delta}_i \sim N(\text{E} \hat{\delta}_i, \text{SE}(\hat{\delta}_i))\)</span> (conditioning on the observed value of the standard error). In this model, inference is about <span class="math inline">\(\delta\)</span>. In <code>brms</code> formula syntax, this model can be specified as <code>log_hr | se(log_hr_stderr) ~ 1</code>.</p>
@@ -490,14 +511,14 @@ window.Quarto = {
 <p>One common method for random-effects meta-analysis is the DerSimonian and Laird method (DerSimonian 1986). Expressed as a regression model, this method corresponds to a regression model for the observed treatment effect estimates that has an intercept term and a random study effect on the intercept, i.e.: <span class="math display">\[\text{E} \hat{\delta}_i = \mu + \nu_i\]</span> with <span class="math inline">\(\nu_i \sim N(0, \tau)\)</span> for some <span class="math inline">\(\tau&gt;0\)</span> and <span class="math inline">\(\hat{\delta}_i \sim N(\text{E} \hat{\delta}_i, \text{SE}(\hat{\delta}_i))\)</span> for <span class="math inline">\(i=1, \ldots, I\)</span> (again, conditioning on the observed value of the standard error). In <code>brms</code>formula syntax, this model can be expressed as <code>log_hr | se(log_hr_stderr) ~ 1 + (1|study)</code>.</p>
 <p>In this model, inference is usually made for <span class="math inline">\(\mu\)</span>, although arguably the effect <span class="math inline">\(\delta^* \sim N(\mu, \tau)\)</span> in a new population drawn from the distribution of study populations may also be of interest.</p>
 </section>
-<section id="with-data-from-each-arm-as-an-input" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="with-data-from-each-arm-as-an-input"><span class="header-section-number">4.3.2</span> With data from each arm as an input</h3>
+<section id="with-data-from-each-arm-as-an-input" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="with-data-from-each-arm-as-an-input"><span class="header-section-number">5.3.2</span> With data from each arm as an input</h3>
 <p>When we have data from each arm as an input, we can use a fixed-effects approach with a regression model for the observed outcomes in each arm that has fixed study and treatment effects: <span class="math display">\[\text{E} \hat{\theta}_j = \sum_{i=1}^I \alpha_i \times 1\{\text{study}_j=i\} + \delta \times 1\{\text{treatment}_j = 1\}\]</span> with <span class="math inline">\(\hat{\theta}_i \sim N(\text{E} \hat{\theta}_i, \text{SE}(\hat{\theta}_i))\)</span>. The expected control group outcome <span class="math inline">\(\alpha_i\)</span> for each study is a nuissance parameter and we aim to make inference about <span class="math inline">\(\delta\)</span>. In <code>brms</code> formula syntax this model can be expressed as <code>theta | se(se_theta) ~ 0 + study + treatment</code>.</p>
 <p>In a frequentist setting, there is only value in using this input data format, if we have more than two treatments, because different comparisons versus the same control group from the same study are correlated and this approach can automatically reflects this. The generalization of the regression equation above is straightforward.</p>
 <p>When we have data from each arm as an input, we can implement a random-effects approach via a regression model for the observed outcomes in each arm that has fixed study effects and random treatment effects: <span class="math display">\[\text{E} \hat{\theta}_j = \sum_{i=1}^I \alpha_i \times 1\{\text{study}_j=i\} + \left( \mu + \sum_{i=1}^I \nu_i \times 1\{\text{study}_j=i\} \right) \times 1\{\text{treatment}_j = 1\}\]</span> with <span class="math inline">\(\hat{\theta}_i \sim N(\text{E} \hat{\theta}_i, \text{SE}(\hat{\theta}_i))\)</span>. In theory, the <code>brms</code> formula syntax for such a model should be something like <code>theta | se(se_theta) ~ 0 + study + (treatment|study)</code>, but this does not seem to do quite what we want, so we implement something else below.</p>
 </section>
-<section id="what-to-do-when-a-normal-approximation-is-not-appropriate" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="what-to-do-when-a-normal-approximation-is-not-appropriate"><span class="header-section-number">4.3.3</span> What to do when a normal approximation is not appropriate?</h3>
+<section id="what-to-do-when-a-normal-approximation-is-not-appropriate" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="what-to-do-when-a-normal-approximation-is-not-appropriate"><span class="header-section-number">5.3.3</span> What to do when a normal approximation is not appropriate?</h3>
 <p>In the previous subsection, we assumed that it is a good approximation to assume that least-squares-means for each treatment group or treatment differences have a normal sampling distribution. That is often the case, especially after suitable transformations such as the log-transformation for odds ratios, rate ratios, hazard ratios, event rates, odds, and hazard rates. However, making this assumption is not always appropriate. Examples when different approaches are preferable include:</p>
 <ul>
 <li><p>sparse binomial, time-to-event or count outcomes (e.g.&nbsp;arms in some studies have a low number of events or no events - this is one of the most common scenarios),</p></li>
@@ -518,10 +539,10 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="implementation" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">4.4</span> Implementation</h2>
-<section id="meta-analysis-with-treatment-effects-as-inputs" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="meta-analysis-with-treatment-effects-as-inputs"><span class="header-section-number">4.4.1</span> Meta-analysis with treatment effects as inputs</h3>
+<section id="implementation" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">5.4</span> Implementation</h2>
+<section id="meta-analysis-with-treatment-effects-as-inputs" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="meta-analysis-with-treatment-effects-as-inputs"><span class="header-section-number">5.4.1</span> Meta-analysis with treatment effects as inputs</h3>
 <p>We will first implement a Bayesian version of the “traditional” meta-analysis approach, where we use the estimates of a treatment effect and their standard errors as inputs. The <code>brms</code> code below performs a fixed-effects meta-analysis with log-hazard ratios and their standard errors as inputs.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
@@ -589,7 +610,7 @@ Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.0 seconds.</code></pre>
+Total execution time: 0.9 seconds.</code></pre>
 </div>
 </div>
 <p>As we noted before, there’s at least two ways of performing posterior inference after fitting the model above: 1. inference about the mean effect of the SGLT-2 inhibitors across studies, or 2. inference about the predicted effect in a new study drawn from the same distribution of studies as the studies under analysis. This difference becomes very clear when working in a Bayesian regression setting using <code>brms</code>, but is somewhat obscured when we use standard meta-analysis software.</p>
@@ -631,8 +652,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="meta-analysis-with-data-from-each-arm-as-inputs" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="meta-analysis-with-data-from-each-arm-as-inputs"><span class="header-section-number">4.4.2</span> Meta-analysis with data from each arm as inputs</h3>
+<section id="meta-analysis-with-data-from-each-arm-as-inputs" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="meta-analysis-with-data-from-each-arm-as-inputs"><span class="header-section-number">5.4.2</span> Meta-analysis with data from each arm as inputs</h3>
 <p>This <code>brms</code> code performs a fixed-effects meta-analysis with arm-based data as inputs. We now need to assume prior distributions for the placebo group log-hazard rate in each trial, for this we use an extremely wide Student-t prior with 3 degrees of freedom centered on <span class="math inline">\(-3\)</span>, because when exponentiated <span class="math inline">\(e^-3 \approx 0.05\)</span> corresponds to a plausible yearly event rate.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>brmfit3 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2,</span>
@@ -732,7 +753,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.5 seconds.
+Chain 1 finished in 0.4 seconds.
 Chain 2 finished in 0.5 seconds.
 Chain 3 finished in 0.5 seconds.
 Chain 4 finished in 0.5 seconds.
@@ -805,8 +826,8 @@ Total execution time: 2.2 seconds.</code></pre>
 </div>
 </section>
 </section>
-<section id="results" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="results"><span class="header-section-number">4.5</span> Results</h2>
+<section id="results" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="results"><span class="header-section-number">5.5</span> Results</h2>
 <p>Let us combine all the results including also a standard frequentist analysis. As we can see, particularly when using log-hazard-ratios as our analysis inputs, the results of the different models are extremely similar. There seems to be substantial evidence that on average there is a benefit on MACE from SGLT-2 inhibitors in type 2 diabetes patients.</p>
 <p>The uncertainty from random effects models is greater - especially when predicting for a new trial. When using arm-based inputs, the prior we put on the results for each arm appears to influence there results - perhaps we should make those rates exchangeable between trials to make a more data-informed decision on those rates?</p>
 <div class="cell">
@@ -894,8 +915,8 @@ Total execution time: 2.2 seconds.</code></pre>
 </div>
 </div>
 </section>
-<section id="conclusion" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.6</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.6</span> Conclusion</h2>
 <p>As we saw, <code>brms</code> makes it extremely easy to fit various meta-analysis models. Looking at these from a regression perspective makes it easier to see their connections and makes the extension of meta-analysis to meta-regression seem like just one little logical step.</p>
 
 
@@ -1367,12 +1388,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../src/02a_meta_analysis.html" class="pagination-link" aria-label="Use of historical control data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../src/02b_dose_finding.html" class="pagination-link" aria-label="Dose finding">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dose finding</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../src/02ac_meta_analysis_strata.html" class="pagination-link" aria-label="Use of historical control data with stratification">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1382,7 +1403,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - Sebastian Weber - &lt;sebastian.weber@novartis.com&gt;</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># Meta-analysis to estimate treatment effects</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># Meta-analysis to estimate treatment effects {#sec-map-treat-effects}</span></span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE}</span></span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("src", "setup.R"))</span></span>
