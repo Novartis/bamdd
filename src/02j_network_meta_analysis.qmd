@@ -4,7 +4,7 @@ author:
   - Andrew Bean - <andrew.bean@novartis.com>
 ---
 
-# Network meta-analysis
+# Network meta-analysis {#sec-network-meta}
 
 This case study covers:
 

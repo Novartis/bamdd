@@ -1,6 +1,5 @@
 project:
   output-dir: docs/public
-  post-render: src/move_videos.R # workaround for Quarto issue https://github.com/quarto-dev/quarto-cli/issues/3892
 
 book:
   repo-url: https://github.com/Novartis/bamdd/
@@ -11,12 +10,15 @@ book:
       chapters:
       - src/01a_introduction.qmd
       - src/01b_basic_workflow.qmd
+      - src/01c_priors.qmd
     - part: src/02_case_studies.qmd
       chapters:
       - src/02a_meta_analysis.qmd
       - src/02ab_meta_analysis_trtdiff.qmd
+      - src/02ac_meta_analysis_strata.qmd
       - src/02b_dose_finding.qmd
       - src/02c_dose_escalation.qmd
+      - src/02cb_tte_dose_escalation.qmd
       - src/02e_multiple_imputation.qmd
       - src/02g_longitudinal.qmd
       - src/02h_mmrm.qmd
