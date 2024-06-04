@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -260,50 +260,56 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../src/02l_single_arm_pos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -320,13 +326,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -370,7 +376,7 @@ window.Quarto = {
 <p>Within the Bayesian regression modeling in Stan framework <code>brms</code> priors are required to perform inference. This introductory material is intended to provide some pragmatic considerations on how to setup priors and point readers to material to follow-up on. The case studies themselves provide details on setting up priors for the respective problem. By default these priors have been chosen to have minimal impact on the posterior whenever appropriate and also ensure stable numerical inference. As a consequence, the results from the case studies will resemble respective Frequentist model results in most cases. Nonetheless, priors are defined explicitly for all models, since these are an integral part of any Bayesian analysis. This can be easily seen by considering Bayes rule to obtain the posterior:</p>
 <p><span class="math display">\[ p(\theta | y) = \frac{p(y|\theta) \, p(\theta)}{p(y)} \propto p(y|\theta) \, p(\theta)\]</span></p>
 <p>The marginal likelihood term <span class="math inline">\(p(y)\)</span> can be dropped, since this is merely a normalization constant given that we condition the inference on the observed data <span class="math inline">\(y\)</span>. What is left is hence the product of the likelihood <span class="math inline">\(p(y|\theta)\)</span> multiplied by the prior <span class="math inline">\(p(\theta)\)</span>. The posterior information on <span class="math inline">\(\theta\)</span> is hence provided equally by likelihood and prior.</p>
-<p>From a practical perspective one may ask under which circumstances it actually matters which prior we set. In many cases the posterior is dominated by the data, which means that the likelihood term <span class="math inline">\(p(y|\theta)\)</span> is much larger than the prior term <span class="math inline">\(p(\theta)\)</span>. This is the case for most case studies. It is tempting to drop the prior in these cases and not worry about it. However, this is not recommended as it is in many instances of interest to study a model with small sample sizes eventually (by applying the model to subsets, increasing model complexity, etc.). Another practical aspect is the numerical stability and quality of the Markov Chain Monte Carlo (MCMC) sample we obtain from Stan. Without a prior the inference problem becomes much harder to solve. That is, the Markov Chain Monte Carlo (MCMC) sampler Stan has to consider the full sampling space of the prior. Dropping the prior entirely implies an improper prior on the sampling space which becomes un-countably infinitely large. Rather than dropping the prior entirely we strongly recommend to consider so-called weakly informative priors. While no formal definition is given in the literature, these priors aim to identify the <em>scale</em> of parameters. This requires a basic understanding of the parameters for which priors are being defined. Thus, a prior can only be understood in the overall context of the likelihood, parametrization and problem at hand <span class="citation" data-cites="Gelman2017">(see also <a href="02h_mmrm.html#ref-Gelman2017" role="doc-biblioref">Gelman, Simpson, and Betancourt 2017</a>)</span>. For most statistical analyses this means to consider the endpoint and the applied transformations.</p>
+<p>From a practical perspective one may ask under which circumstances it actually matters which prior we set. In many cases the posterior is dominated by the data, which means that the likelihood term <span class="math inline">\(p(y|\theta)\)</span> is much larger than the prior term <span class="math inline">\(p(\theta)\)</span>. This is the case for most case studies. It is tempting to drop the prior in these cases and not worry about it. However, this is not recommended as it is in many instances of interest to study a model with small sample sizes eventually (by applying the model to subsets, increasing model complexity, etc.). Another practical aspect is the numerical stability and quality of the Markov Chain Monte Carlo (MCMC) sample we obtain from Stan. Without a prior the inference problem becomes much harder to solve. That is, the Markov Chain Monte Carlo (MCMC) sampler Stan has to consider the full sampling space of the prior. Dropping the prior entirely implies an improper prior on the sampling space which becomes un-countably infinitely large. Rather than dropping the prior entirely we strongly recommend to consider so-called weakly informative priors. While no formal definition is given in the literature, these priors aim to identify the <em>scale</em> of parameters. This requires a basic understanding of the parameters for which priors are being defined. Thus, a prior can only be understood in the overall context of the likelihood, parametrization and problem at hand <span class="citation" data-cites="Gelman2017">(see also <a href="02l_single_arm_pos.html#ref-Gelman2017" role="doc-biblioref">Gelman, Simpson, and Betancourt 2017</a>)</span>. For most statistical analyses this means to consider the endpoint and the applied transformations.</p>
 <!--
 A notable exception to this are the case studies on the meta
 analytic predictive (MAP) priors. These case studies infer between
@@ -391,7 +397,7 @@ become very popular nowadays.
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## defined prior like</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_summary</span>(<span class="fu">brm</span>(model, <span class="at">data=</span>RBesT<span class="sc">::</span>AS, <span class="at">empty=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 29%">
 <col style="width: 13%">
@@ -435,7 +441,7 @@ become very popular nowadays.
 </table>
 </div>
 </div>
-<p>Note that we have defined first the model via the <code>bf</code> call. This defines the linear predictor and the likelihood using the <code>family</code> argument of <code>bf</code>. We recommend to always explicitly do this step first as it defines the likelihood and the model parametrization in one step. Choosing these is a critical first step in defining the model and, most importantly, the chosen priors can only be understood in the context of the model (likelihood and parametrization) <span class="citation" data-cites="Gelman2017">(see <a href="02h_mmrm.html#ref-Gelman2017" role="doc-biblioref">Gelman, Simpson, and Betancourt 2017</a>)</span>.</p>
+<p>Note that we have defined first the model via the <code>bf</code> call. This defines the linear predictor and the likelihood using the <code>family</code> argument of <code>bf</code>. We recommend to always explicitly do this step first as it defines the likelihood and the model parametrization in one step. Choosing these is a critical first step in defining the model and, most importantly, the chosen priors can only be understood in the context of the model (likelihood and parametrization) <span class="citation" data-cites="Gelman2017">(see <a href="02l_single_arm_pos.html#ref-Gelman2017" role="doc-biblioref">Gelman, Simpson, and Betancourt 2017</a>)</span>.</p>
 <p>Rather than running the model with no explicit prior definition we encourage users to explicitly define the priors used for the analysis - even if these are simply the default priors:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model_def <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span>binomial)</span>
@@ -490,7 +496,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">case</th>
@@ -583,7 +589,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption=</span><span class="st">"Interval probabilities per prior given in percent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>Interval probabilities per prior given in percent</caption>
 <thead>
 <tr class="header">
@@ -629,7 +635,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(RBesT<span class="sc">::</span>AS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">study</th>
@@ -730,7 +736,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 \tau)^2)\)</span>. Considering the absolute value of these differences, the distributions becomes a half-normal with scale <span class="math inline">\(\sqrt{2} \, \tau\)</span>, which has it’s median value at <span class="math inline">\(1.09 \, \tau\)</span>. This results for a range of values of <span class="math inline">\(\tau\)</span> on the respective odds scale to:</p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: right;">tau</th>
@@ -778,7 +784,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </table>
 </div>
 </div>
-<p>In <span class="citation" data-cites="Neuenschwander2020">(<a href="02h_mmrm.html#ref-Neuenschwander2020" role="doc-biblioref">Neuenschwander and Schmidli 2020</a>)</span> suggest the categorization of the between-study heterogeneity <span class="math inline">\(\tau\)</span> parameter the values of <span class="math inline">\(1\)</span> for being large, <span class="math inline">\(0.5\)</span> substantial, <span class="math inline">\(0.25\)</span> moderate, and <span class="math inline">\(0.125\)</span> small. Considering these with the table above qualifies these categories as plausible. An alternative approach to the categorization is to consider what is an extreme value for <span class="math inline">\(\tau\)</span> (like unity) and then choose the prior on <span class="math inline">\(\tau\)</span> such that a large quantile (like the 95% quantile) corresponds to this extreme value.</p>
+<p>In <span class="citation" data-cites="Neuenschwander2020">(<a href="02l_single_arm_pos.html#ref-Neuenschwander2020" role="doc-biblioref">Neuenschwander and Schmidli 2020</a>)</span> suggest the categorization of the between-study heterogeneity <span class="math inline">\(\tau\)</span> parameter the values of <span class="math inline">\(1\)</span> for being large, <span class="math inline">\(0.5\)</span> substantial, <span class="math inline">\(0.25\)</span> moderate, and <span class="math inline">\(0.125\)</span> small. Considering these with the table above qualifies these categories as plausible. An alternative approach to the categorization is to consider what is an extreme value for <span class="math inline">\(\tau\)</span> (like unity) and then choose the prior on <span class="math inline">\(\tau\)</span> such that a large quantile (like the 95% quantile) corresponds to this extreme value.</p>
 <p>With the categorization of specific values for <span class="math inline">\(\tau\)</span> we can now proceed and consider the interval probabilities for these categories for the different choices of <span class="math inline">\(\tau \sim \mbox{Normal}^+(s^2)\)</span> for <span class="math inline">\(s=1\)</span> and <span class="math inline">\(s=1/2\)</span>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -793,7 +799,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp_tau)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">case</th>
@@ -889,7 +895,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption=</span><span class="st">"Interval probabilities per prior given in percent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>Interval probabilities per prior given in percent</caption>
 <colgroup>
 <col style="width: 23%">
@@ -946,13 +952,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>We can see that the “conservative” choice has an about 5% tail probability exceeding the value of large. This implies that some degree of homogeneity between the studies is given. This is usually the case whenever meta-analyses are conducted, since the inclusion &amp; exclusion criteria for studies are aligned to a certain degree in order to ensure that a similar patient population is included in the analysis. In contrast, the “very conservative” choice admits with 30% probability mass the possibility of values in the domain “very large” for which practically no borrowing of historical information occurs. The “less conservative” choice on the hand has 5% tail probability above substantial. This way a large heterogeneity is considered to be unlikely as it can be the case for twin Phase III studies, for example.</p>
 <p>Additional literature for consideration:</p>
 <ul>
-<li>Empirical priors study for HTA treatment effect evaluation by the German IQWIG <span class="citation" data-cites="Lilienthal2023">(<a href="02h_mmrm.html#ref-Lilienthal2023" role="doc-biblioref">Lilienthal et al. 2023</a>)</span></li>
-<li>Empirical priors for meta-analyses organized in disease specific manner <span class="citation" data-cites="Turner2015">(<a href="02h_mmrm.html#ref-Turner2015" role="doc-biblioref">Turner et al. 2015</a>)</span></li>
-<li>Endpoint specific considerations for between-trial heterogeneity parameter priors in random effect meta-analyses <span class="citation" data-cites="Rover2021">(<a href="02h_mmrm.html#ref-Rover2021" role="doc-biblioref">Röver et al. 2021</a>)</span></li>
-<li>Comprehensive introductory book to applied Bayesian data analysis with detailed discussion on many examples <span class="citation" data-cites="Gelman2014">(<a href="02h_mmrm.html#ref-Gelman2014" role="doc-biblioref">Gelman et al. 2014</a>)</span></li>
-<li>Live wiki document maintained by Stan user community (heavily influenced by Andrew Gelman &amp; Aki Vehtari) <span class="citation" data-cites="stanwikiPrior">(<a href="02h_mmrm.html#ref-stanwikiPrior" role="doc-biblioref">Stan 2024</a>)</span></li>
-<li>Prior strategy based on nested modeling considerations (penalization of more complex models), <span class="citation" data-cites="Simpson2014">(<a href="02h_mmrm.html#ref-Simpson2014" role="doc-biblioref">Simpson et al. 2014</a>)</span></li>
-<li>Global model shrinkage regularized horseshoe prior <span class="citation" data-cites="Piironen2017">(<a href="02h_mmrm.html#ref-Piironen2017" role="doc-biblioref">Piironen and Vehtari 2017</a>)</span> or R2D2 prior (overall <span class="math inline">\(R^2\)</span>) <span class="citation" data-cites="Zhang2022">(<a href="02h_mmrm.html#ref-Zhang2022" role="doc-biblioref">Zhang et al. 2022</a>)</span></li>
+<li>Empirical priors study for HTA treatment effect evaluation by the German IQWIG <span class="citation" data-cites="Lilienthal2023">(<a href="02l_single_arm_pos.html#ref-Lilienthal2023" role="doc-biblioref">Lilienthal et al. 2023</a>)</span></li>
+<li>Empirical priors for meta-analyses organized in disease specific manner <span class="citation" data-cites="Turner2015">(<a href="02l_single_arm_pos.html#ref-Turner2015" role="doc-biblioref">Turner et al. 2015</a>)</span></li>
+<li>Endpoint specific considerations for between-trial heterogeneity parameter priors in random effect meta-analyses <span class="citation" data-cites="Rover2021">(<a href="02l_single_arm_pos.html#ref-Rover2021" role="doc-biblioref">Röver et al. 2021</a>)</span></li>
+<li>Comprehensive introductory book to applied Bayesian data analysis with detailed discussion on many examples <span class="citation" data-cites="Gelman2014">(<a href="02l_single_arm_pos.html#ref-Gelman2014" role="doc-biblioref">Gelman et al. 2014</a>)</span></li>
+<li>Live wiki document maintained by Stan user community (heavily influenced by Andrew Gelman &amp; Aki Vehtari) <span class="citation" data-cites="stanwikiPrior">(<a href="02l_single_arm_pos.html#ref-stanwikiPrior" role="doc-biblioref">Stan 2024</a>)</span></li>
+<li>Prior strategy based on nested modeling considerations (penalization of more complex models), <span class="citation" data-cites="Simpson2014">(<a href="02l_single_arm_pos.html#ref-Simpson2014" role="doc-biblioref">Simpson et al. 2014</a>)</span></li>
+<li>Global model shrinkage regularized horseshoe prior <span class="citation" data-cites="Piironen2017">(<a href="02l_single_arm_pos.html#ref-Piironen2017" role="doc-biblioref">Piironen and Vehtari 2017</a>)</span> or R2D2 prior (overall <span class="math inline">\(R^2\)</span>) <span class="citation" data-cites="Zhang2022">(<a href="02l_single_arm_pos.html#ref-Zhang2022" role="doc-biblioref">Zhang et al. 2022</a>)</span></li>
 </ul>
 
 
