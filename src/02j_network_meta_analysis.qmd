@@ -28,7 +28,7 @@ library(posterior)
 library(here)
 library(knitr)
 library(gt)
-library(multinma) # for graphing the network & other NMA utils
+library(netmeta) # for graphing the network & other NMA utils
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
 options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
 # create cache directory if not yet available
@@ -91,15 +91,26 @@ meta-analysis here would be to compare these different treatment in
 terms of the odds of patients managing to stop smoking.
 
 ```{r smoking_cessation_data}
-trt_levels <- c("No intervention", "Self-help",
-                "Individual counselling", "Group counselling")
+data("smokingcessation", package = "netmeta")
 
-smoking <- multinma::smoking %>%
-  mutate(study = factor(studyn),
-         trtc = factor(trtc, trt_levels))
+recode_trt <- c("A" = "No_intervention",
+                "B" = "Self_help",
+                "C" = "Individual_counselling",
+                "D" = "Group_counselling")
 
-levels(smoking$trtc) <- gsub(" ", "_", trt_levels)
-levels(smoking$trtc) <- gsub("-", "_", levels(smoking$trtc))
+smoking <- smokingcessation %>%
+  mutate(studyn = 1:n()) %>%
+  pivot_longer(-studyn,
+               names_to = c(".value", "trtid"),
+               names_pattern = "(.*)([1-9])") %>%
+  filter(!is.na(n)) %>%
+  transmute(
+    study = factor(studyn),
+    trtc = factor(recode_trt[treat], unname(recode_trt)),
+    trtn = as.numeric(trtc),
+    r = event,
+    n
+  )
 
 gt_preview(smoking)
 ```
@@ -122,16 +133,9 @@ of treatments from randomized trials. Below, the thickness of the edges
 is determined by the number of trials comparing each pair of treatments.
 
 ```{r}
-network <- multinma::set_agd_arm(
-  data = smoking,
-  study = study,
-  trt = trtc,
-  r = r,
-  n = n,
-  trt_ref = "No_intervention"
-)
-
-plot(network)
+nm <- netmeta(pairwise(treat = trtc, event = r, n = n, studlab = study,
+                       data = smoking))
+netgraph(nm)
 ```
 
 ## Model description
