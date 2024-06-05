@@ -34,6 +34,8 @@ appropiate. Key changes to the web-site are tracked here:
 
 
 ::: {.content-visible when-profile="public"}
+- 5th June 2024: Added @sec-pos on assessing probability of success of
+  in Phase-III based on a single-arm trial in Phase-II
 - 29th April 2024: Third edition course from Paul Bürkner with the new
   case studies on probability of success, meta-analytic priors with
   covariates & time-to-event modelling in Oncology phase I
