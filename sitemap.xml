@@ -2,78 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://opensource.nibr.com/bamdd/index.html</loc>
-    <lastmod>2024-06-04T20:43:51.242Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.193Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/01a_introduction.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/01b_basic_workflow.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/01c_priors.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02_case_studies.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02a_meta_analysis.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02ab_meta_analysis_trtdiff.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02ac_meta_analysis_strata.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02l_single_arm_pos.html</loc>
-    <lastmod>2024-06-04T20:43:51.250Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.201Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02b_dose_finding.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02c_dose_escalation.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02cb_tte_dose_escalation.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.197Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02e_multiple_imputation.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.201Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02g_longitudinal.html</loc>
-    <lastmod>2024-06-04T20:43:51.246Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.201Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02h_mmrm.html</loc>
-    <lastmod>2024-06-04T20:43:51.250Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.201Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02i_time_to_event.html</loc>
-    <lastmod>2024-06-04T20:43:51.250Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.201Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/02j_network_meta_analysis.html</loc>
-    <lastmod>2024-06-04T20:43:51.250Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.201Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/03a_stan_code.html</loc>
-    <lastmod>2024-06-04T20:43:51.250Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.201Z</lastmod>
   </url>
   <url>
     <loc>https://opensource.nibr.com/bamdd/src/03b_parallel.html</loc>
-    <lastmod>2024-06-04T20:43:51.250Z</lastmod>
+    <lastmod>2024-06-05T15:06:08.201Z</lastmod>
   </url>
 </urlset>
