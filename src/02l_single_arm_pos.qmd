@@ -1,0 +1,656 @@
+---
+author:
+  - Björn Holzhauer - <bjoern.holzhauer@novartis.com>
+  - Sebastian Weber - <sebastian.weber@novartis.com>
+---
+
+# Probability of success from a single arm trial {#sec-pos}
+
+This case study:
+  
+- discusses probability of success for drug development projects (and 
+introduces the related concept of assurance) when the available data come
+from a single arm trial without a control group
+- shows how to specify mixture priors with `brms` using helper functions from
+the `RBesT` package such as `RBesT::mixnorm()` and `RBesT::mixstanvar()` (used
+with the `stanvars` option of `brms::brm()`
+- gives examples of how to choose prior distributions including how to obtain
+useful visualizations and other helpful information using the `ggdist` and 
+`distributional` packages
+
+
+```{r includestuff, include=FALSE}
+here::i_am("src/02l_single_arm_pos.qmd")
+source(here::here("src", "setup.R"))
+```
+
+To run the R code of this section please ensure to load these libraries first:
+  
+```{r basesetup,eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
+library(tidyverse)
+library(brms)
+library(RBesT)
+library(knitr)
+library(gt)
+library(ggdist) # Great ggplo2 extension package for visualizing distributions/priors/posteriors
+library(distributional) # Defines distribution (that we then use in via ggdist)
+library(posterior)
+library(here)
+
+# instruct brms to use cmdstanr as backend and cache all Stan binaries
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+# create cache directory if not yet available
+dir.create(here("_brms-cache"), FALSE)
+set.seed(678571)
+
+# default controls args passed to Stan
+control_args <- list(adapt_delta=0.99, step_size=0.1)
+
+# nice common ggplot2 theme
+theme_set(theme_bw(base_size=18))
+```
+
+```{r brmscachestuff, include=FALSE}
+# speedup things by lowering adapt_delta for now, which speeds up things a lot
+# do this only if caching is on (which is when we want things go fast)
+# TODO: Can we set adapt_delta to low values based on knowing this is a non-production run??
+control_args <- list(adapt_delta=0.8)
+```
+
+## Background
+  
+### Probability of success
+ 
+For pharmaceutical companies it is important to realistically assess
+the probability of success (PoS) for drug development
+projects. Together with other information and considerations
+(e.g. costs of trials, projected timelines, unmet need for new
+therapies for an indication, competitive landscape, ...) this allows
+for informed decision making about things such as which projects to
+pursue at all and how much at-risk investment to make into each of
+them.
+
+There are a number of ways to define success for PoS calculations, but 
+[at Novartis the definition of success](https://doi.org/10.1002/pst.2179) is to 
+get approval meeting a target product profile (TPP). It is assumed that if the 
+drug is approved with a label as good or better than the TPP targets, it will
+meet an important unmet need for patients, be successful on the market and the 
+sales forecasts (obtained assuming this TPP) would be achieved. 
+[The Novartis PoS framework](https://doi.org/10.1002/pst.2179) combines industry
+benchmark information with data on a drug and team assessments of other risks. 
+This is most easily done when we have directly relevant data, e.g. with a 
+Phase 2 study that is very similar (in terms of population, endpoint, duration 
+and treatment groups) to the planned Phase 3 trial(s). On the other hand, this 
+is harder based on a single arm study that differs from Phase 3 (or worse
+without Phase 2 data).
+
+### Assurance
+
+[Assurance](https://doi.org/10.1002/pst.175) is a 
+[popular](https://doi.org/10.1002/pst.1856) related concept to PoS. It describes
+the probability of a successful trial.
+
+### Background of the hypothetical example
+
+A hypothetical drug called NVS101 is already approved as a treatment for
+some systemic diseases. In a single arm trial in patients with a
+different systemic disease that leads to anemia, most patients
+that received NVS101 for 12 weeks were able to achieve an acceptable red
+blood cell count without needing a blood transfusion. We are now
+considering to start a pivotal randomized placebo controlled Phase III
+trial, where the primary endpoint would be having an acceptable red
+blood cell count without needing a blood transfusion over a 1-year
+period.
+
+We wish to assess the PoS of such a pivotal study. I.e. the probability to get 
+approval meeting the TPP of an odds ratio of 8.5 (given an assumed placebo
+responder rate of 15% this corresponds to a targeted 60% for the drug).
+
+## Data
+
+The [Novartis PoS framework](https://doi.org/10.1002/pst.2179) provides
+us with a prior for the log-odds ratio of response on drug compared with
+a placebo given a number of project features. For a drug that is past
+its first approval (a so-called "life-cycle management" situation) such
+as NVS101, a TPP target of a odds ratio of 8.5 (given an assumed placebo
+responder rate of 15% this corresponds to a targeted 60% for the drug),
+we obtain a mixture prior for the log-odds ratio:
+
+```{r}
+mixture_prior <- RBesT::mixnorm("Null component"=c(0.08289228, 0, 0.91992526),
+                                "TPP component"=c(0.91710772, 2.14006616, 0.91992526))
+
+mixture_prior[,] |> 
+  as_tibble() |>
+  mutate(Property = c("Mixture weight", 
+                      "Mean of mixture component", 
+                      "SD of mixture component")) |>
+  relocate(Property) |>
+  gt() |>
+  fmt_number(decimals=3) |>
+  tab_spanner(columns=c("Null component", "TPP component"), 
+              label="Components of the mixture prior")
+```
+
+Novartis associates can obtain this using the Novartis internal `pos` R
+package using the `pos::benchmark_prior()` function and applying the
+`pos::as_rbest_mixnorm()` function to the result, which converts the
+prior to a mixture prior object in the `RBesT` package.
+
+When we plot this mixture distribution, it looks as follows:
+
+```{r plot_mixture}
+plot(mixture_prior) + 
+  xlab("Log-odds ratio for response\non drug compared with placebo") +
+  theme(legend.position="bottom")
+```
+
+The hypothetical single arm trial data for NVS101 are given below:
+
+```{r}
+nvs101_singlearm <- tibble(trial="NVS101 Proof of Concept",
+                           treatment="NVS101",
+                           `trial duration` = "12 weeks",
+                           responders=8,
+                           patients=10) |>
+  mutate(proportion=responders/patients,
+         long_study=0L)
+
+nvs101_singlearm |>
+  gt() |>
+  fmt_number(columns="proportion", decimals=2)
+```
+
+Let us assume that there has been a placebo controlled Phase 3 trial in
+this indication for another drug EG-999, but no other trials with the
+same endpoint. The data for the hypothetical other drug are given below:
+
+```{r}
+eg999_ph3 <- tibble(trial="EG-999 Phase 3",
+                    `trial duration` = "52 weeks",
+                    treatment=c("EG-999", "placebo"),
+                    responders=c(19,2),
+                    patients=c(26, 13)) |>
+  mutate(proportion=responders/patients,
+         long_study=1L)
+
+eg999_ph3 |>
+  gt() |>
+  fmt_number(columns="proportion", decimals=2)
+```
+
+Superficially, this extra information makes the NVS101 single arm data
+look promising, because the responder proportion on NVS101 is much
+higher than on placebo and even higher than on the EG-999 active
+treatment group. However, this is a non-randomized across trial
+comparison and it is not immediately clear how to quantify the strength
+of evidence for the efficacy of NVS101.
+
+Since we are not really interested in EG-999, the data we will use from
+the EG-999 Phase 3 trial will only be the placebo group. Thus, our the
+data we will use are the following:
+
+```{r}
+our_data <- bind_rows(nvs101_singlearm,
+                      eg999_ph3 |> filter(treatment != "EG-999")) |>
+  mutate(treatment=factor(treatment, levels=c("placebo", "NVS101")))
+
+our_data |>
+  gt() |>
+  fmt_number(columns="proportion", decimals=2)
+```
+
+
+## Model description
+
+### Idea
+
+With this available information and data, what do we do to come to a
+reasonable belief about the efficacy of NVS101 and the PoS of the drug
+development project? One approach that is [foreseen in the Novartis PoS
+framework](https://doi.org/10.1002/pst.2179) is to conduct an expert
+elicitation that relies on experts making judgements about the totality
+of the available evidence.
+
+Another approach is to analyze the available data. However, we do not
+have direct data on
+
+1.  how NVS101 compares to a placebo group within the same trial (the
+    proof of concept study was a single arm trial),
+
+2.  how much the true placebo group responder proportion varies from
+    trial to trial, and
+
+3.  how much the true responder proportion changes with trial duration
+    (for either NVS101 or placebo).
+
+Thus, we will still require prior judgements on these questions.
+However, it could be the case that these questions are easier to make
+judgements about for experts than if we asked them directly about the
+efficacy of a drug compared with placebo.
+
+### Model specification
+
+we first express a mixed effects logistic regression model ignoring
+whether we have data to tell us something about all model parameters. We
+assume a binomial outcome
+$Y_{ij} \sim \text{Bin}(\pi_{ij}, N_{ij})$ for arm $j$ of trial $i$. Our
+model specifies that
+
+\begin{align}
+\text{logit}(\pi_{ij}) =& \; \beta_0  \\
+& + \beta_1 \times 1\{\text{treatment}_{ij} = \text{NVS101}\} \\
+& + \beta_2 \times
+1\{\text{duration} = \text{52 weeks} \} \\
+&+ \beta_3 \times
+1\{\text{treatment}_{ij} = \text{NVS101 \& duration} = \text{52 weeks}
+\}  \\
+& + \theta_i,
+\end{align}
+
+where $\theta_i \sim N(0, \tau^2)$ is a random trial effect. Or to
+express this as a brms-formula:
+
+```{r}
+model_formula <- bf(responders | trials(patients) ~ 1 + treatment + long_study + long_study:treatment + (1 | trial),
+                    # short notation for the rhs of this formula is
+                    # 1 + treatment*long_study + (1 | trial)
+                    center = FALSE, 
+                    family = binomial(link="logit"))
+```
+
+**Note** that we use the option `center=FALSE` here in order to fully
+control the parametrization of the linear predictor. By default `brms`
+centers the design matrix and treats the intercept separately from the
+remaining covariates. While this is often desirable to do, this is not
+appropiate in this case where we want to control all details of the
+model and intend to set priors deliberately.
+
+### Specification of prior distributions
+
+Before we saw the EG-999 Phase 3 study, what might we have believed
+about the placebo group of such a study? To answer this might be a time
+consuming process that may require a review of the available literature
+and/or eliciting the judgements of experts. Conveniently, the sample
+size section of the clinical trial protocol of the EG-999 Phase 3 study
+contained a statement that the expected placebo responder rate might be
+in the range of 5% to 40%. We will interpret this to indicate a 80% prediction
+interval. The authors of the protocol do not really say so clearly, but
+we speculate that we cannot rely on this being a 95% prediction
+interval. Thus, if we assume a normal distribution for the predictive
+distribution, we get a normal distribution on the logit-scale with mean
+`( logit(0.4) + logit(0.05) )/2` $\approx$
+`r round( ( logit(0.4) + logit(0.05) )/2, 2)` and standard deviation
+`( logit(0.4) - logit(0.05) ) / 2 / qnorm(0.9)` $\approx$
+`r round( ( logit(0.4) - logit(0.05) ) / 2 / qnorm(0.9), 1)`. 
+
+::: {.alert .alert-info}
+Note that the `logit` and `inv_logit` are convenient functions from the `RBesT`
+package for converting from probabilities to logit-probabilities and
+vice versa (in base R you can use `qlogis` and `plogis` instead).
+:::
+
+The resulting prior distribution looks as shown in the figure below.
+```{r}
+tibble(mean=-1.67, sd=1.0) |>
+  ggplot(aes(xdist = dist_normal(mu = mean, sigma = sd))) +
+  stat_halfeye(fill="darkorange", alpha=0.5) +
+  scale_x_continuous(breaks=seq(-4,2,1), 
+                     labels=paste0(seq(-4,2,1), "\n(=", 
+                                   round(inv_logit(seq(-4,2,1)),2)*100,"%)")) +
+  xlab("Average placebo log-odds") +
+  ylab("Prior density")
+```
+
+::: {.alert .alert-info}
+**NOTE**: The `ggdist` and `distributional` packages are an amazing
+combo for understanding distributions. `ggdist` extends `ggplot2` to
+help us with visualizing distributions (see
+[here](https://mjskay.github.io/ggdist/) for more information).
+`distributional` lets us work with distributions including many commonly
+used ones, truncated distributions (e.g. half-normal as
+`dist_truncated(dist_normal(mu = 0, sigma=2.5), lower=0)`),
+distributions of transformed random variables (e.g.
+`dist_transformed(dist=dist_normal(0, 0.5), transform=exp, inverse=log) |> mean()`)
+and mixture distributions (e.g.
+`dist_mixture(dist_normal(0, 1), dist_normal(1.5, 5), weights = c(0.5, 0.5))`).
+With the `distributional` package, we can also obtain information on
+distributions such as their mean, median, quantiles, variance, skewness
+and so on (e.g. `dist_student_t(df=3, mu = 0, sigma = 1) |> median()`).
+:::
+
+Now that we have a prior for the average true response proportion, we 
+consider how much the true proportion might vary from study to study. 
+To set a prior distribution on the between trial SD, we asked experts
+about the narrowest and widest random effects distributions
+they consider plausible. 
+When discussing with our experts, we fixed the 
+random effects mean to a plausible value to make it 
+easier for them to express their prior belief on a scale they are 
+comfortable on. We then assumed that the same distribution width is 
+approximately plausible for other mean values, too.
+
+For a hypothetical scenario with an average true reponse proportion of 15\%,
+clinical experts expressed that it would be unlikely that a few
+studies would not end up having a true responder proportion of 20\% and
+that it is possible that variability could be so high that some could
+reach 40\%.
+
+Thus, we considered that for the narrowest plausible random effects 
+distribution (conditional on the the middle of the distribution being 15\%),
+there should be 2.5\% probability that studies could vary to 20\% or higher.
+Similarly, for the widest plausible distribution, we assigned 2.5% probability
+that studies would vary to 40% or more. Normal distributions on the logit scale
+that fulfill these criteria are shown in the figure below.
+
+```{r}
+tibble(mu=qlogis(0.15), sigma=c(0.18, 0.68) ) %>% 
+  mutate(res=map2(mu, sigma, \(mu,sigma) tibble(x=seq(-2.5,0.5,0.001), y=dnorm(seq(-2.5,0.5,0.001), mu, sigma)))) %>%
+  unnest(res) %>%
+  mutate(grouping = factor(case_when(
+    (sigma==0.18 & x>qlogis(0.2)) ~ 1L,
+    sigma==0.18 ~ 2L,
+    (x>qlogis(0.4)) ~ 3L,
+    TRUE ~ 4L), levels=rev(1L:4L))) %>%
+  ggplot(aes(x=x, y=y, ymin=0, ymax=y, col=grouping,  fill=grouping)) +
+  theme(axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        legend.position="none") +
+  geom_vline(xintercept=qlogis(0.15), lty=2, col="darkred") +
+  #stat_slab(slab_alpha=0.5, n=10000) +
+  geom_ribbon(alpha=0.4) +
+  coord_cartesian(xlim=c(-2.2, 0)) +
+  scale_x_continuous(breaks=qlogis(seq(0.05, 0.5, 0.05)),
+                     labels=paste0(round(qlogis(seq(0.05, 0.5, 0.05)), 2), "\n=", 100*seq(0.05, 0.5, 0.05), "%")) +
+  geom_text(aes(x=x, y=y, label=label),
+             data=tibble(x=c(-1.62, -1.4, -1.1, -0.9), y=c(2, 0.8, 0.6, 0.4), 
+                         label=c("SD of 0.18",
+                                 paste0("P(probability>=20%)=",round(100-100*pnorm(q=qlogis(0.2), qlogis(0.15), 0.18),1), "%"),
+                                 "SD of 0.68",
+                                 paste0("P(probability>=40%)=",round(100-100*pnorm(q=qlogis(0.4), qlogis(0.15), 0.68),1), "%")),
+                         mu=0, sigma=c(0.18, 0.18, 0.68, 0.68), grouping=factor(c(2L, 1L, 4L, 3L), levels=rev(1L:4L))), size=6, hjust = 0) +
+  xlab("True logit-response-probability for new trial\ngiven average trial is -1.73 (=15%)") +
+  ylab("Prior density") +
+  scale_fill_manual(values=rev(c("darkred", "#E69F00", "darkblue", "#56B4E9"))) +
+  scale_color_manual(values=rev(c("darkred", "#E69F00", "darkblue", "#56B4E9"))) +
+  ggtitle("Narrowest & widest plausible random effects\ndistribution conditional on a mean of logit(0.15)")
+```
+
+Now, we translate these beliefs into a prior for the between-trial SD.
+Given that we consider 0.18 and 0.68 as on the edge of what is plausible 
+for the between-trial SD, we pick a log-normal distribution for the 
+between-trial SD that has these two values approximately as its 
+2.5th and 97.5th percentiles. For such a normal distribution on the logit-scale 
+centered on logit(0.15), this implies a standard deviation of
+`(logit(0.2)-logit(0.15)) / qnorm(0.975)` $\approx$ `r round((logit(0.2)-logit(0.15)) / qnorm(0.975),2)` to
+`(logit(0.4)-logit(0.15)) / qnorm(0.975)` $\approx$ `r round((logit(0.4)-logit(0.15)) / qnorm(0.975),2)`. This can be
+described by a log-normal prior distribution on the standard deviation
+with location -1.06 and scale 0.35, as we can see by observing that
+`dist_lognormal(mu = -1.06, sigma = 0.35) |> quantile(p=c(0.025,
+0.975)) |> unlist()`
+=
+`r round(dist_lognormal(mu = -1.06, sigma = 0.35) |> quantile(p=c(0.025, 0.975)) |> unlist(), 3)`.
+
+```{r}
+tibble(mu=-1.06, sigma=0.35) |>
+  ggplot(aes(xdist = dist_lognormal(mu=mu, sigma=sigma))) +
+  geom_vline(xintercept=0.18, col="#E69F00", linewidth=2, lty=2) +
+  geom_vline(xintercept=0.68, col="#56B4E9", linewidth=2, lty=2) +
+  geom_text(data=tibble(mu=c(0.3, 0.8), 
+                        sigma=c(0.96, 0.5), 
+                        label=c("SD of 0.18", "SD of 0.68")),
+            aes(x=mu, y=sigma, label=label),
+            size=6, col=c("#E69F00", "#56B4E9")) +
+  stat_halfeye(n=10000, fill="red", alpha=0.6) +
+  coord_cartesian(xlim=c(0, 1.0)) +
+  ylab("Prior density") +
+  xlab("Between trial SD")
+```
+
+When asked how much lower the responder proportion over 52 vs. 12 weeks would 
+be, the clinicians judge it likely that the proportion would decline a little
+bit. Their rationale was that while the disease does not progress fast enough
+to change substantially over 9 months, a longer duration offers additional 
+opportunities for a low red blood cell count to occur (even if by chance) that
+might lead to a blood transfusion.
+
+The resulting prior distribution looks as shown in the figure below.
+```{r}
+tibble(mean=-0.1, sd=.1) |>
+  ggplot(aes(xdist = dist_normal(mu = mean, sigma = sd))) +
+  stat_halfeye(fill="#e7298a", alpha=0.5) +
+  scale_x_continuous(breaks=log(1+seq(-0.3, 0.2, 0.1)), 
+                    labels=paste0(abs(round(seq(-0.3, 0.2, 0.1) * 100,0)), 
+                                  "%\n", 
+                                  c(rep("lower\nodds", 4), rep("higher\nodds", 2)))) +
+  xlab("Log-odds of response over 52 compared with 12 weeks") +
+  ylab("Prior density")
+```
+
+Finally, the clinicians were unsure whether a 52 week vs. a 12 week study
+would result in a higher or lower log-odds-ratio for drug vs. placebo.
+However, they expressed that the effect would be relatively small, because
+the drug should not be disease modifying (i.e. treatment effect should not
+grow over time) and there is no reason to speculate that the effect on 
+red blood cell counts would somehow decline over time, either. On this basis,
+they expressed the following prior distribution:
+```{r}
+tibble(mean=0, sd=.1/1.96) |>
+  ggplot(aes(xdist = dist_normal(mu = mean, sigma = sd))) +
+  stat_halfeye(fill="royalblue", alpha=0.5) +
+  scale_x_continuous(breaks=log(1+seq(-0.3, 0.2, 0.1)), 
+                    labels=paste0(abs(round(seq(-0.3, 0.2, 0.1) * 100,0)), 
+                                  "%\n", 
+                                  c(rep("lower\nodds", 4), rep("higher\nodds", 2)))) +
+  xlab("Change in log-odds ratio of drug vs. placebo\nwhen increasing trial duration from 12 to 52 weeks") +
+  ylab("Prior density")
+```
+
+Thus, we can set out prior distributions as below. To see what particular
+coefficients are named, `get_prior(model_formula, our_data)` is a useful
+command.
+
+```{r}
+brms_prior <- prior(class=b, coef=Intercept, normal(-1.67, 1.0)) + # prior average placebo effect 
+  prior(class=sd, coef=Intercept, group=trial, lognormal( -1.06, 0.35)) + # prior on the between-study SD in  placebo log-odds
+  prior(class=b, coef=long_study, normal(-0.1, 0.1)) + # prior for effect of long-study (26 vs. 12 weeks) on responder rate
+  prior(class=b, coef="treatmentNVS101:long_study", normal(0, 0.1/1.96)) + # Prior on the log-odds-ratio for drug vs. placebo when switching from shor to long study
+  prior(mixnorm(map_w, map_m, map_s), class=b, coef=treatmentNVS101) #  Syntax for specifying mixture prior
+```
+
+::: {.alert .alert-info}
+**NOTE**: Thanks to the new functionality in the `RBesT` package, we were able
+to just write `prior(mixture_prior, class=b, coef=treatmentNVS10)` to specify
+a mixture prior. Alternatively, we could have written
+`prior(mixnorm(map_w, map_m, map_s), class=b, coef=treatmentNovDrug)`. 
+`map_w`, `map_m` and `map_s` would specify the weights, means and standard
+deviations of the mixture components, respectively. If we did not have this
+`RBesT` functionality available, we would have to manually write down the
+log-probability-density-function of the mixture, which involves weighted sums
+on the probability scale e.g. using the `log_sum_exp` function. For
+further details on the `mixstanvars` feature, please refer to its
+[online manual](https://opensource.nibr.com/RBesT/reference/mixstanvar.html).
+:::
+
+### Model fitting and predictions
+
+```{r fitmodel, results='hide',message=FALSE,warning=FALSE}
+brmfit1 <- brm(formula = model_formula,
+               data = our_data,
+               # By doing 11,000 samples per chain (default 4 chains) incl. 1000
+               # warmup samples, we'll get 4 * 10,000= 40,000 samples, which is
+               # what we'll need in the PoS app.
+               #iter = 11000, warmup=1000, 
+               # Now we specify our prior distributions:
+               prior = brms_prior,
+               # Note that we define "map=mixture_prior" below. This
+               # matches the prefix "map" defined in the previous
+               # prior definition statement:
+               stanvars = mixstanvar(map=mixture_prior),
+               control = control_args,
+               seed = 5674574,
+               silent = 2, 
+               refresh = 0
+               )
+```
+We can now generate predictions for a new Phase 3 trial 
+for NVS101 compared with placebo of 52 week duration. While the predictions
+for each arm of the new trial are by default for the true log-odds of response,
+we can derive all desired quantities from this:
+
+```{r ph3preds}
+# we are using the inv_logit function on rvars for which we need to
+# prepare the funnction to handle rvar arguments
+rvar_inv_logit <- rfun(inv_logit)
+
+new_ph3_trial <- tibble(trial="New trial",
+                        treatment=c("placebo", "NVS101"),
+                        long_study=1,
+                        patients=c(25, 50))
+
+ph3_predictions <- new_ph3_trial |>
+    tidybayes::add_linpred_rvars(brmfit1,
+                                 allow_new_levels=TRUE,
+                                 sample_new_levels="gaussian",
+                                 value="logodds") |>
+    mutate(proportion=rvar_inv_logit(logodds))
+
+# One can have tibbles contain columns of rvars, which one can
+# recognize by the reported mean and standard deviation of the
+# sample they represent:
+ph3_predictions
+
+```
+
+
+## Results
+
+Here is a plot of the predicted Phase 3 placebo and NVS101 responder proportion.
+```{r}
+with(ph3_predictions,
+     tibble(proportion_NVS101  = proportion[2],
+            proportion_placebo = proportion[1])) |>
+    tidybayes::unnest_rvars() |>
+    ggplot(aes(x=proportion_placebo, y=proportion_NVS101)) +
+    geom_hex() +
+    scale_fill_continuous() +
+    coord_cartesian(xlim=c(0,1), ylim=c(0,1))
+```
+
+Additionally, we can look at various measures of a treatment effect:
+```{r}
+
+ph3_predictions |>
+    ggplot(aes(xdist=proportion)) +
+    stat_slabinterval() +
+    facet_wrap(~treatment, labeller=label_both, scales="free") +
+    xlab("Proportion") + ylab(NULL)
+
+with(ph3_predictions,
+     tibble(measure=c("logodds", "lograte", "proportion_diff"),
+            posterior=c(diff(logodds),
+                        diff(log(proportion)),
+                        diff(proportion)),
+            ref=c(1,1,0)
+            )) |>
+    ggplot(aes(xdist=posterior)) +
+    stat_slabinterval() +
+    geom_vline(aes(xintercept=ref), lty=2, col="darkred") +
+    facet_wrap(~measure, scales="free_x") +
+    ylab(NULL)
+     
+
+
+```
+
+Let's say the target product profile (TPP) for the drug demands a risk difference
+of >= 45\%. We can simulate Phase III outcomes to find the probability of 
+meeting this TPP and having a significant study, which the Novartis internal
+PoS app would do for us.
+
+Note that the relativley compact code below does indeed perform a full
+trial simulation for possible outcomes for every draw of the
+posterior. The use of `rvars` hides essentially that we are handling
+entire posteriors here. However, note that we have to wrap the call to
+the `fisher.test` funcntion into `rdo` such that the expression is
+automatically evaluated for each draw of the posterior.
+
+```{r}
+pos_simulations <- new_ph3_trial |>
+    tidybayes::add_predicted_rvars(brmfit1,
+                                   allow_new_levels=TRUE,
+                                   sample_new_levels="gaussian",
+                                   value="pred") |>
+    mutate(predrate=pred/patients) |>
+    select(treatment, pred, predrate, patients) |>
+    pivot_wider(names_from="treatment", values_from=c("pred", "predrate", "patients")) |>
+    mutate(riskdiff_crit = predrate_NVS101 - predrate_placebo >= 0.45,
+           pvalue = rdo(fisher.test(x=matrix(c(pred_NVS101,  patients_NVS101  - pred_NVS101,
+                                               pred_placebo, patients_placebo - pred_placebo ),
+                                             2, 2 ) )[["p.value"]] ),
+           `Achieving >= 45% risk difference` = E(riskdiff_crit),
+           `Achieving significance (p<=0.05)` = E(pvalue <= 0.05),
+           `Achieving significance & TPP target` = E(riskdiff_crit * (pvalue <= 0.05))
+           )
+
+pos_simulations |>
+    select(starts_with("Achieving")) |>
+    pivot_longer(cols=everything(), names_to="Outcome", values_to = "Probability") |>
+    gt() |>
+    fmt_number(decimals=3)
+
+
+
+```
+
+As we can see, achieving the TPP risk difference is the greater hurdle than
+achieving statistical significance.
+
+As part of the Novartis PoS framework, we would now account for
+the possibility of not obtaining an approval despite a positive Phase 3 study,
+a failure in Phase 3 due to a safety issue, and other risks (e.g. relating
+to drug manufacturing or market access).
+
+
+## Conclusion
+
+In the hypothetical case study, there was not a lot of data, but what there was 
+appeared to be promising. Thus, one would not want to ignore it. 
+In order to make use of it, we had to use informative prior distributions for 
+several parameters of a logistic regression model. In this kind of situation,
+where we cannot let data inform our prior distributions, there is little choice,
+if we want an answer using the available data.
+
+Given how our prior judgments directly affect the inference, we want ot ensure 
+that the prior judgements reflect our best understanding of the
+available scientific evidence. For this purpose a formal prior elicitation
+(or predictions for some parameters from historical data) are options, but
+when those are not possibler, we should still try to ensure that prior choices
+are plausible to the whole team.
+
+Note that in this example, there was also an underlying laboratory measurement
+(longitudinal measurements of red blood cell counts). It might have been more
+efficient to work with these directly, but it would have been necessary 
+to translate any results into predictions for the Phase III responder endpoint.
+Furthermore, the published external competitor data might not report these
+laboratory outcomes in sufficient detail.
+
+Single arm studies are not ideal. However, when treatment effects are large
+compared to how much placebo group outcomes vary, we can still learn
+about drug efficacy from them at the cost of additional assumptions.
+As part of our case study, we tried to be explicit about our 
+uncertainties and to transparently describe our prior judgements, as well as 
+the rationale behind them. If someone disagrees with some of our prior 
+distributions, they can then do a sensitivity analysis.
+
+A Bayesian approach is also well-suited for PoS calculations, because it lets
+us easily propagate uncertainties through different steps of a PoS analysis.
+
+## Exercises
+
+To be added
+
+## References {.unnumbered}
+
+::: {#refs}
+:::

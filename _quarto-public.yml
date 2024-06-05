@@ -16,6 +16,7 @@ book:
       - src/02a_meta_analysis.qmd
       - src/02ab_meta_analysis_trtdiff.qmd
       - src/02ac_meta_analysis_strata.qmd
+      - src/02l_single_arm_pos.qmd
       - src/02b_dose_finding.qmd
       - src/02c_dose_escalation.qmd
       - src/02cb_tte_dose_escalation.qmd
