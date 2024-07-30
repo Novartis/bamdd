@@ -6,13 +6,7 @@ author:
 
 # Use of historical control data with stratification {#sec-use-hist-control-data-strata}
 
-```{r, include=FALSE}
-source(here::here("src", "setup.R"))
-## use caching explicitly here as for quarto 1.3.450 the local
-## _quarto.yml is an issue
-# knitr::opts_chunk$set(cache=TRUE) 
-```
-
+<!-- https://raw.githubusercontent.com/Novartis/bamdd/main/src/_macros.qmd -->
 {{< include _macros.qmd >}}
 
 Here we will demonstrate the use of historical control data as an
@@ -49,6 +43,20 @@ dir.create(here("_brms-cache"), FALSE)
 set.seed(57339)
 # allow for wider and prettier printing
 options(width=120, digits=2)
+```
+
+
+
+::: {.content-visible when-profile="dummy"}
+## Overview Video
+
+{{< video videos/brms3-hq-alt-5-map-strata.mp4 >}}
+:::
+
+
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
 ```
 
 ## Background

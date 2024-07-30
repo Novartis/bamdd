@@ -14,10 +14,6 @@ This case study covers:
 * ` r | trials(n) ~ ...` for binomial outcomes (`r` out of `n` patients)
 * Ranking treatments based on samples from the posterior distribution
 
-```{r, include=FALSE}
-source(here::here("src", "setup.R"))
-```
-
 To run the R code of this section please ensure to load these
 libraries and options first:
 
@@ -40,15 +36,10 @@ options(width=120)
 control_args <- list(adapt_delta=0.95)
 ```
 
-```{r include=FALSE}
-# invisible to the reader we move the cache directory
-options(cmdstanr_write_stan_file_dir=brms_cache_dir)
-# speedup things by lowering adapt_delta for now, which speeds up things a lot
-# do this only if caching is on (which is when we want things go fast)
-control_args <- list(adapt_delta=0.8)
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
 ```
-
-
 
 
 

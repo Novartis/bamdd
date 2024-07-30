@@ -7,6 +7,11 @@ project:
    type: book
    execute-dir: project
    pre-render: src/install_dependencies.R
+   
+   resources:
+   - resources/**
+
+
 
 execute:
    cache: true
@@ -35,7 +40,10 @@ bibliography:
 
 format:
   html:
-    theme: cosmo
+    theme: 
+    - cosmo
+    - bamdd.scss
+    css: bamdd.css
 # embedding of resources would be desirable to avoid using google fonts, but deno does not
 # work nice with the company SSL certificate setup
     embed-resources: false
@@ -43,6 +51,9 @@ format:
     code-tools: true
 #    code-summary: "Show the code"
     source: repo
+    html-math-method: 
+      method: mathjax
+      url: ./resources/mathjax/tex-mml-chtml.js
 #    html-math-method: katex
 
 #  pdf:
@@ -53,4 +64,3 @@ format:
 #      - text: |
 #         \usepackage{colortbl}
 	  #  epub: default ## maybe enable this via the profiles feature in a production run only (takes time)
-    

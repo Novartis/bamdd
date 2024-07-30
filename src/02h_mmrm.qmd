@@ -4,6 +4,7 @@ author:
   - Sebastian Weber - <sebastian.weber@novartis.com>
 ---
 
+<!-- https://raw.githubusercontent.com/Novartis/bamdd/main/src/_macros.qmd -->
 {{< include _macros.qmd >}}
 
 # Bayesian Mixed effects Model for Repeated Measures {#sec-mmrm}
@@ -19,10 +20,6 @@ This case study covers
 * Options for MMRM paramterization including forward difference contrasts for changes between visits using `contrasts(simulated_data$AVISIT) <- MASS::contr.sdif`
 * Meta-analytic combined approach to MMRMs for using historical data and attempts to make the approach more robust against prior-data-conflict
 * Extending MMRMs using covariates with a monotonic effect using `mo()` and non-linear terms
-
-```{r, include=FALSE}
-source(here::here("src", "setup.R"))
-```
 
 To run the R code of this section please ensure to load these libraries first:
 
@@ -52,8 +49,12 @@ control_args <- list(adapt_delta=0.95)
 options(width=120)
 ```
 
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
+```
+
 ```{r include=FALSE}
-# invisible to the reader we move the cache directory
 options(mc.cores=parallelly::availableCores(logical=FALSE))
 # speedup things by lowering adapt_delta for now, which speeds up things a lot
 # do this only if caching is on (which is when we want things go fast)

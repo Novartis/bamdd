@@ -6,14 +6,6 @@ author:
 
 # Meta-analysis to estimate treatment effects {#sec-map-treat-effects}
 
-```{r, include=FALSE}
-source(here::here("src", "setup.R"))
-
-## let quarto handle this
-##knitr::opts_chunk$set(cache=FALSE)
-
-```
-
 To run the R code of this section please ensure to load these libraries first:
 
 ```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
@@ -30,10 +22,9 @@ dir.create(here("_brms-cache"), FALSE)
 set.seed(979356)
 ```
 
-
-```{r include=FALSE}
-# invisible to the reader we move the cache directory
-options(cmdstanr_write_stan_file_dir=brms_cache_dir)
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
 ```
 
 ## Background

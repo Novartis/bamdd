@@ -5,11 +5,7 @@ author:
 
 # Use of historical control data {#sec-use-hist-control-data}
 
-```{r, include=FALSE}
-source(here::here("src", "setup.R"))
-##knitr::opts_chunk$set(cache=FALSE) 
-```
-
+<!-- https://raw.githubusercontent.com/Novartis/bamdd/main/src/_macros.qmd -->
 {{< include _macros.qmd >}}
 
 Here we will demonstrate the use of historical control data as an
@@ -46,6 +42,11 @@ options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"
 # create cache directory if not yet available
 dir.create(here("_brms-cache"), FALSE)
 set.seed(593467)
+```
+
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
 ```
 
 ## Background
