@@ -1,0 +1,237 @@
+---
+title: 'brms exercises: historical controls'
+author: 'your-name-here'
+date: today
+output: 
+  html_document:
+    toc: true
+    embed-resources: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+These exercises accompany the case study [Use of Historical Control
+Data](TODO:link) as part of the training course "Workshop
+on applied modeling in drug development using brms."
+
+## Preliminary code
+
+First load the required packages and set some options as described in the case study.
+
+```{r, warning = FALSE, message = FALSE}
+here::i_am("exercises/solutions/ex1_historical_control.qmd")
+library(here)
+
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(brms)
+library(posterior)
+library(bayesplot)
+library(RBesT)
+theme_set(theme_bw())
+
+options(
+  # how many processor cores would you like to use?
+  mc.cores = 4, 
+  # how would you like to access Stan?
+  brms.backend = "cmdstanr",
+  # cache model binaries
+  cmdstanr_write_stan_file_dir=here::here("_brms-cache"),
+  # no need to normalize likelihoods
+  brms.normalize = FALSE,
+  # when you are storing your model to file, 
+  # how shall it be updated?
+  brms.file_refit = "on_change"  
+  # alternatives: "never", "always"
+  # use "never" for production
+)
+
+set.seed(254335)
+```
+
+Then create the dataset used in the example:
+
+```{r}
+AS_region <- bind_cols(RBesT::AS, region=sample(c("asia", "europe", "north_america"), 8, TRUE))
+kable(AS_region)
+```
+
+And fit the model as shown in the case study:
+
+```{r}
+model <- bf(r | trials(n) ~ 1 + (1 | study), family=binomial)
+
+model_prior <- prior(normal(0, 2), class="Intercept") +
+    prior(normal(0, 1), class="sd", coef="Intercept", group="study")
+
+map_mc_brms  <- brm(model, AS_region, prior = model_prior,
+                    seed = 4767,
+                    silent = 2, refresh = 0)
+
+```
+
+## Exercise 1
+
+Create a posterior predictive check based on the predictive
+distribution for the response rate.  
+Steps:
+* Use `posterior_predict` to create samples from the predictive
+  distribution of outcomes per trial.
+* Use `sweep(predictive, 2, AS_region$n, "/")` to convert these
+  samples from the predictive distribution of the outcome counts to
+  samples from the predictive distribution for responder rates.
+* Use `ppc_intervals` from `bayesplot` to create a plot showing your
+  results.
+    
+```{r}
+# Your solution here -----------------------------------------------------------
+
+pp_count_AS_region <- posterior_predict(map_mc_brms)
+
+pp_rate_AS_region <- sweep(pp_count_AS_region, 2, AS_region$n, "/")
+
+y_obs_rate <- with(AS_region, r / n)
+
+ppc_intervals(y_obs_rate, pp_rate_AS_region)  +
+    scale_x_continuous("Study", breaks=1:nrow(AS_region), labels=AS_region$study) +
+    ylab("Responder Rate") +
+    coord_flip() +
+    theme(legend.position="right",
+          # suppress vertical grid lines for better readability of intervals
+          panel.grid.major.y = element_blank())
+
+```
+
+
+## Exercise 2
+
+Redo the analysis with region, but treat region as a fixed
+   effect. Evaluate the informativeness of the obtained MAP priors.
+   The model formula for `brms` should look like `region_model_fixed
+   <- bf(r | trials(n) ~ 1 + region + (1 | study), family=binomial)`.
+Steps:
+* Consider the prior for the region fixed effect first. The reference
+  region is included in the intercept. The reference region is
+  implicitly defined by the first level of the variable region when
+  defined as `factor`.
+  - Define `asia` to be the reference region in the example. Also
+    include a level `other` in the set of levels.
+  - Assume that an odds-ratio of $2$ between regions can be seen as
+    very large such that a prior of $\mbox{N}(0, (\log(2)/1.96)^2)$
+    for the region main effect is adequate.
+* Obtain the MAP prior for each region by using the
+  `AS_region_all` data frame defined below and apply
+  `posterior_linpred` as shown above.
+* Convert the MCMC samples from the MAP prior distribution into
+  mixture distributions with the same code as above.
+* Calculate the ESS for each prior distribution with the `ess`
+  function from `RBesT`.
+	
+```{r}
+
+AS_region_all <- data.frame(region=c("asia", "europe", "north_america", "other")) %>%
+    mutate(study=paste("new_study", region, sep="_"), r=0, n=6)
+
+# Your solution here -----------------------------------------------------------
+
+## to get brms to include the other factor level in the model, we have
+## to add a fake row with region "other" and n=0
+AS_region_2 <- mutate(bind_rows(AS_region, mutate(AS_region_all, n=0)[4,]),
+                      region=factor(region, levels=c("asia", "europe", "north_america", "other")))
+
+str(AS_region_2)
+
+model_fixed <- bf(r | trials(n) ~ 1 + region + (1|study), family=binomial)
+
+get_prior(model_fixed, AS_region_2)
+
+model_fixed_prior <- prior(normal(0, 2), class="Intercept") +
+    prior(normal(0, 1), class="sd", coef="Intercept", group="study") +
+    prior(normal(0, log(2)/1.96), class="b")
+
+fixed_mc_brms  <- brm(model_fixed, AS_region_2, prior=model_fixed_prior,
+                      seed=4767,
+                      silent = 2, refresh = 0, control=list(adapt_delta=0.99))
+
+fixed_mc_brms
+
+post_regions <- posterior_linpred(fixed_mc_brms,
+                                  newdata=AS_region_all,
+                                  transform=TRUE,
+                                  allow_new_levels=TRUE,
+                                  sample_new_levels="gaussian")
+
+head(post_regions)
+
+colnames(post_regions) <- AS_region_all$region
+map_region <- list()
+for(r in AS_region_all$region) {
+    map_region[[r]] <- mixfit(post_regions[,r], type="beta", Nc=3, constrain_gt1=TRUE)
+}
+
+kable(bind_rows(lapply(map_region, summary), .id="MAP"), digits=3)
+
+sapply(map_region, ess)
+
+```
+	
+   
+## Exercise 3
+
+Run the analysis for the normal endpoint in the `crohn` data set of
+`RBesT`. Refer to the `RBesT` vignette for a [normal endpoint](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html)
+   on more details and context.  
+Steps:
+* Use as `family=gaussian` and use the `se` response modifier in place
+  of `trials` to specify a known standard error.
+* Use the same priors as proposed in the vignette.
+* Compare the obtained MAP prior (in MCMC sample form) from `RBesT`
+  and `brms`.
+    
+```{r}
+crohn <- RBesT::crohn
+
+# Your solution here -----------------------------------------------------------
+
+crohn_sigma <- 88
+crohn$y.se <- crohn_sigma/sqrt(crohn$n)
+
+library(RBesT)
+set.seed(1234)
+rbest_normal_map_mcmc <- gMAP(cbind(y, y.se) ~ 1 | study, 
+                              weights=n, data=crohn,
+                              family=gaussian,
+                              beta.prior=cbind(0, crohn_sigma),
+                              tau.dist="HalfNormal",tau.prior=cbind(0,crohn_sigma/2))
+
+model_normal <- bf(y | se(y.se) ~ 1 + (1 | study), family=gaussian())
+
+prior_normal <- prior(normal(0, 88), class="Intercept") +
+    prior(normal(0, 88/2), class="sd", coef="Intercept", group="study")
+
+brms_normal_map_mcmc <- brm(model_normal, crohn, prior=prior_normal,
+                            seed=4767,
+                            silent = 2, refresh = 0, control=list(adapt_delta=0.99))
+
+## comparing the outputs we see that the random effect posterior
+## matches...
+rbest_normal_map_mcmc
+brms_normal_map_mcmc
+
+brms_normal_map <- posterior_epred(brms_normal_map_mcmc,
+                                   newdata=data.frame(study="new", n=1, y=0, y.se=88),
+                                   allow_new_levels=TRUE,
+                                   sample_new_levels="gaussian")
+
+## ... and the MAP prior is also the same
+summarise_draws(brms_normal_map, mean, sd, ~quantile(., probs = c(0.025, 0.5, 0.975)))
+
+```
+
+
+
