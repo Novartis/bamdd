@@ -9,7 +9,10 @@ bibliography: references.bib
 
 # Model setup & priors {#sec-model-priors}
 
-```{r, include=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+#| code-fold: true
+#| code-summary: "Show R setup"
+
 library(ggplot2)
 library(dplyr)
 library(knitr)
