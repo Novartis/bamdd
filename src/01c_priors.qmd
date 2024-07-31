@@ -4,13 +4,12 @@ author:
 bibliography: references.bib
 ---
 
+<!-- https://raw.githubusercontent.com/Novartis/bamdd/main/src/_macros.qmd -->
 {{< include _macros.qmd >}}
 
 # Model setup & priors {#sec-model-priors}
 
 ```{r, include=FALSE}
-source(here::here("src", "setup.R"))
-##knitr::opts_chunk$set(cache=FALSE) 
 library(ggplot2)
 library(dplyr)
 library(knitr)
@@ -28,6 +27,11 @@ options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"
 dir.create(here("_brms-cache"), FALSE) 
 set.seed(593467)
 theme_set(theme_bw(12))
+```
+
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
 ```
 
 Within the Bayesian regression modeling in Stan framework `brms`
@@ -422,4 +426,14 @@ Additional literature for consideration:
   of more complex models), [@Simpson2014]
 - Global model shrinkage regularized horseshoe prior [@Piironen2017]
   or R2D2 prior (overall $R^2$) [@Zhang2022]
+
+
+
+
+
+::: {.content-visible when-profile="dummy"}
+## Further considerations
+
+{{< video videos/brms3-hq-alt-2-priors.mp4 >}}
+:::
 

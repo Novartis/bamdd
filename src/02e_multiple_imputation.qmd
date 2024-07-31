@@ -5,11 +5,6 @@ author:
 
 # Multiple imputation {#sec-multiple-imputation}
 
-```{r, include=FALSE}
-source(here::here("src", "setup.R"))
-```
-
-
 
 
 ::: {.content-visible when-profile="dummy"}
@@ -79,9 +74,9 @@ set.seed(7894562)
 options(brms.normalize=FALSE)
 ```
 
-```{r include=FALSE}
-# invisible to the reader we move the cache directory
-options(cmdstanr_write_stan_file_dir=brms_cache_dir)
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
 ```
 
 Let us consider some simulated data for a trial in chronic obstructive

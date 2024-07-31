@@ -5,10 +5,6 @@ author:
 
 # Basic workflow {#sec-basic-workflow}
 
-```{r, include=FALSE}
-source(here::here("src", "setup.R"))
-```
-
 This section demonstrates the basic steps needed to setup and run an
 analysis using `brms`. 
 
@@ -90,9 +86,12 @@ dir.create(here("_brms-cache"), FALSE)
 set.seed(5886935)
 ```
 
-```{r include=FALSE}
-# invisible to the reader we move the cache directory
-options(cmdstanr_write_stan_file_dir=brms_cache_dir)
+```r
+#| echo: false
+#| eval: true 
+#| include: false
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
 ```
 
 As `brms` models are translated to Stan model files, which must be

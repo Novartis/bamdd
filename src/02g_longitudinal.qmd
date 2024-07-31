@@ -5,11 +5,6 @@ author:
 
 # Longitudinal data {#sec-longitudinal-data}
 
-```{r setup, echo = FALSE, include = FALSE}
-source(here::here("src", "setup.R"))
-set.seed(254335)
-```
-
 ## Background
 
 Many clinical trials assess efficacy and other endpoints at numerous timepoints post-baseline. For example, consider the case where a continuous response endpoint is assessed every 2 weeks post baseline (Week 2, Week 4, ..., Week 12). Although clinical interest may focus on the response rate at a particular visit (e.g. at Week 12), efficacy data at other visits is of course still of interest, either in its own right, to build understanding of the full time vs. efficacy profile, or as a means to increase statistical power for estimation at Week 12.
@@ -48,9 +43,9 @@ set.seed(8904568)
 control_args <- list(adapt_delta = 0.95)
 ```
 
-```{r include=FALSE}
-# invisible to the reader we move the cache directory
-options(cmdstanr_write_stan_file_dir=brms_cache_dir)
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# invisible to the reader additional setup steps, which are optional
+{{< include setup.R >}}
 ```
 
 ```{r get_data, echo = TRUE}
