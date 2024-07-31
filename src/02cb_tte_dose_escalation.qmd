@@ -144,7 +144,8 @@ gt_format <- function(x) {
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE}
 # invisible to the reader additional setup steps, which are optional
-{{< include setup.R >}}
+# {{< include setup.R >}}
+source("setup.R")
 ```
 
 ## Example trial

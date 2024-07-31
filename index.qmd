@@ -13,6 +13,17 @@ development problems. In order to highlight the versatility of that package,
 we have developed a collection of case studies covering a diverse set of 
 clinical questions that were addressed via Bayesian modelling with the `brms` package. 
 
+::: {.content-visible when-profile="public"}
+::: {.callout-tip}
+## Short course at JSM -- Portland, OR -- August 5th 2024
+
+We will offer a short course based on this material at the 2024 Joint Statistical Meetings in Portland on August 5. The materials are available here:
+
+- [Slides](workshops/jsm2024/slides/bamdd_jsm2024.pdf) & [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/jsm2024)
+
+:::
+:::
+
 ## Navigating the site
 
 The material is organized as follows:
@@ -26,6 +37,7 @@ studies. You can find a [listing with descriptions on this page](src/02_case_stu
 as exposing and injecting custom stan code to `brms` models,
 and efficient parallel computation to support sampling in `brms`.
 
+
 ## Updates
 
 This web-site is intended as a live document with updates as
@@ -34,6 +46,7 @@ appropiate. Key changes to the web-site are tracked here:
 
 
 ::: {.content-visible when-profile="public"}
+- 31st July 2024: Linked materials from JSM Portland 2024 short course
 - 5th June 2024: Added @sec-pos on assessing probability of success of
   in Phase-III based on a single-arm trial in Phase-II
 - 29th April 2024: Third edition course from Paul Bürkner with the new

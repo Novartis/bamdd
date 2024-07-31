@@ -56,7 +56,8 @@ options(width=120, digits=2)
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE}
 # invisible to the reader additional setup steps, which are optional
-{{< include setup.R >}}
+# {{< include setup.R >}}
+source("setup.R")
 ```
 
 ## Background

@@ -91,7 +91,8 @@ set.seed(5886935)
 #| eval: true 
 #| include: false
 # invisible to the reader additional setup steps, which are optional
-{{< include setup.R >}}
+# {{< include setup.R >}}
+source("setup.R")
 ```
 
 As `brms` models are translated to Stan model files, which must be
