@@ -46,6 +46,7 @@ appropiate. Key changes to the web-site are tracked here:
 
 
 ::: {.content-visible when-profile="public"}
+- 31st July 2024: Linked materials from JSM Portland 2024 short course
 - 5th June 2024: Added @sec-pos on assessing probability of success of
   in Phase-III based on a single-arm trial in Phase-II
 - 29th April 2024: Third edition course from Paul Bürkner with the new
