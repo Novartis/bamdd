@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sebastian Weber - sebastian.weber@novartis.com">
 
-<title>Applied Modelling in Drug Development - 4&nbsp; Use of historical control data</title>
+<title>4&nbsp; Use of historical control data – Applied Modelling in Drug Development</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -104,8 +104,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="../resources/mathjax/tex-mml-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -134,6 +134,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="../bamdd.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -142,13 +143,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02a_meta_analysis.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Use of historical control data</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -184,9 +185,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Getting started</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -215,7 +216,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="../src/02_case_studies.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Case studies</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -296,9 +297,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Advanced topics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -365,6 +366,7 @@ window.Quarto = {
 </header>
 
 
+<!-- https://raw.githubusercontent.com/Novartis/bamdd/main/src/_macros.qmd -->
 <p>Here we will demonstrate the use of historical control data as an example for a meta-analytic predictive (MAP) prior approach based on random-effects meta-analyses. The intention of using a MAP prior is to reduce the sample size in a control group of a new trial while maintaining power to detect a treatment effect. This is achieved by synthesizing available information on a control treatment, which is then used in the form of an informative prior for the analysis in the new trial.</p>
 <p>This case study demonstrates</p>
 <ul>
@@ -421,13 +423,13 @@ window.Quarto = {
 <td style="text-align: left;">Study 1</td>
 <td style="text-align: right;">107</td>
 <td style="text-align: right;">23</td>
-<td style="text-align: left;">asia</td>
+<td style="text-align: left;">europe</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Study 2</td>
 <td style="text-align: right;">44</td>
 <td style="text-align: right;">12</td>
-<td style="text-align: left;">north_america</td>
+<td style="text-align: left;">asia</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Study 3</td>
@@ -445,13 +447,13 @@ window.Quarto = {
 <td style="text-align: left;">Study 5</td>
 <td style="text-align: right;">139</td>
 <td style="text-align: right;">39</td>
-<td style="text-align: left;">europe</td>
+<td style="text-align: left;">north_america</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Study 6</td>
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: left;">europe</td>
+<td style="text-align: left;">north_america</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Study 7</td>
@@ -710,13 +712,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 0.4 seconds.
-Chain 2 finished in 0.3 seconds.
-Chain 3 finished in 0.3 seconds.
-Chain 4 finished in 0.3 seconds.
+Chain 2 finished in 0.5 seconds.
+Chain 3 finished in 0.4 seconds.
+Chain 4 finished in 0.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.3 seconds.
-Total execution time: 1.6 seconds.</code></pre>
+Mean chain execution time: 0.4 seconds.
+Total execution time: 1.9 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>post_region_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">newdata=</span>AS_region_new,</span>
@@ -730,7 +732,7 @@ Total execution time: 1.6 seconds.</code></pre>
 <pre><code># A tibble: 1 × 10
   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 ...1     0.263  0.256 0.0676 0.0552 0.164 0.380  1.00    3243.    3960.</code></pre>
+1 ...1     0.293  0.290 0.0666 0.0631 0.191 0.407  1.00    2657.    3568.</code></pre>
 </div>
 </div>
 <p>The key difference to the previous model is the nested random effect specification term <code>(1 | region/study)</code> of the model formula. This syntax denotes a random intercept term for <code>region</code> and <code>study</code> in a way which assumes a nested data structure in that a given study is only run in a single region.</p>
@@ -888,35 +890,35 @@ Total execution time: 1.6 seconds.</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">asia</td>
-<td style="text-align: right;">0.265</td>
-<td style="text-align: right;">0.068</td>
-<td style="text-align: right;">0.147</td>
-<td style="text-align: right;">0.258</td>
-<td style="text-align: right;">0.431</td>
+<td style="text-align: right;">0.294</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">0.172</td>
+<td style="text-align: right;">0.290</td>
+<td style="text-align: right;">0.439</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">europe</td>
-<td style="text-align: right;">0.248</td>
-<td style="text-align: right;">0.061</td>
-<td style="text-align: right;">0.136</td>
-<td style="text-align: right;">0.244</td>
-<td style="text-align: right;">0.391</td>
+<td style="text-align: right;">0.221</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">0.353</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">north_america</td>
-<td style="text-align: right;">0.255</td>
-<td style="text-align: right;">0.069</td>
-<td style="text-align: right;">0.140</td>
-<td style="text-align: right;">0.249</td>
-<td style="text-align: right;">0.427</td>
+<td style="text-align: right;">0.266</td>
+<td style="text-align: right;">0.057</td>
+<td style="text-align: right;">0.160</td>
+<td style="text-align: right;">0.263</td>
+<td style="text-align: right;">0.399</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">other</td>
-<td style="text-align: right;">0.263</td>
-<td style="text-align: right;">0.091</td>
-<td style="text-align: right;">0.115</td>
-<td style="text-align: right;">0.253</td>
-<td style="text-align: right;">0.502</td>
+<td style="text-align: right;">0.267</td>
+<td style="text-align: right;">0.100</td>
+<td style="text-align: right;">0.103</td>
+<td style="text-align: right;">0.255</td>
+<td style="text-align: right;">0.521</td>
 </tr>
 </tbody>
 </table>
@@ -927,7 +929,7 @@ Total execution time: 1.6 seconds.</code></pre>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(map_region, ess)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         asia        europe north_america         other 
-     52.57311      56.77707      49.12890      32.85157 </code></pre>
+     48.80080      75.02258      74.00508      24.85041 </code></pre>
 </div>
 </div>
 <p>At this point the tools from <code>RBesT</code> can be used to assess further properties of trial designs which use these MAP priors. Please refer to the <a href="https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html">getting started vignette</a> of <code>RBesT</code>.</p>
@@ -1006,18 +1008,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1049,7 +1040,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -1108,7 +1121,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1450,546 +1463,547 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Use of historical control data {#sec-use-hist-control-data}</span></span>
 <span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE}</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="in">source(here::here("src", "setup.R"))</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="in">##knitr::opts_chunk$set(cache=FALSE) </span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>{{&lt; include _macros.qmd &gt;}}</span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>Here we will demonstrate the use of historical control data as an</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>example for a meta-analytic predictive (MAP) prior approach based on</span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>random-effects meta-analyses. The intention of using a MAP prior is to</span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>reduce the sample size in a control group of a new trial while</span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>maintaining power to detect a treatment effect. This is achieved by</span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>synthesizing available information on a control treatment, which is</span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>then used in the form of an informative prior for the analysis in the</span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>new trial.</span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>This case study demonstrates</span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>setting up a random effect meta-analysis with up to two levels</span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>setting up model priors</span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>how to use the model outputs from <span class="in">`brms`</span> as input to the R package</span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>  <span class="in">`RBesT`</span>, which allows to further evaluate MAP priors for a trial</span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>  design.</span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>To run the R code of this section please ensure to load these</span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>libraries and options first:</span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}</span></span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
-<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)</span></span>
-<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a><span class="in">library(knitr)</span></span>
-<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a><span class="in">library(brms)</span></span>
-<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a><span class="in">library(posterior)</span></span>
-<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a><span class="in">library(bayesplot)</span></span>
-<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a><span class="in">library(RBesT)</span></span>
-<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
-<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a><span class="in"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a><span class="in">options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))</span></span>
-<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a><span class="in"># create cache directory if not yet available</span></span>
-<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a><span class="in">dir.create(here("_brms-cache"), FALSE)</span></span>
-<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(593467)</span></span>
-<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background</span></span>
-<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a>Given the relevance of the use of historical control data problem for</span>
-<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>drug development, a full R package <span class="in">`RBesT`</span> (R Bayesian evidence</span>
-<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a>synthesis tools) is available on</span>
-<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">CRAN</span><span class="co">](https://cran.r-project.org/package=RBesT)</span>. Here we will</span>
-<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a>re-implement the example of the vignette of <span class="in">`RBesT`</span> for the [binary</span>
-<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a>case](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html)</span>
-<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>and will illustrate how <span class="in">`brms`</span> can be used in a more complex setting</span>
-<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>as a case study. In particular, we are going to assume as a</span>
-<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>complication that the historical trial data has been collected in</span>
-<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a>specific regions of the world and how this can be used to borrow</span>
-<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a>strength between regions. As a simplifying assumption it is assumed</span>
-<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a>that trials are nested within regions thereby implying that trials are</span>
-<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a>conducting exclusively in specific regions. </span>
-<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a>For details on the <span class="in">`RBesT`</span> R package, please refer to</span>
-<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-69"><a href="#cb41-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Weber et al. (2021) <span class="co">[</span><span class="ot">doi:10.18637/jss.v100.i19</span><span class="co">](https://doi.org/10.18637/jss.v100.i19)</span> for</span>
-<span id="cb41-70"><a href="#cb41-70" aria-hidden="true" tabindex="-1"></a>details on applying the <span class="in">`RBesT`</span> package, and</span>
-<span id="cb41-71"><a href="#cb41-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Neuenschwander et al. (2010) <span class="co">[</span><span class="ot">doi:10.1177/1740774509356002</span><span class="co">](https://doi.org/10.1177/1740774509356002)</span></span>
-<span id="cb41-72"><a href="#cb41-72" aria-hidden="true" tabindex="-1"></a>and</span>
-<span id="cb41-73"><a href="#cb41-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Schmidli et al. (2014) <span class="co">[</span><span class="ot">doi:10.1111/biom.12242</span><span class="co">](https://doi.org/10.1111/biom.12242)</span> for</span>
-<span id="cb41-74"><a href="#cb41-74" aria-hidden="true" tabindex="-1"></a>details on the MAP methodology.</span>
-<span id="cb41-75"><a href="#cb41-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- https://raw.githubusercontent.com/Novartis/bamdd/main/src/_macros.qmd --&gt;</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>{{&lt; include _macros.qmd &gt;}}</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>Here we will demonstrate the use of historical control data as an</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>example for a meta-analytic predictive (MAP) prior approach based on</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>random-effects meta-analyses. The intention of using a MAP prior is to</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>reduce the sample size in a control group of a new trial while</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>maintaining power to detect a treatment effect. This is achieved by</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>synthesizing available information on a control treatment, which is</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>then used in the form of an informative prior for the analysis in the</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>new trial.</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>This case study demonstrates</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>setting up a random effect meta-analysis with up to two levels</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>setting up model priors</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>how to use the model outputs from <span class="in">`brms`</span> as input to the R package</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>  <span class="in">`RBesT`</span>, which allows to further evaluate MAP priors for a trial</span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>  design.</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>To run the R code of this section please ensure to load these</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>libraries and options first:</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}</span></span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)</span></span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a><span class="in">library(knitr)</span></span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a><span class="in">library(brms)</span></span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a><span class="in">library(posterior)</span></span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a><span class="in">library(bayesplot)</span></span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a><span class="in">library(RBesT)</span></span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a><span class="in"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a><span class="in">options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))</span></span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a><span class="in"># create cache directory if not yet available</span></span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a><span class="in">dir.create(here("_brms-cache"), FALSE)</span></span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(593467)</span></span>
+<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
+<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a><span class="in"># invisible to the reader additional setup steps, which are optional</span></span>
+<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a><span class="in">{{&lt; include setup.R &gt;}}</span></span>
+<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background</span></span>
+<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>Given the relevance of the use of historical control data problem for</span>
+<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a>drug development, a full R package <span class="in">`RBesT`</span> (R Bayesian evidence</span>
+<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a>synthesis tools) is available on</span>
+<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">CRAN</span><span class="co">](https://cran.r-project.org/package=RBesT)</span>. Here we will</span>
+<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a>re-implement the example of the vignette of <span class="in">`RBesT`</span> for the [binary</span>
+<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>case](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html)</span>
+<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>and will illustrate how <span class="in">`brms`</span> can be used in a more complex setting</span>
+<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>as a case study. In particular, we are going to assume as a</span>
+<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a>complication that the historical trial data has been collected in</span>
+<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a>specific regions of the world and how this can be used to borrow</span>
+<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a>strength between regions. As a simplifying assumption it is assumed</span>
+<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a>that trials are nested within regions thereby implying that trials are</span>
+<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a>conducting exclusively in specific regions. </span>
+<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a>For details on the <span class="in">`RBesT`</span> R package, please refer to</span>
+<span id="cb41-69"><a href="#cb41-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-70"><a href="#cb41-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Weber et al. (2021) <span class="co">[</span><span class="ot">doi:10.18637/jss.v100.i19</span><span class="co">](https://doi.org/10.18637/jss.v100.i19)</span> for</span>
+<span id="cb41-71"><a href="#cb41-71" aria-hidden="true" tabindex="-1"></a>details on applying the <span class="in">`RBesT`</span> package, and</span>
+<span id="cb41-72"><a href="#cb41-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Neuenschwander et al. (2010) <span class="co">[</span><span class="ot">doi:10.1177/1740774509356002</span><span class="co">](https://doi.org/10.1177/1740774509356002)</span></span>
+<span id="cb41-73"><a href="#cb41-73" aria-hidden="true" tabindex="-1"></a>and</span>
+<span id="cb41-74"><a href="#cb41-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Schmidli et al. (2014) <span class="co">[</span><span class="ot">doi:10.1111/biom.12242</span><span class="co">](https://doi.org/10.1111/biom.12242)</span> for</span>
+<span id="cb41-75"><a href="#cb41-75" aria-hidden="true" tabindex="-1"></a>details on the MAP methodology.</span>
 <span id="cb41-76"><a href="#cb41-76" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-77"><a href="#cb41-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-78"><a href="#cb41-78" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-79"><a href="#cb41-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-80"><a href="#cb41-80" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-profile="dummy"}</span>
-<span id="cb41-81"><a href="#cb41-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview Video</span></span>
-<span id="cb41-82"><a href="#cb41-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-83"><a href="#cb41-83" aria-hidden="true" tabindex="-1"></a>{{&lt; video videos/brms-case-1-historical-data-MAP.mp4 &gt;}}</span>
-<span id="cb41-84"><a href="#cb41-84" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb41-85"><a href="#cb41-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-86"><a href="#cb41-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
-<span id="cb41-87"><a href="#cb41-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-88"><a href="#cb41-88" aria-hidden="true" tabindex="-1"></a>A Phase II study is planned to evaluate the efficacy of a test treatment in</span>
-<span id="cb41-89"><a href="#cb41-89" aria-hidden="true" tabindex="-1"></a>a randomized comparison with placebo in the disease ankylosing</span>
-<span id="cb41-90"><a href="#cb41-90" aria-hidden="true" tabindex="-1"></a>spondilityis. At the design stage of the trial control group data were available </span>
-<span id="cb41-91"><a href="#cb41-91" aria-hidden="true" tabindex="-1"></a>from a total of eight historical studies.</span>
-<span id="cb41-92"><a href="#cb41-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-80"><a href="#cb41-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-81"><a href="#cb41-81" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-profile="dummy"}</span>
+<span id="cb41-82"><a href="#cb41-82" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview Video</span></span>
+<span id="cb41-83"><a href="#cb41-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-84"><a href="#cb41-84" aria-hidden="true" tabindex="-1"></a>{{&lt; video videos/brms-case-1-historical-data-MAP.mp4 &gt;}}</span>
+<span id="cb41-85"><a href="#cb41-85" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb41-86"><a href="#cb41-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-87"><a href="#cb41-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb41-88"><a href="#cb41-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-89"><a href="#cb41-89" aria-hidden="true" tabindex="-1"></a>A Phase II study is planned to evaluate the efficacy of a test treatment in</span>
+<span id="cb41-90"><a href="#cb41-90" aria-hidden="true" tabindex="-1"></a>a randomized comparison with placebo in the disease ankylosing</span>
+<span id="cb41-91"><a href="#cb41-91" aria-hidden="true" tabindex="-1"></a>spondilityis. At the design stage of the trial control group data were available </span>
+<span id="cb41-92"><a href="#cb41-92" aria-hidden="true" tabindex="-1"></a>from a total of eight historical studies.</span>
 <span id="cb41-93"><a href="#cb41-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-94"><a href="#cb41-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-95"><a href="#cb41-95" aria-hidden="true" tabindex="-1"></a>This data-set is part of the <span class="in">`RBesT`</span> package as the <span class="in">`AS`</span></span>
-<span id="cb41-96"><a href="#cb41-96" aria-hidden="true" tabindex="-1"></a>data-set and here we add as additional column a randomly assigned</span>
-<span id="cb41-97"><a href="#cb41-97" aria-hidden="true" tabindex="-1"></a><span class="in">`region`</span> variable:</span>
-<span id="cb41-98"><a href="#cb41-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-101"><a href="#cb41-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-102"><a href="#cb41-102" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RBesT)</span>
-<span id="cb41-103"><a href="#cb41-103" aria-hidden="true" tabindex="-1"></a>AS_region <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(AS, <span class="at">region=</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"asia"</span>, <span class="st">"europe"</span>, <span class="st">"north_america"</span>), <span class="dv">8</span>, <span class="cn">TRUE</span>))</span>
-<span id="cb41-104"><a href="#cb41-104" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(AS_region)</span>
-<span id="cb41-105"><a href="#cb41-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-106"><a href="#cb41-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-107"><a href="#cb41-107" aria-hidden="true" tabindex="-1"></a>The total number of <span class="in">`r sum(AS_region$n)`</span> patients in the <span class="in">`r length(AS_region$n)`</span> trials is quite substantial.</span>
-<span id="cb41-108"><a href="#cb41-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-109"><a href="#cb41-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model description</span></span>
-<span id="cb41-110"><a href="#cb41-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-111"><a href="#cb41-111" aria-hidden="true" tabindex="-1"></a>The <span class="in">`RBesT`</span> package implements the MAP approach following a standard</span>
-<span id="cb41-112"><a href="#cb41-112" aria-hidden="true" tabindex="-1"></a>generalized linear modeling framework for a random-effects</span>
-<span id="cb41-113"><a href="#cb41-113" aria-hidden="true" tabindex="-1"></a>meta-analysis:</span>
-<span id="cb41-114"><a href="#cb41-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-115"><a href="#cb41-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y$ is the (control) group summary data for $H$ historical trials</span>
-<span id="cb41-116"><a href="#cb41-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-117"><a href="#cb41-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y_{h}|\theta_{h} \sim f(\theta_{h})$</span>
-<span id="cb41-118"><a href="#cb41-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-119"><a href="#cb41-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$g(\theta_{h}) = \beta + \eta_h$</span>
-<span id="cb41-120"><a href="#cb41-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-121"><a href="#cb41-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\eta_h|\tau \sim \N(0, \tau^2)$</span>
-<span id="cb41-122"><a href="#cb41-122" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-123"><a href="#cb41-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$f$ likelihood: Binomial, Normal (known $\sigma$) or Poisson</span>
-<span id="cb41-124"><a href="#cb41-124" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-125"><a href="#cb41-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$g$ link function for each likelihood $f$: $\logit$, identity or $\log$</span>
-<span id="cb41-126"><a href="#cb41-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-127"><a href="#cb41-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta$ population mean with prior $\N(m_{\beta}, s_{\beta}^2)$</span>
-<span id="cb41-128"><a href="#cb41-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-129"><a href="#cb41-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\tau$ between-trial heterogeneity with prior $P_\tau$</span>
-<span id="cb41-130"><a href="#cb41-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-131"><a href="#cb41-131" aria-hidden="true" tabindex="-1"></a>The priors used for this data-set will be:</span>
-<span id="cb41-132"><a href="#cb41-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-133"><a href="#cb41-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta \sim \N(0, 2^2)$</span>
-<span id="cb41-134"><a href="#cb41-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\tau \sim \HN(0, 1)$</span>
-<span id="cb41-135"><a href="#cb41-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-136"><a href="#cb41-136" aria-hidden="true" tabindex="-1"></a>We will first run the analysis with the <span class="in">`RBesT`</span> command <span class="in">`gMAP`</span>. As a</span>
-<span id="cb41-137"><a href="#cb41-137" aria-hidden="true" tabindex="-1"></a>next step we will convert the analysis to use <span class="in">`brms`</span> for the</span>
-<span id="cb41-138"><a href="#cb41-138" aria-hidden="true" tabindex="-1"></a>inference. Finally, we will add an additional random effect for the</span>
-<span id="cb41-139"><a href="#cb41-139" aria-hidden="true" tabindex="-1"></a>region $j$ and treat the random effect for the studies to be nested</span>
-<span id="cb41-140"><a href="#cb41-140" aria-hidden="true" tabindex="-1"></a>within the region. As the more general model requires two levels of</span>
-<span id="cb41-141"><a href="#cb41-141" aria-hidden="true" tabindex="-1"></a>random effects, it is outside the possible models of <span class="in">`RBesT`</span>. Such a</span>
-<span id="cb41-142"><a href="#cb41-142" aria-hidden="true" tabindex="-1"></a>more general region specific model can be useful in various situations</span>
-<span id="cb41-143"><a href="#cb41-143" aria-hidden="true" tabindex="-1"></a>whenever we wish to borrow strength across regions. Denoting with $j$</span>
-<span id="cb41-144"><a href="#cb41-144" aria-hidden="true" tabindex="-1"></a>specific regions, the more general model is then:</span>
-<span id="cb41-145"><a href="#cb41-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-95"><a href="#cb41-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-96"><a href="#cb41-96" aria-hidden="true" tabindex="-1"></a>This data-set is part of the <span class="in">`RBesT`</span> package as the <span class="in">`AS`</span></span>
+<span id="cb41-97"><a href="#cb41-97" aria-hidden="true" tabindex="-1"></a>data-set and here we add as additional column a randomly assigned</span>
+<span id="cb41-98"><a href="#cb41-98" aria-hidden="true" tabindex="-1"></a><span class="in">`region`</span> variable:</span>
+<span id="cb41-99"><a href="#cb41-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-102"><a href="#cb41-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-103"><a href="#cb41-103" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RBesT)</span>
+<span id="cb41-104"><a href="#cb41-104" aria-hidden="true" tabindex="-1"></a>AS_region <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(AS, <span class="at">region=</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"asia"</span>, <span class="st">"europe"</span>, <span class="st">"north_america"</span>), <span class="dv">8</span>, <span class="cn">TRUE</span>))</span>
+<span id="cb41-105"><a href="#cb41-105" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(AS_region)</span>
+<span id="cb41-106"><a href="#cb41-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-107"><a href="#cb41-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-108"><a href="#cb41-108" aria-hidden="true" tabindex="-1"></a>The total number of <span class="in">`r sum(AS_region$n)`</span> patients in the <span class="in">`r length(AS_region$n)`</span> trials is quite substantial.</span>
+<span id="cb41-109"><a href="#cb41-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-110"><a href="#cb41-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model description</span></span>
+<span id="cb41-111"><a href="#cb41-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-112"><a href="#cb41-112" aria-hidden="true" tabindex="-1"></a>The <span class="in">`RBesT`</span> package implements the MAP approach following a standard</span>
+<span id="cb41-113"><a href="#cb41-113" aria-hidden="true" tabindex="-1"></a>generalized linear modeling framework for a random-effects</span>
+<span id="cb41-114"><a href="#cb41-114" aria-hidden="true" tabindex="-1"></a>meta-analysis:</span>
+<span id="cb41-115"><a href="#cb41-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-116"><a href="#cb41-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y$ is the (control) group summary data for $H$ historical trials</span>
+<span id="cb41-117"><a href="#cb41-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-118"><a href="#cb41-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y_{h}|\theta_{h} \sim f(\theta_{h})$</span>
+<span id="cb41-119"><a href="#cb41-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-120"><a href="#cb41-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$g(\theta_{h}) = \beta + \eta_h$</span>
+<span id="cb41-121"><a href="#cb41-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-122"><a href="#cb41-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\eta_h|\tau \sim \N(0, \tau^2)$</span>
+<span id="cb41-123"><a href="#cb41-123" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb41-124"><a href="#cb41-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$f$ likelihood: Binomial, Normal (known $\sigma$) or Poisson</span>
+<span id="cb41-125"><a href="#cb41-125" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb41-126"><a href="#cb41-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$g$ link function for each likelihood $f$: $\logit$, identity or $\log$</span>
+<span id="cb41-127"><a href="#cb41-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-128"><a href="#cb41-128" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta$ population mean with prior $\N(m_{\beta}, s_{\beta}^2)$</span>
+<span id="cb41-129"><a href="#cb41-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-130"><a href="#cb41-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\tau$ between-trial heterogeneity with prior $P_\tau$</span>
+<span id="cb41-131"><a href="#cb41-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-132"><a href="#cb41-132" aria-hidden="true" tabindex="-1"></a>The priors used for this data-set will be:</span>
+<span id="cb41-133"><a href="#cb41-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-134"><a href="#cb41-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta \sim \N(0, 2^2)$</span>
+<span id="cb41-135"><a href="#cb41-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\tau \sim \HN(0, 1)$</span>
+<span id="cb41-136"><a href="#cb41-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-137"><a href="#cb41-137" aria-hidden="true" tabindex="-1"></a>We will first run the analysis with the <span class="in">`RBesT`</span> command <span class="in">`gMAP`</span>. As a</span>
+<span id="cb41-138"><a href="#cb41-138" aria-hidden="true" tabindex="-1"></a>next step we will convert the analysis to use <span class="in">`brms`</span> for the</span>
+<span id="cb41-139"><a href="#cb41-139" aria-hidden="true" tabindex="-1"></a>inference. Finally, we will add an additional random effect for the</span>
+<span id="cb41-140"><a href="#cb41-140" aria-hidden="true" tabindex="-1"></a>region $j$ and treat the random effect for the studies to be nested</span>
+<span id="cb41-141"><a href="#cb41-141" aria-hidden="true" tabindex="-1"></a>within the region. As the more general model requires two levels of</span>
+<span id="cb41-142"><a href="#cb41-142" aria-hidden="true" tabindex="-1"></a>random effects, it is outside the possible models of <span class="in">`RBesT`</span>. Such a</span>
+<span id="cb41-143"><a href="#cb41-143" aria-hidden="true" tabindex="-1"></a>more general region specific model can be useful in various situations</span>
+<span id="cb41-144"><a href="#cb41-144" aria-hidden="true" tabindex="-1"></a>whenever we wish to borrow strength across regions. Denoting with $j$</span>
+<span id="cb41-145"><a href="#cb41-145" aria-hidden="true" tabindex="-1"></a>specific regions, the more general model is then:</span>
 <span id="cb41-146"><a href="#cb41-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-147"><a href="#cb41-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y_{h,j}|\theta_{h,j} \sim f(\theta_{h,j})$</span>
-<span id="cb41-148"><a href="#cb41-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-149"><a href="#cb41-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$g(\theta_{h,j}) = \beta + \eta_h + \nu_j$</span>
-<span id="cb41-150"><a href="#cb41-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-151"><a href="#cb41-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\eta_h|\tau \sim \N(0, \tau^2)$</span>
-<span id="cb41-152"><a href="#cb41-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-153"><a href="#cb41-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\nu_j|\omega \sim \N(0, \omega^2)$</span>
-<span id="cb41-154"><a href="#cb41-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-155"><a href="#cb41-155" aria-hidden="true" tabindex="-1"></a>In our case study we make a simplifying assumption that any trial $h$</span>
-<span id="cb41-156"><a href="#cb41-156" aria-hidden="true" tabindex="-1"></a>is run entirely within a given region $j$. Therefore we have a</span>
-<span id="cb41-157"><a href="#cb41-157" aria-hidden="true" tabindex="-1"></a>nested structure (trials within regions) such that no correlation is</span>
-<span id="cb41-158"><a href="#cb41-158" aria-hidden="true" tabindex="-1"></a>modeled between region and trial. This would be different if some trials</span>
-<span id="cb41-159"><a href="#cb41-159" aria-hidden="true" tabindex="-1"></a>were run across different regions and trial results would be reported by</span>
-<span id="cb41-160"><a href="#cb41-160" aria-hidden="true" tabindex="-1"></a>region.</span>
-<span id="cb41-161"><a href="#cb41-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-162"><a href="#cb41-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Implementation</span></span>
-<span id="cb41-163"><a href="#cb41-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-164"><a href="#cb41-164" aria-hidden="true" tabindex="-1"></a>With the <span class="in">`gMAP`</span> command in <span class="in">`RBesT`</span> we can obtain MCMC samples from posterior for the first model as follows:</span>
-<span id="cb41-165"><a href="#cb41-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-168"><a href="#cb41-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-169"><a href="#cb41-169" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34767</span>)</span>
-<span id="cb41-170"><a href="#cb41-170" aria-hidden="true" tabindex="-1"></a>map_mc_rbest <span class="ot">&lt;-</span> <span class="fu">gMAP</span>(<span class="fu">cbind</span>(r, n<span class="sc">-</span>r) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> study,</span>
-<span id="cb41-171"><a href="#cb41-171" aria-hidden="true" tabindex="-1"></a>                     <span class="at">family=</span>binomial,</span>
-<span id="cb41-172"><a href="#cb41-172" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data=</span>AS_region,</span>
-<span id="cb41-173"><a href="#cb41-173" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tau.dist=</span><span class="st">"HalfNormal"</span>, <span class="at">tau.prior=</span><span class="dv">1</span>,</span>
-<span id="cb41-174"><a href="#cb41-174" aria-hidden="true" tabindex="-1"></a>                     <span class="at">beta.prior=</span><span class="fu">cbind</span>(<span class="dv">0</span>,<span class="dv">2</span>))</span>
-<span id="cb41-175"><a href="#cb41-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-176"><a href="#cb41-176" aria-hidden="true" tabindex="-1"></a>map_mc_rbest</span>
-<span id="cb41-177"><a href="#cb41-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-178"><a href="#cb41-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-179"><a href="#cb41-179" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`brms`</span> we now specify the MAP model step by step. Binomial data</span>
-<span id="cb41-180"><a href="#cb41-180" aria-hidden="true" tabindex="-1"></a>is specified slightly different in <span class="in">`brms`</span>. We first define the model:</span>
-<span id="cb41-181"><a href="#cb41-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-184"><a href="#cb41-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-185"><a href="#cb41-185" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> study), <span class="at">family=</span>binomial)</span>
-<span id="cb41-186"><a href="#cb41-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-187"><a href="#cb41-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-188"><a href="#cb41-188" aria-hidden="true" tabindex="-1"></a>The left hand side of the formula, <span class="in">` r | trials(n) ~ ...`</span>, denotes with</span>
-<span id="cb41-189"><a href="#cb41-189" aria-hidden="true" tabindex="-1"></a><span class="in">` r`</span> the data being modeled - the number of responders - and adds with</span>
-<span id="cb41-190"><a href="#cb41-190" aria-hidden="true" tabindex="-1"></a>a bar <span class="in">`|`</span> additional information on the response, which are the number of</span>
-<span id="cb41-191"><a href="#cb41-191" aria-hidden="true" tabindex="-1"></a>overall trials, needed to interpret the binomial likelihood.</span>
-<span id="cb41-192"><a href="#cb41-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-193"><a href="#cb41-193" aria-hidden="true" tabindex="-1"></a>With the model (and data) being defined, we are left to specify the</span>
-<span id="cb41-194"><a href="#cb41-194" aria-hidden="true" tabindex="-1"></a>model priors. With the help of the call</span>
-<span id="cb41-195"><a href="#cb41-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-198"><a href="#cb41-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-199"><a href="#cb41-199" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(model, AS_region)</span>
-<span id="cb41-200"><a href="#cb41-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-201"><a href="#cb41-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-202"><a href="#cb41-202" aria-hidden="true" tabindex="-1"></a>we can ask <span class="in">`brms`</span> as to what model parameters it has detected for</span>
-<span id="cb41-203"><a href="#cb41-203" aria-hidden="true" tabindex="-1"></a>which priors should be specified. In this example, we need to define</span>
-<span id="cb41-204"><a href="#cb41-204" aria-hidden="true" tabindex="-1"></a>the population mean intercept ($\beta$) and the between-study</span>
-<span id="cb41-205"><a href="#cb41-205" aria-hidden="true" tabindex="-1"></a>heterogeneity parameter ($\tau$):</span>
-<span id="cb41-206"><a href="#cb41-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-209"><a href="#cb41-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-210"><a href="#cb41-210" aria-hidden="true" tabindex="-1"></a>model_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class=</span>Intercept) <span class="sc">+</span></span>
-<span id="cb41-211"><a href="#cb41-211" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span>
-<span id="cb41-212"><a href="#cb41-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-213"><a href="#cb41-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-214"><a href="#cb41-214" aria-hidden="true" tabindex="-1"></a>Now we are ready to run the model in <span class="in">`brms`</span> (we are setting</span>
-<span id="cb41-215"><a href="#cb41-215" aria-hidden="true" tabindex="-1"></a><span class="in">`refresh=1000`</span> to suppress most progress output):</span>
-<span id="cb41-216"><a href="#cb41-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-219"><a href="#cb41-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-220"><a href="#cb41-220" aria-hidden="true" tabindex="-1"></a>map_mc_brms  <span class="ot">&lt;-</span> <span class="fu">brm</span>(model, AS_region, <span class="at">prior=</span>model_prior,</span>
-<span id="cb41-221"><a href="#cb41-221" aria-hidden="true" tabindex="-1"></a>                    <span class="at">seed=</span><span class="dv">4767</span>, <span class="at">refresh=</span><span class="dv">1000</span>)</span>
-<span id="cb41-222"><a href="#cb41-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-223"><a href="#cb41-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-224"><a href="#cb41-224" aria-hidden="true" tabindex="-1"></a>The model is compiled and then run. Occasionally one observes a</span>
-<span id="cb41-225"><a href="#cb41-225" aria-hidden="true" tabindex="-1"></a>warning on divergent transitions after warmup reported like:</span>
-<span id="cb41-226"><a href="#cb41-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-227"><a href="#cb41-227" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`## Warning: There were 1 divergent transitions after warmup.`</span></span>
-<span id="cb41-228"><a href="#cb41-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-229"><a href="#cb41-229" aria-hidden="true" tabindex="-1"></a>This is caused in this case by the choice of very conservative priors,</span>
-<span id="cb41-230"><a href="#cb41-230" aria-hidden="true" tabindex="-1"></a>which lead to a difficult to sample posterior. As a quick fix we may</span>
-<span id="cb41-231"><a href="#cb41-231" aria-hidden="true" tabindex="-1"></a>reduce the aggressiveness of the sampler and increase the sampler</span>
-<span id="cb41-232"><a href="#cb41-232" aria-hidden="true" tabindex="-1"></a>parameter on the target acceptance probability <span class="in">`adapt_delta`</span> from it's</span>
-<span id="cb41-233"><a href="#cb41-233" aria-hidden="true" tabindex="-1"></a>default value $0.8$ to a value closer to the maximum possible value of</span>
-<span id="cb41-234"><a href="#cb41-234" aria-hidden="true" tabindex="-1"></a>$1.0$. For most analyses with weak priors using a value of $0.95$ can</span>
-<span id="cb41-235"><a href="#cb41-235" aria-hidden="true" tabindex="-1"></a>be used as a starting value. This is at the cost of some sampling</span>
-<span id="cb41-236"><a href="#cb41-236" aria-hidden="true" tabindex="-1"></a>speed as the sampler will take smaller steps, but the choice of a</span>
-<span id="cb41-237"><a href="#cb41-237" aria-hidden="true" tabindex="-1"></a>higher than default acceptance probability results in more robust</span>
-<span id="cb41-238"><a href="#cb41-238" aria-hidden="true" tabindex="-1"></a>inference and avoids in many instances the warning about</span>
-<span id="cb41-239"><a href="#cb41-239" aria-hidden="true" tabindex="-1"></a>divergences. For a more comprehensive overview on possible warnings,</span>
-<span id="cb41-240"><a href="#cb41-240" aria-hidden="true" tabindex="-1"></a>their meanings and how to address these, please refer to the [online</span>
-<span id="cb41-241"><a href="#cb41-241" aria-hidden="true" tabindex="-1"></a>help of the Stan project on possible Stan stampler warnings and</span>
-<span id="cb41-242"><a href="#cb41-242" aria-hidden="true" tabindex="-1"></a>messages](https://mc-stan.org/misc/warnings.html).</span>
-<span id="cb41-243"><a href="#cb41-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-244"><a href="#cb41-244" aria-hidden="true" tabindex="-1"></a>In order to also avoid having to compile the Stan code for the model </span>
-<span id="cb41-245"><a href="#cb41-245" aria-hidden="true" tabindex="-1"></a>once more, we use the <span class="in">`update`</span> functionality of <span class="in">`brms`</span>:</span>
-<span id="cb41-246"><a href="#cb41-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-249"><a href="#cb41-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-250"><a href="#cb41-250" aria-hidden="true" tabindex="-1"></a>map_mc_brms_2 <span class="ot">&lt;-</span> <span class="fu">update</span>(map_mc_brms, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
-<span id="cb41-251"><a href="#cb41-251" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># the two options below only silence Stan sampling output</span></span>
-<span id="cb41-252"><a href="#cb41-252" aria-hidden="true" tabindex="-1"></a>                        <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="dv">0</span>)</span>
-<span id="cb41-253"><a href="#cb41-253" aria-hidden="true" tabindex="-1"></a>map_mc_brms_2</span>
-<span id="cb41-254"><a href="#cb41-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-255"><a href="#cb41-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-256"><a href="#cb41-256" aria-hidden="true" tabindex="-1"></a>We can see that the estimate of the between-study heterogeneity $\tau$</span>
-<span id="cb41-257"><a href="#cb41-257" aria-hidden="true" tabindex="-1"></a>is very similar between <span class="in">`RBesT`</span> and <span class="in">`brms`</span>. However, the MAP prior is</span>
-<span id="cb41-258"><a href="#cb41-258" aria-hidden="true" tabindex="-1"></a>not apparent from the output of <span class="in">`brms`</span> directly (as it's not designed</span>
-<span id="cb41-259"><a href="#cb41-259" aria-hidden="true" tabindex="-1"></a>with this specific application in mind).</span>
-<span id="cb41-260"><a href="#cb41-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-261"><a href="#cb41-261" aria-hidden="true" tabindex="-1"></a>To obtain the MAP prior from <span class="in">`brms`</span>, we have to predict the response</span>
-<span id="cb41-262"><a href="#cb41-262" aria-hidden="true" tabindex="-1"></a>rate of a new study. To do so, a new data set with the same columns as</span>
-<span id="cb41-263"><a href="#cb41-263" aria-hidden="true" tabindex="-1"></a>the modeling data sets needs to be created.</span>
-<span id="cb41-264"><a href="#cb41-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-267"><a href="#cb41-267" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-268"><a href="#cb41-268" aria-hidden="true" tabindex="-1"></a>AS_region_new <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">study=</span><span class="st">"new_study_asia"</span>, <span class="at">r=</span><span class="dv">0</span>, <span class="at">n=</span><span class="dv">6</span>, <span class="at">region=</span><span class="st">"asia"</span>)</span>
-<span id="cb41-269"><a href="#cb41-269" aria-hidden="true" tabindex="-1"></a>post_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(map_mc_brms_2,</span>
-<span id="cb41-270"><a href="#cb41-270" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">newdata=</span>AS_region_new,</span>
-<span id="cb41-271"><a href="#cb41-271" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># apply inverse link function</span></span>
-<span id="cb41-272"><a href="#cb41-272" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">transform=</span><span class="cn">TRUE</span>,</span>
-<span id="cb41-273"><a href="#cb41-273" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># allows new studies</span></span>
-<span id="cb41-274"><a href="#cb41-274" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb41-275"><a href="#cb41-275" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># and samples these according to the model</span></span>
-<span id="cb41-276"><a href="#cb41-276" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span></span>
-<span id="cb41-277"><a href="#cb41-277" aria-hidden="true" tabindex="-1"></a>                                      )</span>
-<span id="cb41-278"><a href="#cb41-278" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's have a look at what we got:</span></span>
-<span id="cb41-279"><a href="#cb41-279" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(post_map_mc_brms)</span>
-<span id="cb41-280"><a href="#cb41-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-281"><a href="#cb41-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-282"><a href="#cb41-282" aria-hidden="true" tabindex="-1"></a>Model outputs are returned in the standard format of a matrix which</span>
-<span id="cb41-283"><a href="#cb41-283" aria-hidden="true" tabindex="-1"></a>contains the model simulations. While the rows label the draws, the</span>
-<span id="cb41-284"><a href="#cb41-284" aria-hidden="true" tabindex="-1"></a>columns go along with the rows of the input data set. As in this case</span>
-<span id="cb41-285"><a href="#cb41-285" aria-hidden="true" tabindex="-1"></a>we have as input data set a 1-row data frame <span class="in">`AS_region_new`</span> </span>
-<span id="cb41-286"><a href="#cb41-286" aria-hidden="true" tabindex="-1"></a>corresponding to predictions for a (single) new study, the</span>
-<span id="cb41-287"><a href="#cb41-287" aria-hidden="true" tabindex="-1"></a>output is a 1 column matrix with 4000 rows, since 4000 draws in total</span>
-<span id="cb41-288"><a href="#cb41-288" aria-hidden="true" tabindex="-1"></a>were obtained from the sampler run with 4 chains and 1000 draws per</span>
-<span id="cb41-289"><a href="#cb41-289" aria-hidden="true" tabindex="-1"></a>chain from the sampling phase.</span>
-<span id="cb41-290"><a href="#cb41-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-147"><a href="#cb41-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-148"><a href="#cb41-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y_{h,j}|\theta_{h,j} \sim f(\theta_{h,j})$</span>
+<span id="cb41-149"><a href="#cb41-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-150"><a href="#cb41-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$g(\theta_{h,j}) = \beta + \eta_h + \nu_j$</span>
+<span id="cb41-151"><a href="#cb41-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-152"><a href="#cb41-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\eta_h|\tau \sim \N(0, \tau^2)$</span>
+<span id="cb41-153"><a href="#cb41-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-154"><a href="#cb41-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\nu_j|\omega \sim \N(0, \omega^2)$</span>
+<span id="cb41-155"><a href="#cb41-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-156"><a href="#cb41-156" aria-hidden="true" tabindex="-1"></a>In our case study we make a simplifying assumption that any trial $h$</span>
+<span id="cb41-157"><a href="#cb41-157" aria-hidden="true" tabindex="-1"></a>is run entirely within a given region $j$. Therefore we have a</span>
+<span id="cb41-158"><a href="#cb41-158" aria-hidden="true" tabindex="-1"></a>nested structure (trials within regions) such that no correlation is</span>
+<span id="cb41-159"><a href="#cb41-159" aria-hidden="true" tabindex="-1"></a>modeled between region and trial. This would be different if some trials</span>
+<span id="cb41-160"><a href="#cb41-160" aria-hidden="true" tabindex="-1"></a>were run across different regions and trial results would be reported by</span>
+<span id="cb41-161"><a href="#cb41-161" aria-hidden="true" tabindex="-1"></a>region.</span>
+<span id="cb41-162"><a href="#cb41-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-163"><a href="#cb41-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## Implementation</span></span>
+<span id="cb41-164"><a href="#cb41-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-165"><a href="#cb41-165" aria-hidden="true" tabindex="-1"></a>With the <span class="in">`gMAP`</span> command in <span class="in">`RBesT`</span> we can obtain MCMC samples from posterior for the first model as follows:</span>
+<span id="cb41-166"><a href="#cb41-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-169"><a href="#cb41-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-170"><a href="#cb41-170" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">34767</span>)</span>
+<span id="cb41-171"><a href="#cb41-171" aria-hidden="true" tabindex="-1"></a>map_mc_rbest <span class="ot">&lt;-</span> <span class="fu">gMAP</span>(<span class="fu">cbind</span>(r, n<span class="sc">-</span>r) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> study,</span>
+<span id="cb41-172"><a href="#cb41-172" aria-hidden="true" tabindex="-1"></a>                     <span class="at">family=</span>binomial,</span>
+<span id="cb41-173"><a href="#cb41-173" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data=</span>AS_region,</span>
+<span id="cb41-174"><a href="#cb41-174" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tau.dist=</span><span class="st">"HalfNormal"</span>, <span class="at">tau.prior=</span><span class="dv">1</span>,</span>
+<span id="cb41-175"><a href="#cb41-175" aria-hidden="true" tabindex="-1"></a>                     <span class="at">beta.prior=</span><span class="fu">cbind</span>(<span class="dv">0</span>,<span class="dv">2</span>))</span>
+<span id="cb41-176"><a href="#cb41-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-177"><a href="#cb41-177" aria-hidden="true" tabindex="-1"></a>map_mc_rbest</span>
+<span id="cb41-178"><a href="#cb41-178" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-179"><a href="#cb41-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-180"><a href="#cb41-180" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`brms`</span> we now specify the MAP model step by step. Binomial data</span>
+<span id="cb41-181"><a href="#cb41-181" aria-hidden="true" tabindex="-1"></a>is specified slightly different in <span class="in">`brms`</span>. We first define the model:</span>
+<span id="cb41-182"><a href="#cb41-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-185"><a href="#cb41-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-186"><a href="#cb41-186" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> study), <span class="at">family=</span>binomial)</span>
+<span id="cb41-187"><a href="#cb41-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-188"><a href="#cb41-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-189"><a href="#cb41-189" aria-hidden="true" tabindex="-1"></a>The left hand side of the formula, <span class="in">` r | trials(n) ~ ...`</span>, denotes with</span>
+<span id="cb41-190"><a href="#cb41-190" aria-hidden="true" tabindex="-1"></a><span class="in">` r`</span> the data being modeled - the number of responders - and adds with</span>
+<span id="cb41-191"><a href="#cb41-191" aria-hidden="true" tabindex="-1"></a>a bar <span class="in">`|`</span> additional information on the response, which are the number of</span>
+<span id="cb41-192"><a href="#cb41-192" aria-hidden="true" tabindex="-1"></a>overall trials, needed to interpret the binomial likelihood.</span>
+<span id="cb41-193"><a href="#cb41-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-194"><a href="#cb41-194" aria-hidden="true" tabindex="-1"></a>With the model (and data) being defined, we are left to specify the</span>
+<span id="cb41-195"><a href="#cb41-195" aria-hidden="true" tabindex="-1"></a>model priors. With the help of the call</span>
+<span id="cb41-196"><a href="#cb41-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-199"><a href="#cb41-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-200"><a href="#cb41-200" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(model, AS_region)</span>
+<span id="cb41-201"><a href="#cb41-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-202"><a href="#cb41-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-203"><a href="#cb41-203" aria-hidden="true" tabindex="-1"></a>we can ask <span class="in">`brms`</span> as to what model parameters it has detected for</span>
+<span id="cb41-204"><a href="#cb41-204" aria-hidden="true" tabindex="-1"></a>which priors should be specified. In this example, we need to define</span>
+<span id="cb41-205"><a href="#cb41-205" aria-hidden="true" tabindex="-1"></a>the population mean intercept ($\beta$) and the between-study</span>
+<span id="cb41-206"><a href="#cb41-206" aria-hidden="true" tabindex="-1"></a>heterogeneity parameter ($\tau$):</span>
+<span id="cb41-207"><a href="#cb41-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-210"><a href="#cb41-210" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-211"><a href="#cb41-211" aria-hidden="true" tabindex="-1"></a>model_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class=</span>Intercept) <span class="sc">+</span></span>
+<span id="cb41-212"><a href="#cb41-212" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span>
+<span id="cb41-213"><a href="#cb41-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-214"><a href="#cb41-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-215"><a href="#cb41-215" aria-hidden="true" tabindex="-1"></a>Now we are ready to run the model in <span class="in">`brms`</span> (we are setting</span>
+<span id="cb41-216"><a href="#cb41-216" aria-hidden="true" tabindex="-1"></a><span class="in">`refresh=1000`</span> to suppress most progress output):</span>
+<span id="cb41-217"><a href="#cb41-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-220"><a href="#cb41-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-221"><a href="#cb41-221" aria-hidden="true" tabindex="-1"></a>map_mc_brms  <span class="ot">&lt;-</span> <span class="fu">brm</span>(model, AS_region, <span class="at">prior=</span>model_prior,</span>
+<span id="cb41-222"><a href="#cb41-222" aria-hidden="true" tabindex="-1"></a>                    <span class="at">seed=</span><span class="dv">4767</span>, <span class="at">refresh=</span><span class="dv">1000</span>)</span>
+<span id="cb41-223"><a href="#cb41-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-224"><a href="#cb41-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-225"><a href="#cb41-225" aria-hidden="true" tabindex="-1"></a>The model is compiled and then run. Occasionally one observes a</span>
+<span id="cb41-226"><a href="#cb41-226" aria-hidden="true" tabindex="-1"></a>warning on divergent transitions after warmup reported like:</span>
+<span id="cb41-227"><a href="#cb41-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-228"><a href="#cb41-228" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`## Warning: There were 1 divergent transitions after warmup.`</span></span>
+<span id="cb41-229"><a href="#cb41-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-230"><a href="#cb41-230" aria-hidden="true" tabindex="-1"></a>This is caused in this case by the choice of very conservative priors,</span>
+<span id="cb41-231"><a href="#cb41-231" aria-hidden="true" tabindex="-1"></a>which lead to a difficult to sample posterior. As a quick fix we may</span>
+<span id="cb41-232"><a href="#cb41-232" aria-hidden="true" tabindex="-1"></a>reduce the aggressiveness of the sampler and increase the sampler</span>
+<span id="cb41-233"><a href="#cb41-233" aria-hidden="true" tabindex="-1"></a>parameter on the target acceptance probability <span class="in">`adapt_delta`</span> from it's</span>
+<span id="cb41-234"><a href="#cb41-234" aria-hidden="true" tabindex="-1"></a>default value $0.8$ to a value closer to the maximum possible value of</span>
+<span id="cb41-235"><a href="#cb41-235" aria-hidden="true" tabindex="-1"></a>$1.0$. For most analyses with weak priors using a value of $0.95$ can</span>
+<span id="cb41-236"><a href="#cb41-236" aria-hidden="true" tabindex="-1"></a>be used as a starting value. This is at the cost of some sampling</span>
+<span id="cb41-237"><a href="#cb41-237" aria-hidden="true" tabindex="-1"></a>speed as the sampler will take smaller steps, but the choice of a</span>
+<span id="cb41-238"><a href="#cb41-238" aria-hidden="true" tabindex="-1"></a>higher than default acceptance probability results in more robust</span>
+<span id="cb41-239"><a href="#cb41-239" aria-hidden="true" tabindex="-1"></a>inference and avoids in many instances the warning about</span>
+<span id="cb41-240"><a href="#cb41-240" aria-hidden="true" tabindex="-1"></a>divergences. For a more comprehensive overview on possible warnings,</span>
+<span id="cb41-241"><a href="#cb41-241" aria-hidden="true" tabindex="-1"></a>their meanings and how to address these, please refer to the [online</span>
+<span id="cb41-242"><a href="#cb41-242" aria-hidden="true" tabindex="-1"></a>help of the Stan project on possible Stan stampler warnings and</span>
+<span id="cb41-243"><a href="#cb41-243" aria-hidden="true" tabindex="-1"></a>messages](https://mc-stan.org/misc/warnings.html).</span>
+<span id="cb41-244"><a href="#cb41-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-245"><a href="#cb41-245" aria-hidden="true" tabindex="-1"></a>In order to also avoid having to compile the Stan code for the model </span>
+<span id="cb41-246"><a href="#cb41-246" aria-hidden="true" tabindex="-1"></a>once more, we use the <span class="in">`update`</span> functionality of <span class="in">`brms`</span>:</span>
+<span id="cb41-247"><a href="#cb41-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-250"><a href="#cb41-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-251"><a href="#cb41-251" aria-hidden="true" tabindex="-1"></a>map_mc_brms_2 <span class="ot">&lt;-</span> <span class="fu">update</span>(map_mc_brms, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
+<span id="cb41-252"><a href="#cb41-252" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># the two options below only silence Stan sampling output</span></span>
+<span id="cb41-253"><a href="#cb41-253" aria-hidden="true" tabindex="-1"></a>                        <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="dv">0</span>)</span>
+<span id="cb41-254"><a href="#cb41-254" aria-hidden="true" tabindex="-1"></a>map_mc_brms_2</span>
+<span id="cb41-255"><a href="#cb41-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-256"><a href="#cb41-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-257"><a href="#cb41-257" aria-hidden="true" tabindex="-1"></a>We can see that the estimate of the between-study heterogeneity $\tau$</span>
+<span id="cb41-258"><a href="#cb41-258" aria-hidden="true" tabindex="-1"></a>is very similar between <span class="in">`RBesT`</span> and <span class="in">`brms`</span>. However, the MAP prior is</span>
+<span id="cb41-259"><a href="#cb41-259" aria-hidden="true" tabindex="-1"></a>not apparent from the output of <span class="in">`brms`</span> directly (as it's not designed</span>
+<span id="cb41-260"><a href="#cb41-260" aria-hidden="true" tabindex="-1"></a>with this specific application in mind).</span>
+<span id="cb41-261"><a href="#cb41-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-262"><a href="#cb41-262" aria-hidden="true" tabindex="-1"></a>To obtain the MAP prior from <span class="in">`brms`</span>, we have to predict the response</span>
+<span id="cb41-263"><a href="#cb41-263" aria-hidden="true" tabindex="-1"></a>rate of a new study. To do so, a new data set with the same columns as</span>
+<span id="cb41-264"><a href="#cb41-264" aria-hidden="true" tabindex="-1"></a>the modeling data sets needs to be created.</span>
+<span id="cb41-265"><a href="#cb41-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-268"><a href="#cb41-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-269"><a href="#cb41-269" aria-hidden="true" tabindex="-1"></a>AS_region_new <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">study=</span><span class="st">"new_study_asia"</span>, <span class="at">r=</span><span class="dv">0</span>, <span class="at">n=</span><span class="dv">6</span>, <span class="at">region=</span><span class="st">"asia"</span>)</span>
+<span id="cb41-270"><a href="#cb41-270" aria-hidden="true" tabindex="-1"></a>post_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(map_mc_brms_2,</span>
+<span id="cb41-271"><a href="#cb41-271" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">newdata=</span>AS_region_new,</span>
+<span id="cb41-272"><a href="#cb41-272" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># apply inverse link function</span></span>
+<span id="cb41-273"><a href="#cb41-273" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">transform=</span><span class="cn">TRUE</span>,</span>
+<span id="cb41-274"><a href="#cb41-274" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># allows new studies</span></span>
+<span id="cb41-275"><a href="#cb41-275" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb41-276"><a href="#cb41-276" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># and samples these according to the model</span></span>
+<span id="cb41-277"><a href="#cb41-277" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span></span>
+<span id="cb41-278"><a href="#cb41-278" aria-hidden="true" tabindex="-1"></a>                                      )</span>
+<span id="cb41-279"><a href="#cb41-279" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's have a look at what we got:</span></span>
+<span id="cb41-280"><a href="#cb41-280" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(post_map_mc_brms)</span>
+<span id="cb41-281"><a href="#cb41-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-282"><a href="#cb41-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-283"><a href="#cb41-283" aria-hidden="true" tabindex="-1"></a>Model outputs are returned in the standard format of a matrix which</span>
+<span id="cb41-284"><a href="#cb41-284" aria-hidden="true" tabindex="-1"></a>contains the model simulations. While the rows label the draws, the</span>
+<span id="cb41-285"><a href="#cb41-285" aria-hidden="true" tabindex="-1"></a>columns go along with the rows of the input data set. As in this case</span>
+<span id="cb41-286"><a href="#cb41-286" aria-hidden="true" tabindex="-1"></a>we have as input data set a 1-row data frame <span class="in">`AS_region_new`</span> </span>
+<span id="cb41-287"><a href="#cb41-287" aria-hidden="true" tabindex="-1"></a>corresponding to predictions for a (single) new study, the</span>
+<span id="cb41-288"><a href="#cb41-288" aria-hidden="true" tabindex="-1"></a>output is a 1 column matrix with 4000 rows, since 4000 draws in total</span>
+<span id="cb41-289"><a href="#cb41-289" aria-hidden="true" tabindex="-1"></a>were obtained from the sampler run with 4 chains and 1000 draws per</span>
+<span id="cb41-290"><a href="#cb41-290" aria-hidden="true" tabindex="-1"></a>chain from the sampling phase.</span>
 <span id="cb41-291"><a href="#cb41-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-292"><a href="#cb41-292" aria-hidden="true" tabindex="-1"></a>Note the following important arguments used to obtain the posterior:</span>
-<span id="cb41-293"><a href="#cb41-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-294"><a href="#cb41-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`transform=TRUE`</span> applies automatically the inverse link function</span>
-<span id="cb41-295"><a href="#cb41-295" aria-hidden="true" tabindex="-1"></a>  such that we get response rates rather than logit values.</span>
-<span id="cb41-296"><a href="#cb41-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`allow_new_levels=TRUE`</span> is needed to instruct <span class="in">`brms`</span> that new levels</span>
-<span id="cb41-297"><a href="#cb41-297" aria-hidden="true" tabindex="-1"></a>  of the fitted random effects are admissible in the data. In this</span>
-<span id="cb41-298"><a href="#cb41-298" aria-hidden="true" tabindex="-1"></a>  case we sample a new study random effect level.</span>
-<span id="cb41-299"><a href="#cb41-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`sample_new_levels="gaussian"`</span> ensures that the new random effect is</span>
-<span id="cb41-300"><a href="#cb41-300" aria-hidden="true" tabindex="-1"></a>  sampled according to normal distributions as specified with the</span>
-<span id="cb41-301"><a href="#cb41-301" aria-hidden="true" tabindex="-1"></a>  model. The default option <span class="in">`"uncertainty"`</span> samples for each draw from</span>
-<span id="cb41-302"><a href="#cb41-302" aria-hidden="true" tabindex="-1"></a>  the fitted random effect levels one realization, which is</span>
-<span id="cb41-303"><a href="#cb41-303" aria-hidden="true" tabindex="-1"></a>  essentially bootstrapping random effects on the level of posterior</span>
-<span id="cb41-304"><a href="#cb41-304" aria-hidden="true" tabindex="-1"></a>  draws. The option <span class="in">`"old_levels"`</span> samples a random effect level and</span>
-<span id="cb41-305"><a href="#cb41-305" aria-hidden="true" tabindex="-1"></a>  substitutes *all* draws for the new level corresponding to</span>
-<span id="cb41-306"><a href="#cb41-306" aria-hidden="true" tabindex="-1"></a>  bootstrapping the existing levels. While this avoids normality</span>
-<span id="cb41-307"><a href="#cb41-307" aria-hidden="true" tabindex="-1"></a>  assumptions, it can only work well in situations with many levels of</span>
-<span id="cb41-308"><a href="#cb41-308" aria-hidden="true" tabindex="-1"></a>  the random effect. The option <span class="in">`"gaussian"`</span> is for most models the</span>
-<span id="cb41-309"><a href="#cb41-309" aria-hidden="true" tabindex="-1"></a>  preferred choice and for more details, please refer to the <span class="in">`brms`</span></span>
-<span id="cb41-310"><a href="#cb41-310" aria-hidden="true" tabindex="-1"></a>  help page on <span class="in">`prepare_predictions`</span>.</span>
-<span id="cb41-311"><a href="#cb41-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-312"><a href="#cb41-312" aria-hidden="true" tabindex="-1"></a>A convenient way to get a summary of the samples is to use</span>
-<span id="cb41-313"><a href="#cb41-313" aria-hidden="true" tabindex="-1"></a>the <span class="in">`summarize_draws`</span> function from the <span class="in">`posterior`</span> package (used as</span>
-<span id="cb41-314"><a href="#cb41-314" aria-hidden="true" tabindex="-1"></a>a helper package in <span class="in">`brms`</span> already):</span>
-<span id="cb41-315"><a href="#cb41-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-318"><a href="#cb41-318" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-319"><a href="#cb41-319" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_draws</span>(post_map_mc_brms)</span>
-<span id="cb41-320"><a href="#cb41-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-321"><a href="#cb41-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-322"><a href="#cb41-322" aria-hidden="true" tabindex="-1"></a>These estimates are now very similar to the results reported from</span>
-<span id="cb41-323"><a href="#cb41-323" aria-hidden="true" tabindex="-1"></a><span class="in">`RBesT`</span> reported above (up to sampling error).</span>
-<span id="cb41-324"><a href="#cb41-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-325"><a href="#cb41-325" aria-hidden="true" tabindex="-1"></a>Expanding the model to include region would only be possible in</span>
-<span id="cb41-326"><a href="#cb41-326" aria-hidden="true" tabindex="-1"></a><span class="in">`RBesT`</span> via the use of an additional fixed effect. However, this would</span>
-<span id="cb41-327"><a href="#cb41-327" aria-hidden="true" tabindex="-1"></a>essentially refit the model for each region *separately* and hence</span>
-<span id="cb41-328"><a href="#cb41-328" aria-hidden="true" tabindex="-1"></a>limit the amount of information we can borrow among regions. With</span>
-<span id="cb41-329"><a href="#cb41-329" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> it is straightforward to specify the nested random effects</span>
-<span id="cb41-330"><a href="#cb41-330" aria-hidden="true" tabindex="-1"></a>structure described in the _Model Details_ Section. Following the </span>
-<span id="cb41-331"><a href="#cb41-331" aria-hidden="true" tabindex="-1"></a>same steps as before, setting up the brms model may look like:</span>
-<span id="cb41-332"><a href="#cb41-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-335"><a href="#cb41-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-336"><a href="#cb41-336" aria-hidden="true" tabindex="-1"></a>region_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> region<span class="sc">/</span>study), <span class="at">family=</span>binomial)</span>
-<span id="cb41-337"><a href="#cb41-337" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(region_model, AS_region)</span>
-<span id="cb41-338"><a href="#cb41-338" aria-hidden="true" tabindex="-1"></a>region_model_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class=</span>Intercept) <span class="sc">+</span></span>
-<span id="cb41-339"><a href="#cb41-339" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>region) <span class="sc">+</span></span>
-<span id="cb41-340"><a href="#cb41-340" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.25</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>region<span class="sc">:</span>study)</span>
-<span id="cb41-341"><a href="#cb41-341" aria-hidden="true" tabindex="-1"></a>region_map_mc_brms  <span class="ot">&lt;-</span> <span class="fu">brm</span>(region_model, AS_region, <span class="at">prior=</span>region_model_prior, <span class="at">seed=</span><span class="dv">4767</span>,</span>
-<span id="cb41-342"><a href="#cb41-342" aria-hidden="true" tabindex="-1"></a>                           <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
-<span id="cb41-343"><a href="#cb41-343" aria-hidden="true" tabindex="-1"></a>                           <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="dv">0</span>)</span>
-<span id="cb41-344"><a href="#cb41-344" aria-hidden="true" tabindex="-1"></a>post_region_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
-<span id="cb41-345"><a href="#cb41-345" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">newdata=</span>AS_region_new,</span>
-<span id="cb41-346"><a href="#cb41-346" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">transform=</span><span class="cn">TRUE</span>,</span>
-<span id="cb41-347"><a href="#cb41-347" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb41-348"><a href="#cb41-348" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span></span>
-<span id="cb41-349"><a href="#cb41-349" aria-hidden="true" tabindex="-1"></a>                                             )</span>
-<span id="cb41-350"><a href="#cb41-350" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's have a look at what we got:</span></span>
-<span id="cb41-351"><a href="#cb41-351" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_draws</span>(post_region_map_mc_brms)</span>
-<span id="cb41-352"><a href="#cb41-352" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-353"><a href="#cb41-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-354"><a href="#cb41-354" aria-hidden="true" tabindex="-1"></a>The key difference to the previous model is the nested random effect</span>
-<span id="cb41-355"><a href="#cb41-355" aria-hidden="true" tabindex="-1"></a>specification term <span class="in">`(1 | region/study)`</span> of the model formula. This</span>
-<span id="cb41-356"><a href="#cb41-356" aria-hidden="true" tabindex="-1"></a>syntax denotes a random intercept term for <span class="in">`region`</span> and <span class="in">`study`</span> in a</span>
-<span id="cb41-357"><a href="#cb41-357" aria-hidden="true" tabindex="-1"></a>way which assumes a nested data structure in that a given study is</span>
-<span id="cb41-358"><a href="#cb41-358" aria-hidden="true" tabindex="-1"></a>only run in a single region.</span>
-<span id="cb41-359"><a href="#cb41-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-360"><a href="#cb41-360" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
-<span id="cb41-361"><a href="#cb41-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-362"><a href="#cb41-362" aria-hidden="true" tabindex="-1"></a>Once the MAP prior is obtained in MCMC form a model check of is</span>
-<span id="cb41-363"><a href="#cb41-363" aria-hidden="true" tabindex="-1"></a>recommended. In <span class="in">`RBesT`</span> a forest plot augmented with model shrinkage</span>
-<span id="cb41-364"><a href="#cb41-364" aria-hidden="true" tabindex="-1"></a>estimates is suggested for this purpose:</span>
-<span id="cb41-365"><a href="#cb41-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-368"><a href="#cb41-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-369"><a href="#cb41-369" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map_mc_rbest)<span class="sc">$</span>forest_model</span>
-<span id="cb41-370"><a href="#cb41-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-371"><a href="#cb41-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-372"><a href="#cb41-372" aria-hidden="true" tabindex="-1"></a>The dashed lines show the 95% confidence intervals of each study</span>
-<span id="cb41-373"><a href="#cb41-373" aria-hidden="true" tabindex="-1"></a>estimate on it's own while the solid line shows the respective</span>
-<span id="cb41-374"><a href="#cb41-374" aria-hidden="true" tabindex="-1"></a>shrinkage estimate of the MAP model. This plot is useful to assess the</span>
-<span id="cb41-375"><a href="#cb41-375" aria-hidden="true" tabindex="-1"></a>plausibility of the results and may unveil possible issues with the</span>
-<span id="cb41-376"><a href="#cb41-376" aria-hidden="true" tabindex="-1"></a>model specification. In <span class="in">`brms`</span> model diagnostic functions are directly</span>
-<span id="cb41-377"><a href="#cb41-377" aria-hidden="true" tabindex="-1"></a>available and essentially expose the functionality found in the</span>
-<span id="cb41-378"><a href="#cb41-378" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">`bayesplot`</span><span class="co">](https://mc-stan.org/bayesplot/index.html)</span> R package. A</span>
-<span id="cb41-379"><a href="#cb41-379" aria-hidden="true" tabindex="-1"></a>suitable <span class="in">`bayesplot`</span> plot in this situation could be an <span class="in">`intervals`</span></span>
-<span id="cb41-380"><a href="#cb41-380" aria-hidden="true" tabindex="-1"></a>plot as:</span>
-<span id="cb41-381"><a href="#cb41-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-384"><a href="#cb41-384" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-385"><a href="#cb41-385" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(map_mc_brms_2, <span class="at">type=</span><span class="st">"intervals"</span>) <span class="sc">+</span></span>
-<span id="cb41-386"><a href="#cb41-386" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="st">"Study"</span>, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(AS_region), <span class="at">labels=</span>AS_region<span class="sc">$</span>study) <span class="sc">+</span></span>
-<span id="cb41-387"><a href="#cb41-387" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
-<span id="cb41-388"><a href="#cb41-388" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb41-389"><a href="#cb41-389" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
-<span id="cb41-390"><a href="#cb41-390" aria-hidden="true" tabindex="-1"></a>          <span class="co"># suppress vertical grid lines for better readability of intervals</span></span>
-<span id="cb41-391"><a href="#cb41-391" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb41-392"><a href="#cb41-392" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-393"><a href="#cb41-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-394"><a href="#cb41-394" aria-hidden="true" tabindex="-1"></a>The call of the <span class="in">`pp_check`</span> function is forwarded to the respective</span>
-<span id="cb41-395"><a href="#cb41-395" aria-hidden="true" tabindex="-1"></a><span class="in">`ppc_*`</span> functions for posterior predictive checks from <span class="in">`bayesplot`</span></span>
-<span id="cb41-396"><a href="#cb41-396" aria-hidden="true" tabindex="-1"></a>(depending on the <span class="in">`type`</span> argument). The plots are designed to compare</span>
-<span id="cb41-397"><a href="#cb41-397" aria-hidden="true" tabindex="-1"></a>the *posterior predictive* distribution to the observed data rather</span>
-<span id="cb41-398"><a href="#cb41-398" aria-hidden="true" tabindex="-1"></a>than comparing mean estimates to one another. Thus, the outcome of</span>
-<span id="cb41-399"><a href="#cb41-399" aria-hidden="true" tabindex="-1"></a>each trial in the original data set is sampled according to the fitted</span>
-<span id="cb41-400"><a href="#cb41-400" aria-hidden="true" tabindex="-1"></a>model and the resulting predictive distribution of the outcome (number</span>
-<span id="cb41-401"><a href="#cb41-401" aria-hidden="true" tabindex="-1"></a>of responders) is compared to the observed outcome. The <span class="in">`intervals`</span></span>
-<span id="cb41-402"><a href="#cb41-402" aria-hidden="true" tabindex="-1"></a>predictive probability check summarises the predictive distributions</span>
-<span id="cb41-403"><a href="#cb41-403" aria-hidden="true" tabindex="-1"></a>using a light color for an outer credible interval range and a darker</span>
-<span id="cb41-404"><a href="#cb41-404" aria-hidden="true" tabindex="-1"></a>line for an inner credible interval. The outer defaults to a 90%</span>
-<span id="cb41-405"><a href="#cb41-405" aria-hidden="true" tabindex="-1"></a>credible interval (<span class="in">`prob_outer`</span> argument) while the inner uses a 50%</span>
-<span id="cb41-406"><a href="#cb41-406" aria-hidden="true" tabindex="-1"></a>credible interval (<span class="in">`prob`</span> argument). The light dot in the middle is</span>
-<span id="cb41-407"><a href="#cb41-407" aria-hidden="true" tabindex="-1"></a>the median of the predictive distribution and the dark dot is the</span>
-<span id="cb41-408"><a href="#cb41-408" aria-hidden="true" tabindex="-1"></a>outcome $y$. As we can observe, the outcomes $y$ of the trials all are</span>
-<span id="cb41-409"><a href="#cb41-409" aria-hidden="true" tabindex="-1"></a>contained within outer credible intervals of the predictive</span>
-<span id="cb41-410"><a href="#cb41-410" aria-hidden="true" tabindex="-1"></a>distributions for the simulated replicate data $y_{rep}$. However, one</span>
-<span id="cb41-411"><a href="#cb41-411" aria-hidden="true" tabindex="-1"></a>may critizise that also the 50% credible intervals contain all but two</span>
-<span id="cb41-412"><a href="#cb41-412" aria-hidden="true" tabindex="-1"></a>trials (study 3, study 7). Hence, the *calibration* of the model with</span>
-<span id="cb41-413"><a href="#cb41-413" aria-hidden="true" tabindex="-1"></a>the data is possibly not ideal given that every other trial outcome</span>
-<span id="cb41-414"><a href="#cb41-414" aria-hidden="true" tabindex="-1"></a>should be outside (or inside) of the 50% predictive</span>
-<span id="cb41-415"><a href="#cb41-415" aria-hidden="true" tabindex="-1"></a>interval. Comparing with a binomial distribution one can find that</span>
-<span id="cb41-416"><a href="#cb41-416" aria-hidden="true" tabindex="-1"></a>such an outcome can occur in 14% of the cases and does not represent</span>
-<span id="cb41-417"><a href="#cb41-417" aria-hidden="true" tabindex="-1"></a>an extreme finding such that we can conclude that the model is</span>
-<span id="cb41-418"><a href="#cb41-418" aria-hidden="true" tabindex="-1"></a>consistent with the data.</span>
-<span id="cb41-419"><a href="#cb41-419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-420"><a href="#cb41-420" aria-hidden="true" tabindex="-1"></a>Once the model has been checked for plausibility, we can proceed and</span>
-<span id="cb41-421"><a href="#cb41-421" aria-hidden="true" tabindex="-1"></a>derive the main target of the MAP analysis, which is the MAP prior in</span>
-<span id="cb41-422"><a href="#cb41-422" aria-hidden="true" tabindex="-1"></a>*parametric* form. <span class="in">`RBesT`</span> provides a fitting procedure, based in the</span>
-<span id="cb41-423"><a href="#cb41-423" aria-hidden="true" tabindex="-1"></a>EM algorithm, for approximating the MCMC output of the MAP prior in</span>
-<span id="cb41-424"><a href="#cb41-424" aria-hidden="true" tabindex="-1"></a>parametric form using mixture distributions. In the case of a binomial</span>
-<span id="cb41-425"><a href="#cb41-425" aria-hidden="true" tabindex="-1"></a>response Beta mixtures are being estimated:</span>
-<span id="cb41-426"><a href="#cb41-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-429"><a href="#cb41-429" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-430"><a href="#cb41-430" aria-hidden="true" tabindex="-1"></a>map_rbest <span class="ot">&lt;-</span> <span class="fu">automixfit</span>(map_mc_rbest)</span>
-<span id="cb41-431"><a href="#cb41-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-432"><a href="#cb41-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-433"><a href="#cb41-433" aria-hidden="true" tabindex="-1"></a>And a comparison of the fitted density vs the histogram of the MCMC</span>
-<span id="cb41-434"><a href="#cb41-434" aria-hidden="true" tabindex="-1"></a>sample is available as:</span>
-<span id="cb41-435"><a href="#cb41-435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-438"><a href="#cb41-438" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-439"><a href="#cb41-439" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map_rbest)<span class="sc">$</span>mix</span>
-<span id="cb41-440"><a href="#cb41-440" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-441"><a href="#cb41-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-442"><a href="#cb41-442" aria-hidden="true" tabindex="-1"></a>The <span class="in">`automixfit`</span> function above recognizes that the  <span class="in">`map_mc_rbest`</span> </span>
-<span id="cb41-443"><a href="#cb41-443" aria-hidden="true" tabindex="-1"></a>object is a <span class="in">`gMAP`</span> analysis object and automatically calls the correct </span>
-<span id="cb41-444"><a href="#cb41-444" aria-hidden="true" tabindex="-1"></a>Beta EM mixture algorithm for proportions. When working with <span class="in">`brms`</span> we </span>
-<span id="cb41-445"><a href="#cb41-445" aria-hidden="true" tabindex="-1"></a>also do obtain the MAP prior in MCMC form on the response scale, but we </span>
-<span id="cb41-446"><a href="#cb41-446" aria-hidden="true" tabindex="-1"></a>need to provide <span class="in">`automixfit`</span> additional information on the provided MCMC </span>
-<span id="cb41-447"><a href="#cb41-447" aria-hidden="true" tabindex="-1"></a>sample like this:</span>
-<span id="cb41-448"><a href="#cb41-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-292"><a href="#cb41-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-293"><a href="#cb41-293" aria-hidden="true" tabindex="-1"></a>Note the following important arguments used to obtain the posterior:</span>
+<span id="cb41-294"><a href="#cb41-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-295"><a href="#cb41-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`transform=TRUE`</span> applies automatically the inverse link function</span>
+<span id="cb41-296"><a href="#cb41-296" aria-hidden="true" tabindex="-1"></a>  such that we get response rates rather than logit values.</span>
+<span id="cb41-297"><a href="#cb41-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`allow_new_levels=TRUE`</span> is needed to instruct <span class="in">`brms`</span> that new levels</span>
+<span id="cb41-298"><a href="#cb41-298" aria-hidden="true" tabindex="-1"></a>  of the fitted random effects are admissible in the data. In this</span>
+<span id="cb41-299"><a href="#cb41-299" aria-hidden="true" tabindex="-1"></a>  case we sample a new study random effect level.</span>
+<span id="cb41-300"><a href="#cb41-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`sample_new_levels="gaussian"`</span> ensures that the new random effect is</span>
+<span id="cb41-301"><a href="#cb41-301" aria-hidden="true" tabindex="-1"></a>  sampled according to normal distributions as specified with the</span>
+<span id="cb41-302"><a href="#cb41-302" aria-hidden="true" tabindex="-1"></a>  model. The default option <span class="in">`"uncertainty"`</span> samples for each draw from</span>
+<span id="cb41-303"><a href="#cb41-303" aria-hidden="true" tabindex="-1"></a>  the fitted random effect levels one realization, which is</span>
+<span id="cb41-304"><a href="#cb41-304" aria-hidden="true" tabindex="-1"></a>  essentially bootstrapping random effects on the level of posterior</span>
+<span id="cb41-305"><a href="#cb41-305" aria-hidden="true" tabindex="-1"></a>  draws. The option <span class="in">`"old_levels"`</span> samples a random effect level and</span>
+<span id="cb41-306"><a href="#cb41-306" aria-hidden="true" tabindex="-1"></a>  substitutes *all* draws for the new level corresponding to</span>
+<span id="cb41-307"><a href="#cb41-307" aria-hidden="true" tabindex="-1"></a>  bootstrapping the existing levels. While this avoids normality</span>
+<span id="cb41-308"><a href="#cb41-308" aria-hidden="true" tabindex="-1"></a>  assumptions, it can only work well in situations with many levels of</span>
+<span id="cb41-309"><a href="#cb41-309" aria-hidden="true" tabindex="-1"></a>  the random effect. The option <span class="in">`"gaussian"`</span> is for most models the</span>
+<span id="cb41-310"><a href="#cb41-310" aria-hidden="true" tabindex="-1"></a>  preferred choice and for more details, please refer to the <span class="in">`brms`</span></span>
+<span id="cb41-311"><a href="#cb41-311" aria-hidden="true" tabindex="-1"></a>  help page on <span class="in">`prepare_predictions`</span>.</span>
+<span id="cb41-312"><a href="#cb41-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-313"><a href="#cb41-313" aria-hidden="true" tabindex="-1"></a>A convenient way to get a summary of the samples is to use</span>
+<span id="cb41-314"><a href="#cb41-314" aria-hidden="true" tabindex="-1"></a>the <span class="in">`summarize_draws`</span> function from the <span class="in">`posterior`</span> package (used as</span>
+<span id="cb41-315"><a href="#cb41-315" aria-hidden="true" tabindex="-1"></a>a helper package in <span class="in">`brms`</span> already):</span>
+<span id="cb41-316"><a href="#cb41-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-319"><a href="#cb41-319" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-320"><a href="#cb41-320" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_draws</span>(post_map_mc_brms)</span>
+<span id="cb41-321"><a href="#cb41-321" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-322"><a href="#cb41-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-323"><a href="#cb41-323" aria-hidden="true" tabindex="-1"></a>These estimates are now very similar to the results reported from</span>
+<span id="cb41-324"><a href="#cb41-324" aria-hidden="true" tabindex="-1"></a><span class="in">`RBesT`</span> reported above (up to sampling error).</span>
+<span id="cb41-325"><a href="#cb41-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-326"><a href="#cb41-326" aria-hidden="true" tabindex="-1"></a>Expanding the model to include region would only be possible in</span>
+<span id="cb41-327"><a href="#cb41-327" aria-hidden="true" tabindex="-1"></a><span class="in">`RBesT`</span> via the use of an additional fixed effect. However, this would</span>
+<span id="cb41-328"><a href="#cb41-328" aria-hidden="true" tabindex="-1"></a>essentially refit the model for each region *separately* and hence</span>
+<span id="cb41-329"><a href="#cb41-329" aria-hidden="true" tabindex="-1"></a>limit the amount of information we can borrow among regions. With</span>
+<span id="cb41-330"><a href="#cb41-330" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> it is straightforward to specify the nested random effects</span>
+<span id="cb41-331"><a href="#cb41-331" aria-hidden="true" tabindex="-1"></a>structure described in the _Model Details_ Section. Following the </span>
+<span id="cb41-332"><a href="#cb41-332" aria-hidden="true" tabindex="-1"></a>same steps as before, setting up the brms model may look like:</span>
+<span id="cb41-333"><a href="#cb41-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-336"><a href="#cb41-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-337"><a href="#cb41-337" aria-hidden="true" tabindex="-1"></a>region_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> region<span class="sc">/</span>study), <span class="at">family=</span>binomial)</span>
+<span id="cb41-338"><a href="#cb41-338" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(region_model, AS_region)</span>
+<span id="cb41-339"><a href="#cb41-339" aria-hidden="true" tabindex="-1"></a>region_model_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class=</span>Intercept) <span class="sc">+</span></span>
+<span id="cb41-340"><a href="#cb41-340" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>region) <span class="sc">+</span></span>
+<span id="cb41-341"><a href="#cb41-341" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.25</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>region<span class="sc">:</span>study)</span>
+<span id="cb41-342"><a href="#cb41-342" aria-hidden="true" tabindex="-1"></a>region_map_mc_brms  <span class="ot">&lt;-</span> <span class="fu">brm</span>(region_model, AS_region, <span class="at">prior=</span>region_model_prior, <span class="at">seed=</span><span class="dv">4767</span>,</span>
+<span id="cb41-343"><a href="#cb41-343" aria-hidden="true" tabindex="-1"></a>                           <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
+<span id="cb41-344"><a href="#cb41-344" aria-hidden="true" tabindex="-1"></a>                           <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="dv">0</span>)</span>
+<span id="cb41-345"><a href="#cb41-345" aria-hidden="true" tabindex="-1"></a>post_region_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
+<span id="cb41-346"><a href="#cb41-346" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">newdata=</span>AS_region_new,</span>
+<span id="cb41-347"><a href="#cb41-347" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">transform=</span><span class="cn">TRUE</span>,</span>
+<span id="cb41-348"><a href="#cb41-348" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb41-349"><a href="#cb41-349" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span></span>
+<span id="cb41-350"><a href="#cb41-350" aria-hidden="true" tabindex="-1"></a>                                             )</span>
+<span id="cb41-351"><a href="#cb41-351" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's have a look at what we got:</span></span>
+<span id="cb41-352"><a href="#cb41-352" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_draws</span>(post_region_map_mc_brms)</span>
+<span id="cb41-353"><a href="#cb41-353" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-354"><a href="#cb41-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-355"><a href="#cb41-355" aria-hidden="true" tabindex="-1"></a>The key difference to the previous model is the nested random effect</span>
+<span id="cb41-356"><a href="#cb41-356" aria-hidden="true" tabindex="-1"></a>specification term <span class="in">`(1 | region/study)`</span> of the model formula. This</span>
+<span id="cb41-357"><a href="#cb41-357" aria-hidden="true" tabindex="-1"></a>syntax denotes a random intercept term for <span class="in">`region`</span> and <span class="in">`study`</span> in a</span>
+<span id="cb41-358"><a href="#cb41-358" aria-hidden="true" tabindex="-1"></a>way which assumes a nested data structure in that a given study is</span>
+<span id="cb41-359"><a href="#cb41-359" aria-hidden="true" tabindex="-1"></a>only run in a single region.</span>
+<span id="cb41-360"><a href="#cb41-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-361"><a href="#cb41-361" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb41-362"><a href="#cb41-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-363"><a href="#cb41-363" aria-hidden="true" tabindex="-1"></a>Once the MAP prior is obtained in MCMC form a model check of is</span>
+<span id="cb41-364"><a href="#cb41-364" aria-hidden="true" tabindex="-1"></a>recommended. In <span class="in">`RBesT`</span> a forest plot augmented with model shrinkage</span>
+<span id="cb41-365"><a href="#cb41-365" aria-hidden="true" tabindex="-1"></a>estimates is suggested for this purpose:</span>
+<span id="cb41-366"><a href="#cb41-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-369"><a href="#cb41-369" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-370"><a href="#cb41-370" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map_mc_rbest)<span class="sc">$</span>forest_model</span>
+<span id="cb41-371"><a href="#cb41-371" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-372"><a href="#cb41-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-373"><a href="#cb41-373" aria-hidden="true" tabindex="-1"></a>The dashed lines show the 95% confidence intervals of each study</span>
+<span id="cb41-374"><a href="#cb41-374" aria-hidden="true" tabindex="-1"></a>estimate on it's own while the solid line shows the respective</span>
+<span id="cb41-375"><a href="#cb41-375" aria-hidden="true" tabindex="-1"></a>shrinkage estimate of the MAP model. This plot is useful to assess the</span>
+<span id="cb41-376"><a href="#cb41-376" aria-hidden="true" tabindex="-1"></a>plausibility of the results and may unveil possible issues with the</span>
+<span id="cb41-377"><a href="#cb41-377" aria-hidden="true" tabindex="-1"></a>model specification. In <span class="in">`brms`</span> model diagnostic functions are directly</span>
+<span id="cb41-378"><a href="#cb41-378" aria-hidden="true" tabindex="-1"></a>available and essentially expose the functionality found in the</span>
+<span id="cb41-379"><a href="#cb41-379" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">`bayesplot`</span><span class="co">](https://mc-stan.org/bayesplot/index.html)</span> R package. A</span>
+<span id="cb41-380"><a href="#cb41-380" aria-hidden="true" tabindex="-1"></a>suitable <span class="in">`bayesplot`</span> plot in this situation could be an <span class="in">`intervals`</span></span>
+<span id="cb41-381"><a href="#cb41-381" aria-hidden="true" tabindex="-1"></a>plot as:</span>
+<span id="cb41-382"><a href="#cb41-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-385"><a href="#cb41-385" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-386"><a href="#cb41-386" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(map_mc_brms_2, <span class="at">type=</span><span class="st">"intervals"</span>) <span class="sc">+</span></span>
+<span id="cb41-387"><a href="#cb41-387" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="st">"Study"</span>, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(AS_region), <span class="at">labels=</span>AS_region<span class="sc">$</span>study) <span class="sc">+</span></span>
+<span id="cb41-388"><a href="#cb41-388" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
+<span id="cb41-389"><a href="#cb41-389" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb41-390"><a href="#cb41-390" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
+<span id="cb41-391"><a href="#cb41-391" aria-hidden="true" tabindex="-1"></a>          <span class="co"># suppress vertical grid lines for better readability of intervals</span></span>
+<span id="cb41-392"><a href="#cb41-392" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb41-393"><a href="#cb41-393" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-394"><a href="#cb41-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-395"><a href="#cb41-395" aria-hidden="true" tabindex="-1"></a>The call of the <span class="in">`pp_check`</span> function is forwarded to the respective</span>
+<span id="cb41-396"><a href="#cb41-396" aria-hidden="true" tabindex="-1"></a><span class="in">`ppc_*`</span> functions for posterior predictive checks from <span class="in">`bayesplot`</span></span>
+<span id="cb41-397"><a href="#cb41-397" aria-hidden="true" tabindex="-1"></a>(depending on the <span class="in">`type`</span> argument). The plots are designed to compare</span>
+<span id="cb41-398"><a href="#cb41-398" aria-hidden="true" tabindex="-1"></a>the *posterior predictive* distribution to the observed data rather</span>
+<span id="cb41-399"><a href="#cb41-399" aria-hidden="true" tabindex="-1"></a>than comparing mean estimates to one another. Thus, the outcome of</span>
+<span id="cb41-400"><a href="#cb41-400" aria-hidden="true" tabindex="-1"></a>each trial in the original data set is sampled according to the fitted</span>
+<span id="cb41-401"><a href="#cb41-401" aria-hidden="true" tabindex="-1"></a>model and the resulting predictive distribution of the outcome (number</span>
+<span id="cb41-402"><a href="#cb41-402" aria-hidden="true" tabindex="-1"></a>of responders) is compared to the observed outcome. The <span class="in">`intervals`</span></span>
+<span id="cb41-403"><a href="#cb41-403" aria-hidden="true" tabindex="-1"></a>predictive probability check summarises the predictive distributions</span>
+<span id="cb41-404"><a href="#cb41-404" aria-hidden="true" tabindex="-1"></a>using a light color for an outer credible interval range and a darker</span>
+<span id="cb41-405"><a href="#cb41-405" aria-hidden="true" tabindex="-1"></a>line for an inner credible interval. The outer defaults to a 90%</span>
+<span id="cb41-406"><a href="#cb41-406" aria-hidden="true" tabindex="-1"></a>credible interval (<span class="in">`prob_outer`</span> argument) while the inner uses a 50%</span>
+<span id="cb41-407"><a href="#cb41-407" aria-hidden="true" tabindex="-1"></a>credible interval (<span class="in">`prob`</span> argument). The light dot in the middle is</span>
+<span id="cb41-408"><a href="#cb41-408" aria-hidden="true" tabindex="-1"></a>the median of the predictive distribution and the dark dot is the</span>
+<span id="cb41-409"><a href="#cb41-409" aria-hidden="true" tabindex="-1"></a>outcome $y$. As we can observe, the outcomes $y$ of the trials all are</span>
+<span id="cb41-410"><a href="#cb41-410" aria-hidden="true" tabindex="-1"></a>contained within outer credible intervals of the predictive</span>
+<span id="cb41-411"><a href="#cb41-411" aria-hidden="true" tabindex="-1"></a>distributions for the simulated replicate data $y_{rep}$. However, one</span>
+<span id="cb41-412"><a href="#cb41-412" aria-hidden="true" tabindex="-1"></a>may critizise that also the 50% credible intervals contain all but two</span>
+<span id="cb41-413"><a href="#cb41-413" aria-hidden="true" tabindex="-1"></a>trials (study 3, study 7). Hence, the *calibration* of the model with</span>
+<span id="cb41-414"><a href="#cb41-414" aria-hidden="true" tabindex="-1"></a>the data is possibly not ideal given that every other trial outcome</span>
+<span id="cb41-415"><a href="#cb41-415" aria-hidden="true" tabindex="-1"></a>should be outside (or inside) of the 50% predictive</span>
+<span id="cb41-416"><a href="#cb41-416" aria-hidden="true" tabindex="-1"></a>interval. Comparing with a binomial distribution one can find that</span>
+<span id="cb41-417"><a href="#cb41-417" aria-hidden="true" tabindex="-1"></a>such an outcome can occur in 14% of the cases and does not represent</span>
+<span id="cb41-418"><a href="#cb41-418" aria-hidden="true" tabindex="-1"></a>an extreme finding such that we can conclude that the model is</span>
+<span id="cb41-419"><a href="#cb41-419" aria-hidden="true" tabindex="-1"></a>consistent with the data.</span>
+<span id="cb41-420"><a href="#cb41-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-421"><a href="#cb41-421" aria-hidden="true" tabindex="-1"></a>Once the model has been checked for plausibility, we can proceed and</span>
+<span id="cb41-422"><a href="#cb41-422" aria-hidden="true" tabindex="-1"></a>derive the main target of the MAP analysis, which is the MAP prior in</span>
+<span id="cb41-423"><a href="#cb41-423" aria-hidden="true" tabindex="-1"></a>*parametric* form. <span class="in">`RBesT`</span> provides a fitting procedure, based in the</span>
+<span id="cb41-424"><a href="#cb41-424" aria-hidden="true" tabindex="-1"></a>EM algorithm, for approximating the MCMC output of the MAP prior in</span>
+<span id="cb41-425"><a href="#cb41-425" aria-hidden="true" tabindex="-1"></a>parametric form using mixture distributions. In the case of a binomial</span>
+<span id="cb41-426"><a href="#cb41-426" aria-hidden="true" tabindex="-1"></a>response Beta mixtures are being estimated:</span>
+<span id="cb41-427"><a href="#cb41-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-430"><a href="#cb41-430" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-431"><a href="#cb41-431" aria-hidden="true" tabindex="-1"></a>map_rbest <span class="ot">&lt;-</span> <span class="fu">automixfit</span>(map_mc_rbest)</span>
+<span id="cb41-432"><a href="#cb41-432" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-433"><a href="#cb41-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-434"><a href="#cb41-434" aria-hidden="true" tabindex="-1"></a>And a comparison of the fitted density vs the histogram of the MCMC</span>
+<span id="cb41-435"><a href="#cb41-435" aria-hidden="true" tabindex="-1"></a>sample is available as:</span>
+<span id="cb41-436"><a href="#cb41-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-439"><a href="#cb41-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-440"><a href="#cb41-440" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map_rbest)<span class="sc">$</span>mix</span>
+<span id="cb41-441"><a href="#cb41-441" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-442"><a href="#cb41-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-443"><a href="#cb41-443" aria-hidden="true" tabindex="-1"></a>The <span class="in">`automixfit`</span> function above recognizes that the  <span class="in">`map_mc_rbest`</span> </span>
+<span id="cb41-444"><a href="#cb41-444" aria-hidden="true" tabindex="-1"></a>object is a <span class="in">`gMAP`</span> analysis object and automatically calls the correct </span>
+<span id="cb41-445"><a href="#cb41-445" aria-hidden="true" tabindex="-1"></a>Beta EM mixture algorithm for proportions. When working with <span class="in">`brms`</span> we </span>
+<span id="cb41-446"><a href="#cb41-446" aria-hidden="true" tabindex="-1"></a>also do obtain the MAP prior in MCMC form on the response scale, but we </span>
+<span id="cb41-447"><a href="#cb41-447" aria-hidden="true" tabindex="-1"></a>need to provide <span class="in">`automixfit`</span> additional information on the provided MCMC </span>
+<span id="cb41-448"><a href="#cb41-448" aria-hidden="true" tabindex="-1"></a>sample like this:</span>
 <span id="cb41-449"><a href="#cb41-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-452"><a href="#cb41-452" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-453"><a href="#cb41-453" aria-hidden="true" tabindex="-1"></a>map_brms <span class="ot">&lt;-</span> <span class="fu">automixfit</span>(post_map_mc_brms[,<span class="dv">1</span>], <span class="at">type=</span><span class="st">"beta"</span>)</span>
-<span id="cb41-454"><a href="#cb41-454" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-455"><a href="#cb41-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-456"><a href="#cb41-456" aria-hidden="true" tabindex="-1"></a>At this stage we can work with <span class="in">`map_brms_2`</span> just like we would when</span>
-<span id="cb41-457"><a href="#cb41-457" aria-hidden="true" tabindex="-1"></a>using <span class="in">`RBesT`</span> directly such that the graphical diagnostic of the fit</span>
-<span id="cb41-458"><a href="#cb41-458" aria-hidden="true" tabindex="-1"></a>still works:</span>
-<span id="cb41-459"><a href="#cb41-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-462"><a href="#cb41-462" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-463"><a href="#cb41-463" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map_brms)<span class="sc">$</span>mix</span>
-<span id="cb41-464"><a href="#cb41-464" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-465"><a href="#cb41-465" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-466"><a href="#cb41-466" aria-hidden="true" tabindex="-1"></a>Comparing the results of using either packages shows that the two resulting </span>
-<span id="cb41-467"><a href="#cb41-467" aria-hidden="true" tabindex="-1"></a>MAP prior distributions are representing the same evidence (up to MCMC sampling error):</span>
-<span id="cb41-468"><a href="#cb41-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-471"><a href="#cb41-471" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-472"><a href="#cb41-472" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">rbind</span>(<span class="at">rbest=</span><span class="fu">summary</span>(map_rbest),</span>
-<span id="cb41-473"><a href="#cb41-473" aria-hidden="true" tabindex="-1"></a>            <span class="at">brms=</span><span class="fu">summary</span>(map_brms)),</span>
-<span id="cb41-474"><a href="#cb41-474" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits=</span><span class="dv">3</span>)</span>
-<span id="cb41-475"><a href="#cb41-475" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-476"><a href="#cb41-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-477"><a href="#cb41-477" aria-hidden="true" tabindex="-1"></a>For the region specific model, two different types of priors can be derived. </span>
-<span id="cb41-478"><a href="#cb41-478" aria-hidden="true" tabindex="-1"></a>One may wish to obtain a MAP prior for one of the considered regions or</span>
-<span id="cb41-479"><a href="#cb41-479" aria-hidden="true" tabindex="-1"></a>for a new region:</span>
-<span id="cb41-480"><a href="#cb41-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-450"><a href="#cb41-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-453"><a href="#cb41-453" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-454"><a href="#cb41-454" aria-hidden="true" tabindex="-1"></a>map_brms <span class="ot">&lt;-</span> <span class="fu">automixfit</span>(post_map_mc_brms[,<span class="dv">1</span>], <span class="at">type=</span><span class="st">"beta"</span>)</span>
+<span id="cb41-455"><a href="#cb41-455" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-456"><a href="#cb41-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-457"><a href="#cb41-457" aria-hidden="true" tabindex="-1"></a>At this stage we can work with <span class="in">`map_brms_2`</span> just like we would when</span>
+<span id="cb41-458"><a href="#cb41-458" aria-hidden="true" tabindex="-1"></a>using <span class="in">`RBesT`</span> directly such that the graphical diagnostic of the fit</span>
+<span id="cb41-459"><a href="#cb41-459" aria-hidden="true" tabindex="-1"></a>still works:</span>
+<span id="cb41-460"><a href="#cb41-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-463"><a href="#cb41-463" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-464"><a href="#cb41-464" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(map_brms)<span class="sc">$</span>mix</span>
+<span id="cb41-465"><a href="#cb41-465" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-466"><a href="#cb41-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-467"><a href="#cb41-467" aria-hidden="true" tabindex="-1"></a>Comparing the results of using either packages shows that the two resulting </span>
+<span id="cb41-468"><a href="#cb41-468" aria-hidden="true" tabindex="-1"></a>MAP prior distributions are representing the same evidence (up to MCMC sampling error):</span>
+<span id="cb41-469"><a href="#cb41-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-472"><a href="#cb41-472" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-473"><a href="#cb41-473" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">rbind</span>(<span class="at">rbest=</span><span class="fu">summary</span>(map_rbest),</span>
+<span id="cb41-474"><a href="#cb41-474" aria-hidden="true" tabindex="-1"></a>            <span class="at">brms=</span><span class="fu">summary</span>(map_brms)),</span>
+<span id="cb41-475"><a href="#cb41-475" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb41-476"><a href="#cb41-476" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-477"><a href="#cb41-477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-478"><a href="#cb41-478" aria-hidden="true" tabindex="-1"></a>For the region specific model, two different types of priors can be derived. </span>
+<span id="cb41-479"><a href="#cb41-479" aria-hidden="true" tabindex="-1"></a>One may wish to obtain a MAP prior for one of the considered regions or</span>
+<span id="cb41-480"><a href="#cb41-480" aria-hidden="true" tabindex="-1"></a>for a new region:</span>
 <span id="cb41-481"><a href="#cb41-481" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-484"><a href="#cb41-484" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-485"><a href="#cb41-485" aria-hidden="true" tabindex="-1"></a><span class="co"># predict a new study for all fitted region and other (=a new region)</span></span>
-<span id="cb41-486"><a href="#cb41-486" aria-hidden="true" tabindex="-1"></a>AS_region_all <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">region=</span><span class="fu">c</span>(<span class="st">"asia"</span>, <span class="st">"europe"</span>, <span class="st">"north_america"</span>, <span class="st">"other"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb41-487"><a href="#cb41-487" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">study=</span><span class="fu">paste</span>(<span class="st">"new_study"</span>, region, <span class="at">sep=</span><span class="st">"_"</span>), <span class="at">r=</span><span class="dv">0</span>, <span class="at">n=</span><span class="dv">6</span>)</span>
-<span id="cb41-488"><a href="#cb41-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-489"><a href="#cb41-489" aria-hidden="true" tabindex="-1"></a>post_region_all_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
-<span id="cb41-490"><a href="#cb41-490" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">newdata=</span>AS_region_all,</span>
-<span id="cb41-491"><a href="#cb41-491" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">transform=</span><span class="cn">TRUE</span>,</span>
-<span id="cb41-492"><a href="#cb41-492" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb41-493"><a href="#cb41-493" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span></span>
-<span id="cb41-494"><a href="#cb41-494" aria-hidden="true" tabindex="-1"></a>                                                 )</span>
-<span id="cb41-495"><a href="#cb41-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-482"><a href="#cb41-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-485"><a href="#cb41-485" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-486"><a href="#cb41-486" aria-hidden="true" tabindex="-1"></a><span class="co"># predict a new study for all fitted region and other (=a new region)</span></span>
+<span id="cb41-487"><a href="#cb41-487" aria-hidden="true" tabindex="-1"></a>AS_region_all <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">region=</span><span class="fu">c</span>(<span class="st">"asia"</span>, <span class="st">"europe"</span>, <span class="st">"north_america"</span>, <span class="st">"other"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-488"><a href="#cb41-488" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">study=</span><span class="fu">paste</span>(<span class="st">"new_study"</span>, region, <span class="at">sep=</span><span class="st">"_"</span>), <span class="at">r=</span><span class="dv">0</span>, <span class="at">n=</span><span class="dv">6</span>)</span>
+<span id="cb41-489"><a href="#cb41-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-490"><a href="#cb41-490" aria-hidden="true" tabindex="-1"></a>post_region_all_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
+<span id="cb41-491"><a href="#cb41-491" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">newdata=</span>AS_region_all,</span>
+<span id="cb41-492"><a href="#cb41-492" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">transform=</span><span class="cn">TRUE</span>,</span>
+<span id="cb41-493"><a href="#cb41-493" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb41-494"><a href="#cb41-494" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span></span>
+<span id="cb41-495"><a href="#cb41-495" aria-hidden="true" tabindex="-1"></a>                                                 )</span>
 <span id="cb41-496"><a href="#cb41-496" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-497"><a href="#cb41-497" aria-hidden="true" tabindex="-1"></a><span class="co"># name columns according to their region...</span></span>
-<span id="cb41-498"><a href="#cb41-498" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(post_region_all_map_mc_brms) <span class="ot">&lt;-</span> AS_region_all<span class="sc">$</span>region</span>
-<span id="cb41-499"><a href="#cb41-499" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-500"><a href="#cb41-500" aria-hidden="true" tabindex="-1"></a><span class="co">#...to obtain nice labels in a visualization with bayesplot</span></span>
-<span id="cb41-501"><a href="#cb41-501" aria-hidden="true" tabindex="-1"></a>bayesplot<span class="sc">::</span><span class="fu">mcmc_intervals</span>(post_region_all_map_mc_brms)</span>
-<span id="cb41-502"><a href="#cb41-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-503"><a href="#cb41-503" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain parametric mixture for each region, always using </span></span>
-<span id="cb41-504"><a href="#cb41-504" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 mixture components (often sufficient) to speed up inference</span></span>
-<span id="cb41-505"><a href="#cb41-505" aria-hidden="true" tabindex="-1"></a>map_region <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb41-506"><a href="#cb41-506" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> AS_region_all<span class="sc">$</span>region) {</span>
-<span id="cb41-507"><a href="#cb41-507" aria-hidden="true" tabindex="-1"></a>    map_region[[r]] <span class="ot">&lt;-</span> <span class="fu">mixfit</span>(post_region_all_map_mc_brms[,r], <span class="at">type=</span><span class="st">"beta"</span>, <span class="at">Nc=</span><span class="dv">3</span>, <span class="at">constrain_gt1=</span><span class="cn">TRUE</span>)</span>
-<span id="cb41-508"><a href="#cb41-508" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb41-509"><a href="#cb41-509" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-510"><a href="#cb41-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-511"><a href="#cb41-511" aria-hidden="true" tabindex="-1"></a>These MAP priors summaries are:</span>
-<span id="cb41-512"><a href="#cb41-512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-515"><a href="#cb41-515" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-516"><a href="#cb41-516" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">bind_rows</span>(<span class="fu">lapply</span>(map_region, summary), <span class="at">.id=</span><span class="st">"MAP"</span>), <span class="at">digits=</span><span class="dv">3</span>)</span>
-<span id="cb41-517"><a href="#cb41-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-518"><a href="#cb41-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-519"><a href="#cb41-519" aria-hidden="true" tabindex="-1"></a>The summaries show that we have higher precision for regions with more</span>
-<span id="cb41-520"><a href="#cb41-520" aria-hidden="true" tabindex="-1"></a>trials and the least precision for the MAP prior for a new (<span class="in">`"other"`</span>) </span>
-<span id="cb41-521"><a href="#cb41-521" aria-hidden="true" tabindex="-1"></a>region, for which there were no trials. An alternative way to quantify </span>
-<span id="cb41-522"><a href="#cb41-522" aria-hidden="true" tabindex="-1"></a>the informativeness of the MAP prior is the effective sample size as </span>
-<span id="cb41-523"><a href="#cb41-523" aria-hidden="true" tabindex="-1"></a>provided by <span class="in">`RBesT`</span>:</span>
-<span id="cb41-524"><a href="#cb41-524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-527"><a href="#cb41-527" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-528"><a href="#cb41-528" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(map_region, ess)</span>
-<span id="cb41-529"><a href="#cb41-529" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-530"><a href="#cb41-530" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-531"><a href="#cb41-531" aria-hidden="true" tabindex="-1"></a>At this point the tools from <span class="in">`RBesT`</span> can be used to assess further</span>
-<span id="cb41-532"><a href="#cb41-532" aria-hidden="true" tabindex="-1"></a>properties of trial designs which use these MAP priors. Please refer</span>
-<span id="cb41-533"><a href="#cb41-533" aria-hidden="true" tabindex="-1"></a>to the [getting started</span>
-<span id="cb41-534"><a href="#cb41-534" aria-hidden="true" tabindex="-1"></a>vignette](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html)</span>
-<span id="cb41-535"><a href="#cb41-535" aria-hidden="true" tabindex="-1"></a>of <span class="in">`RBesT`</span>.</span>
-<span id="cb41-536"><a href="#cb41-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-537"><a href="#cb41-537" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
-<span id="cb41-538"><a href="#cb41-538" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-539"><a href="#cb41-539" aria-hidden="true" tabindex="-1"></a>The random-effects meta-analysis model implemented in <span class="in">`RBesT`</span> has been</span>
-<span id="cb41-540"><a href="#cb41-540" aria-hidden="true" tabindex="-1"></a>re-implemented with <span class="in">`brms`</span>. In a second step the meta-analysis has been</span>
-<span id="cb41-541"><a href="#cb41-541" aria-hidden="true" tabindex="-1"></a>extended to account for trial regions. This enables stronger borrowing</span>
-<span id="cb41-542"><a href="#cb41-542" aria-hidden="true" tabindex="-1"></a>within regions and hence a more informative MAP prior as can be seen by</span>
-<span id="cb41-543"><a href="#cb41-543" aria-hidden="true" tabindex="-1"></a>the effective sample size measure. Moreover, the case study also</span>
-<span id="cb41-544"><a href="#cb41-544" aria-hidden="true" tabindex="-1"></a>demonstrates how posterior samples produced with <span class="in">`brms`</span> can be used as </span>
-<span id="cb41-545"><a href="#cb41-545" aria-hidden="true" tabindex="-1"></a>an input to <span class="in">`RBesT`</span> such that both tools can be used in combination.</span>
-<span id="cb41-546"><a href="#cb41-546" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-547"><a href="#cb41-547" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises</span></span>
-<span id="cb41-548"><a href="#cb41-548" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-549"><a href="#cb41-549" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a posterior predictive check based on the predictive</span>
-<span id="cb41-550"><a href="#cb41-550" aria-hidden="true" tabindex="-1"></a>   distribution for the response rate.  </span>
-<span id="cb41-551"><a href="#cb41-551" aria-hidden="true" tabindex="-1"></a>   Steps:</span>
-<span id="cb41-552"><a href="#cb41-552" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use <span class="in">`posterior_predict`</span> to create samples from the predictive distribution of</span>
-<span id="cb41-553"><a href="#cb41-553" aria-hidden="true" tabindex="-1"></a>      outcomes per trial.</span>
-<span id="cb41-554"><a href="#cb41-554" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use <span class="in">`sweep(predictive, 2, AS_region$n, "/")`</span> to convert these samples from</span>
-<span id="cb41-555"><a href="#cb41-555" aria-hidden="true" tabindex="-1"></a>      the predictive distribution of the outcome counts to samples from the predictive distribution for responder rates.</span>
-<span id="cb41-556"><a href="#cb41-556" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use <span class="in">`ppc_intervals`</span> from <span class="in">`bayesplot`</span> to create a plot showing your results.</span>
-<span id="cb41-557"><a href="#cb41-557" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Redo the analysis with region, but treat region as a fixed</span>
-<span id="cb41-558"><a href="#cb41-558" aria-hidden="true" tabindex="-1"></a>   effect. Evaluate the informativeness of the obtained MAP priors.</span>
-<span id="cb41-559"><a href="#cb41-559" aria-hidden="true" tabindex="-1"></a>   The model formula for <span class="in">`brms`</span> should look like</span>
-<span id="cb41-560"><a href="#cb41-560" aria-hidden="true" tabindex="-1"></a>   `region_model_fixed &lt;- bf(r | trials(n) ~ 1 + region + (1 | study),</span>
-<span id="cb41-561"><a href="#cb41-561" aria-hidden="true" tabindex="-1"></a>   family=binomial)`.</span>
-<span id="cb41-562"><a href="#cb41-562" aria-hidden="true" tabindex="-1"></a>   Steps:</span>
-<span id="cb41-563"><a href="#cb41-563" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Consider the prior for the region fixed effect first. The</span>
-<span id="cb41-564"><a href="#cb41-564" aria-hidden="true" tabindex="-1"></a>    reference region is included in the intercept. The reference</span>
-<span id="cb41-565"><a href="#cb41-565" aria-hidden="true" tabindex="-1"></a>    region is implicitly defined by the first level of the variable</span>
-<span id="cb41-566"><a href="#cb41-566" aria-hidden="true" tabindex="-1"></a>    region when defined as <span class="in">`factor`</span>.</span>
-<span id="cb41-567"><a href="#cb41-567" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Define <span class="in">`asia`</span> to be the reference region in the example. Also</span>
-<span id="cb41-568"><a href="#cb41-568" aria-hidden="true" tabindex="-1"></a>        include a level <span class="in">`other`</span> in the set of levels.</span>
-<span id="cb41-569"><a href="#cb41-569" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Assume that an odds-ratio of $2$ between regions can be seen as very large such</span>
-<span id="cb41-570"><a href="#cb41-570" aria-hidden="true" tabindex="-1"></a>        that a prior of $\N(0, (\log(2)/1.96)^2)$ for the region main effect is adequate.</span>
-<span id="cb41-571"><a href="#cb41-571" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Obtain the MAP prior for each region by using the</span>
-<span id="cb41-572"><a href="#cb41-572" aria-hidden="true" tabindex="-1"></a>      <span class="in">`AS_region_all`</span> data frame defined above and apply</span>
-<span id="cb41-573"><a href="#cb41-573" aria-hidden="true" tabindex="-1"></a>      <span class="in">`posterior_linpred`</span> as shown above.</span>
-<span id="cb41-574"><a href="#cb41-574" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Convert the MCMC samples from the MAP prior distribution into mixture </span>
-<span id="cb41-575"><a href="#cb41-575" aria-hidden="true" tabindex="-1"></a>      distributions with the same code as above.</span>
-<span id="cb41-576"><a href="#cb41-576" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Calculate the ESS for each prior distribution with the <span class="in">`ess`</span> function from <span class="in">`RBesT`</span>.</span>
-<span id="cb41-577"><a href="#cb41-577" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb41-578"><a href="#cb41-578" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Run the analysis for the normal endpoint in the <span class="in">`crohn`</span> data set of</span>
-<span id="cb41-579"><a href="#cb41-579" aria-hidden="true" tabindex="-1"></a>   <span class="in">`RBesT`</span>. Refer to the <span class="in">`RBesT`</span> vignette for a [normal</span>
-<span id="cb41-580"><a href="#cb41-580" aria-hidden="true" tabindex="-1"></a>   endpoint](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction_normal.html)</span>
-<span id="cb41-581"><a href="#cb41-581" aria-hidden="true" tabindex="-1"></a>   on more details and context. </span>
-<span id="cb41-582"><a href="#cb41-582" aria-hidden="true" tabindex="-1"></a>   Steps:</span>
-<span id="cb41-583"><a href="#cb41-583" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use as <span class="in">`family=gaussian`</span> and use the <span class="in">`se`</span> response modifier in</span>
-<span id="cb41-584"><a href="#cb41-584" aria-hidden="true" tabindex="-1"></a>      place of <span class="in">`trials`</span> to specify a known standard error.</span>
-<span id="cb41-585"><a href="#cb41-585" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use the same priors as proposed in the vignette.</span>
-<span id="cb41-586"><a href="#cb41-586" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Compare the obtained MAP prior (in MCMC sample form) from <span class="in">`RBesT`</span> and <span class="in">`brms`</span>.</span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-497"><a href="#cb41-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-498"><a href="#cb41-498" aria-hidden="true" tabindex="-1"></a><span class="co"># name columns according to their region...</span></span>
+<span id="cb41-499"><a href="#cb41-499" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(post_region_all_map_mc_brms) <span class="ot">&lt;-</span> AS_region_all<span class="sc">$</span>region</span>
+<span id="cb41-500"><a href="#cb41-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-501"><a href="#cb41-501" aria-hidden="true" tabindex="-1"></a><span class="co">#...to obtain nice labels in a visualization with bayesplot</span></span>
+<span id="cb41-502"><a href="#cb41-502" aria-hidden="true" tabindex="-1"></a>bayesplot<span class="sc">::</span><span class="fu">mcmc_intervals</span>(post_region_all_map_mc_brms)</span>
+<span id="cb41-503"><a href="#cb41-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-504"><a href="#cb41-504" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain parametric mixture for each region, always using </span></span>
+<span id="cb41-505"><a href="#cb41-505" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 mixture components (often sufficient) to speed up inference</span></span>
+<span id="cb41-506"><a href="#cb41-506" aria-hidden="true" tabindex="-1"></a>map_region <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb41-507"><a href="#cb41-507" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> AS_region_all<span class="sc">$</span>region) {</span>
+<span id="cb41-508"><a href="#cb41-508" aria-hidden="true" tabindex="-1"></a>    map_region[[r]] <span class="ot">&lt;-</span> <span class="fu">mixfit</span>(post_region_all_map_mc_brms[,r], <span class="at">type=</span><span class="st">"beta"</span>, <span class="at">Nc=</span><span class="dv">3</span>, <span class="at">constrain_gt1=</span><span class="cn">TRUE</span>)</span>
+<span id="cb41-509"><a href="#cb41-509" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-510"><a href="#cb41-510" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-511"><a href="#cb41-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-512"><a href="#cb41-512" aria-hidden="true" tabindex="-1"></a>These MAP priors summaries are:</span>
+<span id="cb41-513"><a href="#cb41-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-516"><a href="#cb41-516" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-517"><a href="#cb41-517" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">bind_rows</span>(<span class="fu">lapply</span>(map_region, summary), <span class="at">.id=</span><span class="st">"MAP"</span>), <span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb41-518"><a href="#cb41-518" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-519"><a href="#cb41-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-520"><a href="#cb41-520" aria-hidden="true" tabindex="-1"></a>The summaries show that we have higher precision for regions with more</span>
+<span id="cb41-521"><a href="#cb41-521" aria-hidden="true" tabindex="-1"></a>trials and the least precision for the MAP prior for a new (<span class="in">`"other"`</span>) </span>
+<span id="cb41-522"><a href="#cb41-522" aria-hidden="true" tabindex="-1"></a>region, for which there were no trials. An alternative way to quantify </span>
+<span id="cb41-523"><a href="#cb41-523" aria-hidden="true" tabindex="-1"></a>the informativeness of the MAP prior is the effective sample size as </span>
+<span id="cb41-524"><a href="#cb41-524" aria-hidden="true" tabindex="-1"></a>provided by <span class="in">`RBesT`</span>:</span>
+<span id="cb41-525"><a href="#cb41-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-528"><a href="#cb41-528" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb41-529"><a href="#cb41-529" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(map_region, ess)</span>
+<span id="cb41-530"><a href="#cb41-530" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb41-531"><a href="#cb41-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-532"><a href="#cb41-532" aria-hidden="true" tabindex="-1"></a>At this point the tools from <span class="in">`RBesT`</span> can be used to assess further</span>
+<span id="cb41-533"><a href="#cb41-533" aria-hidden="true" tabindex="-1"></a>properties of trial designs which use these MAP priors. Please refer</span>
+<span id="cb41-534"><a href="#cb41-534" aria-hidden="true" tabindex="-1"></a>to the [getting started</span>
+<span id="cb41-535"><a href="#cb41-535" aria-hidden="true" tabindex="-1"></a>vignette](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html)</span>
+<span id="cb41-536"><a href="#cb41-536" aria-hidden="true" tabindex="-1"></a>of <span class="in">`RBesT`</span>.</span>
+<span id="cb41-537"><a href="#cb41-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-538"><a href="#cb41-538" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb41-539"><a href="#cb41-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-540"><a href="#cb41-540" aria-hidden="true" tabindex="-1"></a>The random-effects meta-analysis model implemented in <span class="in">`RBesT`</span> has been</span>
+<span id="cb41-541"><a href="#cb41-541" aria-hidden="true" tabindex="-1"></a>re-implemented with <span class="in">`brms`</span>. In a second step the meta-analysis has been</span>
+<span id="cb41-542"><a href="#cb41-542" aria-hidden="true" tabindex="-1"></a>extended to account for trial regions. This enables stronger borrowing</span>
+<span id="cb41-543"><a href="#cb41-543" aria-hidden="true" tabindex="-1"></a>within regions and hence a more informative MAP prior as can be seen by</span>
+<span id="cb41-544"><a href="#cb41-544" aria-hidden="true" tabindex="-1"></a>the effective sample size measure. Moreover, the case study also</span>
+<span id="cb41-545"><a href="#cb41-545" aria-hidden="true" tabindex="-1"></a>demonstrates how posterior samples produced with <span class="in">`brms`</span> can be used as </span>
+<span id="cb41-546"><a href="#cb41-546" aria-hidden="true" tabindex="-1"></a>an input to <span class="in">`RBesT`</span> such that both tools can be used in combination.</span>
+<span id="cb41-547"><a href="#cb41-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-548"><a href="#cb41-548" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises</span></span>
+<span id="cb41-549"><a href="#cb41-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-550"><a href="#cb41-550" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a posterior predictive check based on the predictive</span>
+<span id="cb41-551"><a href="#cb41-551" aria-hidden="true" tabindex="-1"></a>   distribution for the response rate.  </span>
+<span id="cb41-552"><a href="#cb41-552" aria-hidden="true" tabindex="-1"></a>   Steps:</span>
+<span id="cb41-553"><a href="#cb41-553" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use <span class="in">`posterior_predict`</span> to create samples from the predictive distribution of</span>
+<span id="cb41-554"><a href="#cb41-554" aria-hidden="true" tabindex="-1"></a>      outcomes per trial.</span>
+<span id="cb41-555"><a href="#cb41-555" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use <span class="in">`sweep(predictive, 2, AS_region$n, "/")`</span> to convert these samples from</span>
+<span id="cb41-556"><a href="#cb41-556" aria-hidden="true" tabindex="-1"></a>      the predictive distribution of the outcome counts to samples from the predictive distribution for responder rates.</span>
+<span id="cb41-557"><a href="#cb41-557" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use <span class="in">`ppc_intervals`</span> from <span class="in">`bayesplot`</span> to create a plot showing your results.</span>
+<span id="cb41-558"><a href="#cb41-558" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Redo the analysis with region, but treat region as a fixed</span>
+<span id="cb41-559"><a href="#cb41-559" aria-hidden="true" tabindex="-1"></a>   effect. Evaluate the informativeness of the obtained MAP priors.</span>
+<span id="cb41-560"><a href="#cb41-560" aria-hidden="true" tabindex="-1"></a>   The model formula for <span class="in">`brms`</span> should look like</span>
+<span id="cb41-561"><a href="#cb41-561" aria-hidden="true" tabindex="-1"></a>   `region_model_fixed &lt;- bf(r | trials(n) ~ 1 + region + (1 | study),</span>
+<span id="cb41-562"><a href="#cb41-562" aria-hidden="true" tabindex="-1"></a>   family=binomial)`.</span>
+<span id="cb41-563"><a href="#cb41-563" aria-hidden="true" tabindex="-1"></a>   Steps:</span>
+<span id="cb41-564"><a href="#cb41-564" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Consider the prior for the region fixed effect first. The</span>
+<span id="cb41-565"><a href="#cb41-565" aria-hidden="true" tabindex="-1"></a>    reference region is included in the intercept. The reference</span>
+<span id="cb41-566"><a href="#cb41-566" aria-hidden="true" tabindex="-1"></a>    region is implicitly defined by the first level of the variable</span>
+<span id="cb41-567"><a href="#cb41-567" aria-hidden="true" tabindex="-1"></a>    region when defined as <span class="in">`factor`</span>.</span>
+<span id="cb41-568"><a href="#cb41-568" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Define <span class="in">`asia`</span> to be the reference region in the example. Also</span>
+<span id="cb41-569"><a href="#cb41-569" aria-hidden="true" tabindex="-1"></a>        include a level <span class="in">`other`</span> in the set of levels.</span>
+<span id="cb41-570"><a href="#cb41-570" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>Assume that an odds-ratio of $2$ between regions can be seen as very large such</span>
+<span id="cb41-571"><a href="#cb41-571" aria-hidden="true" tabindex="-1"></a>        that a prior of $\N(0, (\log(2)/1.96)^2)$ for the region main effect is adequate.</span>
+<span id="cb41-572"><a href="#cb41-572" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Obtain the MAP prior for each region by using the</span>
+<span id="cb41-573"><a href="#cb41-573" aria-hidden="true" tabindex="-1"></a>      <span class="in">`AS_region_all`</span> data frame defined above and apply</span>
+<span id="cb41-574"><a href="#cb41-574" aria-hidden="true" tabindex="-1"></a>      <span class="in">`posterior_linpred`</span> as shown above.</span>
+<span id="cb41-575"><a href="#cb41-575" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Convert the MCMC samples from the MAP prior distribution into mixture </span>
+<span id="cb41-576"><a href="#cb41-576" aria-hidden="true" tabindex="-1"></a>      distributions with the same code as above.</span>
+<span id="cb41-577"><a href="#cb41-577" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Calculate the ESS for each prior distribution with the <span class="in">`ess`</span> function from <span class="in">`RBesT`</span>.</span>
+<span id="cb41-578"><a href="#cb41-578" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb41-579"><a href="#cb41-579" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Run the analysis for the normal endpoint in the <span class="in">`crohn`</span> data set of</span>
+<span id="cb41-580"><a href="#cb41-580" aria-hidden="true" tabindex="-1"></a>   <span class="in">`RBesT`</span>. Refer to the <span class="in">`RBesT`</span> vignette for a [normal</span>
+<span id="cb41-581"><a href="#cb41-581" aria-hidden="true" tabindex="-1"></a>   endpoint](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction_normal.html)</span>
+<span id="cb41-582"><a href="#cb41-582" aria-hidden="true" tabindex="-1"></a>   on more details and context. </span>
+<span id="cb41-583"><a href="#cb41-583" aria-hidden="true" tabindex="-1"></a>   Steps:</span>
+<span id="cb41-584"><a href="#cb41-584" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use as <span class="in">`family=gaussian`</span> and use the <span class="in">`se`</span> response modifier in</span>
+<span id="cb41-585"><a href="#cb41-585" aria-hidden="true" tabindex="-1"></a>      place of <span class="in">`trials`</span> to specify a known standard error.</span>
+<span id="cb41-586"><a href="#cb41-586" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Use the same priors as proposed in the vignette.</span>
+<span id="cb41-587"><a href="#cb41-587" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Compare the obtained MAP prior (in MCMC sample form) from <span class="in">`RBesT`</span> and <span class="in">`brms`</span>.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
