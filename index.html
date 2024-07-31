@@ -352,6 +352,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
 <p>This website contains materials that were developed to accompany a series of workshops held in the Analytics department at Novartis over 2022-2024, illustrating the utility of the R package <code>brms</code> for solving drug- development problems. In order to highlight the versatility of that package, we have developed a collection of case studies covering a diverse set of clinical questions that were addressed via Bayesian modelling with the <code>brms</code> package.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Short course at JSM – Portland, OR – August 5th 2024
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We will offer a short course based on this material at the 2024 Joint Statistical Meetings in Portland on August 5. The materials are available here:</p>
+<ul>
+<li><a href="workshops/jsm2024/slides/bamdd_jsm2024.pdf">Slides</a> &amp; <a href="https://github.com/Novartis/bamdd/tree/main/workshops/jsm2024">additional material (see readme)</a></li>
+</ul>
+</div>
+</div>
 <section id="navigating-the-site" class="level2">
 <h2 class="anchored" data-anchor-id="navigating-the-site">Navigating the site</h2>
 <p>The material is organized as follows:</p>
@@ -366,6 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="updates">Updates</h2>
 <p>This web-site is intended as a live document with updates as appropiate. Key changes to the web-site are tracked here:</p>
 <ul>
+<li>31st July 2024: Linked materials from JSM Portland 2024 short course</li>
 <li>5th June 2024: Added <a href="src/02l_single_arm_pos.html" class="quarto-xref"><span>7&nbsp; Probability of success from a single arm trial</span></a> on assessing probability of success of in Phase-III based on a single-arm trial in Phase-II</li>
 <li>29th April 2024: Third edition course from Paul Bürkner with the new case studies on probability of success, meta-analytic priors with covariates &amp; time-to-event modelling in Oncology phase I dose-escalation. Pre-read version.</li>
 <li>19th April 2024: First public version at <a href="http://opensource.nibr.com/bamdd">opensource.nibr.com/bamdd</a></li>
@@ -883,50 +900,63 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>we have developed a collection of case studies covering a diverse set of </span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>clinical questions that were addressed via Bayesian modelling with the <span class="in">`brms`</span> package. </span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Navigating the site</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>The material is organized as follows:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-profile="public"}</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Short course at JSM -- Portland, OR -- August 5th 2024</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@sec-introduction introduces <span class="in">`brms`</span> and the objectives of these vignettes</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@sec-basic-workflow highlights the basic workflow (analysis steps and </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>syntax) for carrying out an analysis with <span class="in">`brms`</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The next series of sections contain the case</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>studies. You can find a <span class="co">[</span><span class="ot">listing with descriptions on this page</span><span class="co">](src/02_case_studies.qmd)</span>.</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sections @sec-stan-code and @sec-parallel cover more technical topics, such</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>as exposing and injecting custom stan code to <span class="in">`brms`</span> models,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>and efficient parallel computation to support sampling in <span class="in">`brms`</span>.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>We will offer a short course based on this material at the 2024 Joint Statistical Meetings in Portland on August 5. The materials are available here:</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Slides</span><span class="co">](workshops/jsm2024/slides/bamdd_jsm2024.pdf)</span> &amp; <span class="co">[</span><span class="ot">additional material (see readme)</span><span class="co">](https://github.com/Novartis/bamdd/tree/main/workshops/jsm2024)</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Navigating the site</span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Updates</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>The material is organized as follows:</span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>This web-site is intended as a live document with updates as</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>appropiate. Key changes to the web-site are tracked here:</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-profile="public"}</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>5th June 2024: Added @sec-pos on assessing probability of success of</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  in Phase-III based on a single-arm trial in Phase-II</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>29th April 2024: Third edition course from Paul Bürkner with the new</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  case studies on probability of success, meta-analytic priors with</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  covariates &amp; time-to-event modelling in Oncology phase I</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  dose-escalation. Pre-read version.</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>19th April 2024: First public version at <span class="co">[</span><span class="ot">opensource.nibr.com/bamdd</span><span class="co">](http://opensource.nibr.com/bamdd)</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>5th January 2024: Release web-site in more modern quarto book</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  based format</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>26th April 2023: Second edition course from Paul Bürkner with the</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  new case studies on MMRM, time-to-event data, surrogate endpoint</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  meta-regression and network meta-analysis</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>27th April 2022: First release with course from Paul Bürkner</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-profile="public"}</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## License information</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The material on this website is provided under a CC BY 4.0 <span class="co">[</span><span class="ot">license</span><span class="co">](https://github.com/Novartis/bamdd/tree/main/docs/public/LICENSE)</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The source code is provided under a GPL-2 <span class="co">[</span><span class="ot">license</span><span class="co">](https://github.com/Novartis/bamdd/tree/main/LICENSE)</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@sec-introduction introduces <span class="in">`brms`</span> and the objectives of these vignettes</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>@sec-basic-workflow highlights the basic workflow (analysis steps and </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>syntax) for carrying out an analysis with <span class="in">`brms`</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The next series of sections contain the case</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>studies. You can find a <span class="co">[</span><span class="ot">listing with descriptions on this page</span><span class="co">](src/02_case_studies.qmd)</span>.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sections @sec-stan-code and @sec-parallel cover more technical topics, such</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>as exposing and injecting custom stan code to <span class="in">`brms`</span> models,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>and efficient parallel computation to support sampling in <span class="in">`brms`</span>.</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Updates</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>This web-site is intended as a live document with updates as</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>appropiate. Key changes to the web-site are tracked here:</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-profile="public"}</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>31st July 2024: Linked materials from JSM Portland 2024 short course</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>5th June 2024: Added @sec-pos on assessing probability of success of</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  in Phase-III based on a single-arm trial in Phase-II</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>29th April 2024: Third edition course from Paul Bürkner with the new</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  case studies on probability of success, meta-analytic priors with</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  covariates &amp; time-to-event modelling in Oncology phase I</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  dose-escalation. Pre-read version.</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>19th April 2024: First public version at <span class="co">[</span><span class="ot">opensource.nibr.com/bamdd</span><span class="co">](http://opensource.nibr.com/bamdd)</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>5th January 2024: Release web-site in more modern quarto book</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  based format</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>26th April 2023: Second edition course from Paul Bürkner with the</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  new case studies on MMRM, time-to-event data, surrogate endpoint</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  meta-regression and network meta-analysis</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>27th April 2022: First release with course from Paul Bürkner</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-profile="public"}</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## License information</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The material on this website is provided under a CC BY 4.0 <span class="co">[</span><span class="ot">license</span><span class="co">](https://github.com/Novartis/bamdd/tree/main/docs/public/LICENSE)</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The source code is provided under a GPL-2 <span class="co">[</span><span class="ot">license</span><span class="co">](https://github.com/Novartis/bamdd/tree/main/LICENSE)</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

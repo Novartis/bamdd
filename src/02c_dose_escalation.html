@@ -1534,420 +1534,421 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
 <span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a><span class="in"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a><span class="in">{{&lt; include setup.R &gt;}}</span></span>
-<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a>Such a model is straightforward to implement in <span class="in">`brms`</span>. Below, we use a nonlinear formula specification, in order to allow the prior for the intercept to be specified on the log scale. </span>
-<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE}</span></span>
-<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a><span class="in"># Reference dose</span></span>
-<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="in">dref &lt;- 50</span></span>
-<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a><span class="in"># Standardize the covariate as in the model description</span></span>
-<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a><span class="in">dlt_data &lt;- mutate(dlt_data, std_dose = log(dose / dref))</span></span>
-<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a><span class="in"># Model formula in brms</span></span>
-<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_model &lt;- bf(num_toxicities | trials(num_patients) ~ logalpha + exp(logbeta) * std_dose, nl = TRUE) +</span></span>
-<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a><span class="in">  lf(logalpha ~ 1) +</span></span>
-<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a><span class="in">  lf(logbeta ~ 1)</span></span>
-<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a><span class="in"># Get the list of model parameters requiring prior specifications</span></span>
-<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a><span class="in">get_prior(blrm_model, data = dlt_data, family = "binomial")</span></span>
-<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a><span class="in"># Set the prior as described in the previous section</span></span>
-<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_prior &lt;- prior(normal(logit(0.33), 2), nlpar = "logalpha") +</span></span>
-<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a><span class="in">  prior(normal(0, 0.7), nlpar = "logbeta")</span></span>
-<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a><span class="in"># Compile and fit the model using brms</span></span>
-<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_fit &lt;- brm(blrm_model,</span></span>
-<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a><span class="in">                data = dlt_data,</span></span>
-<span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a><span class="in">                family = "binomial",</span></span>
-<span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a><span class="in">                prior = blrm_prior,</span></span>
-<span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a><span class="in">                refresh = 0, silent = 0)</span></span>
-<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
-<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inference for model parameters</span></span>
-<span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a>It is simple to get summary statistics and graphical displays of the posterior distributions for the model parameters.</span>
-<span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics for log(alpha) and log(beta)</span></span>
-<span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_summary</span>(blrm_fit)</span>
-<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.height = 5, fig.width = 5 * 1.62}</span></span>
-<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a><span class="in"># Posterior density estimates for log(alpha) and log(beta)</span></span>
-<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a><span class="in">brms::mcmc_plot(blrm_fit, type = "dens", facet_args = list(ncol = 1))</span></span>
-<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a>However, these parameters are not themselves the primary target of inference for decision making. Rather the dose-DLT curve $\pi(d)$ itself is estimated, in order to guide decision making about future dose levels.</span>
-<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inference for DLT rates</span></span>
-<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a>Estimation of $\pi(d)$ is similarly straightforward. For posterior summary statistics of $\pi(d_i)$ at the observed dose levels $i=1,\ldots,K$, one can use the <span class="in">`poserior::summarize_draws`</span> function as follows:</span>
-<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior draws for pi(d)</span></span>
-<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a>dlt_data <span class="sc">%&gt;%</span></span>
-<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
-<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a>    posterior<span class="sc">::</span><span class="fu">summarize_draws</span>(</span>
-<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a>      <span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">transform =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"quantile2"</span>)</span>
-<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
-<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a>Next we illustrate estimation of $\pi(d)$ on a fine grid of dose levels, in order to visualize the posterior for the continuous curve.</span>
-<span id="cb19-149"><a href="#cb19-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-150"><a href="#cb19-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.height = 4, fig.width = 4 * 1.62}</span></span>
-<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a><span class="in">dose_grid &lt;- seq(0, dref, length.out = 500)</span></span>
-<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a><span class="in"># Posterior draws for pi(d)</span></span>
-<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a><span class="in">dlt_rate_draws &lt;- posterior_linpred(blrm_fit,</span></span>
-<span id="cb19-155"><a href="#cb19-155" aria-hidden="true" tabindex="-1"></a><span class="in">                                    newdata = tibble(dose = dose_grid,</span></span>
-<span id="cb19-156"><a href="#cb19-156" aria-hidden="true" tabindex="-1"></a><span class="in">                                                     std_dose = log(dose / dref),</span></span>
-<span id="cb19-157"><a href="#cb19-157" aria-hidden="true" tabindex="-1"></a><span class="in">                                                     num_patients = 1),</span></span>
-<span id="cb19-158"><a href="#cb19-158" aria-hidden="true" tabindex="-1"></a><span class="in">                                    transform = TRUE)</span></span>
-<span id="cb19-159"><a href="#cb19-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-160"><a href="#cb19-160" aria-hidden="true" tabindex="-1"></a><span class="in"># Visualization using bayesplot</span></span>
-<span id="cb19-161"><a href="#cb19-161" aria-hidden="true" tabindex="-1"></a><span class="in">bayesplot::ppc_ribbon(y = rep(0, 500), yrep = dlt_rate_draws, x = dose_grid) +</span></span>
-<span id="cb19-162"><a href="#cb19-162" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill = "none", color = "none") +</span></span>
-<span id="cb19-163"><a href="#cb19-163" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Dose", y = "P(DLT)")</span></span>
-<span id="cb19-164"><a href="#cb19-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-165"><a href="#cb19-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-166"><a href="#cb19-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-167"><a href="#cb19-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predictive inference for future cohorts</span></span>
-<span id="cb19-168"><a href="#cb19-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-169"><a href="#cb19-169" aria-hidden="true" tabindex="-1"></a>Another key quantity for understanding risk of toxicity for patients is the *predictive distribution* for DLTs in a future, unobserved cohort:</span>
-<span id="cb19-170"><a href="#cb19-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-171"><a href="#cb19-171" aria-hidden="true" tabindex="-1"></a>$$ \Pr(\tilde Y = y \, | \, y_{obs}) = \int \Pr(\tilde Y = y \, | \, \theta) \, d\pi(\theta|y_{obs}). $$</span>
-<span id="cb19-172"><a href="#cb19-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-173"><a href="#cb19-173" aria-hidden="true" tabindex="-1"></a>One can easily obtain such information from <span class="in">`brms`</span>. Suppose we wished to know the predictive distribution for the DLT count in new cohorts of size 4 at a set of candidate dose levels, $d=10, 25, 50$.</span>
-<span id="cb19-174"><a href="#cb19-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-177"><a href="#cb19-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-178"><a href="#cb19-178" aria-hidden="true" tabindex="-1"></a>candidate_doses <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb19-179"><a href="#cb19-179" aria-hidden="true" tabindex="-1"></a>  <span class="at">dose =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>),</span>
-<span id="cb19-180"><a href="#cb19-180" aria-hidden="true" tabindex="-1"></a>  <span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> dref),</span>
-<span id="cb19-181"><a href="#cb19-181" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_patients =</span> <span class="dv">4</span></span>
-<span id="cb19-182"><a href="#cb19-182" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-183"><a href="#cb19-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-184"><a href="#cb19-184" aria-hidden="true" tabindex="-1"></a>predictive_draws <span class="ot">&lt;-</span> <span class="fu">posterior_predict</span>(blrm_fit, <span class="at">newdata =</span> candidate_doses)</span>
-<span id="cb19-185"><a href="#cb19-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-186"><a href="#cb19-186" aria-hidden="true" tabindex="-1"></a>count_freq <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>){</span>
-<span id="cb19-187"><a href="#cb19-187" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">factor</span>(x, breaks)</span>
-<span id="cb19-188"><a href="#cb19-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(</span>
-<span id="cb19-189"><a href="#cb19-189" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prop.table</span>(<span class="fu">table</span>(x)),</span>
-<span id="cb19-190"><a href="#cb19-190" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"P("</span>, breaks, <span class="st">" DLTs)"</span>)</span>
-<span id="cb19-191"><a href="#cb19-191" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb19-192"><a href="#cb19-192" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb19-193"><a href="#cb19-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-194"><a href="#cb19-194" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">bind_cols</span>(</span>
-<span id="cb19-195"><a href="#cb19-195" aria-hidden="true" tabindex="-1"></a>  candidate_doses,</span>
-<span id="cb19-196"><a href="#cb19-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_draws</span>(predictive_draws, count_freq) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
-<span id="cb19-197"><a href="#cb19-197" aria-hidden="true" tabindex="-1"></a>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb19-198"><a href="#cb19-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-199"><a href="#cb19-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a><span class="in"># {{&lt; include setup.R &gt;}}</span></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="in">source("setup.R")</span></span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a>Such a model is straightforward to implement in <span class="in">`brms`</span>. Below, we use a nonlinear formula specification, in order to allow the prior for the intercept to be specified on the log scale. </span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE}</span></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="in"># Reference dose</span></span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a><span class="in">dref &lt;- 50</span></span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a><span class="in"># Standardize the covariate as in the model description</span></span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a><span class="in">dlt_data &lt;- mutate(dlt_data, std_dose = log(dose / dref))</span></span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a><span class="in"># Model formula in brms</span></span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_model &lt;- bf(num_toxicities | trials(num_patients) ~ logalpha + exp(logbeta) * std_dose, nl = TRUE) +</span></span>
+<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a><span class="in">  lf(logalpha ~ 1) +</span></span>
+<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a><span class="in">  lf(logbeta ~ 1)</span></span>
+<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a><span class="in"># Get the list of model parameters requiring prior specifications</span></span>
+<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a><span class="in">get_prior(blrm_model, data = dlt_data, family = "binomial")</span></span>
+<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a><span class="in"># Set the prior as described in the previous section</span></span>
+<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_prior &lt;- prior(normal(logit(0.33), 2), nlpar = "logalpha") +</span></span>
+<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a><span class="in">  prior(normal(0, 0.7), nlpar = "logbeta")</span></span>
+<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a><span class="in"># Compile and fit the model using brms</span></span>
+<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_fit &lt;- brm(blrm_model,</span></span>
+<span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a><span class="in">                data = dlt_data,</span></span>
+<span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a><span class="in">                family = "binomial",</span></span>
+<span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a><span class="in">                prior = blrm_prior,</span></span>
+<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a><span class="in">                refresh = 0, silent = 0)</span></span>
+<span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inference for model parameters</span></span>
+<span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a>It is simple to get summary statistics and graphical displays of the posterior distributions for the model parameters.</span>
+<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics for log(alpha) and log(beta)</span></span>
+<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_summary</span>(blrm_fit)</span>
+<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.height = 5, fig.width = 5 * 1.62}</span></span>
+<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a><span class="in"># Posterior density estimates for log(alpha) and log(beta)</span></span>
+<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a><span class="in">brms::mcmc_plot(blrm_fit, type = "dens", facet_args = list(ncol = 1))</span></span>
+<span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a>However, these parameters are not themselves the primary target of inference for decision making. Rather the dose-DLT curve $\pi(d)$ itself is estimated, in order to guide decision making about future dose levels.</span>
+<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inference for DLT rates</span></span>
+<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a>Estimation of $\pi(d)$ is similarly straightforward. For posterior summary statistics of $\pi(d_i)$ at the observed dose levels $i=1,\ldots,K$, one can use the <span class="in">`poserior::summarize_draws`</span> function as follows:</span>
+<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior draws for pi(d)</span></span>
+<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a>dlt_data <span class="sc">%&gt;%</span></span>
+<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a>    posterior<span class="sc">::</span><span class="fu">summarize_draws</span>(</span>
+<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a>      <span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">transform =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"quantile2"</span>)</span>
+<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
+<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-149"><a href="#cb19-149" aria-hidden="true" tabindex="-1"></a>Next we illustrate estimation of $\pi(d)$ on a fine grid of dose levels, in order to visualize the posterior for the continuous curve.</span>
+<span id="cb19-150"><a href="#cb19-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.height = 4, fig.width = 4 * 1.62}</span></span>
+<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a><span class="in">dose_grid &lt;- seq(0, dref, length.out = 500)</span></span>
+<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a><span class="in"># Posterior draws for pi(d)</span></span>
+<span id="cb19-155"><a href="#cb19-155" aria-hidden="true" tabindex="-1"></a><span class="in">dlt_rate_draws &lt;- posterior_linpred(blrm_fit,</span></span>
+<span id="cb19-156"><a href="#cb19-156" aria-hidden="true" tabindex="-1"></a><span class="in">                                    newdata = tibble(dose = dose_grid,</span></span>
+<span id="cb19-157"><a href="#cb19-157" aria-hidden="true" tabindex="-1"></a><span class="in">                                                     std_dose = log(dose / dref),</span></span>
+<span id="cb19-158"><a href="#cb19-158" aria-hidden="true" tabindex="-1"></a><span class="in">                                                     num_patients = 1),</span></span>
+<span id="cb19-159"><a href="#cb19-159" aria-hidden="true" tabindex="-1"></a><span class="in">                                    transform = TRUE)</span></span>
+<span id="cb19-160"><a href="#cb19-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-161"><a href="#cb19-161" aria-hidden="true" tabindex="-1"></a><span class="in"># Visualization using bayesplot</span></span>
+<span id="cb19-162"><a href="#cb19-162" aria-hidden="true" tabindex="-1"></a><span class="in">bayesplot::ppc_ribbon(y = rep(0, 500), yrep = dlt_rate_draws, x = dose_grid) +</span></span>
+<span id="cb19-163"><a href="#cb19-163" aria-hidden="true" tabindex="-1"></a><span class="in">  guides(fill = "none", color = "none") +</span></span>
+<span id="cb19-164"><a href="#cb19-164" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Dose", y = "P(DLT)")</span></span>
+<span id="cb19-165"><a href="#cb19-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-166"><a href="#cb19-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-167"><a href="#cb19-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-168"><a href="#cb19-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predictive inference for future cohorts</span></span>
+<span id="cb19-169"><a href="#cb19-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-170"><a href="#cb19-170" aria-hidden="true" tabindex="-1"></a>Another key quantity for understanding risk of toxicity for patients is the *predictive distribution* for DLTs in a future, unobserved cohort:</span>
+<span id="cb19-171"><a href="#cb19-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-172"><a href="#cb19-172" aria-hidden="true" tabindex="-1"></a>$$ \Pr(\tilde Y = y \, | \, y_{obs}) = \int \Pr(\tilde Y = y \, | \, \theta) \, d\pi(\theta|y_{obs}). $$</span>
+<span id="cb19-173"><a href="#cb19-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-174"><a href="#cb19-174" aria-hidden="true" tabindex="-1"></a>One can easily obtain such information from <span class="in">`brms`</span>. Suppose we wished to know the predictive distribution for the DLT count in new cohorts of size 4 at a set of candidate dose levels, $d=10, 25, 50$.</span>
+<span id="cb19-175"><a href="#cb19-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-178"><a href="#cb19-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-179"><a href="#cb19-179" aria-hidden="true" tabindex="-1"></a>candidate_doses <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb19-180"><a href="#cb19-180" aria-hidden="true" tabindex="-1"></a>  <span class="at">dose =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>),</span>
+<span id="cb19-181"><a href="#cb19-181" aria-hidden="true" tabindex="-1"></a>  <span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> dref),</span>
+<span id="cb19-182"><a href="#cb19-182" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_patients =</span> <span class="dv">4</span></span>
+<span id="cb19-183"><a href="#cb19-183" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-184"><a href="#cb19-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-185"><a href="#cb19-185" aria-hidden="true" tabindex="-1"></a>predictive_draws <span class="ot">&lt;-</span> <span class="fu">posterior_predict</span>(blrm_fit, <span class="at">newdata =</span> candidate_doses)</span>
+<span id="cb19-186"><a href="#cb19-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-187"><a href="#cb19-187" aria-hidden="true" tabindex="-1"></a>count_freq <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>){</span>
+<span id="cb19-188"><a href="#cb19-188" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">factor</span>(x, breaks)</span>
+<span id="cb19-189"><a href="#cb19-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(</span>
+<span id="cb19-190"><a href="#cb19-190" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prop.table</span>(<span class="fu">table</span>(x)),</span>
+<span id="cb19-191"><a href="#cb19-191" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"P("</span>, breaks, <span class="st">" DLTs)"</span>)</span>
+<span id="cb19-192"><a href="#cb19-192" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-193"><a href="#cb19-193" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-194"><a href="#cb19-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-195"><a href="#cb19-195" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">bind_cols</span>(</span>
+<span id="cb19-196"><a href="#cb19-196" aria-hidden="true" tabindex="-1"></a>  candidate_doses,</span>
+<span id="cb19-197"><a href="#cb19-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_draws</span>(predictive_draws, count_freq) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
+<span id="cb19-198"><a href="#cb19-198" aria-hidden="true" tabindex="-1"></a>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb19-199"><a href="#cb19-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-200"><a href="#cb19-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-201"><a href="#cb19-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dose escalation decisions</span></span>
-<span id="cb19-202"><a href="#cb19-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a>One common framework for guiding dosing decisions using a model-based dose escalation framework is known as Escalation With Overdose Control (EWOC). Decisions are based on an MTD threshold above which constitutes excessive toxicity $\pi_{over}$ (typically $\pi_{over}$), and a so-called feasibility bound $c$:</span>
-<span id="cb19-204"><a href="#cb19-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a>$$ \text{EWOC satisfied at }d \iff \Pr( \pi(d) &gt; \pi_{over}) \leq c $$</span>
-<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a>Furthermore, we often define another cutoff $\pi_{targ}$, and summarize the posterior probabilities for three intervals,</span>
-<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is an underdose}) = \Pr( \pi(d) &lt; \pi_{targ} ) $$</span>
-<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is in the target range}) = \Pr( \pi_{targ} \leq \pi(d) &lt; \pi_{over} ) $$</span>
-<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is an overdose}) = \Pr( \pi(d) &gt; \pi_{over} ),$$</span>
-<span id="cb19-212"><a href="#cb19-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-213"><a href="#cb19-213" aria-hidden="true" tabindex="-1"></a>and evaluate EWOC by checking if the last quantity exceeds $c$.</span>
-<span id="cb19-214"><a href="#cb19-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a>For the set of candidate doses, the EWOC criteria can be evaluated as follows:</span>
-<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-219"><a href="#cb19-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a>pi_target <span class="ot">&lt;-</span> <span class="fl">0.16</span> <span class="co"># motivated by 3+3 design (~ 1/6)</span></span>
-<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a>pi_over <span class="ot">&lt;-</span> <span class="fl">0.33</span> <span class="co"># motivated by 3+3 design (~ 1/3)</span></span>
-<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-224"><a href="#cb19-224" aria-hidden="true" tabindex="-1"></a>raw_draws <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">newdata =</span> candidate_doses, <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-225"><a href="#cb19-225" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> posterior<span class="sc">::</span><span class="fu">as_draws_matrix</span>(raw_draws)</span>
-<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a>interval_probs <span class="ot">&lt;-</span> posterior<span class="sc">::</span><span class="fu">summarize_draws</span>(</span>
-<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a>  draws,</span>
-<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x){</span>
-<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a>      <span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(x, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, pi_target, pi_over, <span class="dv">1</span>))))</span>
-<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb19-232"><a href="#cb19-232" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb19-233"><a href="#cb19-233" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(</span>
-<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(candidate_doses, dose),</span>
-<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">mutate</span>(interval_probs, <span class="at">ewoc_ok =</span> <span class="st">`</span><span class="at">(0.33,1]</span><span class="st">`</span> <span class="sc">&lt;=</span> c), <span class="sc">-</span>variable)</span>
-<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-241"><a href="#cb19-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-201"><a href="#cb19-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-202"><a href="#cb19-202" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dose escalation decisions</span></span>
+<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-204"><a href="#cb19-204" aria-hidden="true" tabindex="-1"></a>One common framework for guiding dosing decisions using a model-based dose escalation framework is known as Escalation With Overdose Control (EWOC). Decisions are based on an MTD threshold above which constitutes excessive toxicity $\pi_{over}$ (typically $\pi_{over}$), and a so-called feasibility bound $c$:</span>
+<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a>$$ \text{EWOC satisfied at }d \iff \Pr( \pi(d) &gt; \pi_{over}) \leq c $$</span>
+<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a>Furthermore, we often define another cutoff $\pi_{targ}$, and summarize the posterior probabilities for three intervals,</span>
+<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is an underdose}) = \Pr( \pi(d) &lt; \pi_{targ} ) $$</span>
+<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is in the target range}) = \Pr( \pi_{targ} \leq \pi(d) &lt; \pi_{over} ) $$</span>
+<span id="cb19-212"><a href="#cb19-212" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is an overdose}) = \Pr( \pi(d) &gt; \pi_{over} ),$$</span>
+<span id="cb19-213"><a href="#cb19-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-214"><a href="#cb19-214" aria-hidden="true" tabindex="-1"></a>and evaluate EWOC by checking if the last quantity exceeds $c$.</span>
+<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a>For the set of candidate doses, the EWOC criteria can be evaluated as follows:</span>
+<span id="cb19-217"><a href="#cb19-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a>pi_target <span class="ot">&lt;-</span> <span class="fl">0.16</span> <span class="co"># motivated by 3+3 design (~ 1/6)</span></span>
+<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a>pi_over <span class="ot">&lt;-</span> <span class="fl">0.33</span> <span class="co"># motivated by 3+3 design (~ 1/3)</span></span>
+<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb19-224"><a href="#cb19-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-225"><a href="#cb19-225" aria-hidden="true" tabindex="-1"></a>raw_draws <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">newdata =</span> candidate_doses, <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> posterior<span class="sc">::</span><span class="fu">as_draws_matrix</span>(raw_draws)</span>
+<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a>interval_probs <span class="ot">&lt;-</span> posterior<span class="sc">::</span><span class="fu">summarize_draws</span>(</span>
+<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a>  draws,</span>
+<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x){</span>
+<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a>      <span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(x, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, pi_target, pi_over, <span class="dv">1</span>))))</span>
+<span id="cb19-232"><a href="#cb19-232" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb19-233"><a href="#cb19-233" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(candidate_doses, dose),</span>
+<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">mutate</span>(interval_probs, <span class="at">ewoc_ok =</span> <span class="st">`</span><span class="at">(0.33,1]</span><span class="st">`</span> <span class="sc">&lt;=</span> c), <span class="sc">-</span>variable)</span>
+<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb19-241"><a href="#cb19-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-242"><a href="#cb19-242" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-243"><a href="#cb19-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-244"><a href="#cb19-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
-<span id="cb19-245"><a href="#cb19-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-246"><a href="#cb19-246" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> is easily capable of handling this simple logistic regression model, and producing all the posterior summaries necessary for guiding a dose escalation trial with it. There are, of course, *many* extensions and complications to this basic methodology that we encounter frequently. The <span class="co">[</span><span class="ot">OncoBayes2</span><span class="co">](https://cran.r-project.org/package=OncoBayes2)</span> package is specifically tailored to this class of regression models, and covers all the typical use-cases. However, the approach described above for <span class="in">`brms`</span> can be extended as well, for example to handle dose escalation for drug combinations, rather than single agents. See <span class="co">[</span><span class="ot">Advanced Topics section on combination dose escalation</span><span class="co">][Combination dose escalation]</span>.</span>
-<span id="cb19-247"><a href="#cb19-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-248"><a href="#cb19-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise</span></span>
-<span id="cb19-249"><a href="#cb19-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-244"><a href="#cb19-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-245"><a href="#cb19-245" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb19-246"><a href="#cb19-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-247"><a href="#cb19-247" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> is easily capable of handling this simple logistic regression model, and producing all the posterior summaries necessary for guiding a dose escalation trial with it. There are, of course, *many* extensions and complications to this basic methodology that we encounter frequently. The <span class="co">[</span><span class="ot">OncoBayes2</span><span class="co">](https://cran.r-project.org/package=OncoBayes2)</span> package is specifically tailored to this class of regression models, and covers all the typical use-cases. However, the approach described above for <span class="in">`brms`</span> can be extended as well, for example to handle dose escalation for drug combinations, rather than single agents. See <span class="co">[</span><span class="ot">Advanced Topics section on combination dose escalation</span><span class="co">][Combination dose escalation]</span>.</span>
+<span id="cb19-248"><a href="#cb19-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-249"><a href="#cb19-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise</span></span>
 <span id="cb19-250"><a href="#cb19-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-251"><a href="#cb19-251" aria-hidden="true" tabindex="-1"></a>An alternative to designs based on the BLRM is the so-called Bayesian Optimal INterval (BOIN) design <span class="co">[</span><span class="ot">(see Yan et al, 2020)</span><span class="co">](https://doi.org/10.18637/jss.v094.i13)</span>. In this exercise we will explore how the estimation of the MTD differs between the BOIN approach vs the BLRM vs a flexible monotone-regression approach that can be easily implemented in <span class="in">`brms`</span>.</span>
-<span id="cb19-252"><a href="#cb19-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-253"><a href="#cb19-253" aria-hidden="true" tabindex="-1"></a>Suppose are planning a trial with the following provisional doses. </span>
-<span id="cb19-254"><a href="#cb19-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-255"><a href="#cb19-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb19-256"><a href="#cb19-256" aria-hidden="true" tabindex="-1"></a><span class="in">provisional_doses &lt;- tribble(</span></span>
-<span id="cb19-257"><a href="#cb19-257" aria-hidden="true" tabindex="-1"></a><span class="in">  ~dose_id, ~dose, ~prob_dlt,</span></span>
-<span id="cb19-258"><a href="#cb19-258" aria-hidden="true" tabindex="-1"></a><span class="in">         1,     1,      0.05,</span></span>
-<span id="cb19-259"><a href="#cb19-259" aria-hidden="true" tabindex="-1"></a><span class="in">         2,     2,       0.1,</span></span>
-<span id="cb19-260"><a href="#cb19-260" aria-hidden="true" tabindex="-1"></a><span class="in">         3,     4,       0.2,</span></span>
-<span id="cb19-261"><a href="#cb19-261" aria-hidden="true" tabindex="-1"></a><span class="in">         4,     8,       0.3,</span></span>
-<span id="cb19-262"><a href="#cb19-262" aria-hidden="true" tabindex="-1"></a><span class="in">         5,    16,       0.5</span></span>
-<span id="cb19-263"><a href="#cb19-263" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb19-264"><a href="#cb19-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-265"><a href="#cb19-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-266"><a href="#cb19-266" aria-hidden="true" tabindex="-1"></a>To generate data for comparing the MTD estimation methods, we begin by simulating a trial acording to true DLT rates <span class="in">`prob_DLT`</span> above, and according to BOIN decision rules for escalation and de-escalation. We starting with dose = 2, and enroll cohorts of size 4 until either 12 cohorts have been enrolled, or more than 12 patients have been enrolled at any one dose. Below is some code that simulates such a trial.</span>
-<span id="cb19-267"><a href="#cb19-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-268"><a href="#cb19-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb19-269"><a href="#cb19-269" aria-hidden="true" tabindex="-1"></a><span class="in">library(BOIN)</span></span>
-<span id="cb19-270"><a href="#cb19-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-271"><a href="#cb19-271" aria-hidden="true" tabindex="-1"></a><span class="in"># Function to simulate a BOIN trial</span></span>
-<span id="cb19-272"><a href="#cb19-272" aria-hidden="true" tabindex="-1"></a><span class="in">simulate_BOIN &lt;- function(starting_dose_id,</span></span>
-<span id="cb19-273"><a href="#cb19-273" aria-hidden="true" tabindex="-1"></a><span class="in">                          provisional_doses,</span></span>
-<span id="cb19-274"><a href="#cb19-274" aria-hidden="true" tabindex="-1"></a><span class="in">                          cohort_size,</span></span>
-<span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a><span class="in">                          num_cohorts,</span></span>
-<span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a><span class="in">                          num_patients_stop,</span></span>
-<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a><span class="in">                          target_dlt_rate = 0.25,</span></span>
-<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a><span class="in">                          low_dlt_rate = 0.6 * target_dlt_rate,</span></span>
-<span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a><span class="in">                          high_dlt_rate = 1.4 * target_dlt_rate){</span></span>
-<span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a><span class="in">  BOIN_decisions &lt;- BOIN::get.boundary(</span></span>
-<span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a><span class="in">    target = target_dlt_rate,</span></span>
-<span id="cb19-283"><a href="#cb19-283" aria-hidden="true" tabindex="-1"></a><span class="in">    ncohort = num_cohorts,</span></span>
-<span id="cb19-284"><a href="#cb19-284" aria-hidden="true" tabindex="-1"></a><span class="in">    cohortsize = cohort_size,</span></span>
-<span id="cb19-285"><a href="#cb19-285" aria-hidden="true" tabindex="-1"></a><span class="in">    n.earlystop = num_patients_stop,</span></span>
-<span id="cb19-286"><a href="#cb19-286" aria-hidden="true" tabindex="-1"></a><span class="in">    p.saf = low_dlt_rate,</span></span>
-<span id="cb19-287"><a href="#cb19-287" aria-hidden="true" tabindex="-1"></a><span class="in">    p.tox = high_dlt_rate</span></span>
-<span id="cb19-288"><a href="#cb19-288" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-289"><a href="#cb19-289" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb19-290"><a href="#cb19-290" aria-hidden="true" tabindex="-1"></a><span class="in">  current_dose_id &lt;- starting_dose_id</span></span>
-<span id="cb19-291"><a href="#cb19-291" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb19-292"><a href="#cb19-292" aria-hidden="true" tabindex="-1"></a><span class="in">  dlt_data &lt;- provisional_doses %&gt;%</span></span>
-<span id="cb19-293"><a href="#cb19-293" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(</span></span>
-<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a><span class="in">      num_patients = 0,</span></span>
-<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a><span class="in">      num_toxicities = 0,</span></span>
-<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a><span class="in">      eliminated = FALSE</span></span>
-<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a><span class="in">  cohort_history &lt;- dlt_data[0,]</span></span>
-<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a><span class="in">  cohort_time &lt;- 1</span></span>
-<span id="cb19-302"><a href="#cb19-302" aria-hidden="true" tabindex="-1"></a><span class="in">  while(cohort_time &lt;= num_cohorts){</span></span>
-<span id="cb19-303"><a href="#cb19-303" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-304"><a href="#cb19-304" aria-hidden="true" tabindex="-1"></a><span class="in">    current_dose_data &lt;- dlt_data[current_dose_id,]</span></span>
-<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a><span class="in">    true_dlt_rate &lt;- dlt_data$prob_dlt[current_dose_id]</span></span>
-<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a><span class="in">    num_toxicities &lt;- rbinom(1, cohort_size, true_dlt_rate)</span></span>
-<span id="cb19-308"><a href="#cb19-308" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a><span class="in">    current_dose_data$num_patients &lt;- current_dose_data$num_patients + cohort_size</span></span>
-<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a><span class="in">    current_dose_data$num_toxicities &lt;- current_dose_data$num_toxicities + num_toxicities</span></span>
-<span id="cb19-311"><a href="#cb19-311" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-251"><a href="#cb19-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-252"><a href="#cb19-252" aria-hidden="true" tabindex="-1"></a>An alternative to designs based on the BLRM is the so-called Bayesian Optimal INterval (BOIN) design <span class="co">[</span><span class="ot">(see Yan et al, 2020)</span><span class="co">](https://doi.org/10.18637/jss.v094.i13)</span>. In this exercise we will explore how the estimation of the MTD differs between the BOIN approach vs the BLRM vs a flexible monotone-regression approach that can be easily implemented in <span class="in">`brms`</span>.</span>
+<span id="cb19-253"><a href="#cb19-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-254"><a href="#cb19-254" aria-hidden="true" tabindex="-1"></a>Suppose are planning a trial with the following provisional doses. </span>
+<span id="cb19-255"><a href="#cb19-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-256"><a href="#cb19-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb19-257"><a href="#cb19-257" aria-hidden="true" tabindex="-1"></a><span class="in">provisional_doses &lt;- tribble(</span></span>
+<span id="cb19-258"><a href="#cb19-258" aria-hidden="true" tabindex="-1"></a><span class="in">  ~dose_id, ~dose, ~prob_dlt,</span></span>
+<span id="cb19-259"><a href="#cb19-259" aria-hidden="true" tabindex="-1"></a><span class="in">         1,     1,      0.05,</span></span>
+<span id="cb19-260"><a href="#cb19-260" aria-hidden="true" tabindex="-1"></a><span class="in">         2,     2,       0.1,</span></span>
+<span id="cb19-261"><a href="#cb19-261" aria-hidden="true" tabindex="-1"></a><span class="in">         3,     4,       0.2,</span></span>
+<span id="cb19-262"><a href="#cb19-262" aria-hidden="true" tabindex="-1"></a><span class="in">         4,     8,       0.3,</span></span>
+<span id="cb19-263"><a href="#cb19-263" aria-hidden="true" tabindex="-1"></a><span class="in">         5,    16,       0.5</span></span>
+<span id="cb19-264"><a href="#cb19-264" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb19-265"><a href="#cb19-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-266"><a href="#cb19-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-267"><a href="#cb19-267" aria-hidden="true" tabindex="-1"></a>To generate data for comparing the MTD estimation methods, we begin by simulating a trial acording to true DLT rates <span class="in">`prob_DLT`</span> above, and according to BOIN decision rules for escalation and de-escalation. We starting with dose = 2, and enroll cohorts of size 4 until either 12 cohorts have been enrolled, or more than 12 patients have been enrolled at any one dose. Below is some code that simulates such a trial.</span>
+<span id="cb19-268"><a href="#cb19-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-269"><a href="#cb19-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb19-270"><a href="#cb19-270" aria-hidden="true" tabindex="-1"></a><span class="in">library(BOIN)</span></span>
+<span id="cb19-271"><a href="#cb19-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-272"><a href="#cb19-272" aria-hidden="true" tabindex="-1"></a><span class="in"># Function to simulate a BOIN trial</span></span>
+<span id="cb19-273"><a href="#cb19-273" aria-hidden="true" tabindex="-1"></a><span class="in">simulate_BOIN &lt;- function(starting_dose_id,</span></span>
+<span id="cb19-274"><a href="#cb19-274" aria-hidden="true" tabindex="-1"></a><span class="in">                          provisional_doses,</span></span>
+<span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a><span class="in">                          cohort_size,</span></span>
+<span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a><span class="in">                          num_cohorts,</span></span>
+<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a><span class="in">                          num_patients_stop,</span></span>
+<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a><span class="in">                          target_dlt_rate = 0.25,</span></span>
+<span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a><span class="in">                          low_dlt_rate = 0.6 * target_dlt_rate,</span></span>
+<span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a><span class="in">                          high_dlt_rate = 1.4 * target_dlt_rate){</span></span>
+<span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a><span class="in">  BOIN_decisions &lt;- BOIN::get.boundary(</span></span>
+<span id="cb19-283"><a href="#cb19-283" aria-hidden="true" tabindex="-1"></a><span class="in">    target = target_dlt_rate,</span></span>
+<span id="cb19-284"><a href="#cb19-284" aria-hidden="true" tabindex="-1"></a><span class="in">    ncohort = num_cohorts,</span></span>
+<span id="cb19-285"><a href="#cb19-285" aria-hidden="true" tabindex="-1"></a><span class="in">    cohortsize = cohort_size,</span></span>
+<span id="cb19-286"><a href="#cb19-286" aria-hidden="true" tabindex="-1"></a><span class="in">    n.earlystop = num_patients_stop,</span></span>
+<span id="cb19-287"><a href="#cb19-287" aria-hidden="true" tabindex="-1"></a><span class="in">    p.saf = low_dlt_rate,</span></span>
+<span id="cb19-288"><a href="#cb19-288" aria-hidden="true" tabindex="-1"></a><span class="in">    p.tox = high_dlt_rate</span></span>
+<span id="cb19-289"><a href="#cb19-289" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-290"><a href="#cb19-290" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb19-291"><a href="#cb19-291" aria-hidden="true" tabindex="-1"></a><span class="in">  current_dose_id &lt;- starting_dose_id</span></span>
+<span id="cb19-292"><a href="#cb19-292" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb19-293"><a href="#cb19-293" aria-hidden="true" tabindex="-1"></a><span class="in">  dlt_data &lt;- provisional_doses %&gt;%</span></span>
+<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(</span></span>
+<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a><span class="in">      num_patients = 0,</span></span>
+<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a><span class="in">      num_toxicities = 0,</span></span>
+<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a><span class="in">      eliminated = FALSE</span></span>
+<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a><span class="in">  cohort_history &lt;- dlt_data[0,]</span></span>
+<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb19-302"><a href="#cb19-302" aria-hidden="true" tabindex="-1"></a><span class="in">  cohort_time &lt;- 1</span></span>
+<span id="cb19-303"><a href="#cb19-303" aria-hidden="true" tabindex="-1"></a><span class="in">  while(cohort_time &lt;= num_cohorts){</span></span>
+<span id="cb19-304"><a href="#cb19-304" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a><span class="in">    current_dose_data &lt;- dlt_data[current_dose_id,]</span></span>
+<span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a><span class="in">    true_dlt_rate &lt;- dlt_data$prob_dlt[current_dose_id]</span></span>
+<span id="cb19-308"><a href="#cb19-308" aria-hidden="true" tabindex="-1"></a><span class="in">    num_toxicities &lt;- rbinom(1, cohort_size, true_dlt_rate)</span></span>
+<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a><span class="in">    current_dose_data$num_patients &lt;- current_dose_data$num_patients + cohort_size</span></span>
+<span id="cb19-311"><a href="#cb19-311" aria-hidden="true" tabindex="-1"></a><span class="in">    current_dose_data$num_toxicities &lt;- current_dose_data$num_toxicities + num_toxicities</span></span>
 <span id="cb19-312"><a href="#cb19-312" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a><span class="in">    new_data &lt;- mutate(current_dose_data,</span></span>
-<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a><span class="in">                       num_patients = cohort_size,</span></span>
-<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a><span class="in">                       num_toxicities = !! num_toxicities)</span></span>
-<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-317"><a href="#cb19-317" aria-hidden="true" tabindex="-1"></a><span class="in">    cohort_history &lt;- rbind(</span></span>
-<span id="cb19-318"><a href="#cb19-318" aria-hidden="true" tabindex="-1"></a><span class="in">      cohort_history,</span></span>
-<span id="cb19-319"><a href="#cb19-319" aria-hidden="true" tabindex="-1"></a><span class="in">      new_data</span></span>
-<span id="cb19-320"><a href="#cb19-320" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb19-321"><a href="#cb19-321" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-322"><a href="#cb19-322" aria-hidden="true" tabindex="-1"></a><span class="in">    dlt_data[current_dose_id, ] &lt;- current_dose_data</span></span>
-<span id="cb19-323"><a href="#cb19-323" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-324"><a href="#cb19-324" aria-hidden="true" tabindex="-1"></a><span class="in">    if(current_dose_data$num_patients &gt;= num_patients_stop) break</span></span>
-<span id="cb19-325"><a href="#cb19-325" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-326"><a href="#cb19-326" aria-hidden="true" tabindex="-1"></a><span class="in">    boundaries &lt;- setNames(</span></span>
-<span id="cb19-327"><a href="#cb19-327" aria-hidden="true" tabindex="-1"></a><span class="in">      BOIN_decisions$full_boundary_tab[-1, current_dose_data$num_patients],</span></span>
-<span id="cb19-328"><a href="#cb19-328" aria-hidden="true" tabindex="-1"></a><span class="in">      NULL</span></span>
-<span id="cb19-329"><a href="#cb19-329" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb19-330"><a href="#cb19-330" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-331"><a href="#cb19-331" aria-hidden="true" tabindex="-1"></a><span class="in">    comparison &lt;- c(</span></span>
-<span id="cb19-332"><a href="#cb19-332" aria-hidden="true" tabindex="-1"></a><span class="in">      escalate = current_dose_data$num_toxicities &lt;= boundaries[1],</span></span>
-<span id="cb19-333"><a href="#cb19-333" aria-hidden="true" tabindex="-1"></a><span class="in">      stay = current_dose_data$num_toxicities &gt; boundaries[1] &amp; current_dose_data$num_toxicities &lt; boundaries[2],</span></span>
-<span id="cb19-334"><a href="#cb19-334" aria-hidden="true" tabindex="-1"></a><span class="in">      de_escalate = current_dose_data$num_toxicities &gt;= boundaries[2],</span></span>
-<span id="cb19-335"><a href="#cb19-335" aria-hidden="true" tabindex="-1"></a><span class="in">      eliminate = current_dose_data$num_toxicities &gt;= boundaries[3]</span></span>
-<span id="cb19-336"><a href="#cb19-336" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb19-337"><a href="#cb19-337" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-338"><a href="#cb19-338" aria-hidden="true" tabindex="-1"></a><span class="in">    decision &lt;- names(comparison[max(which(comparison))])</span></span>
-<span id="cb19-339"><a href="#cb19-339" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-340"><a href="#cb19-340" aria-hidden="true" tabindex="-1"></a><span class="in">    if(decision == "stay"){</span></span>
-<span id="cb19-341"><a href="#cb19-341" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- current_dose_id</span></span>
-<span id="cb19-342"><a href="#cb19-342" aria-hidden="true" tabindex="-1"></a><span class="in">    } else if(decision == "escalate"){</span></span>
-<span id="cb19-343"><a href="#cb19-343" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- current_dose_id + 1</span></span>
-<span id="cb19-344"><a href="#cb19-344" aria-hidden="true" tabindex="-1"></a><span class="in">    } else{</span></span>
-<span id="cb19-345"><a href="#cb19-345" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- current_dose_id - 1</span></span>
-<span id="cb19-346"><a href="#cb19-346" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
-<span id="cb19-347"><a href="#cb19-347" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-348"><a href="#cb19-348" aria-hidden="true" tabindex="-1"></a><span class="in">    if(decision == "eliminate") dlt_data$eliminated[current_dose_id] &lt;- TRUE</span></span>
-<span id="cb19-349"><a href="#cb19-349" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-350"><a href="#cb19-350" aria-hidden="true" tabindex="-1"></a><span class="in">    if(next_dose_id &gt; nrow(dlt_data)){</span></span>
-<span id="cb19-351"><a href="#cb19-351" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- nrow(dlt_data)</span></span>
-<span id="cb19-352"><a href="#cb19-352" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
-<span id="cb19-353"><a href="#cb19-353" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-354"><a href="#cb19-354" aria-hidden="true" tabindex="-1"></a><span class="in">    if(dlt_data$eliminated[next_dose_id]){</span></span>
-<span id="cb19-355"><a href="#cb19-355" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- next_dose_id - 1</span></span>
-<span id="cb19-356"><a href="#cb19-356" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
-<span id="cb19-357"><a href="#cb19-357" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-358"><a href="#cb19-358" aria-hidden="true" tabindex="-1"></a><span class="in">    if(next_dose_id &lt; 1) break</span></span>
-<span id="cb19-359"><a href="#cb19-359" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-360"><a href="#cb19-360" aria-hidden="true" tabindex="-1"></a><span class="in">    current_dose_id &lt;- next_dose_id</span></span>
-<span id="cb19-361"><a href="#cb19-361" aria-hidden="true" tabindex="-1"></a><span class="in">    cohort_time &lt;- cohort_time + 1</span></span>
-<span id="cb19-362"><a href="#cb19-362" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-363"><a href="#cb19-363" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
-<span id="cb19-364"><a href="#cb19-364" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb19-365"><a href="#cb19-365" aria-hidden="true" tabindex="-1"></a><span class="in">  mtd &lt;- BOIN::select.mtd(</span></span>
-<span id="cb19-366"><a href="#cb19-366" aria-hidden="true" tabindex="-1"></a><span class="in">    target = target_dlt_rate,</span></span>
-<span id="cb19-367"><a href="#cb19-367" aria-hidden="true" tabindex="-1"></a><span class="in">    npts = dlt_data$num_patients,</span></span>
-<span id="cb19-368"><a href="#cb19-368" aria-hidden="true" tabindex="-1"></a><span class="in">    ntox = dlt_data$num_toxicities,</span></span>
-<span id="cb19-369"><a href="#cb19-369" aria-hidden="true" tabindex="-1"></a><span class="in">    p.tox = high_dlt_rate</span></span>
-<span id="cb19-370"><a href="#cb19-370" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-371"><a href="#cb19-371" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb19-372"><a href="#cb19-372" aria-hidden="true" tabindex="-1"></a><span class="in">  return(</span></span>
-<span id="cb19-373"><a href="#cb19-373" aria-hidden="true" tabindex="-1"></a><span class="in">    brms:::nlist(</span></span>
-<span id="cb19-374"><a href="#cb19-374" aria-hidden="true" tabindex="-1"></a><span class="in">      dlt_data,</span></span>
-<span id="cb19-375"><a href="#cb19-375" aria-hidden="true" tabindex="-1"></a><span class="in">      cohort_history,</span></span>
-<span id="cb19-376"><a href="#cb19-376" aria-hidden="true" tabindex="-1"></a><span class="in">      mtd</span></span>
-<span id="cb19-377"><a href="#cb19-377" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb19-378"><a href="#cb19-378" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-379"><a href="#cb19-379" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb19-380"><a href="#cb19-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a><span class="in">    new_data &lt;- mutate(current_dose_data,</span></span>
+<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a><span class="in">                       num_patients = cohort_size,</span></span>
+<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a><span class="in">                       num_toxicities = !! num_toxicities)</span></span>
+<span id="cb19-317"><a href="#cb19-317" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-318"><a href="#cb19-318" aria-hidden="true" tabindex="-1"></a><span class="in">    cohort_history &lt;- rbind(</span></span>
+<span id="cb19-319"><a href="#cb19-319" aria-hidden="true" tabindex="-1"></a><span class="in">      cohort_history,</span></span>
+<span id="cb19-320"><a href="#cb19-320" aria-hidden="true" tabindex="-1"></a><span class="in">      new_data</span></span>
+<span id="cb19-321"><a href="#cb19-321" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb19-322"><a href="#cb19-322" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-323"><a href="#cb19-323" aria-hidden="true" tabindex="-1"></a><span class="in">    dlt_data[current_dose_id, ] &lt;- current_dose_data</span></span>
+<span id="cb19-324"><a href="#cb19-324" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-325"><a href="#cb19-325" aria-hidden="true" tabindex="-1"></a><span class="in">    if(current_dose_data$num_patients &gt;= num_patients_stop) break</span></span>
+<span id="cb19-326"><a href="#cb19-326" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-327"><a href="#cb19-327" aria-hidden="true" tabindex="-1"></a><span class="in">    boundaries &lt;- setNames(</span></span>
+<span id="cb19-328"><a href="#cb19-328" aria-hidden="true" tabindex="-1"></a><span class="in">      BOIN_decisions$full_boundary_tab[-1, current_dose_data$num_patients],</span></span>
+<span id="cb19-329"><a href="#cb19-329" aria-hidden="true" tabindex="-1"></a><span class="in">      NULL</span></span>
+<span id="cb19-330"><a href="#cb19-330" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb19-331"><a href="#cb19-331" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-332"><a href="#cb19-332" aria-hidden="true" tabindex="-1"></a><span class="in">    comparison &lt;- c(</span></span>
+<span id="cb19-333"><a href="#cb19-333" aria-hidden="true" tabindex="-1"></a><span class="in">      escalate = current_dose_data$num_toxicities &lt;= boundaries[1],</span></span>
+<span id="cb19-334"><a href="#cb19-334" aria-hidden="true" tabindex="-1"></a><span class="in">      stay = current_dose_data$num_toxicities &gt; boundaries[1] &amp; current_dose_data$num_toxicities &lt; boundaries[2],</span></span>
+<span id="cb19-335"><a href="#cb19-335" aria-hidden="true" tabindex="-1"></a><span class="in">      de_escalate = current_dose_data$num_toxicities &gt;= boundaries[2],</span></span>
+<span id="cb19-336"><a href="#cb19-336" aria-hidden="true" tabindex="-1"></a><span class="in">      eliminate = current_dose_data$num_toxicities &gt;= boundaries[3]</span></span>
+<span id="cb19-337"><a href="#cb19-337" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb19-338"><a href="#cb19-338" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-339"><a href="#cb19-339" aria-hidden="true" tabindex="-1"></a><span class="in">    decision &lt;- names(comparison[max(which(comparison))])</span></span>
+<span id="cb19-340"><a href="#cb19-340" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-341"><a href="#cb19-341" aria-hidden="true" tabindex="-1"></a><span class="in">    if(decision == "stay"){</span></span>
+<span id="cb19-342"><a href="#cb19-342" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- current_dose_id</span></span>
+<span id="cb19-343"><a href="#cb19-343" aria-hidden="true" tabindex="-1"></a><span class="in">    } else if(decision == "escalate"){</span></span>
+<span id="cb19-344"><a href="#cb19-344" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- current_dose_id + 1</span></span>
+<span id="cb19-345"><a href="#cb19-345" aria-hidden="true" tabindex="-1"></a><span class="in">    } else{</span></span>
+<span id="cb19-346"><a href="#cb19-346" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- current_dose_id - 1</span></span>
+<span id="cb19-347"><a href="#cb19-347" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb19-348"><a href="#cb19-348" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-349"><a href="#cb19-349" aria-hidden="true" tabindex="-1"></a><span class="in">    if(decision == "eliminate") dlt_data$eliminated[current_dose_id] &lt;- TRUE</span></span>
+<span id="cb19-350"><a href="#cb19-350" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-351"><a href="#cb19-351" aria-hidden="true" tabindex="-1"></a><span class="in">    if(next_dose_id &gt; nrow(dlt_data)){</span></span>
+<span id="cb19-352"><a href="#cb19-352" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- nrow(dlt_data)</span></span>
+<span id="cb19-353"><a href="#cb19-353" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb19-354"><a href="#cb19-354" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-355"><a href="#cb19-355" aria-hidden="true" tabindex="-1"></a><span class="in">    if(dlt_data$eliminated[next_dose_id]){</span></span>
+<span id="cb19-356"><a href="#cb19-356" aria-hidden="true" tabindex="-1"></a><span class="in">      next_dose_id &lt;- next_dose_id - 1</span></span>
+<span id="cb19-357"><a href="#cb19-357" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb19-358"><a href="#cb19-358" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-359"><a href="#cb19-359" aria-hidden="true" tabindex="-1"></a><span class="in">    if(next_dose_id &lt; 1) break</span></span>
+<span id="cb19-360"><a href="#cb19-360" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-361"><a href="#cb19-361" aria-hidden="true" tabindex="-1"></a><span class="in">    current_dose_id &lt;- next_dose_id</span></span>
+<span id="cb19-362"><a href="#cb19-362" aria-hidden="true" tabindex="-1"></a><span class="in">    cohort_time &lt;- cohort_time + 1</span></span>
+<span id="cb19-363"><a href="#cb19-363" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-364"><a href="#cb19-364" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb19-365"><a href="#cb19-365" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb19-366"><a href="#cb19-366" aria-hidden="true" tabindex="-1"></a><span class="in">  mtd &lt;- BOIN::select.mtd(</span></span>
+<span id="cb19-367"><a href="#cb19-367" aria-hidden="true" tabindex="-1"></a><span class="in">    target = target_dlt_rate,</span></span>
+<span id="cb19-368"><a href="#cb19-368" aria-hidden="true" tabindex="-1"></a><span class="in">    npts = dlt_data$num_patients,</span></span>
+<span id="cb19-369"><a href="#cb19-369" aria-hidden="true" tabindex="-1"></a><span class="in">    ntox = dlt_data$num_toxicities,</span></span>
+<span id="cb19-370"><a href="#cb19-370" aria-hidden="true" tabindex="-1"></a><span class="in">    p.tox = high_dlt_rate</span></span>
+<span id="cb19-371"><a href="#cb19-371" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-372"><a href="#cb19-372" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb19-373"><a href="#cb19-373" aria-hidden="true" tabindex="-1"></a><span class="in">  return(</span></span>
+<span id="cb19-374"><a href="#cb19-374" aria-hidden="true" tabindex="-1"></a><span class="in">    brms:::nlist(</span></span>
+<span id="cb19-375"><a href="#cb19-375" aria-hidden="true" tabindex="-1"></a><span class="in">      dlt_data,</span></span>
+<span id="cb19-376"><a href="#cb19-376" aria-hidden="true" tabindex="-1"></a><span class="in">      cohort_history,</span></span>
+<span id="cb19-377"><a href="#cb19-377" aria-hidden="true" tabindex="-1"></a><span class="in">      mtd</span></span>
+<span id="cb19-378"><a href="#cb19-378" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb19-379"><a href="#cb19-379" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-380"><a href="#cb19-380" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb19-381"><a href="#cb19-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-382"><a href="#cb19-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-383"><a href="#cb19-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-384"><a href="#cb19-384" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb19-385"><a href="#cb19-385" aria-hidden="true" tabindex="-1"></a><span class="in"># simulate a trial</span></span>
-<span id="cb19-386"><a href="#cb19-386" aria-hidden="true" tabindex="-1"></a><span class="in">withr::with_seed(</span></span>
-<span id="cb19-387"><a href="#cb19-387" aria-hidden="true" tabindex="-1"></a><span class="in">  -1423048045,</span></span>
-<span id="cb19-388"><a href="#cb19-388" aria-hidden="true" tabindex="-1"></a><span class="in">  {</span></span>
-<span id="cb19-389"><a href="#cb19-389" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb19-390"><a href="#cb19-390" aria-hidden="true" tabindex="-1"></a><span class="in">    sim &lt;- simulate_BOIN(</span></span>
-<span id="cb19-391"><a href="#cb19-391" aria-hidden="true" tabindex="-1"></a><span class="in">      starting_dose_id = 2,</span></span>
-<span id="cb19-392"><a href="#cb19-392" aria-hidden="true" tabindex="-1"></a><span class="in">      provisional_doses = provisional_doses,</span></span>
-<span id="cb19-393"><a href="#cb19-393" aria-hidden="true" tabindex="-1"></a><span class="in">      cohort_size = 4,</span></span>
-<span id="cb19-394"><a href="#cb19-394" aria-hidden="true" tabindex="-1"></a><span class="in">      num_cohorts = 12,</span></span>
-<span id="cb19-395"><a href="#cb19-395" aria-hidden="true" tabindex="-1"></a><span class="in">      num_patients_stop = 13,</span></span>
-<span id="cb19-396"><a href="#cb19-396" aria-hidden="true" tabindex="-1"></a><span class="in">      target_dlt_rate = 0.25</span></span>
-<span id="cb19-397"><a href="#cb19-397" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb19-398"><a href="#cb19-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-399"><a href="#cb19-399" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
-<span id="cb19-400"><a href="#cb19-400" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb19-401"><a href="#cb19-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-402"><a href="#cb19-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-403"><a href="#cb19-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-404"><a href="#cb19-404" aria-hidden="true" tabindex="-1"></a>The output of this call include:</span>
-<span id="cb19-405"><a href="#cb19-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-406"><a href="#cb19-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb19-407"><a href="#cb19-407" aria-hidden="true" tabindex="-1"></a><span class="in">sim$dlt_data # simulated cohort-by-cohort data</span></span>
-<span id="cb19-408"><a href="#cb19-408" aria-hidden="true" tabindex="-1"></a><span class="in">sim$mtd # isotonic regression to determine the MTD; p_est shows the result</span></span>
-<span id="cb19-409"><a href="#cb19-409" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-410"><a href="#cb19-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-411"><a href="#cb19-411" aria-hidden="true" tabindex="-1"></a>In the BOIN design, the MTD is selected based on isotonic regression of beta-binomial posterior quantiles <span class="co">[</span><span class="ot">(see Yan et al, 2020)</span><span class="co">](https://doi.org/10.18637/jss.v094.i13)</span>.</span>
-<span id="cb19-412"><a href="#cb19-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-413"><a href="#cb19-413" aria-hidden="true" tabindex="-1"></a>Now for the exercise:</span>
-<span id="cb19-414"><a href="#cb19-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-415"><a href="#cb19-415" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Use <span class="in">`brms`</span> to fit a BLRM similar to these data with reference dose $d^* = 16$ and the same prior as described in this section.</span>
-<span id="cb19-416"><a href="#cb19-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-417"><a href="#cb19-417" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>In <span class="in">`brms`</span>, the <span class="in">`mo()`</span> function is used to specify an ordinal covariate with a monotone relationship with the response. Fit a model in which the log odds of DLT (<span class="in">`family = binomial("logit")`</span>) is a monotone function of the <span class="in">`dose_id`</span> variable defined in <span class="in">`dlt_data`</span> (i.e. the covariate is an integer sequence indexing the provisional doses). How do these estimates compare to the estimates from the BLRM?</span>
-<span id="cb19-418"><a href="#cb19-418" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-419"><a href="#cb19-419" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Compare the estimates of DLT rate (e.g. posterior means and quantiles) by dose: for the models in #1 and #2, and as estimated by BOIN in <span class="in">`sim$mtd$p_est`</span>. Does the BOIN MTD differ from the MTD that would result from taking the highest dose satisfying EWOC from models #1 and #2?</span>
-<span id="cb19-420"><a href="#cb19-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-382"><a href="#cb19-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-383"><a href="#cb19-383" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-384"><a href="#cb19-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-385"><a href="#cb19-385" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb19-386"><a href="#cb19-386" aria-hidden="true" tabindex="-1"></a><span class="in"># simulate a trial</span></span>
+<span id="cb19-387"><a href="#cb19-387" aria-hidden="true" tabindex="-1"></a><span class="in">withr::with_seed(</span></span>
+<span id="cb19-388"><a href="#cb19-388" aria-hidden="true" tabindex="-1"></a><span class="in">  -1423048045,</span></span>
+<span id="cb19-389"><a href="#cb19-389" aria-hidden="true" tabindex="-1"></a><span class="in">  {</span></span>
+<span id="cb19-390"><a href="#cb19-390" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb19-391"><a href="#cb19-391" aria-hidden="true" tabindex="-1"></a><span class="in">    sim &lt;- simulate_BOIN(</span></span>
+<span id="cb19-392"><a href="#cb19-392" aria-hidden="true" tabindex="-1"></a><span class="in">      starting_dose_id = 2,</span></span>
+<span id="cb19-393"><a href="#cb19-393" aria-hidden="true" tabindex="-1"></a><span class="in">      provisional_doses = provisional_doses,</span></span>
+<span id="cb19-394"><a href="#cb19-394" aria-hidden="true" tabindex="-1"></a><span class="in">      cohort_size = 4,</span></span>
+<span id="cb19-395"><a href="#cb19-395" aria-hidden="true" tabindex="-1"></a><span class="in">      num_cohorts = 12,</span></span>
+<span id="cb19-396"><a href="#cb19-396" aria-hidden="true" tabindex="-1"></a><span class="in">      num_patients_stop = 13,</span></span>
+<span id="cb19-397"><a href="#cb19-397" aria-hidden="true" tabindex="-1"></a><span class="in">      target_dlt_rate = 0.25</span></span>
+<span id="cb19-398"><a href="#cb19-398" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb19-399"><a href="#cb19-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-400"><a href="#cb19-400" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb19-401"><a href="#cb19-401" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb19-402"><a href="#cb19-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-403"><a href="#cb19-403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-404"><a href="#cb19-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-405"><a href="#cb19-405" aria-hidden="true" tabindex="-1"></a>The output of this call include:</span>
+<span id="cb19-406"><a href="#cb19-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-407"><a href="#cb19-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb19-408"><a href="#cb19-408" aria-hidden="true" tabindex="-1"></a><span class="in">sim$dlt_data # simulated cohort-by-cohort data</span></span>
+<span id="cb19-409"><a href="#cb19-409" aria-hidden="true" tabindex="-1"></a><span class="in">sim$mtd # isotonic regression to determine the MTD; p_est shows the result</span></span>
+<span id="cb19-410"><a href="#cb19-410" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-411"><a href="#cb19-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-412"><a href="#cb19-412" aria-hidden="true" tabindex="-1"></a>In the BOIN design, the MTD is selected based on isotonic regression of beta-binomial posterior quantiles <span class="co">[</span><span class="ot">(see Yan et al, 2020)</span><span class="co">](https://doi.org/10.18637/jss.v094.i13)</span>.</span>
+<span id="cb19-413"><a href="#cb19-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-414"><a href="#cb19-414" aria-hidden="true" tabindex="-1"></a>Now for the exercise:</span>
+<span id="cb19-415"><a href="#cb19-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-416"><a href="#cb19-416" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Use <span class="in">`brms`</span> to fit a BLRM similar to these data with reference dose $d^* = 16$ and the same prior as described in this section.</span>
+<span id="cb19-417"><a href="#cb19-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-418"><a href="#cb19-418" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>In <span class="in">`brms`</span>, the <span class="in">`mo()`</span> function is used to specify an ordinal covariate with a monotone relationship with the response. Fit a model in which the log odds of DLT (<span class="in">`family = binomial("logit")`</span>) is a monotone function of the <span class="in">`dose_id`</span> variable defined in <span class="in">`dlt_data`</span> (i.e. the covariate is an integer sequence indexing the provisional doses). How do these estimates compare to the estimates from the BLRM?</span>
+<span id="cb19-419"><a href="#cb19-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-420"><a href="#cb19-420" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Compare the estimates of DLT rate (e.g. posterior means and quantiles) by dose: for the models in #1 and #2, and as estimated by BOIN in <span class="in">`sim$mtd$p_est`</span>. Does the BOIN MTD differ from the MTD that would result from taking the highest dose satisfying EWOC from models #1 and #2?</span>
 <span id="cb19-421"><a href="#cb19-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-422"><a href="#cb19-422" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
-<span id="cb19-423"><a href="#cb19-423" aria-hidden="true" tabindex="-1"></a><span class="in"># solution to 1: fit a BLRM</span></span>
-<span id="cb19-424"><a href="#cb19-424" aria-hidden="true" tabindex="-1"></a><span class="in">ref_dose &lt;- 16</span></span>
-<span id="cb19-425"><a href="#cb19-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-426"><a href="#cb19-426" aria-hidden="true" tabindex="-1"></a><span class="in">dlt_data &lt;- sim$dlt_data %&gt;%</span></span>
-<span id="cb19-427"><a href="#cb19-427" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(std_dose = log(dose / ref_dose))</span></span>
-<span id="cb19-428"><a href="#cb19-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-429"><a href="#cb19-429" aria-hidden="true" tabindex="-1"></a><span class="in"># Model formula in brms</span></span>
-<span id="cb19-430"><a href="#cb19-430" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_model &lt;- bf(num_toxicities | trials(num_patients) ~ logalpha + exp(logbeta) * std_dose, nl = TRUE) +</span></span>
-<span id="cb19-431"><a href="#cb19-431" aria-hidden="true" tabindex="-1"></a><span class="in">  lf(logalpha ~ 1) +</span></span>
-<span id="cb19-432"><a href="#cb19-432" aria-hidden="true" tabindex="-1"></a><span class="in">  lf(logbeta ~ 1)</span></span>
-<span id="cb19-433"><a href="#cb19-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-434"><a href="#cb19-434" aria-hidden="true" tabindex="-1"></a><span class="in"># Default prior</span></span>
-<span id="cb19-435"><a href="#cb19-435" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_prior &lt;- prior(normal(logit(0.33), 2), nlpar = "logalpha") +</span></span>
-<span id="cb19-436"><a href="#cb19-436" aria-hidden="true" tabindex="-1"></a><span class="in">  prior(normal(0, 0.7), nlpar = "logbeta")</span></span>
-<span id="cb19-437"><a href="#cb19-437" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-438"><a href="#cb19-438" aria-hidden="true" tabindex="-1"></a><span class="in"># Compile and fit the model using brms</span></span>
-<span id="cb19-439"><a href="#cb19-439" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_fit &lt;- brm(blrm_model,</span></span>
-<span id="cb19-440"><a href="#cb19-440" aria-hidden="true" tabindex="-1"></a><span class="in">                data = dlt_data,</span></span>
-<span id="cb19-441"><a href="#cb19-441" aria-hidden="true" tabindex="-1"></a><span class="in">                family = binomial("logit"),</span></span>
-<span id="cb19-442"><a href="#cb19-442" aria-hidden="true" tabindex="-1"></a><span class="in">                prior = blrm_prior)</span></span>
-<span id="cb19-443"><a href="#cb19-443" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-444"><a href="#cb19-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-422"><a href="#cb19-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-423"><a href="#cb19-423" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
+<span id="cb19-424"><a href="#cb19-424" aria-hidden="true" tabindex="-1"></a><span class="in"># solution to 1: fit a BLRM</span></span>
+<span id="cb19-425"><a href="#cb19-425" aria-hidden="true" tabindex="-1"></a><span class="in">ref_dose &lt;- 16</span></span>
+<span id="cb19-426"><a href="#cb19-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-427"><a href="#cb19-427" aria-hidden="true" tabindex="-1"></a><span class="in">dlt_data &lt;- sim$dlt_data %&gt;%</span></span>
+<span id="cb19-428"><a href="#cb19-428" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(std_dose = log(dose / ref_dose))</span></span>
+<span id="cb19-429"><a href="#cb19-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-430"><a href="#cb19-430" aria-hidden="true" tabindex="-1"></a><span class="in"># Model formula in brms</span></span>
+<span id="cb19-431"><a href="#cb19-431" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_model &lt;- bf(num_toxicities | trials(num_patients) ~ logalpha + exp(logbeta) * std_dose, nl = TRUE) +</span></span>
+<span id="cb19-432"><a href="#cb19-432" aria-hidden="true" tabindex="-1"></a><span class="in">  lf(logalpha ~ 1) +</span></span>
+<span id="cb19-433"><a href="#cb19-433" aria-hidden="true" tabindex="-1"></a><span class="in">  lf(logbeta ~ 1)</span></span>
+<span id="cb19-434"><a href="#cb19-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-435"><a href="#cb19-435" aria-hidden="true" tabindex="-1"></a><span class="in"># Default prior</span></span>
+<span id="cb19-436"><a href="#cb19-436" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_prior &lt;- prior(normal(logit(0.33), 2), nlpar = "logalpha") +</span></span>
+<span id="cb19-437"><a href="#cb19-437" aria-hidden="true" tabindex="-1"></a><span class="in">  prior(normal(0, 0.7), nlpar = "logbeta")</span></span>
+<span id="cb19-438"><a href="#cb19-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-439"><a href="#cb19-439" aria-hidden="true" tabindex="-1"></a><span class="in"># Compile and fit the model using brms</span></span>
+<span id="cb19-440"><a href="#cb19-440" aria-hidden="true" tabindex="-1"></a><span class="in">blrm_fit &lt;- brm(blrm_model,</span></span>
+<span id="cb19-441"><a href="#cb19-441" aria-hidden="true" tabindex="-1"></a><span class="in">                data = dlt_data,</span></span>
+<span id="cb19-442"><a href="#cb19-442" aria-hidden="true" tabindex="-1"></a><span class="in">                family = binomial("logit"),</span></span>
+<span id="cb19-443"><a href="#cb19-443" aria-hidden="true" tabindex="-1"></a><span class="in">                prior = blrm_prior)</span></span>
+<span id="cb19-444"><a href="#cb19-444" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-445"><a href="#cb19-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-446"><a href="#cb19-446" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
-<span id="cb19-447"><a href="#cb19-447" aria-hidden="true" tabindex="-1"></a><span class="in"># solution to #2: fit a monotone regression</span></span>
-<span id="cb19-448"><a href="#cb19-448" aria-hidden="true" tabindex="-1"></a><span class="in">mo_fit &lt;- brm(num_toxicities | trials(num_patients) ~ mo(dose_id),</span></span>
-<span id="cb19-449"><a href="#cb19-449" aria-hidden="true" tabindex="-1"></a><span class="in">              data = dlt_data,</span></span>
-<span id="cb19-450"><a href="#cb19-450" aria-hidden="true" tabindex="-1"></a><span class="in">              family = binomial("logit"))</span></span>
-<span id="cb19-451"><a href="#cb19-451" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-452"><a href="#cb19-452" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-453"><a href="#cb19-453" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
-<span id="cb19-454"><a href="#cb19-454" aria-hidden="true" tabindex="-1"></a><span class="in"># solution to #3: compare</span></span>
-<span id="cb19-455"><a href="#cb19-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-456"><a href="#cb19-456" aria-hidden="true" tabindex="-1"></a><span class="in"># monotone regression summary</span></span>
-<span id="cb19-457"><a href="#cb19-457" aria-hidden="true" tabindex="-1"></a><span class="in">est_mo &lt;- summarize_draws(posterior_linpred(mo_fit, transform = TRUE), c("mean", "quantile_fn"))</span></span>
-<span id="cb19-458"><a href="#cb19-458" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-459"><a href="#cb19-459" aria-hidden="true" tabindex="-1"></a><span class="in"># blrm summary</span></span>
-<span id="cb19-460"><a href="#cb19-460" aria-hidden="true" tabindex="-1"></a><span class="in">est_blrm &lt;- summarize_draws(posterior_linpred(blrm_fit, transform = TRUE), c("mean", "quantile_fn"))</span></span>
-<span id="cb19-461"><a href="#cb19-461" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-462"><a href="#cb19-462" aria-hidden="true" tabindex="-1"></a><span class="in"># BOIN estimate</span></span>
-<span id="cb19-463"><a href="#cb19-463" aria-hidden="true" tabindex="-1"></a><span class="in">est_boin &lt;- sim$mtd$p_est %&gt;%</span></span>
-<span id="cb19-464"><a href="#cb19-464" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(</span></span>
-<span id="cb19-465"><a href="#cb19-465" aria-hidden="true" tabindex="-1"></a><span class="in">    mean = as.numeric(phat),</span></span>
-<span id="cb19-466"><a href="#cb19-466" aria-hidden="true" tabindex="-1"></a><span class="in">    ci = map(CI, function(CI) as_tibble(setNames(eval(parse(text = paste0("list", CI))), c("2.5%", "97.5%"))))</span></span>
-<span id="cb19-467"><a href="#cb19-467" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb19-468"><a href="#cb19-468" aria-hidden="true" tabindex="-1"></a><span class="in">  unnest(ci)</span></span>
-<span id="cb19-469"><a href="#cb19-469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-470"><a href="#cb19-470" aria-hidden="true" tabindex="-1"></a><span class="in"># visualize together</span></span>
-<span id="cb19-471"><a href="#cb19-471" aria-hidden="true" tabindex="-1"></a><span class="in">all_est &lt;- bind_cols(</span></span>
-<span id="cb19-472"><a href="#cb19-472" aria-hidden="true" tabindex="-1"></a><span class="in">  bind_rows(</span></span>
-<span id="cb19-473"><a href="#cb19-473" aria-hidden="true" tabindex="-1"></a><span class="in">    provisional_doses,</span></span>
+<span id="cb19-446"><a href="#cb19-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-447"><a href="#cb19-447" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
+<span id="cb19-448"><a href="#cb19-448" aria-hidden="true" tabindex="-1"></a><span class="in"># solution to #2: fit a monotone regression</span></span>
+<span id="cb19-449"><a href="#cb19-449" aria-hidden="true" tabindex="-1"></a><span class="in">mo_fit &lt;- brm(num_toxicities | trials(num_patients) ~ mo(dose_id),</span></span>
+<span id="cb19-450"><a href="#cb19-450" aria-hidden="true" tabindex="-1"></a><span class="in">              data = dlt_data,</span></span>
+<span id="cb19-451"><a href="#cb19-451" aria-hidden="true" tabindex="-1"></a><span class="in">              family = binomial("logit"))</span></span>
+<span id="cb19-452"><a href="#cb19-452" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-453"><a href="#cb19-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-454"><a href="#cb19-454" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
+<span id="cb19-455"><a href="#cb19-455" aria-hidden="true" tabindex="-1"></a><span class="in"># solution to #3: compare</span></span>
+<span id="cb19-456"><a href="#cb19-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-457"><a href="#cb19-457" aria-hidden="true" tabindex="-1"></a><span class="in"># monotone regression summary</span></span>
+<span id="cb19-458"><a href="#cb19-458" aria-hidden="true" tabindex="-1"></a><span class="in">est_mo &lt;- summarize_draws(posterior_linpred(mo_fit, transform = TRUE), c("mean", "quantile_fn"))</span></span>
+<span id="cb19-459"><a href="#cb19-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-460"><a href="#cb19-460" aria-hidden="true" tabindex="-1"></a><span class="in"># blrm summary</span></span>
+<span id="cb19-461"><a href="#cb19-461" aria-hidden="true" tabindex="-1"></a><span class="in">est_blrm &lt;- summarize_draws(posterior_linpred(blrm_fit, transform = TRUE), c("mean", "quantile_fn"))</span></span>
+<span id="cb19-462"><a href="#cb19-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-463"><a href="#cb19-463" aria-hidden="true" tabindex="-1"></a><span class="in"># BOIN estimate</span></span>
+<span id="cb19-464"><a href="#cb19-464" aria-hidden="true" tabindex="-1"></a><span class="in">est_boin &lt;- sim$mtd$p_est %&gt;%</span></span>
+<span id="cb19-465"><a href="#cb19-465" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(</span></span>
+<span id="cb19-466"><a href="#cb19-466" aria-hidden="true" tabindex="-1"></a><span class="in">    mean = as.numeric(phat),</span></span>
+<span id="cb19-467"><a href="#cb19-467" aria-hidden="true" tabindex="-1"></a><span class="in">    ci = map(CI, function(CI) as_tibble(setNames(eval(parse(text = paste0("list", CI))), c("2.5%", "97.5%"))))</span></span>
+<span id="cb19-468"><a href="#cb19-468" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb19-469"><a href="#cb19-469" aria-hidden="true" tabindex="-1"></a><span class="in">  unnest(ci)</span></span>
+<span id="cb19-470"><a href="#cb19-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-471"><a href="#cb19-471" aria-hidden="true" tabindex="-1"></a><span class="in"># visualize together</span></span>
+<span id="cb19-472"><a href="#cb19-472" aria-hidden="true" tabindex="-1"></a><span class="in">all_est &lt;- bind_cols(</span></span>
+<span id="cb19-473"><a href="#cb19-473" aria-hidden="true" tabindex="-1"></a><span class="in">  bind_rows(</span></span>
 <span id="cb19-474"><a href="#cb19-474" aria-hidden="true" tabindex="-1"></a><span class="in">    provisional_doses,</span></span>
-<span id="cb19-475"><a href="#cb19-475" aria-hidden="true" tabindex="-1"></a><span class="in">    provisional_doses</span></span>
-<span id="cb19-476"><a href="#cb19-476" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
-<span id="cb19-477"><a href="#cb19-477" aria-hidden="true" tabindex="-1"></a><span class="in">  bind_rows(</span></span>
-<span id="cb19-478"><a href="#cb19-478" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(est_blrm, method = "BLRM"),</span></span>
-<span id="cb19-479"><a href="#cb19-479" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(est_mo, method = "Monotone"),</span></span>
-<span id="cb19-480"><a href="#cb19-480" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(est_boin, method = "BOIN")</span></span>
-<span id="cb19-481"><a href="#cb19-481" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb19-482"><a href="#cb19-482" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb19-483"><a href="#cb19-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-484"><a href="#cb19-484" aria-hidden="true" tabindex="-1"></a><span class="in">dodge_amount &lt;- 0.6</span></span>
-<span id="cb19-485"><a href="#cb19-485" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(all_est, aes(x = dose, y = mean, ymin = `2.5%`, ymax = `97.5%`,</span></span>
-<span id="cb19-486"><a href="#cb19-486" aria-hidden="true" tabindex="-1"></a><span class="in">                    color = method, group = method)) +</span></span>
-<span id="cb19-487"><a href="#cb19-487" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_path(position = position_dodge(dodge_amount)) +</span></span>
-<span id="cb19-488"><a href="#cb19-488" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_pointrange(position = position_dodge(dodge_amount)) +</span></span>
-<span id="cb19-489"><a href="#cb19-489" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(data = provisional_doses, aes(x = dose, y = prob_dlt),</span></span>
-<span id="cb19-490"><a href="#cb19-490" aria-hidden="true" tabindex="-1"></a><span class="in">             color = "black",</span></span>
-<span id="cb19-491"><a href="#cb19-491" aria-hidden="true" tabindex="-1"></a><span class="in">             inherit.aes = FALSE) +</span></span>
-<span id="cb19-492"><a href="#cb19-492" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_path(data = provisional_doses, aes(x = dose, y = prob_dlt),</span></span>
-<span id="cb19-493"><a href="#cb19-493" aria-hidden="true" tabindex="-1"></a><span class="in">            color = "black", linetype = "dashed",</span></span>
-<span id="cb19-494"><a href="#cb19-494" aria-hidden="true" tabindex="-1"></a><span class="in">            inherit.aes = FALSE)</span></span>
-<span id="cb19-495"><a href="#cb19-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-496"><a href="#cb19-496" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-497"><a href="#cb19-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-475"><a href="#cb19-475" aria-hidden="true" tabindex="-1"></a><span class="in">    provisional_doses,</span></span>
+<span id="cb19-476"><a href="#cb19-476" aria-hidden="true" tabindex="-1"></a><span class="in">    provisional_doses</span></span>
+<span id="cb19-477"><a href="#cb19-477" aria-hidden="true" tabindex="-1"></a><span class="in">  ),</span></span>
+<span id="cb19-478"><a href="#cb19-478" aria-hidden="true" tabindex="-1"></a><span class="in">  bind_rows(</span></span>
+<span id="cb19-479"><a href="#cb19-479" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(est_blrm, method = "BLRM"),</span></span>
+<span id="cb19-480"><a href="#cb19-480" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(est_mo, method = "Monotone"),</span></span>
+<span id="cb19-481"><a href="#cb19-481" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(est_boin, method = "BOIN")</span></span>
+<span id="cb19-482"><a href="#cb19-482" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb19-483"><a href="#cb19-483" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb19-484"><a href="#cb19-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-485"><a href="#cb19-485" aria-hidden="true" tabindex="-1"></a><span class="in">dodge_amount &lt;- 0.6</span></span>
+<span id="cb19-486"><a href="#cb19-486" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(all_est, aes(x = dose, y = mean, ymin = `2.5%`, ymax = `97.5%`,</span></span>
+<span id="cb19-487"><a href="#cb19-487" aria-hidden="true" tabindex="-1"></a><span class="in">                    color = method, group = method)) +</span></span>
+<span id="cb19-488"><a href="#cb19-488" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_path(position = position_dodge(dodge_amount)) +</span></span>
+<span id="cb19-489"><a href="#cb19-489" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_pointrange(position = position_dodge(dodge_amount)) +</span></span>
+<span id="cb19-490"><a href="#cb19-490" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(data = provisional_doses, aes(x = dose, y = prob_dlt),</span></span>
+<span id="cb19-491"><a href="#cb19-491" aria-hidden="true" tabindex="-1"></a><span class="in">             color = "black",</span></span>
+<span id="cb19-492"><a href="#cb19-492" aria-hidden="true" tabindex="-1"></a><span class="in">             inherit.aes = FALSE) +</span></span>
+<span id="cb19-493"><a href="#cb19-493" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_path(data = provisional_doses, aes(x = dose, y = prob_dlt),</span></span>
+<span id="cb19-494"><a href="#cb19-494" aria-hidden="true" tabindex="-1"></a><span class="in">            color = "black", linetype = "dashed",</span></span>
+<span id="cb19-495"><a href="#cb19-495" aria-hidden="true" tabindex="-1"></a><span class="in">            inherit.aes = FALSE)</span></span>
+<span id="cb19-496"><a href="#cb19-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-497"><a href="#cb19-497" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-498"><a href="#cb19-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-499"><a href="#cb19-499" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

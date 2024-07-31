@@ -1979,658 +1979,659 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb42-56"><a href="#cb42-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-57"><a href="#cb42-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
 <span id="cb42-58"><a href="#cb42-58" aria-hidden="true" tabindex="-1"></a><span class="in"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb42-59"><a href="#cb42-59" aria-hidden="true" tabindex="-1"></a><span class="in">{{&lt; include setup.R &gt;}}</span></span>
-<span id="cb42-60"><a href="#cb42-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-61"><a href="#cb42-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-62"><a href="#cb42-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background</span></span>
-<span id="cb42-63"><a href="#cb42-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-64"><a href="#cb42-64" aria-hidden="true" tabindex="-1"></a>Assume we wish to evaluate in a Phase III study, the effectiveness of</span>
-<span id="cb42-65"><a href="#cb42-65" aria-hidden="true" tabindex="-1"></a>an investigational treatment by comparing it to a placebo in a</span>
-<span id="cb42-66"><a href="#cb42-66" aria-hidden="true" tabindex="-1"></a>population with a rare disease. The study focused on evaluating the</span>
-<span id="cb42-67"><a href="#cb42-67" aria-hidden="true" tabindex="-1"></a>treatment's efficacy in different age groups from the age range 2 to</span>
-<span id="cb42-68"><a href="#cb42-68" aria-hidden="true" tabindex="-1"></a>under 18 years old.  The primary endpoint of the study is the change</span>
-<span id="cb42-69"><a href="#cb42-69" aria-hidden="true" tabindex="-1"></a>in a Patient Reported Outcome (PRO) total score at the end of the</span>
-<span id="cb42-70"><a href="#cb42-70" aria-hidden="true" tabindex="-1"></a>follow-up period (12 months).</span>
-<span id="cb42-71"><a href="#cb42-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-72"><a href="#cb42-72" aria-hidden="true" tabindex="-1"></a>The statistical hypothesis being tested for the primary endpoint is that there</span>
-<span id="cb42-73"><a href="#cb42-73" aria-hidden="true" tabindex="-1"></a>is no difference in the change from baseline in the PRO total score between</span>
-<span id="cb42-74"><a href="#cb42-74" aria-hidden="true" tabindex="-1"></a>the treatment group and the placebo group.</span>
-<span id="cb42-75"><a href="#cb42-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-76"><a href="#cb42-76" aria-hidden="true" tabindex="-1"></a>A Bayesian linear regression model will be applied, adjusting for the</span>
-<span id="cb42-77"><a href="#cb42-77" aria-hidden="true" tabindex="-1"></a>age classified into 3 groups (2 to under 5, 5 to under 13, and 13 to</span>
-<span id="cb42-78"><a href="#cb42-78" aria-hidden="true" tabindex="-1"></a>under 18) and baseline score. The age group of 5 to under 13 years</span>
-<span id="cb42-79"><a href="#cb42-79" aria-hidden="true" tabindex="-1"></a>old will serve as the reference category, allowing the use of priors</span>
-<span id="cb42-80"><a href="#cb42-80" aria-hidden="true" tabindex="-1"></a>on the intercept and coefficients for treatment to represent the mean</span>
-<span id="cb42-81"><a href="#cb42-81" aria-hidden="true" tabindex="-1"></a>change in the score at 12 months in this subgroup of patients.</span>
-<span id="cb42-82"><a href="#cb42-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-83"><a href="#cb42-83" aria-hidden="true" tabindex="-1"></a>In order to inform the model, informative priors will be included for the mean </span>
-<span id="cb42-84"><a href="#cb42-84" aria-hidden="true" tabindex="-1"></a>change in the PRO score at 12 months in each age subgroup. </span>
-<span id="cb42-85"><a href="#cb42-85" aria-hidden="true" tabindex="-1"></a>These priors will be derived from historical studies.</span>
-<span id="cb42-86"><a href="#cb42-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-59"><a href="#cb42-59" aria-hidden="true" tabindex="-1"></a><span class="in"># {{&lt; include setup.R &gt;}}</span></span>
+<span id="cb42-60"><a href="#cb42-60" aria-hidden="true" tabindex="-1"></a><span class="in">source("setup.R")</span></span>
+<span id="cb42-61"><a href="#cb42-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-62"><a href="#cb42-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-63"><a href="#cb42-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background</span></span>
+<span id="cb42-64"><a href="#cb42-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-65"><a href="#cb42-65" aria-hidden="true" tabindex="-1"></a>Assume we wish to evaluate in a Phase III study, the effectiveness of</span>
+<span id="cb42-66"><a href="#cb42-66" aria-hidden="true" tabindex="-1"></a>an investigational treatment by comparing it to a placebo in a</span>
+<span id="cb42-67"><a href="#cb42-67" aria-hidden="true" tabindex="-1"></a>population with a rare disease. The study focused on evaluating the</span>
+<span id="cb42-68"><a href="#cb42-68" aria-hidden="true" tabindex="-1"></a>treatment's efficacy in different age groups from the age range 2 to</span>
+<span id="cb42-69"><a href="#cb42-69" aria-hidden="true" tabindex="-1"></a>under 18 years old.  The primary endpoint of the study is the change</span>
+<span id="cb42-70"><a href="#cb42-70" aria-hidden="true" tabindex="-1"></a>in a Patient Reported Outcome (PRO) total score at the end of the</span>
+<span id="cb42-71"><a href="#cb42-71" aria-hidden="true" tabindex="-1"></a>follow-up period (12 months).</span>
+<span id="cb42-72"><a href="#cb42-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-73"><a href="#cb42-73" aria-hidden="true" tabindex="-1"></a>The statistical hypothesis being tested for the primary endpoint is that there</span>
+<span id="cb42-74"><a href="#cb42-74" aria-hidden="true" tabindex="-1"></a>is no difference in the change from baseline in the PRO total score between</span>
+<span id="cb42-75"><a href="#cb42-75" aria-hidden="true" tabindex="-1"></a>the treatment group and the placebo group.</span>
+<span id="cb42-76"><a href="#cb42-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-77"><a href="#cb42-77" aria-hidden="true" tabindex="-1"></a>A Bayesian linear regression model will be applied, adjusting for the</span>
+<span id="cb42-78"><a href="#cb42-78" aria-hidden="true" tabindex="-1"></a>age classified into 3 groups (2 to under 5, 5 to under 13, and 13 to</span>
+<span id="cb42-79"><a href="#cb42-79" aria-hidden="true" tabindex="-1"></a>under 18) and baseline score. The age group of 5 to under 13 years</span>
+<span id="cb42-80"><a href="#cb42-80" aria-hidden="true" tabindex="-1"></a>old will serve as the reference category, allowing the use of priors</span>
+<span id="cb42-81"><a href="#cb42-81" aria-hidden="true" tabindex="-1"></a>on the intercept and coefficients for treatment to represent the mean</span>
+<span id="cb42-82"><a href="#cb42-82" aria-hidden="true" tabindex="-1"></a>change in the score at 12 months in this subgroup of patients.</span>
+<span id="cb42-83"><a href="#cb42-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-84"><a href="#cb42-84" aria-hidden="true" tabindex="-1"></a>In order to inform the model, informative priors will be included for the mean </span>
+<span id="cb42-85"><a href="#cb42-85" aria-hidden="true" tabindex="-1"></a>change in the PRO score at 12 months in each age subgroup. </span>
+<span id="cb42-86"><a href="#cb42-86" aria-hidden="true" tabindex="-1"></a>These priors will be derived from historical studies.</span>
 <span id="cb42-87"><a href="#cb42-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-88"><a href="#cb42-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
-<span id="cb42-89"><a href="#cb42-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-90"><a href="#cb42-90" aria-hidden="true" tabindex="-1"></a>At the design stage of the trial, data from two historical studies were</span>
-<span id="cb42-91"><a href="#cb42-91" aria-hidden="true" tabindex="-1"></a>available for the control group.</span>
-<span id="cb42-92"><a href="#cb42-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-93"><a href="#cb42-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Study 1: A natural history study of patients with the disease.</span>
-<span id="cb42-94"><a href="#cb42-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Study 2: Control arm of a randomized study evaluating an alternative</span>
-<span id="cb42-95"><a href="#cb42-95" aria-hidden="true" tabindex="-1"></a>  therapy.</span>
-<span id="cb42-96"><a href="#cb42-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-97"><a href="#cb42-97" aria-hidden="true" tabindex="-1"></a>These historical studies provide valuable information for the primary</span>
-<span id="cb42-98"><a href="#cb42-98" aria-hidden="true" tabindex="-1"></a>evaluation of the treatment effect in the trial of interest. Casting</span>
-<span id="cb42-99"><a href="#cb42-99" aria-hidden="true" tabindex="-1"></a>the historical data into an informative prior on the control response</span>
-<span id="cb42-100"><a href="#cb42-100" aria-hidden="true" tabindex="-1"></a>is expected to increase the precision in the estimation of the</span>
-<span id="cb42-101"><a href="#cb42-101" aria-hidden="true" tabindex="-1"></a>treatment effect for the Phase III study of interest.</span>
-<span id="cb42-102"><a href="#cb42-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-103"><a href="#cb42-103" aria-hidden="true" tabindex="-1"></a>The data set obtained from these two studies are summary statistics</span>
-<span id="cb42-104"><a href="#cb42-104" aria-hidden="true" tabindex="-1"></a>for the PRO score at baseline (BASE), the mean change from baseline</span>
-<span id="cb42-105"><a href="#cb42-105" aria-hidden="true" tabindex="-1"></a>(CHGm), and is standard error (CHGse) stratified by age group</span>
-<span id="cb42-106"><a href="#cb42-106" aria-hidden="true" tabindex="-1"></a>(AGEGRP).</span>
-<span id="cb42-107"><a href="#cb42-107" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb42-110"><a href="#cb42-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-111"><a href="#cb42-111" aria-hidden="true" tabindex="-1"></a>hdata <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb42-112"><a href="#cb42-112" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>Study   , <span class="sc">~</span>AGEGRPN, <span class="sc">~</span>AGEGRP,           <span class="sc">~</span>n, <span class="sc">~</span>BASE, <span class="sc">~</span>CHGm, <span class="sc">~</span>CHGse,</span>
-<span id="cb42-113"><a href="#cb42-113" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1. STUDY 1"</span> , <span class="st">"1"</span> , <span class="st">"Age &gt;=2 to &lt;5"</span>   , <span class="dv">28</span>, <span class="fl">16.8</span>,  <span class="sc">-</span><span class="fl">0.7</span>,  <span class="fl">1.00</span>,</span>
-<span id="cb42-114"><a href="#cb42-114" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1. STUDY 1"</span> , <span class="st">"2"</span> , <span class="st">"Age &gt;=5 to &lt;13"</span>  , <span class="dv">50</span>, <span class="fl">26.7</span>,  <span class="sc">-</span><span class="fl">1.1</span>,  <span class="fl">0.73</span>,</span>
-<span id="cb42-115"><a href="#cb42-115" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1. STUDY 1"</span> , <span class="st">"3"</span> , <span class="st">"Age &gt;=13 to &lt;18"</span> , <span class="dv">23</span>, <span class="fl">18.5</span>,  <span class="sc">-</span><span class="fl">1.1</span>,  <span class="fl">1.27</span>,</span>
-<span id="cb42-116"><a href="#cb42-116" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2. STUDY 2"</span> , <span class="st">"1"</span> , <span class="st">"Age &gt;=2 to &lt;5"</span>   , <span class="dv">42</span>, <span class="fl">19.9</span>,   <span class="fl">0.2</span>,  <span class="fl">0.66</span>)</span>
-<span id="cb42-117"><a href="#cb42-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-118"><a href="#cb42-118" aria-hidden="true" tabindex="-1"></a>base_mean <span class="ot">&lt;-</span> <span class="fu">with</span>(hdata, <span class="fu">round</span>(<span class="fu">weighted.mean</span>(BASE, n), <span class="dv">2</span>))</span>
-<span id="cb42-119"><a href="#cb42-119" aria-hidden="true" tabindex="-1"></a>hdata <span class="ot">&lt;-</span> hdata <span class="sc">|&gt;</span></span>
-<span id="cb42-120"><a href="#cb42-120" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb42-121"><a href="#cb42-121" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make the age group a factor and set the middle age group to be the reference</span></span>
-<span id="cb42-122"><a href="#cb42-122" aria-hidden="true" tabindex="-1"></a>        <span class="at">age_group =</span> <span class="fu">factor</span>(AGEGRPN, <span class="fu">c</span>(<span class="st">"2"</span>, <span class="st">"1"</span>, <span class="st">"3"</span>)),</span>
-<span id="cb42-123"><a href="#cb42-123" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add a centered baseline covariate</span></span>
-<span id="cb42-124"><a href="#cb42-124" aria-hidden="true" tabindex="-1"></a>        <span class="at">cBASE =</span> BASE <span class="sc">-</span> base_mean,</span>
-<span id="cb42-125"><a href="#cb42-125" aria-hidden="true" tabindex="-1"></a>        <span class="co"># back-calculate the sd</span></span>
-<span id="cb42-126"><a href="#cb42-126" aria-hidden="true" tabindex="-1"></a>        <span class="at">CHGsd =</span> CHGse <span class="sc">*</span> <span class="fu">sqrt</span>(n),</span>
-<span id="cb42-127"><a href="#cb42-127" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make Study a factor for better handling</span></span>
-<span id="cb42-128"><a href="#cb42-128" aria-hidden="true" tabindex="-1"></a>        <span class="at">Study =</span> <span class="fu">factor</span>(Study),</span>
-<span id="cb42-129"><a href="#cb42-129" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make a variable 'label' for later use in plots</span></span>
-<span id="cb42-130"><a href="#cb42-130" aria-hidden="true" tabindex="-1"></a>        <span class="at">label  =</span> <span class="fu">paste0</span>(Study, <span class="st">"/"</span>, age_group),</span>
-<span id="cb42-131"><a href="#cb42-131" aria-hidden="true" tabindex="-1"></a>        <span class="at">label2 =</span> <span class="fu">paste0</span>(Study, <span class="st">"/"</span>, age_group, <span class="st">". "</span>, AGEGRP),</span>
-<span id="cb42-132"><a href="#cb42-132" aria-hidden="true" tabindex="-1"></a>        <span class="co"># include active treatment indicator (in this case, is set to 0 as all patients are 'control')</span></span>
-<span id="cb42-133"><a href="#cb42-133" aria-hidden="true" tabindex="-1"></a>        <span class="at">active =</span> <span class="dv">0</span>L)</span>
-<span id="cb42-134"><a href="#cb42-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-135"><a href="#cb42-135" aria-hidden="true" tabindex="-1"></a>hdata <span class="sc">|&gt;</span></span>
-<span id="cb42-136"><a href="#cb42-136" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Study, AGEGRP, n, BASE, cBASE, CHGm, CHGse, CHGsd) <span class="sc">|&gt;</span></span>
-<span id="cb42-137"><a href="#cb42-137" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span>
-<span id="cb42-138"><a href="#cb42-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-139"><a href="#cb42-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-140"><a href="#cb42-140" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model description</span></span>
-<span id="cb42-141"><a href="#cb42-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-142"><a href="#cb42-142" aria-hidden="true" tabindex="-1"></a>The primary endpoint will be analyzed using a Bayesian regression model with</span>
-<span id="cb42-143"><a href="#cb42-143" aria-hidden="true" tabindex="-1"></a>the mean change from baseline in the PRO score as the response $Y$ and with</span>
-<span id="cb42-144"><a href="#cb42-144" aria-hidden="true" tabindex="-1"></a>treatment $Z$ ($Z = 1$ is treatment, $Z = 0$ is control). The basic</span>
-<span id="cb42-145"><a href="#cb42-145" aria-hidden="true" tabindex="-1"></a>analysis model for the Phase III model can be written as</span>
-<span id="cb42-146"><a href="#cb42-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-147"><a href="#cb42-147" aria-hidden="true" tabindex="-1"></a>$$Y|\mu,\sigma \sim \N(\mu, \sigma^2)$$</span>
-<span id="cb42-148"><a href="#cb42-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-149"><a href="#cb42-149" aria-hidden="true" tabindex="-1"></a>$$\mu = \beta_0 + \beta_1 \, x_1 + \beta_2 \, x_2 + \beta_3 \, cBASE + \theta \, Z$$</span>
-<span id="cb42-150"><a href="#cb42-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-151"><a href="#cb42-151" aria-hidden="true" tabindex="-1"></a>where:</span>
-<span id="cb42-152"><a href="#cb42-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-153"><a href="#cb42-153" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$\beta_0$ is the mean change from baseline in the score on the control</span>
-<span id="cb42-154"><a href="#cb42-154" aria-hidden="true" tabindex="-1"></a>    arm for the 5 to 13 years old age group,</span>
-<span id="cb42-155"><a href="#cb42-155" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$x_1,x_2$ are indicators for the Age <span class="sc">\&gt;</span>=2 to <span class="sc">\&lt;</span>-5 and Age <span class="sc">\&gt;</span>=13 to</span>
-<span id="cb42-156"><a href="#cb42-156" aria-hidden="true" tabindex="-1"></a>    <span class="sc">\&lt;</span>18 groups,</span>
-<span id="cb42-157"><a href="#cb42-157" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$\beta_3$ is the covariate for the centered baseline score,</span>
-<span id="cb42-158"><a href="#cb42-158" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$\theta$ is the treatment effect comparing mean change from</span>
-<span id="cb42-159"><a href="#cb42-159" aria-hidden="true" tabindex="-1"></a>    baseline for the treatment arm vs control arm,</span>
-<span id="cb42-160"><a href="#cb42-160" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$\sigma$ is the sample standard deviation.</span>
-<span id="cb42-161"><a href="#cb42-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-162"><a href="#cb42-162" aria-hidden="true" tabindex="-1"></a>Inference for the primary analysis focuses on the posterior</span>
-<span id="cb42-163"><a href="#cb42-163" aria-hidden="true" tabindex="-1"></a>distributions of the treatment effect comparing mean change from</span>
-<span id="cb42-164"><a href="#cb42-164" aria-hidden="true" tabindex="-1"></a>baseline in the PRO score on the treatment arm vs control arm, $\theta$.</span>
-<span id="cb42-165"><a href="#cb42-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-166"><a href="#cb42-166" aria-hidden="true" tabindex="-1"></a>To form priors, the mean change from baseline as well the standard</span>
-<span id="cb42-167"><a href="#cb42-167" aria-hidden="true" tabindex="-1"></a>errors from each historical study and age subgroup are combined using</span>
-<span id="cb42-168"><a href="#cb42-168" aria-hidden="true" tabindex="-1"></a>the meta-analytic predictive approach (MAP, Neuenschwander et al</span>
-<span id="cb42-169"><a href="#cb42-169" aria-hidden="true" tabindex="-1"></a>2010). While the MAP approach is mostly used for an intercept only</span>
-<span id="cb42-170"><a href="#cb42-170" aria-hidden="true" tabindex="-1"></a>model, the use of covariates complicates the analysis here. However,</span>
-<span id="cb42-171"><a href="#cb42-171" aria-hidden="true" tabindex="-1"></a>this complication can be resolved by considering the equivalent</span>
-<span id="cb42-172"><a href="#cb42-172" aria-hidden="true" tabindex="-1"></a>meta-analytic (MAC) combined approach. Recall, that whereas the MAP</span>
-<span id="cb42-173"><a href="#cb42-173" aria-hidden="true" tabindex="-1"></a>approach is a 2-step procedure (derived MAP prior from historical</span>
-<span id="cb42-174"><a href="#cb42-174" aria-hidden="true" tabindex="-1"></a>data, then apply to current data), the MAC approach performs a joint</span>
-<span id="cb42-175"><a href="#cb42-175" aria-hidden="true" tabindex="-1"></a>analysis of the historical data and the current data. Both approaches</span>
-<span id="cb42-176"><a href="#cb42-176" aria-hidden="true" tabindex="-1"></a>result in exactly the same results (Schmidli et al 2014). Thus, it is</span>
-<span id="cb42-177"><a href="#cb42-177" aria-hidden="true" tabindex="-1"></a>useful to first consider the respective MAC model. For this we expand</span>
-<span id="cb42-178"><a href="#cb42-178" aria-hidden="true" tabindex="-1"></a>the basic model shown above to also include a random intercept effect,</span>
-<span id="cb42-179"><a href="#cb42-179" aria-hidden="true" tabindex="-1"></a>which accounts for between-study heterogeneity. Denoting with $i$ the</span>
-<span id="cb42-180"><a href="#cb42-180" aria-hidden="true" tabindex="-1"></a>study, we thus model the data as</span>
-<span id="cb42-181"><a href="#cb42-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-182"><a href="#cb42-182" aria-hidden="true" tabindex="-1"></a>$$Y_i|\mu_i,\sigma \sim \N(\mu_i, \sigma^2)$$</span>
-<span id="cb42-183"><a href="#cb42-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-184"><a href="#cb42-184" aria-hidden="true" tabindex="-1"></a>$$\mu_i = b_i  + \beta_1 \, x_1 + \beta_2 \, x_2 + \beta_3 \, cBASE + \theta \, Z$$</span>
-<span id="cb42-185"><a href="#cb42-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-186"><a href="#cb42-186" aria-hidden="true" tabindex="-1"></a>$$b_i|\beta_0,\tau \sim \N(\beta_0, \tau^2).$$</span>
-<span id="cb42-187"><a href="#cb42-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-188"><a href="#cb42-188" aria-hidden="true" tabindex="-1"></a>The key assumption of this model is that the covariate effects for</span>
-<span id="cb42-189"><a href="#cb42-189" aria-hidden="true" tabindex="-1"></a>age, centered baseline score and treatment effect are *pooled* accross</span>
-<span id="cb42-190"><a href="#cb42-190" aria-hidden="true" tabindex="-1"></a>all studies. That is, no between-study heterogeneity is admitted in</span>
-<span id="cb42-191"><a href="#cb42-191" aria-hidden="true" tabindex="-1"></a>these effects; heterogeneity is only accounted for in the intercept</span>
-<span id="cb42-192"><a href="#cb42-192" aria-hidden="true" tabindex="-1"></a>term representing the mean change from baseline for control of the</span>
-<span id="cb42-193"><a href="#cb42-193" aria-hidden="true" tabindex="-1"></a>reference age group with a baseline value as used for centering</span>
-<span id="cb42-194"><a href="#cb42-194" aria-hidden="true" tabindex="-1"></a>(<span class="in">`r base_mean`</span>). Note that since we do only include data on control for</span>
-<span id="cb42-195"><a href="#cb42-195" aria-hidden="true" tabindex="-1"></a>the historical studies, we will infer the treatment effect $\theta$</span>
-<span id="cb42-196"><a href="#cb42-196" aria-hidden="true" tabindex="-1"></a>for the new Phase III study without any influence from the other</span>
-<span id="cb42-197"><a href="#cb42-197" aria-hidden="true" tabindex="-1"></a>studies.</span>
-<span id="cb42-198"><a href="#cb42-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-199"><a href="#cb42-199" aria-hidden="true" tabindex="-1"></a>However, in practice we will still want to run the primary analysis in</span>
-<span id="cb42-200"><a href="#cb42-200" aria-hidden="true" tabindex="-1"></a>a 2-step MAP approach. The desire here is to be able to evaluate the</span>
-<span id="cb42-201"><a href="#cb42-201" aria-hidden="true" tabindex="-1"></a>properties of the MAP prior derived from the historical data in</span>
-<span id="cb42-202"><a href="#cb42-202" aria-hidden="true" tabindex="-1"></a>advance. The challenge becomes then that we have to use the</span>
-<span id="cb42-203"><a href="#cb42-203" aria-hidden="true" tabindex="-1"></a>information from fitting the above model to the historical data for</span>
-<span id="cb42-204"><a href="#cb42-204" aria-hidden="true" tabindex="-1"></a>the *entire model posterior* and not merley the intercept</span>
-<span id="cb42-205"><a href="#cb42-205" aria-hidden="true" tabindex="-1"></a>only. Therefore, the MAP prior becomes multi-variate, since the MAP</span>
-<span id="cb42-206"><a href="#cb42-206" aria-hidden="true" tabindex="-1"></a>prior includes the covariate effects.</span>
-<span id="cb42-207"><a href="#cb42-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-208"><a href="#cb42-208" aria-hidden="true" tabindex="-1"></a>Hence, the model is fitted first to the historical data under the</span>
-<span id="cb42-209"><a href="#cb42-209" aria-hidden="true" tabindex="-1"></a>assumption of a known sampling standard deviation (accounting for the</span>
-<span id="cb42-210"><a href="#cb42-210" aria-hidden="true" tabindex="-1"></a>reported standard errors).</span>
-<span id="cb42-211"><a href="#cb42-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-212"><a href="#cb42-212" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
-<span id="cb42-213"><a href="#cb42-213" aria-hidden="true" tabindex="-1"></a><span class="co">Let $\delta_{(j,0)}^{(1)}, \delta_{(j,0)}^{(2)}, \delta_{(j,0)}^{(3)}$ denote </span></span>
-<span id="cb42-214"><a href="#cb42-214" aria-hidden="true" tabindex="-1"></a><span class="co">the change in score at 12 months in the historical study $j$ for the </span></span>
-<span id="cb42-215"><a href="#cb42-215" aria-hidden="true" tabindex="-1"></a><span class="co">control arm in age groups 1, 2, and 3.</span></span>
-<span id="cb42-216"><a href="#cb42-216" aria-hidden="true" tabindex="-1"></a><span class="co">Let $\delta_{(new,0)}^{(i)}$ and $\delta_{(new,1)}^{(i)}$ denote the change in </span></span>
-<span id="cb42-217"><a href="#cb42-217" aria-hidden="true" tabindex="-1"></a><span class="co">score at 12 months for the new studiy in the control and treatment arm, </span></span>
-<span id="cb42-218"><a href="#cb42-218" aria-hidden="true" tabindex="-1"></a><span class="co">respectively. The estimates across studies are linked through the hierarchical model:</span></span>
-<span id="cb42-219"><a href="#cb42-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-220"><a href="#cb42-220" aria-hidden="true" tabindex="-1"></a><span class="co">$\hat{\delta_{(j,z)}^{(i)}} \sim N(\delta_{(j,z)}^{(i)}, SE(\hat{\delta_{(j,z)}^{(i)}})^2)$</span></span>
-<span id="cb42-221"><a href="#cb42-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-222"><a href="#cb42-222" aria-hidden="true" tabindex="-1"></a><span class="co">with agegroup $i=1,2,3$; $j=$Study 1, Study 2, New Study; and treatment $z=0, 1$, such that</span></span>
-<span id="cb42-223"><a href="#cb42-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-224"><a href="#cb42-224" aria-hidden="true" tabindex="-1"></a><span class="co">$\delta_{(j,z)}^{(1)}\sim N(\beta_0 + b_j + \beta_1 + \beta_3 BASE + \theta z,\sigma^2)$</span></span>
-<span id="cb42-225"><a href="#cb42-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-226"><a href="#cb42-226" aria-hidden="true" tabindex="-1"></a><span class="co">$\delta_{(j,z)}^{(2)}\sim N(\beta_0 + b_j + \beta_3 BASE + \theta z, \sigma^2)$</span></span>
-<span id="cb42-227"><a href="#cb42-227" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
-<span id="cb42-228"><a href="#cb42-228" aria-hidden="true" tabindex="-1"></a><span class="co">$\delta_{(j,z)}^{(3)}\sim N(\beta_0 + b_j + \beta_2 + \beta_3 BASE + \theta z,\sigma^2)$</span></span>
-<span id="cb42-229"><a href="#cb42-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-230"><a href="#cb42-230" aria-hidden="true" tabindex="-1"></a><span class="co">$b_j \sim N(0,\tau_s^2)$</span></span>
-<span id="cb42-231"><a href="#cb42-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-232"><a href="#cb42-232" aria-hidden="true" tabindex="-1"></a><span class="co">MAP-prior distributions can then be obtained under the assumptions that the </span></span>
-<span id="cb42-233"><a href="#cb42-233" aria-hidden="true" tabindex="-1"></a><span class="co">change from baseline in the PRO score in the new study for the treatment and</span></span>
-<span id="cb42-234"><a href="#cb42-234" aria-hidden="true" tabindex="-1"></a><span class="co">control arm, $\delta_1^{(new)}$, and $\delta_0^{(new)}$ come from the same </span></span>
-<span id="cb42-235"><a href="#cb42-235" aria-hidden="true" tabindex="-1"></a><span class="co">distribution as the change from baseline in the PRO score for historical studies.</span></span>
-<span id="cb42-236"><a href="#cb42-236" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
-<span id="cb42-237"><a href="#cb42-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-238"><a href="#cb42-238" aria-hidden="true" tabindex="-1"></a>As priors for $\beta_0,\beta_1,\beta_2,\beta_3,\theta$ weakly</span>
-<span id="cb42-239"><a href="#cb42-239" aria-hidden="true" tabindex="-1"></a>informative $\N(0,s^2)$ distributions are used, with $s = 5$. The</span>
-<span id="cb42-240"><a href="#cb42-240" aria-hidden="true" tabindex="-1"></a>choice of $5$ follows from the observation that the historical data</span>
-<span id="cb42-241"><a href="#cb42-241" aria-hidden="true" tabindex="-1"></a>has approximatly a sampling standard deviation of $5$ (the pooled</span>
-<span id="cb42-242"><a href="#cb42-242" aria-hidden="true" tabindex="-1"></a>estimate from the historical data is </span>
-<span id="cb42-243"><a href="#cb42-243" aria-hidden="true" tabindex="-1"></a><span class="in">`r round(sqrt(weighted.mean(hdata$CHGsd^2, hdata$n)), 2)`</span> ). For the</span>
-<span id="cb42-244"><a href="#cb42-244" aria-hidden="true" tabindex="-1"></a>between-trial standard deviation $\tau$ a half-normal prior with scale</span>
-<span id="cb42-245"><a href="#cb42-245" aria-hidden="true" tabindex="-1"></a>$s / 4$ is used. This is considered a</span>
-<span id="cb42-246"><a href="#cb42-246" aria-hidden="true" tabindex="-1"></a>plausible conservative, weakly-informative prior, as values of the</span>
-<span id="cb42-247"><a href="#cb42-247" aria-hidden="true" tabindex="-1"></a>ratio $\tau/\sigma \ge 1/4$ are generally considered to represent</span>
-<span id="cb42-248"><a href="#cb42-248" aria-hidden="true" tabindex="-1"></a>substantial between-trial variability (Neuenschwander et al 2010) and</span>
-<span id="cb42-249"><a href="#cb42-249" aria-hidden="true" tabindex="-1"></a>the proposed prior will generally place more than half of the prior</span>
-<span id="cb42-250"><a href="#cb42-250" aria-hidden="true" tabindex="-1"></a>probability on this area.</span>
-<span id="cb42-251"><a href="#cb42-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-252"><a href="#cb42-252" aria-hidden="true" tabindex="-1"></a><span class="fu">## Implementation</span></span>
-<span id="cb42-253"><a href="#cb42-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-254"><a href="#cb42-254" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`brms`</span> we now specify the MAP model step by step. We first define</span>
-<span id="cb42-255"><a href="#cb42-255" aria-hidden="true" tabindex="-1"></a>the model:</span>
-<span id="cb42-256"><a href="#cb42-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-259"><a href="#cb42-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-260"><a href="#cb42-260" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a model formula for use in 'brms'</span></span>
-<span id="cb42-261"><a href="#cb42-261" aria-hidden="true" tabindex="-1"></a>hist_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(CHGm <span class="sc">|</span> <span class="fu">se</span>(CHGse) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age_group <span class="sc">+</span> cBASE <span class="sc">+</span> active <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Study),</span>
-<span id="cb42-262"><a href="#cb42-262" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family=</span>gaussian, <span class="at">center=</span><span class="cn">FALSE</span>)</span>
-<span id="cb42-263"><a href="#cb42-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Display prior model across all parameters</span></span>
-<span id="cb42-264"><a href="#cb42-264" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(hist_model, hdata)</span>
-<span id="cb42-265"><a href="#cb42-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-266"><a href="#cb42-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-267"><a href="#cb42-267" aria-hidden="true" tabindex="-1"></a>**Note** that we do set explicitly the option <span class="in">`center=FALSE`</span> in the</span>
-<span id="cb42-268"><a href="#cb42-268" aria-hidden="true" tabindex="-1"></a>function call to <span class="in">`bf`</span>. This avoids the otherwise automatic centering</span>
-<span id="cb42-269"><a href="#cb42-269" aria-hidden="true" tabindex="-1"></a>done by <span class="in">`brms`</span>, which is needed here as we require full control over</span>
-<span id="cb42-270"><a href="#cb42-270" aria-hidden="true" tabindex="-1"></a>the parametrization of the model.</span>
-<span id="cb42-271"><a href="#cb42-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-272"><a href="#cb42-272" aria-hidden="true" tabindex="-1"></a>With the model (and data) being defined, we are left to specify the</span>
-<span id="cb42-273"><a href="#cb42-273" aria-hidden="true" tabindex="-1"></a>model priors. With the help of the call</span>
-<span id="cb42-274"><a href="#cb42-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-277"><a href="#cb42-277" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-278"><a href="#cb42-278" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit historical data with between-study heterogeneity  -----------------------</span></span>
-<span id="cb42-279"><a href="#cb42-279" aria-hidden="true" tabindex="-1"></a><span class="co"># For β_0,β_1,β_2,β_3,θ weakly informative N(0,5^2) distributions are used.</span></span>
-<span id="cb42-280"><a href="#cb42-280" aria-hidden="true" tabindex="-1"></a><span class="co"># For the group level effect of the study, we use τ^2=(5.0/4)^2.</span></span>
-<span id="cb42-281"><a href="#cb42-281" aria-hidden="true" tabindex="-1"></a><span class="co"># Set then sd = 5 for later use</span></span>
-<span id="cb42-282"><a href="#cb42-282" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fl">5.0</span></span>
-<span id="cb42-283"><a href="#cb42-283" aria-hidden="true" tabindex="-1"></a>sd_tau <span class="ot">&lt;-</span> sd<span class="sc">/</span><span class="dv">4</span></span>
-<span id="cb42-284"><a href="#cb42-284" aria-hidden="true" tabindex="-1"></a>hist_prior <span class="ot">&lt;-</span> <span class="fu">prior_string</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"normal(0, {sd})"</span>), <span class="at">class=</span><span class="st">"b"</span>) <span class="sc">+</span></span>
-<span id="cb42-285"><a href="#cb42-285" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior_string</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"normal(0, {sd_tau})"</span>), <span class="at">class=</span><span class="st">"sd"</span>, <span class="at">coef=</span><span class="st">"Intercept"</span>, <span class="at">group=</span><span class="st">"Study"</span>)</span>
-<span id="cb42-286"><a href="#cb42-286" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-287"><a href="#cb42-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-288"><a href="#cb42-288" aria-hidden="true" tabindex="-1"></a>Now we are ready to run the model in <span class="in">`brms`</span>:</span>
-<span id="cb42-289"><a href="#cb42-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-292"><a href="#cb42-292" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-293"><a href="#cb42-293" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply brms model using historical data hdata and the model defined in hist_model</span></span>
-<span id="cb42-294"><a href="#cb42-294" aria-hidden="true" tabindex="-1"></a>map_mc_brms <span class="ot">&lt;-</span> <span class="fu">brm</span>(hist_model, </span>
-<span id="cb42-295"><a href="#cb42-295" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> hdata, </span>
-<span id="cb42-296"><a href="#cb42-296" aria-hidden="true" tabindex="-1"></a>                   <span class="at">prior =</span> hist_prior,</span>
-<span id="cb42-297"><a href="#cb42-297" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seed =</span> <span class="dv">234324</span>, <span class="at">refresh =</span> <span class="dv">0</span>,</span>
-<span id="cb42-298"><a href="#cb42-298" aria-hidden="true" tabindex="-1"></a>                   <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.99</span>))</span>
-<span id="cb42-299"><a href="#cb42-299" aria-hidden="true" tabindex="-1"></a>map_mc_brms</span>
-<span id="cb42-300"><a href="#cb42-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-301"><a href="#cb42-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-302"><a href="#cb42-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
-<span id="cb42-303"><a href="#cb42-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-304"><a href="#cb42-304" aria-hidden="true" tabindex="-1"></a>Once the MAP prior is obtained in MCMC form a model check for it is</span>
-<span id="cb42-305"><a href="#cb42-305" aria-hidden="true" tabindex="-1"></a>recommended. In <span class="in">`brms`</span> model diagnostic functions are directly available</span>
-<span id="cb42-306"><a href="#cb42-306" aria-hidden="true" tabindex="-1"></a>and essentially expose the functionality found in the</span>
-<span id="cb42-307"><a href="#cb42-307" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">`bayesplot`</span><span class="co">](https://mc-stan.org/bayesplot/index.html)</span> R package. A</span>
-<span id="cb42-308"><a href="#cb42-308" aria-hidden="true" tabindex="-1"></a>suitable <span class="in">`bayesplot`</span> plot in this situation could be an <span class="in">`intervals`</span> plot</span>
-<span id="cb42-309"><a href="#cb42-309" aria-hidden="true" tabindex="-1"></a>as:</span>
-<span id="cb42-310"><a href="#cb42-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-313"><a href="#cb42-313" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-314"><a href="#cb42-314" aria-hidden="true" tabindex="-1"></a><span class="do">## Posterior predictive check for the mean change in Score at 12mo by age group -------</span></span>
-<span id="cb42-315"><a href="#cb42-315" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(map_mc_brms, <span class="at">type=</span><span class="st">"intervals"</span>) <span class="sc">+</span></span>
-<span id="cb42-316"><a href="#cb42-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Study / Strata"</span>, </span>
-<span id="cb42-317"><a href="#cb42-317" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hdata), </span>
-<span id="cb42-318"><a href="#cb42-318" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> hdata<span class="sc">$</span>label2,</span>
-<span id="cb42-319"><a href="#cb42-319" aria-hidden="true" tabindex="-1"></a>                     <span class="at">trans =</span> <span class="st">"reverse"</span>) <span class="sc">+</span></span>
-<span id="cb42-320"><a href="#cb42-320" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Mean change from baseline"</span>) <span class="sc">+</span></span>
-<span id="cb42-321"><a href="#cb42-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb42-322"><a href="#cb42-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb42-323"><a href="#cb42-323" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hline_0</span>(<span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb42-324"><a href="#cb42-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check"</span>) <span class="sc">+</span></span>
-<span id="cb42-325"><a href="#cb42-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>),</span>
-<span id="cb42-326"><a href="#cb42-326" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position=</span><span class="st">"right"</span>,</span>
-<span id="cb42-327"><a href="#cb42-327" aria-hidden="true" tabindex="-1"></a>        <span class="co"># suppress vertical grid lines for better readability of intervals</span></span>
-<span id="cb42-328"><a href="#cb42-328" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb42-329"><a href="#cb42-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-330"><a href="#cb42-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-331"><a href="#cb42-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-332"><a href="#cb42-332" aria-hidden="true" tabindex="-1"></a>The call of the <span class="in">`pp_check`</span> function is forwarded to the respective</span>
-<span id="cb42-333"><a href="#cb42-333" aria-hidden="true" tabindex="-1"></a><span class="in">`ppc_*`</span> functions for posterior predictive checks from <span class="in">`bayesplot`</span></span>
-<span id="cb42-334"><a href="#cb42-334" aria-hidden="true" tabindex="-1"></a>(depending on the <span class="in">`type`</span> argument). The plots are designed to compare</span>
-<span id="cb42-335"><a href="#cb42-335" aria-hidden="true" tabindex="-1"></a>the *posterior predictive* distribution to the observed data rather</span>
-<span id="cb42-336"><a href="#cb42-336" aria-hidden="true" tabindex="-1"></a>than comparing mean estimates to one another. Thus, the outcome of</span>
-<span id="cb42-337"><a href="#cb42-337" aria-hidden="true" tabindex="-1"></a>each study/age group in the historical data set is sampled according</span>
-<span id="cb42-338"><a href="#cb42-338" aria-hidden="true" tabindex="-1"></a>to the fitted model and the resulting predictive distribution of the</span>
-<span id="cb42-339"><a href="#cb42-339" aria-hidden="true" tabindex="-1"></a>outcome (change in score) is compared to the observed outcome. The</span>
-<span id="cb42-340"><a href="#cb42-340" aria-hidden="true" tabindex="-1"></a><span class="in">`intervals`</span> predictive probability check summarises the predictive</span>
-<span id="cb42-341"><a href="#cb42-341" aria-hidden="true" tabindex="-1"></a>distributions using a light color for an outer credible interval range</span>
-<span id="cb42-342"><a href="#cb42-342" aria-hidden="true" tabindex="-1"></a>and a darker line for an inner credible interval. The outer defaults</span>
-<span id="cb42-343"><a href="#cb42-343" aria-hidden="true" tabindex="-1"></a>to a 90% credible interval (<span class="in">`prob_outer`</span> argument) while the inner</span>
-<span id="cb42-344"><a href="#cb42-344" aria-hidden="true" tabindex="-1"></a>uses a 50% credible interval (<span class="in">`prob`</span> argument). The light dot in the</span>
-<span id="cb42-345"><a href="#cb42-345" aria-hidden="true" tabindex="-1"></a>middle is the median of the predictive distribution and the dark dot</span>
-<span id="cb42-346"><a href="#cb42-346" aria-hidden="true" tabindex="-1"></a>is the outcome $y$. As we can observe, the outcomes $y$ for all age</span>
-<span id="cb42-347"><a href="#cb42-347" aria-hidden="true" tabindex="-1"></a>groups in historical studies all are contained within outer credible</span>
-<span id="cb42-348"><a href="#cb42-348" aria-hidden="true" tabindex="-1"></a>intervals of the predictive distributions for the simulated replicate</span>
-<span id="cb42-349"><a href="#cb42-349" aria-hidden="true" tabindex="-1"></a>data $y_{rep}$.  We can conclude that the model is consistent with the</span>
-<span id="cb42-350"><a href="#cb42-350" aria-hidden="true" tabindex="-1"></a>data.</span>
-<span id="cb42-351"><a href="#cb42-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-352"><a href="#cb42-352" aria-hidden="true" tabindex="-1"></a>Once the model has been checked for plausibility, we can proceed and</span>
-<span id="cb42-353"><a href="#cb42-353" aria-hidden="true" tabindex="-1"></a>derive the main target of the MAP analysis, which is the MAP prior in</span>
-<span id="cb42-354"><a href="#cb42-354" aria-hidden="true" tabindex="-1"></a>*parametric* form. The MAP priors are stored in the <span class="in">`post_coefs_mix`</span> object. </span>
-<span id="cb42-355"><a href="#cb42-355" aria-hidden="true" tabindex="-1"></a>Note that since we will be predicting for a *new* study, we sample a random </span>
-<span id="cb42-356"><a href="#cb42-356" aria-hidden="true" tabindex="-1"></a>intercept using the between study variation.</span>
-<span id="cb42-357"><a href="#cb42-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-360"><a href="#cb42-360" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-361"><a href="#cb42-361" aria-hidden="true" tabindex="-1"></a><span class="co"># For the simple case of this case study for which only a random</span></span>
-<span id="cb42-362"><a href="#cb42-362" aria-hidden="true" tabindex="-1"></a><span class="co"># effect is assigned to the intercept, we can use the brms prediction</span></span>
-<span id="cb42-363"><a href="#cb42-363" aria-hidden="true" tabindex="-1"></a><span class="co"># functions. We are seeking a sample of the intercept with</span></span>
-<span id="cb42-364"><a href="#cb42-364" aria-hidden="true" tabindex="-1"></a><span class="co"># between-trial heterogeneity, but without having other terms</span></span>
-<span id="cb42-365"><a href="#cb42-365" aria-hidden="true" tabindex="-1"></a><span class="co"># included in the linear predictor. Hence, we can predict the mean</span></span>
-<span id="cb42-366"><a href="#cb42-366" aria-hidden="true" tabindex="-1"></a><span class="co"># change from baseline for a new study arm which is has the covariate</span></span>
-<span id="cb42-367"><a href="#cb42-367" aria-hidden="true" tabindex="-1"></a><span class="co"># values set to the reference</span></span>
-<span id="cb42-368"><a href="#cb42-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-369"><a href="#cb42-369" aria-hidden="true" tabindex="-1"></a>new_study_ref <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Study=</span><span class="st">"new_study"</span>, <span class="at">age_group=</span><span class="st">"2"</span>, <span class="at">cBASE=</span><span class="dv">0</span>, <span class="at">CHGse=</span><span class="dv">0</span>, <span class="at">active=</span><span class="dv">0</span>L)</span>
-<span id="cb42-370"><a href="#cb42-370" aria-hidden="true" tabindex="-1"></a>rv_study_sim_inter <span class="ot">&lt;-</span> <span class="fu">rvar</span>(<span class="fu">posterior_epred</span>(map_mc_brms,</span>
-<span id="cb42-371"><a href="#cb42-371" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">newdata=</span>new_study_ref,</span>
-<span id="cb42-372"><a href="#cb42-372" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>,</span>
-<span id="cb42-373"><a href="#cb42-373" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>))</span>
-<span id="cb42-374"><a href="#cb42-374" aria-hidden="true" tabindex="-1"></a>rv_study_sim_inter</span>
-<span id="cb42-375"><a href="#cb42-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-376"><a href="#cb42-376" aria-hidden="true" tabindex="-1"></a><span class="co"># Get random draws from the posterior of each parameter</span></span>
-<span id="cb42-377"><a href="#cb42-377" aria-hidden="true" tabindex="-1"></a><span class="co"># after fitting historical data</span></span>
-<span id="cb42-378"><a href="#cb42-378" aria-hidden="true" tabindex="-1"></a>hist_post_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_rvars</span>(map_mc_brms)</span>
-<span id="cb42-379"><a href="#cb42-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-88"><a href="#cb42-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-89"><a href="#cb42-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb42-90"><a href="#cb42-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-91"><a href="#cb42-91" aria-hidden="true" tabindex="-1"></a>At the design stage of the trial, data from two historical studies were</span>
+<span id="cb42-92"><a href="#cb42-92" aria-hidden="true" tabindex="-1"></a>available for the control group.</span>
+<span id="cb42-93"><a href="#cb42-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-94"><a href="#cb42-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Study 1: A natural history study of patients with the disease.</span>
+<span id="cb42-95"><a href="#cb42-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Study 2: Control arm of a randomized study evaluating an alternative</span>
+<span id="cb42-96"><a href="#cb42-96" aria-hidden="true" tabindex="-1"></a>  therapy.</span>
+<span id="cb42-97"><a href="#cb42-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-98"><a href="#cb42-98" aria-hidden="true" tabindex="-1"></a>These historical studies provide valuable information for the primary</span>
+<span id="cb42-99"><a href="#cb42-99" aria-hidden="true" tabindex="-1"></a>evaluation of the treatment effect in the trial of interest. Casting</span>
+<span id="cb42-100"><a href="#cb42-100" aria-hidden="true" tabindex="-1"></a>the historical data into an informative prior on the control response</span>
+<span id="cb42-101"><a href="#cb42-101" aria-hidden="true" tabindex="-1"></a>is expected to increase the precision in the estimation of the</span>
+<span id="cb42-102"><a href="#cb42-102" aria-hidden="true" tabindex="-1"></a>treatment effect for the Phase III study of interest.</span>
+<span id="cb42-103"><a href="#cb42-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-104"><a href="#cb42-104" aria-hidden="true" tabindex="-1"></a>The data set obtained from these two studies are summary statistics</span>
+<span id="cb42-105"><a href="#cb42-105" aria-hidden="true" tabindex="-1"></a>for the PRO score at baseline (BASE), the mean change from baseline</span>
+<span id="cb42-106"><a href="#cb42-106" aria-hidden="true" tabindex="-1"></a>(CHGm), and is standard error (CHGse) stratified by age group</span>
+<span id="cb42-107"><a href="#cb42-107" aria-hidden="true" tabindex="-1"></a>(AGEGRP).</span>
+<span id="cb42-108"><a href="#cb42-108" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb42-111"><a href="#cb42-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-112"><a href="#cb42-112" aria-hidden="true" tabindex="-1"></a>hdata <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb42-113"><a href="#cb42-113" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>Study   , <span class="sc">~</span>AGEGRPN, <span class="sc">~</span>AGEGRP,           <span class="sc">~</span>n, <span class="sc">~</span>BASE, <span class="sc">~</span>CHGm, <span class="sc">~</span>CHGse,</span>
+<span id="cb42-114"><a href="#cb42-114" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1. STUDY 1"</span> , <span class="st">"1"</span> , <span class="st">"Age &gt;=2 to &lt;5"</span>   , <span class="dv">28</span>, <span class="fl">16.8</span>,  <span class="sc">-</span><span class="fl">0.7</span>,  <span class="fl">1.00</span>,</span>
+<span id="cb42-115"><a href="#cb42-115" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1. STUDY 1"</span> , <span class="st">"2"</span> , <span class="st">"Age &gt;=5 to &lt;13"</span>  , <span class="dv">50</span>, <span class="fl">26.7</span>,  <span class="sc">-</span><span class="fl">1.1</span>,  <span class="fl">0.73</span>,</span>
+<span id="cb42-116"><a href="#cb42-116" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1. STUDY 1"</span> , <span class="st">"3"</span> , <span class="st">"Age &gt;=13 to &lt;18"</span> , <span class="dv">23</span>, <span class="fl">18.5</span>,  <span class="sc">-</span><span class="fl">1.1</span>,  <span class="fl">1.27</span>,</span>
+<span id="cb42-117"><a href="#cb42-117" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2. STUDY 2"</span> , <span class="st">"1"</span> , <span class="st">"Age &gt;=2 to &lt;5"</span>   , <span class="dv">42</span>, <span class="fl">19.9</span>,   <span class="fl">0.2</span>,  <span class="fl">0.66</span>)</span>
+<span id="cb42-118"><a href="#cb42-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-119"><a href="#cb42-119" aria-hidden="true" tabindex="-1"></a>base_mean <span class="ot">&lt;-</span> <span class="fu">with</span>(hdata, <span class="fu">round</span>(<span class="fu">weighted.mean</span>(BASE, n), <span class="dv">2</span>))</span>
+<span id="cb42-120"><a href="#cb42-120" aria-hidden="true" tabindex="-1"></a>hdata <span class="ot">&lt;-</span> hdata <span class="sc">|&gt;</span></span>
+<span id="cb42-121"><a href="#cb42-121" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb42-122"><a href="#cb42-122" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make the age group a factor and set the middle age group to be the reference</span></span>
+<span id="cb42-123"><a href="#cb42-123" aria-hidden="true" tabindex="-1"></a>        <span class="at">age_group =</span> <span class="fu">factor</span>(AGEGRPN, <span class="fu">c</span>(<span class="st">"2"</span>, <span class="st">"1"</span>, <span class="st">"3"</span>)),</span>
+<span id="cb42-124"><a href="#cb42-124" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add a centered baseline covariate</span></span>
+<span id="cb42-125"><a href="#cb42-125" aria-hidden="true" tabindex="-1"></a>        <span class="at">cBASE =</span> BASE <span class="sc">-</span> base_mean,</span>
+<span id="cb42-126"><a href="#cb42-126" aria-hidden="true" tabindex="-1"></a>        <span class="co"># back-calculate the sd</span></span>
+<span id="cb42-127"><a href="#cb42-127" aria-hidden="true" tabindex="-1"></a>        <span class="at">CHGsd =</span> CHGse <span class="sc">*</span> <span class="fu">sqrt</span>(n),</span>
+<span id="cb42-128"><a href="#cb42-128" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make Study a factor for better handling</span></span>
+<span id="cb42-129"><a href="#cb42-129" aria-hidden="true" tabindex="-1"></a>        <span class="at">Study =</span> <span class="fu">factor</span>(Study),</span>
+<span id="cb42-130"><a href="#cb42-130" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make a variable 'label' for later use in plots</span></span>
+<span id="cb42-131"><a href="#cb42-131" aria-hidden="true" tabindex="-1"></a>        <span class="at">label  =</span> <span class="fu">paste0</span>(Study, <span class="st">"/"</span>, age_group),</span>
+<span id="cb42-132"><a href="#cb42-132" aria-hidden="true" tabindex="-1"></a>        <span class="at">label2 =</span> <span class="fu">paste0</span>(Study, <span class="st">"/"</span>, age_group, <span class="st">". "</span>, AGEGRP),</span>
+<span id="cb42-133"><a href="#cb42-133" aria-hidden="true" tabindex="-1"></a>        <span class="co"># include active treatment indicator (in this case, is set to 0 as all patients are 'control')</span></span>
+<span id="cb42-134"><a href="#cb42-134" aria-hidden="true" tabindex="-1"></a>        <span class="at">active =</span> <span class="dv">0</span>L)</span>
+<span id="cb42-135"><a href="#cb42-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-136"><a href="#cb42-136" aria-hidden="true" tabindex="-1"></a>hdata <span class="sc">|&gt;</span></span>
+<span id="cb42-137"><a href="#cb42-137" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Study, AGEGRP, n, BASE, cBASE, CHGm, CHGse, CHGsd) <span class="sc">|&gt;</span></span>
+<span id="cb42-138"><a href="#cb42-138" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span>
+<span id="cb42-139"><a href="#cb42-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-140"><a href="#cb42-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-141"><a href="#cb42-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model description</span></span>
+<span id="cb42-142"><a href="#cb42-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-143"><a href="#cb42-143" aria-hidden="true" tabindex="-1"></a>The primary endpoint will be analyzed using a Bayesian regression model with</span>
+<span id="cb42-144"><a href="#cb42-144" aria-hidden="true" tabindex="-1"></a>the mean change from baseline in the PRO score as the response $Y$ and with</span>
+<span id="cb42-145"><a href="#cb42-145" aria-hidden="true" tabindex="-1"></a>treatment $Z$ ($Z = 1$ is treatment, $Z = 0$ is control). The basic</span>
+<span id="cb42-146"><a href="#cb42-146" aria-hidden="true" tabindex="-1"></a>analysis model for the Phase III model can be written as</span>
+<span id="cb42-147"><a href="#cb42-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-148"><a href="#cb42-148" aria-hidden="true" tabindex="-1"></a>$$Y|\mu,\sigma \sim \N(\mu, \sigma^2)$$</span>
+<span id="cb42-149"><a href="#cb42-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-150"><a href="#cb42-150" aria-hidden="true" tabindex="-1"></a>$$\mu = \beta_0 + \beta_1 \, x_1 + \beta_2 \, x_2 + \beta_3 \, cBASE + \theta \, Z$$</span>
+<span id="cb42-151"><a href="#cb42-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-152"><a href="#cb42-152" aria-hidden="true" tabindex="-1"></a>where:</span>
+<span id="cb42-153"><a href="#cb42-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-154"><a href="#cb42-154" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$\beta_0$ is the mean change from baseline in the score on the control</span>
+<span id="cb42-155"><a href="#cb42-155" aria-hidden="true" tabindex="-1"></a>    arm for the 5 to 13 years old age group,</span>
+<span id="cb42-156"><a href="#cb42-156" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$x_1,x_2$ are indicators for the Age <span class="sc">\&gt;</span>=2 to <span class="sc">\&lt;</span>-5 and Age <span class="sc">\&gt;</span>=13 to</span>
+<span id="cb42-157"><a href="#cb42-157" aria-hidden="true" tabindex="-1"></a>    <span class="sc">\&lt;</span>18 groups,</span>
+<span id="cb42-158"><a href="#cb42-158" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$\beta_3$ is the covariate for the centered baseline score,</span>
+<span id="cb42-159"><a href="#cb42-159" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$\theta$ is the treatment effect comparing mean change from</span>
+<span id="cb42-160"><a href="#cb42-160" aria-hidden="true" tabindex="-1"></a>    baseline for the treatment arm vs control arm,</span>
+<span id="cb42-161"><a href="#cb42-161" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>$\sigma$ is the sample standard deviation.</span>
+<span id="cb42-162"><a href="#cb42-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-163"><a href="#cb42-163" aria-hidden="true" tabindex="-1"></a>Inference for the primary analysis focuses on the posterior</span>
+<span id="cb42-164"><a href="#cb42-164" aria-hidden="true" tabindex="-1"></a>distributions of the treatment effect comparing mean change from</span>
+<span id="cb42-165"><a href="#cb42-165" aria-hidden="true" tabindex="-1"></a>baseline in the PRO score on the treatment arm vs control arm, $\theta$.</span>
+<span id="cb42-166"><a href="#cb42-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-167"><a href="#cb42-167" aria-hidden="true" tabindex="-1"></a>To form priors, the mean change from baseline as well the standard</span>
+<span id="cb42-168"><a href="#cb42-168" aria-hidden="true" tabindex="-1"></a>errors from each historical study and age subgroup are combined using</span>
+<span id="cb42-169"><a href="#cb42-169" aria-hidden="true" tabindex="-1"></a>the meta-analytic predictive approach (MAP, Neuenschwander et al</span>
+<span id="cb42-170"><a href="#cb42-170" aria-hidden="true" tabindex="-1"></a>2010). While the MAP approach is mostly used for an intercept only</span>
+<span id="cb42-171"><a href="#cb42-171" aria-hidden="true" tabindex="-1"></a>model, the use of covariates complicates the analysis here. However,</span>
+<span id="cb42-172"><a href="#cb42-172" aria-hidden="true" tabindex="-1"></a>this complication can be resolved by considering the equivalent</span>
+<span id="cb42-173"><a href="#cb42-173" aria-hidden="true" tabindex="-1"></a>meta-analytic (MAC) combined approach. Recall, that whereas the MAP</span>
+<span id="cb42-174"><a href="#cb42-174" aria-hidden="true" tabindex="-1"></a>approach is a 2-step procedure (derived MAP prior from historical</span>
+<span id="cb42-175"><a href="#cb42-175" aria-hidden="true" tabindex="-1"></a>data, then apply to current data), the MAC approach performs a joint</span>
+<span id="cb42-176"><a href="#cb42-176" aria-hidden="true" tabindex="-1"></a>analysis of the historical data and the current data. Both approaches</span>
+<span id="cb42-177"><a href="#cb42-177" aria-hidden="true" tabindex="-1"></a>result in exactly the same results (Schmidli et al 2014). Thus, it is</span>
+<span id="cb42-178"><a href="#cb42-178" aria-hidden="true" tabindex="-1"></a>useful to first consider the respective MAC model. For this we expand</span>
+<span id="cb42-179"><a href="#cb42-179" aria-hidden="true" tabindex="-1"></a>the basic model shown above to also include a random intercept effect,</span>
+<span id="cb42-180"><a href="#cb42-180" aria-hidden="true" tabindex="-1"></a>which accounts for between-study heterogeneity. Denoting with $i$ the</span>
+<span id="cb42-181"><a href="#cb42-181" aria-hidden="true" tabindex="-1"></a>study, we thus model the data as</span>
+<span id="cb42-182"><a href="#cb42-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-183"><a href="#cb42-183" aria-hidden="true" tabindex="-1"></a>$$Y_i|\mu_i,\sigma \sim \N(\mu_i, \sigma^2)$$</span>
+<span id="cb42-184"><a href="#cb42-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-185"><a href="#cb42-185" aria-hidden="true" tabindex="-1"></a>$$\mu_i = b_i  + \beta_1 \, x_1 + \beta_2 \, x_2 + \beta_3 \, cBASE + \theta \, Z$$</span>
+<span id="cb42-186"><a href="#cb42-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-187"><a href="#cb42-187" aria-hidden="true" tabindex="-1"></a>$$b_i|\beta_0,\tau \sim \N(\beta_0, \tau^2).$$</span>
+<span id="cb42-188"><a href="#cb42-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-189"><a href="#cb42-189" aria-hidden="true" tabindex="-1"></a>The key assumption of this model is that the covariate effects for</span>
+<span id="cb42-190"><a href="#cb42-190" aria-hidden="true" tabindex="-1"></a>age, centered baseline score and treatment effect are *pooled* accross</span>
+<span id="cb42-191"><a href="#cb42-191" aria-hidden="true" tabindex="-1"></a>all studies. That is, no between-study heterogeneity is admitted in</span>
+<span id="cb42-192"><a href="#cb42-192" aria-hidden="true" tabindex="-1"></a>these effects; heterogeneity is only accounted for in the intercept</span>
+<span id="cb42-193"><a href="#cb42-193" aria-hidden="true" tabindex="-1"></a>term representing the mean change from baseline for control of the</span>
+<span id="cb42-194"><a href="#cb42-194" aria-hidden="true" tabindex="-1"></a>reference age group with a baseline value as used for centering</span>
+<span id="cb42-195"><a href="#cb42-195" aria-hidden="true" tabindex="-1"></a>(<span class="in">`r base_mean`</span>). Note that since we do only include data on control for</span>
+<span id="cb42-196"><a href="#cb42-196" aria-hidden="true" tabindex="-1"></a>the historical studies, we will infer the treatment effect $\theta$</span>
+<span id="cb42-197"><a href="#cb42-197" aria-hidden="true" tabindex="-1"></a>for the new Phase III study without any influence from the other</span>
+<span id="cb42-198"><a href="#cb42-198" aria-hidden="true" tabindex="-1"></a>studies.</span>
+<span id="cb42-199"><a href="#cb42-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-200"><a href="#cb42-200" aria-hidden="true" tabindex="-1"></a>However, in practice we will still want to run the primary analysis in</span>
+<span id="cb42-201"><a href="#cb42-201" aria-hidden="true" tabindex="-1"></a>a 2-step MAP approach. The desire here is to be able to evaluate the</span>
+<span id="cb42-202"><a href="#cb42-202" aria-hidden="true" tabindex="-1"></a>properties of the MAP prior derived from the historical data in</span>
+<span id="cb42-203"><a href="#cb42-203" aria-hidden="true" tabindex="-1"></a>advance. The challenge becomes then that we have to use the</span>
+<span id="cb42-204"><a href="#cb42-204" aria-hidden="true" tabindex="-1"></a>information from fitting the above model to the historical data for</span>
+<span id="cb42-205"><a href="#cb42-205" aria-hidden="true" tabindex="-1"></a>the *entire model posterior* and not merley the intercept</span>
+<span id="cb42-206"><a href="#cb42-206" aria-hidden="true" tabindex="-1"></a>only. Therefore, the MAP prior becomes multi-variate, since the MAP</span>
+<span id="cb42-207"><a href="#cb42-207" aria-hidden="true" tabindex="-1"></a>prior includes the covariate effects.</span>
+<span id="cb42-208"><a href="#cb42-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-209"><a href="#cb42-209" aria-hidden="true" tabindex="-1"></a>Hence, the model is fitted first to the historical data under the</span>
+<span id="cb42-210"><a href="#cb42-210" aria-hidden="true" tabindex="-1"></a>assumption of a known sampling standard deviation (accounting for the</span>
+<span id="cb42-211"><a href="#cb42-211" aria-hidden="true" tabindex="-1"></a>reported standard errors).</span>
+<span id="cb42-212"><a href="#cb42-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-213"><a href="#cb42-213" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
+<span id="cb42-214"><a href="#cb42-214" aria-hidden="true" tabindex="-1"></a><span class="co">Let $\delta_{(j,0)}^{(1)}, \delta_{(j,0)}^{(2)}, \delta_{(j,0)}^{(3)}$ denote </span></span>
+<span id="cb42-215"><a href="#cb42-215" aria-hidden="true" tabindex="-1"></a><span class="co">the change in score at 12 months in the historical study $j$ for the </span></span>
+<span id="cb42-216"><a href="#cb42-216" aria-hidden="true" tabindex="-1"></a><span class="co">control arm in age groups 1, 2, and 3.</span></span>
+<span id="cb42-217"><a href="#cb42-217" aria-hidden="true" tabindex="-1"></a><span class="co">Let $\delta_{(new,0)}^{(i)}$ and $\delta_{(new,1)}^{(i)}$ denote the change in </span></span>
+<span id="cb42-218"><a href="#cb42-218" aria-hidden="true" tabindex="-1"></a><span class="co">score at 12 months for the new studiy in the control and treatment arm, </span></span>
+<span id="cb42-219"><a href="#cb42-219" aria-hidden="true" tabindex="-1"></a><span class="co">respectively. The estimates across studies are linked through the hierarchical model:</span></span>
+<span id="cb42-220"><a href="#cb42-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-221"><a href="#cb42-221" aria-hidden="true" tabindex="-1"></a><span class="co">$\hat{\delta_{(j,z)}^{(i)}} \sim N(\delta_{(j,z)}^{(i)}, SE(\hat{\delta_{(j,z)}^{(i)}})^2)$</span></span>
+<span id="cb42-222"><a href="#cb42-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-223"><a href="#cb42-223" aria-hidden="true" tabindex="-1"></a><span class="co">with agegroup $i=1,2,3$; $j=$Study 1, Study 2, New Study; and treatment $z=0, 1$, such that</span></span>
+<span id="cb42-224"><a href="#cb42-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-225"><a href="#cb42-225" aria-hidden="true" tabindex="-1"></a><span class="co">$\delta_{(j,z)}^{(1)}\sim N(\beta_0 + b_j + \beta_1 + \beta_3 BASE + \theta z,\sigma^2)$</span></span>
+<span id="cb42-226"><a href="#cb42-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-227"><a href="#cb42-227" aria-hidden="true" tabindex="-1"></a><span class="co">$\delta_{(j,z)}^{(2)}\sim N(\beta_0 + b_j + \beta_3 BASE + \theta z, \sigma^2)$</span></span>
+<span id="cb42-228"><a href="#cb42-228" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
+<span id="cb42-229"><a href="#cb42-229" aria-hidden="true" tabindex="-1"></a><span class="co">$\delta_{(j,z)}^{(3)}\sim N(\beta_0 + b_j + \beta_2 + \beta_3 BASE + \theta z,\sigma^2)$</span></span>
+<span id="cb42-230"><a href="#cb42-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-231"><a href="#cb42-231" aria-hidden="true" tabindex="-1"></a><span class="co">$b_j \sim N(0,\tau_s^2)$</span></span>
+<span id="cb42-232"><a href="#cb42-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-233"><a href="#cb42-233" aria-hidden="true" tabindex="-1"></a><span class="co">MAP-prior distributions can then be obtained under the assumptions that the </span></span>
+<span id="cb42-234"><a href="#cb42-234" aria-hidden="true" tabindex="-1"></a><span class="co">change from baseline in the PRO score in the new study for the treatment and</span></span>
+<span id="cb42-235"><a href="#cb42-235" aria-hidden="true" tabindex="-1"></a><span class="co">control arm, $\delta_1^{(new)}$, and $\delta_0^{(new)}$ come from the same </span></span>
+<span id="cb42-236"><a href="#cb42-236" aria-hidden="true" tabindex="-1"></a><span class="co">distribution as the change from baseline in the PRO score for historical studies.</span></span>
+<span id="cb42-237"><a href="#cb42-237" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
+<span id="cb42-238"><a href="#cb42-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-239"><a href="#cb42-239" aria-hidden="true" tabindex="-1"></a>As priors for $\beta_0,\beta_1,\beta_2,\beta_3,\theta$ weakly</span>
+<span id="cb42-240"><a href="#cb42-240" aria-hidden="true" tabindex="-1"></a>informative $\N(0,s^2)$ distributions are used, with $s = 5$. The</span>
+<span id="cb42-241"><a href="#cb42-241" aria-hidden="true" tabindex="-1"></a>choice of $5$ follows from the observation that the historical data</span>
+<span id="cb42-242"><a href="#cb42-242" aria-hidden="true" tabindex="-1"></a>has approximatly a sampling standard deviation of $5$ (the pooled</span>
+<span id="cb42-243"><a href="#cb42-243" aria-hidden="true" tabindex="-1"></a>estimate from the historical data is </span>
+<span id="cb42-244"><a href="#cb42-244" aria-hidden="true" tabindex="-1"></a><span class="in">`r round(sqrt(weighted.mean(hdata$CHGsd^2, hdata$n)), 2)`</span> ). For the</span>
+<span id="cb42-245"><a href="#cb42-245" aria-hidden="true" tabindex="-1"></a>between-trial standard deviation $\tau$ a half-normal prior with scale</span>
+<span id="cb42-246"><a href="#cb42-246" aria-hidden="true" tabindex="-1"></a>$s / 4$ is used. This is considered a</span>
+<span id="cb42-247"><a href="#cb42-247" aria-hidden="true" tabindex="-1"></a>plausible conservative, weakly-informative prior, as values of the</span>
+<span id="cb42-248"><a href="#cb42-248" aria-hidden="true" tabindex="-1"></a>ratio $\tau/\sigma \ge 1/4$ are generally considered to represent</span>
+<span id="cb42-249"><a href="#cb42-249" aria-hidden="true" tabindex="-1"></a>substantial between-trial variability (Neuenschwander et al 2010) and</span>
+<span id="cb42-250"><a href="#cb42-250" aria-hidden="true" tabindex="-1"></a>the proposed prior will generally place more than half of the prior</span>
+<span id="cb42-251"><a href="#cb42-251" aria-hidden="true" tabindex="-1"></a>probability on this area.</span>
+<span id="cb42-252"><a href="#cb42-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-253"><a href="#cb42-253" aria-hidden="true" tabindex="-1"></a><span class="fu">## Implementation</span></span>
+<span id="cb42-254"><a href="#cb42-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-255"><a href="#cb42-255" aria-hidden="true" tabindex="-1"></a>Using <span class="in">`brms`</span> we now specify the MAP model step by step. We first define</span>
+<span id="cb42-256"><a href="#cb42-256" aria-hidden="true" tabindex="-1"></a>the model:</span>
+<span id="cb42-257"><a href="#cb42-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-260"><a href="#cb42-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-261"><a href="#cb42-261" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a model formula for use in 'brms'</span></span>
+<span id="cb42-262"><a href="#cb42-262" aria-hidden="true" tabindex="-1"></a>hist_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(CHGm <span class="sc">|</span> <span class="fu">se</span>(CHGse) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age_group <span class="sc">+</span> cBASE <span class="sc">+</span> active <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Study),</span>
+<span id="cb42-263"><a href="#cb42-263" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family=</span>gaussian, <span class="at">center=</span><span class="cn">FALSE</span>)</span>
+<span id="cb42-264"><a href="#cb42-264" aria-hidden="true" tabindex="-1"></a><span class="co"># Display prior model across all parameters</span></span>
+<span id="cb42-265"><a href="#cb42-265" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(hist_model, hdata)</span>
+<span id="cb42-266"><a href="#cb42-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-267"><a href="#cb42-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-268"><a href="#cb42-268" aria-hidden="true" tabindex="-1"></a>**Note** that we do set explicitly the option <span class="in">`center=FALSE`</span> in the</span>
+<span id="cb42-269"><a href="#cb42-269" aria-hidden="true" tabindex="-1"></a>function call to <span class="in">`bf`</span>. This avoids the otherwise automatic centering</span>
+<span id="cb42-270"><a href="#cb42-270" aria-hidden="true" tabindex="-1"></a>done by <span class="in">`brms`</span>, which is needed here as we require full control over</span>
+<span id="cb42-271"><a href="#cb42-271" aria-hidden="true" tabindex="-1"></a>the parametrization of the model.</span>
+<span id="cb42-272"><a href="#cb42-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-273"><a href="#cb42-273" aria-hidden="true" tabindex="-1"></a>With the model (and data) being defined, we are left to specify the</span>
+<span id="cb42-274"><a href="#cb42-274" aria-hidden="true" tabindex="-1"></a>model priors. With the help of the call</span>
+<span id="cb42-275"><a href="#cb42-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-278"><a href="#cb42-278" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-279"><a href="#cb42-279" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit historical data with between-study heterogeneity  -----------------------</span></span>
+<span id="cb42-280"><a href="#cb42-280" aria-hidden="true" tabindex="-1"></a><span class="co"># For β_0,β_1,β_2,β_3,θ weakly informative N(0,5^2) distributions are used.</span></span>
+<span id="cb42-281"><a href="#cb42-281" aria-hidden="true" tabindex="-1"></a><span class="co"># For the group level effect of the study, we use τ^2=(5.0/4)^2.</span></span>
+<span id="cb42-282"><a href="#cb42-282" aria-hidden="true" tabindex="-1"></a><span class="co"># Set then sd = 5 for later use</span></span>
+<span id="cb42-283"><a href="#cb42-283" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fl">5.0</span></span>
+<span id="cb42-284"><a href="#cb42-284" aria-hidden="true" tabindex="-1"></a>sd_tau <span class="ot">&lt;-</span> sd<span class="sc">/</span><span class="dv">4</span></span>
+<span id="cb42-285"><a href="#cb42-285" aria-hidden="true" tabindex="-1"></a>hist_prior <span class="ot">&lt;-</span> <span class="fu">prior_string</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"normal(0, {sd})"</span>), <span class="at">class=</span><span class="st">"b"</span>) <span class="sc">+</span></span>
+<span id="cb42-286"><a href="#cb42-286" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior_string</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"normal(0, {sd_tau})"</span>), <span class="at">class=</span><span class="st">"sd"</span>, <span class="at">coef=</span><span class="st">"Intercept"</span>, <span class="at">group=</span><span class="st">"Study"</span>)</span>
+<span id="cb42-287"><a href="#cb42-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-288"><a href="#cb42-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-289"><a href="#cb42-289" aria-hidden="true" tabindex="-1"></a>Now we are ready to run the model in <span class="in">`brms`</span>:</span>
+<span id="cb42-290"><a href="#cb42-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-293"><a href="#cb42-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-294"><a href="#cb42-294" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply brms model using historical data hdata and the model defined in hist_model</span></span>
+<span id="cb42-295"><a href="#cb42-295" aria-hidden="true" tabindex="-1"></a>map_mc_brms <span class="ot">&lt;-</span> <span class="fu">brm</span>(hist_model, </span>
+<span id="cb42-296"><a href="#cb42-296" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> hdata, </span>
+<span id="cb42-297"><a href="#cb42-297" aria-hidden="true" tabindex="-1"></a>                   <span class="at">prior =</span> hist_prior,</span>
+<span id="cb42-298"><a href="#cb42-298" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seed =</span> <span class="dv">234324</span>, <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb42-299"><a href="#cb42-299" aria-hidden="true" tabindex="-1"></a>                   <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.99</span>))</span>
+<span id="cb42-300"><a href="#cb42-300" aria-hidden="true" tabindex="-1"></a>map_mc_brms</span>
+<span id="cb42-301"><a href="#cb42-301" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-302"><a href="#cb42-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-303"><a href="#cb42-303" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb42-304"><a href="#cb42-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-305"><a href="#cb42-305" aria-hidden="true" tabindex="-1"></a>Once the MAP prior is obtained in MCMC form a model check for it is</span>
+<span id="cb42-306"><a href="#cb42-306" aria-hidden="true" tabindex="-1"></a>recommended. In <span class="in">`brms`</span> model diagnostic functions are directly available</span>
+<span id="cb42-307"><a href="#cb42-307" aria-hidden="true" tabindex="-1"></a>and essentially expose the functionality found in the</span>
+<span id="cb42-308"><a href="#cb42-308" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">`bayesplot`</span><span class="co">](https://mc-stan.org/bayesplot/index.html)</span> R package. A</span>
+<span id="cb42-309"><a href="#cb42-309" aria-hidden="true" tabindex="-1"></a>suitable <span class="in">`bayesplot`</span> plot in this situation could be an <span class="in">`intervals`</span> plot</span>
+<span id="cb42-310"><a href="#cb42-310" aria-hidden="true" tabindex="-1"></a>as:</span>
+<span id="cb42-311"><a href="#cb42-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-314"><a href="#cb42-314" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-315"><a href="#cb42-315" aria-hidden="true" tabindex="-1"></a><span class="do">## Posterior predictive check for the mean change in Score at 12mo by age group -------</span></span>
+<span id="cb42-316"><a href="#cb42-316" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(map_mc_brms, <span class="at">type=</span><span class="st">"intervals"</span>) <span class="sc">+</span></span>
+<span id="cb42-317"><a href="#cb42-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Study / Strata"</span>, </span>
+<span id="cb42-318"><a href="#cb42-318" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hdata), </span>
+<span id="cb42-319"><a href="#cb42-319" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> hdata<span class="sc">$</span>label2,</span>
+<span id="cb42-320"><a href="#cb42-320" aria-hidden="true" tabindex="-1"></a>                     <span class="at">trans =</span> <span class="st">"reverse"</span>) <span class="sc">+</span></span>
+<span id="cb42-321"><a href="#cb42-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Mean change from baseline"</span>) <span class="sc">+</span></span>
+<span id="cb42-322"><a href="#cb42-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb42-323"><a href="#cb42-323" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb42-324"><a href="#cb42-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hline_0</span>(<span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb42-325"><a href="#cb42-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check"</span>) <span class="sc">+</span></span>
+<span id="cb42-326"><a href="#cb42-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>),</span>
+<span id="cb42-327"><a href="#cb42-327" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position=</span><span class="st">"right"</span>,</span>
+<span id="cb42-328"><a href="#cb42-328" aria-hidden="true" tabindex="-1"></a>        <span class="co"># suppress vertical grid lines for better readability of intervals</span></span>
+<span id="cb42-329"><a href="#cb42-329" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb42-330"><a href="#cb42-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-331"><a href="#cb42-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-332"><a href="#cb42-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-333"><a href="#cb42-333" aria-hidden="true" tabindex="-1"></a>The call of the <span class="in">`pp_check`</span> function is forwarded to the respective</span>
+<span id="cb42-334"><a href="#cb42-334" aria-hidden="true" tabindex="-1"></a><span class="in">`ppc_*`</span> functions for posterior predictive checks from <span class="in">`bayesplot`</span></span>
+<span id="cb42-335"><a href="#cb42-335" aria-hidden="true" tabindex="-1"></a>(depending on the <span class="in">`type`</span> argument). The plots are designed to compare</span>
+<span id="cb42-336"><a href="#cb42-336" aria-hidden="true" tabindex="-1"></a>the *posterior predictive* distribution to the observed data rather</span>
+<span id="cb42-337"><a href="#cb42-337" aria-hidden="true" tabindex="-1"></a>than comparing mean estimates to one another. Thus, the outcome of</span>
+<span id="cb42-338"><a href="#cb42-338" aria-hidden="true" tabindex="-1"></a>each study/age group in the historical data set is sampled according</span>
+<span id="cb42-339"><a href="#cb42-339" aria-hidden="true" tabindex="-1"></a>to the fitted model and the resulting predictive distribution of the</span>
+<span id="cb42-340"><a href="#cb42-340" aria-hidden="true" tabindex="-1"></a>outcome (change in score) is compared to the observed outcome. The</span>
+<span id="cb42-341"><a href="#cb42-341" aria-hidden="true" tabindex="-1"></a><span class="in">`intervals`</span> predictive probability check summarises the predictive</span>
+<span id="cb42-342"><a href="#cb42-342" aria-hidden="true" tabindex="-1"></a>distributions using a light color for an outer credible interval range</span>
+<span id="cb42-343"><a href="#cb42-343" aria-hidden="true" tabindex="-1"></a>and a darker line for an inner credible interval. The outer defaults</span>
+<span id="cb42-344"><a href="#cb42-344" aria-hidden="true" tabindex="-1"></a>to a 90% credible interval (<span class="in">`prob_outer`</span> argument) while the inner</span>
+<span id="cb42-345"><a href="#cb42-345" aria-hidden="true" tabindex="-1"></a>uses a 50% credible interval (<span class="in">`prob`</span> argument). The light dot in the</span>
+<span id="cb42-346"><a href="#cb42-346" aria-hidden="true" tabindex="-1"></a>middle is the median of the predictive distribution and the dark dot</span>
+<span id="cb42-347"><a href="#cb42-347" aria-hidden="true" tabindex="-1"></a>is the outcome $y$. As we can observe, the outcomes $y$ for all age</span>
+<span id="cb42-348"><a href="#cb42-348" aria-hidden="true" tabindex="-1"></a>groups in historical studies all are contained within outer credible</span>
+<span id="cb42-349"><a href="#cb42-349" aria-hidden="true" tabindex="-1"></a>intervals of the predictive distributions for the simulated replicate</span>
+<span id="cb42-350"><a href="#cb42-350" aria-hidden="true" tabindex="-1"></a>data $y_{rep}$.  We can conclude that the model is consistent with the</span>
+<span id="cb42-351"><a href="#cb42-351" aria-hidden="true" tabindex="-1"></a>data.</span>
+<span id="cb42-352"><a href="#cb42-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-353"><a href="#cb42-353" aria-hidden="true" tabindex="-1"></a>Once the model has been checked for plausibility, we can proceed and</span>
+<span id="cb42-354"><a href="#cb42-354" aria-hidden="true" tabindex="-1"></a>derive the main target of the MAP analysis, which is the MAP prior in</span>
+<span id="cb42-355"><a href="#cb42-355" aria-hidden="true" tabindex="-1"></a>*parametric* form. The MAP priors are stored in the <span class="in">`post_coefs_mix`</span> object. </span>
+<span id="cb42-356"><a href="#cb42-356" aria-hidden="true" tabindex="-1"></a>Note that since we will be predicting for a *new* study, we sample a random </span>
+<span id="cb42-357"><a href="#cb42-357" aria-hidden="true" tabindex="-1"></a>intercept using the between study variation.</span>
+<span id="cb42-358"><a href="#cb42-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-361"><a href="#cb42-361" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-362"><a href="#cb42-362" aria-hidden="true" tabindex="-1"></a><span class="co"># For the simple case of this case study for which only a random</span></span>
+<span id="cb42-363"><a href="#cb42-363" aria-hidden="true" tabindex="-1"></a><span class="co"># effect is assigned to the intercept, we can use the brms prediction</span></span>
+<span id="cb42-364"><a href="#cb42-364" aria-hidden="true" tabindex="-1"></a><span class="co"># functions. We are seeking a sample of the intercept with</span></span>
+<span id="cb42-365"><a href="#cb42-365" aria-hidden="true" tabindex="-1"></a><span class="co"># between-trial heterogeneity, but without having other terms</span></span>
+<span id="cb42-366"><a href="#cb42-366" aria-hidden="true" tabindex="-1"></a><span class="co"># included in the linear predictor. Hence, we can predict the mean</span></span>
+<span id="cb42-367"><a href="#cb42-367" aria-hidden="true" tabindex="-1"></a><span class="co"># change from baseline for a new study arm which is has the covariate</span></span>
+<span id="cb42-368"><a href="#cb42-368" aria-hidden="true" tabindex="-1"></a><span class="co"># values set to the reference</span></span>
+<span id="cb42-369"><a href="#cb42-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-370"><a href="#cb42-370" aria-hidden="true" tabindex="-1"></a>new_study_ref <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Study=</span><span class="st">"new_study"</span>, <span class="at">age_group=</span><span class="st">"2"</span>, <span class="at">cBASE=</span><span class="dv">0</span>, <span class="at">CHGse=</span><span class="dv">0</span>, <span class="at">active=</span><span class="dv">0</span>L)</span>
+<span id="cb42-371"><a href="#cb42-371" aria-hidden="true" tabindex="-1"></a>rv_study_sim_inter <span class="ot">&lt;-</span> <span class="fu">rvar</span>(<span class="fu">posterior_epred</span>(map_mc_brms,</span>
+<span id="cb42-372"><a href="#cb42-372" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">newdata=</span>new_study_ref,</span>
+<span id="cb42-373"><a href="#cb42-373" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>,</span>
+<span id="cb42-374"><a href="#cb42-374" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>))</span>
+<span id="cb42-375"><a href="#cb42-375" aria-hidden="true" tabindex="-1"></a>rv_study_sim_inter</span>
+<span id="cb42-376"><a href="#cb42-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-377"><a href="#cb42-377" aria-hidden="true" tabindex="-1"></a><span class="co"># Get random draws from the posterior of each parameter</span></span>
+<span id="cb42-378"><a href="#cb42-378" aria-hidden="true" tabindex="-1"></a><span class="co"># after fitting historical data</span></span>
+<span id="cb42-379"><a href="#cb42-379" aria-hidden="true" tabindex="-1"></a>hist_post_draws <span class="ot">&lt;-</span> <span class="fu">as_draws_rvars</span>(map_mc_brms)</span>
 <span id="cb42-380"><a href="#cb42-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-381"><a href="#cb42-381" aria-hidden="true" tabindex="-1"></a><span class="co"># Whenever one also models the covariate effects to be varying between</span></span>
-<span id="cb42-382"><a href="#cb42-382" aria-hidden="true" tabindex="-1"></a><span class="co"># studies, one needs to smaple the random effect directly, since brms</span></span>
-<span id="cb42-383"><a href="#cb42-383" aria-hidden="true" tabindex="-1"></a><span class="co"># always simulates the linear predictor by convention. In this case</span></span>
-<span id="cb42-384"><a href="#cb42-384" aria-hidden="true" tabindex="-1"></a><span class="co"># one needs to sample the random intercept directly from the posterior.</span></span>
-<span id="cb42-385"><a href="#cb42-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-386"><a href="#cb42-386" aria-hidden="true" tabindex="-1"></a><span class="co"># Add variability to the intercept to capture random between study variation</span></span>
-<span id="cb42-387"><a href="#cb42-387" aria-hidden="true" tabindex="-1"></a>rv_study_sim_inter_alt <span class="ot">&lt;-</span> <span class="fu">with</span>(hist_post_draws,</span>
-<span id="cb42-388"><a href="#cb42-388" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">rvar_rng</span>(rnorm, <span class="dv">1</span>, b_Intercept, sd_Study__Intercept, <span class="at">ndraws=</span><span class="fu">ndraws</span>(hist_post_draws)))</span>
-<span id="cb42-389"><a href="#cb42-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-390"><a href="#cb42-390" aria-hidden="true" tabindex="-1"></a><span class="co"># Get draws for the fixed effects from the model posterior</span></span>
-<span id="cb42-391"><a href="#cb42-391" aria-hidden="true" tabindex="-1"></a>hist_post_coefs <span class="ot">&lt;-</span> <span class="fu">subset_draws</span>(hist_post_draws,</span>
-<span id="cb42-392"><a href="#cb42-392" aria-hidden="true" tabindex="-1"></a>                                <span class="at">variable=</span><span class="st">"^b_"</span>,</span>
-<span id="cb42-393"><a href="#cb42-393" aria-hidden="true" tabindex="-1"></a>                                <span class="at">regex=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-394"><a href="#cb42-394" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_matrix</span>()</span>
-<span id="cb42-395"><a href="#cb42-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-396"><a href="#cb42-396" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the intercept draws with the intercept and added variability</span></span>
-<span id="cb42-397"><a href="#cb42-397" aria-hidden="true" tabindex="-1"></a>hist_post_coefs[,<span class="st">"b_Intercept"</span>] <span class="ot">&lt;-</span> <span class="fu">as_draws_matrix</span>(rv_study_sim_inter)[,<span class="dv">1</span>]</span>
-<span id="cb42-398"><a href="#cb42-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-399"><a href="#cb42-399" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a descriptive statistics for posterior draws by coefficient</span></span>
-<span id="cb42-400"><a href="#cb42-400" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_draws</span>(hist_post_coefs) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span>
-<span id="cb42-401"><a href="#cb42-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-402"><a href="#cb42-402" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize as mixture multi-variate normal  MAP distribution</span></span>
-<span id="cb42-403"><a href="#cb42-403" aria-hidden="true" tabindex="-1"></a>post_coefs_mix <span class="ot">&lt;-</span> <span class="fu">mixfit</span>(<span class="at">sample =</span> hist_post_coefs, <span class="at">type =</span> <span class="st">"mvnorm"</span>, <span class="at">Nc =</span> <span class="dv">3</span>)</span>
-<span id="cb42-404"><a href="#cb42-404" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(post_coefs_mix)</span>
-<span id="cb42-405"><a href="#cb42-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-406"><a href="#cb42-406" aria-hidden="true" tabindex="-1"></a><span class="co"># notice the considerable correlations present in the posterior</span></span>
-<span id="cb42-407"><a href="#cb42-407" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(hist_post_coefs), <span class="dv">2</span>)</span>
-<span id="cb42-408"><a href="#cb42-408" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-409"><a href="#cb42-409" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-410"><a href="#cb42-410" aria-hidden="true" tabindex="-1"></a>And a comparison of the fitted density vs the histogram of the MCMC</span>
-<span id="cb42-411"><a href="#cb42-411" aria-hidden="true" tabindex="-1"></a>sample is available as:</span>
-<span id="cb42-412"><a href="#cb42-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-415"><a href="#cb42-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-416"><a href="#cb42-416" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(post_coefs_mix)</span>
-<span id="cb42-417"><a href="#cb42-417" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-418"><a href="#cb42-418" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-421"><a href="#cb42-421" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-422"><a href="#cb42-422" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary statistics for the posteriors draws of coefficients</span></span>
-<span id="cb42-423"><a href="#cb42-423" aria-hidden="true" tabindex="-1"></a>hist_post_coefs_df <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(hist_post_coefs)</span>
-<span id="cb42-424"><a href="#cb42-424" aria-hidden="true" tabindex="-1"></a>hist_post_coefs_df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb42-425"><a href="#cb42-425" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(hist_post_coefs_df[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
-<span id="cb42-426"><a href="#cb42-426" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-427"><a href="#cb42-427" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-428"><a href="#cb42-428" aria-hidden="true" tabindex="-1"></a>These MAP priors summaries for the coefficients of the model are displayed in </span>
-<span id="cb42-429"><a href="#cb42-429" aria-hidden="true" tabindex="-1"></a>the table below. Note that since the historical data did not contain data in</span>
-<span id="cb42-430"><a href="#cb42-430" aria-hidden="true" tabindex="-1"></a>both the treatment and control arms, the parameter related to the treatment </span>
-<span id="cb42-431"><a href="#cb42-431" aria-hidden="true" tabindex="-1"></a>effect (<span class="in">`b_active`</span>) will remain with a weakly informative prior. </span>
-<span id="cb42-432"><a href="#cb42-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-435"><a href="#cb42-435" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-436"><a href="#cb42-436" aria-hidden="true" tabindex="-1"></a>map_coef_table <span class="ot">&lt;-</span> hist_post_coefs_df <span class="sc">|&gt;</span></span>
-<span id="cb42-437"><a href="#cb42-437" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_draws</span>(median, <span class="sc">~</span><span class="fu">quantile2</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb42-438"><a href="#cb42-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">lower =</span> q2<span class="fl">.5</span>,</span>
-<span id="cb42-439"><a href="#cb42-439" aria-hidden="true" tabindex="-1"></a>         <span class="at">upper =</span> q97<span class="fl">.5</span>)</span>
-<span id="cb42-440"><a href="#cb42-440" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-441"><a href="#cb42-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-442"><a href="#cb42-442" aria-hidden="true" tabindex="-1"></a>Often it is of interest to evaluate the properties of the MAP prior at</span>
-<span id="cb42-443"><a href="#cb42-443" aria-hidden="true" tabindex="-1"></a>the design stage. This is complicated in this example due to the</span>
-<span id="cb42-444"><a href="#cb42-444" aria-hidden="true" tabindex="-1"></a>requirement to assume a certain baseline value for the used</span>
-<span id="cb42-445"><a href="#cb42-445" aria-hidden="true" tabindex="-1"></a>covariates. However, note that these evaluations can be repeated once</span>
-<span id="cb42-446"><a href="#cb42-446" aria-hidden="true" tabindex="-1"></a>the trial has enrolled the study population given that only baseline</span>
-<span id="cb42-447"><a href="#cb42-447" aria-hidden="true" tabindex="-1"></a>data is needed for this. Here we assume a baseline score of 20:</span>
-<span id="cb42-448"><a href="#cb42-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-451"><a href="#cb42-451" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-452"><a href="#cb42-452" aria-hidden="true" tabindex="-1"></a>agegroups <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Age &gt;=2 to &lt;5"</span>,</span>
-<span id="cb42-453"><a href="#cb42-453" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Age &gt;=5 to &lt;13"</span>,</span>
-<span id="cb42-454"><a href="#cb42-454" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Age &gt;=13 to &lt;18"</span>)</span>
-<span id="cb42-455"><a href="#cb42-455" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a value for the baseline score</span></span>
-<span id="cb42-456"><a href="#cb42-456" aria-hidden="true" tabindex="-1"></a>base_score_new <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb42-457"><a href="#cb42-457" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary statistics for the posteriors draws of means across subgroups</span></span>
-<span id="cb42-458"><a href="#cb42-458" aria-hidden="true" tabindex="-1"></a>new_study_base20 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Study=</span><span class="st">"new_study"</span>,</span>
-<span id="cb42-459"><a href="#cb42-459" aria-hidden="true" tabindex="-1"></a>                           <span class="at">age_group=</span><span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>),</span>
-<span id="cb42-460"><a href="#cb42-460" aria-hidden="true" tabindex="-1"></a>                           <span class="at">cBASE=</span>base_score_new<span class="sc">-</span>base_mean,</span>
-<span id="cb42-461"><a href="#cb42-461" aria-hidden="true" tabindex="-1"></a>                           <span class="at">CHGse=</span><span class="dv">0</span>,</span>
-<span id="cb42-462"><a href="#cb42-462" aria-hidden="true" tabindex="-1"></a>                           <span class="at">active=</span><span class="dv">0</span>L)</span>
-<span id="cb42-463"><a href="#cb42-463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-464"><a href="#cb42-464" aria-hidden="true" tabindex="-1"></a>map_resp_table <span class="ot">&lt;-</span> new_study_base20 <span class="sc">|&gt;</span></span>
-<span id="cb42-465"><a href="#cb42-465" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">add_epred_rvars</span>(map_mc_brms, <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>, <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>, <span class="at">value=</span><span class="st">"MAP"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-466"><a href="#cb42-466" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">summarise_draws</span>(MAP, <span class="sc">~</span><span class="fu">quantile2</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))),</span>
-<span id="cb42-467"><a href="#cb42-467" aria-hidden="true" tabindex="-1"></a>           <span class="at">MAP_ess=</span><span class="fu">ess</span>(<span class="fu">mixfit</span>(<span class="fu">draws_of</span>(MAP)[,<span class="dv">1</span>], <span class="at">Nc=</span><span class="dv">3</span>), <span class="at">sigma=</span><span class="dv">5</span>),</span>
-<span id="cb42-468"><a href="#cb42-468" aria-hidden="true" tabindex="-1"></a>           <span class="at">treatment =</span> <span class="st">"Control"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-469"><a href="#cb42-469" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">median=</span> q50,</span>
-<span id="cb42-470"><a href="#cb42-470" aria-hidden="true" tabindex="-1"></a>           <span class="at">lower =</span> q2<span class="fl">.5</span>,</span>
-<span id="cb42-471"><a href="#cb42-471" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper =</span> q97<span class="fl">.5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb42-472"><a href="#cb42-472" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(MAP, treatment, MAP_ess, median, lower, upper)</span>
-<span id="cb42-473"><a href="#cb42-473" aria-hidden="true" tabindex="-1"></a>map_resp_table <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span>
-<span id="cb42-474"><a href="#cb42-474" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-475"><a href="#cb42-475" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-476"><a href="#cb42-476" aria-hidden="true" tabindex="-1"></a>At this point we can use these MAP priors in the analysis of the pivotal</span>
-<span id="cb42-477"><a href="#cb42-477" aria-hidden="true" tabindex="-1"></a>trial as outlined in the following section.</span>
-<span id="cb42-478"><a href="#cb42-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-479"><a href="#cb42-479" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analysis of a new study</span></span>
-<span id="cb42-480"><a href="#cb42-480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-481"><a href="#cb42-481" aria-hidden="true" tabindex="-1"></a>Assume now that the trial reads out and you have to analyze the study</span>
-<span id="cb42-482"><a href="#cb42-482" aria-hidden="true" tabindex="-1"></a>using the MAP prior that were derived. For this exercise  will use a simulated </span>
-<span id="cb42-483"><a href="#cb42-483" aria-hidden="true" tabindex="-1"></a>data set, see code below for reference.</span>
-<span id="cb42-484"><a href="#cb42-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-485"><a href="#cb42-485" aria-hidden="true" tabindex="-1"></a><span class="in">```{r simulate_trial }</span></span>
-<span id="cb42-486"><a href="#cb42-486" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb42-487"><a href="#cb42-487" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-summary: "Show the code"</span></span>
-<span id="cb42-488"><a href="#cb42-488" aria-hidden="true" tabindex="-1"></a><span class="in"># Simulate summary data for 1 trial</span></span>
-<span id="cb42-489"><a href="#cb42-489" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
-<span id="cb42-490"><a href="#cb42-490" aria-hidden="true" tabindex="-1"></a><span class="in"># @param n1 The sample size in the 3 strata of the treatment arm. A vector of length 3</span></span>
-<span id="cb42-491"><a href="#cb42-491" aria-hidden="true" tabindex="-1"></a><span class="in"># @param n0 The sample size in the 3 strata of the control arm. A vector of length 3</span></span>
-<span id="cb42-492"><a href="#cb42-492" aria-hidden="true" tabindex="-1"></a><span class="in"># @param e1 The mean change from baseline at month 12 for the 3 strata of the treatment arm. A vector of length 3</span></span>
-<span id="cb42-493"><a href="#cb42-493" aria-hidden="true" tabindex="-1"></a><span class="in"># @param e0 The mean change from baseline at month 12 for the 3 strata of the control arm. A vector of length 3</span></span>
-<span id="cb42-494"><a href="#cb42-494" aria-hidden="true" tabindex="-1"></a><span class="in"># @param s1 The se of the response in the 3 strata of the treatment arm. A vector of length 3</span></span>
-<span id="cb42-495"><a href="#cb42-495" aria-hidden="true" tabindex="-1"></a><span class="in"># @param s0 The se of the response in the 3 strata of the control arm. A vector of length 3</span></span>
-<span id="cb42-496"><a href="#cb42-496" aria-hidden="true" tabindex="-1"></a><span class="in"># @param s1 The baseline score in the 3 strata of the treatment arm. A vector of length 3</span></span>
-<span id="cb42-497"><a href="#cb42-497" aria-hidden="true" tabindex="-1"></a><span class="in"># @param s0 The baseline score in the 3 strata of the control arm. A vector of length 3</span></span>
-<span id="cb42-498"><a href="#cb42-498" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
-<span id="cb42-499"><a href="#cb42-499" aria-hidden="true" tabindex="-1"></a><span class="in"># @return A data frame with simulated trial data</span></span>
-<span id="cb42-500"><a href="#cb42-500" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
-<span id="cb42-501"><a href="#cb42-501" aria-hidden="true" tabindex="-1"></a><span class="in">simulate_1_trial_ipd &lt;- function(n1 = c(39, 18, 18),</span></span>
-<span id="cb42-502"><a href="#cb42-502" aria-hidden="true" tabindex="-1"></a><span class="in">                                 n0 = c(26, 12, 12),</span></span>
-<span id="cb42-503"><a href="#cb42-503" aria-hidden="true" tabindex="-1"></a><span class="in">                                 e1 = c( 5,  5,  5),</span></span>
-<span id="cb42-504"><a href="#cb42-504" aria-hidden="true" tabindex="-1"></a><span class="in">                                 e0 = c( 0,  0,  0),</span></span>
-<span id="cb42-505"><a href="#cb42-505" aria-hidden="true" tabindex="-1"></a><span class="in">                                 s1 = rep(5, 3),</span></span>
-<span id="cb42-506"><a href="#cb42-506" aria-hidden="true" tabindex="-1"></a><span class="in">                                 s0 = rep(5, 3),</span></span>
-<span id="cb42-507"><a href="#cb42-507" aria-hidden="true" tabindex="-1"></a><span class="in">                                 bs1 = c( 33,33,33),</span></span>
-<span id="cb42-508"><a href="#cb42-508" aria-hidden="true" tabindex="-1"></a><span class="in">                                 bs0 = c( 33,33,33),</span></span>
-<span id="cb42-509"><a href="#cb42-509" aria-hidden="true" tabindex="-1"></a><span class="in">                                 base_center=base_mean) {</span></span>
-<span id="cb42-510"><a href="#cb42-510" aria-hidden="true" tabindex="-1"></a><span class="in">    # Arm 1: Treatment</span></span>
-<span id="cb42-511"><a href="#cb42-511" aria-hidden="true" tabindex="-1"></a><span class="in">    # Arm 0: Control</span></span>
-<span id="cb42-512"><a href="#cb42-512" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb42-513"><a href="#cb42-513" aria-hidden="true" tabindex="-1"></a><span class="in">    # AGEGRPN 1: Age &gt;=2 to &lt;5</span></span>
-<span id="cb42-514"><a href="#cb42-514" aria-hidden="true" tabindex="-1"></a><span class="in">    # AGEGRPN 2: Age &gt;=5 to &lt;13</span></span>
-<span id="cb42-515"><a href="#cb42-515" aria-hidden="true" tabindex="-1"></a><span class="in">    # AGEGRPN 3: Age &gt;=13 to &lt;18</span></span>
-<span id="cb42-516"><a href="#cb42-516" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb42-517"><a href="#cb42-517" aria-hidden="true" tabindex="-1"></a><span class="in">    # Simulate individual patient data  -------</span></span>
-<span id="cb42-518"><a href="#cb42-518" aria-hidden="true" tabindex="-1"></a><span class="in">    d1 &lt;- sapply(1:3, function(i) rnorm(n = n1[i], mean = e1[i], sd = s1[i]))</span></span>
-<span id="cb42-519"><a href="#cb42-519" aria-hidden="true" tabindex="-1"></a><span class="in">    d0 &lt;- sapply(1:3, function(i) rnorm(n = n0[i], mean = e0[i], sd = s0[i]))</span></span>
-<span id="cb42-520"><a href="#cb42-520" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb42-521"><a href="#cb42-521" aria-hidden="true" tabindex="-1"></a><span class="in">    # Simulate individual patient data for the baseline score -------</span></span>
-<span id="cb42-522"><a href="#cb42-522" aria-hidden="true" tabindex="-1"></a><span class="in">    b1 &lt;- sapply(1:3, function(i) rnorm(n = n1[i], mean = bs1[i], sd = s1[i]))</span></span>
-<span id="cb42-523"><a href="#cb42-523" aria-hidden="true" tabindex="-1"></a><span class="in">    b0 &lt;- sapply(1:3, function(i) rnorm(n = n0[i], mean = bs0[i], sd = s0[i]))</span></span>
-<span id="cb42-524"><a href="#cb42-524" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb42-525"><a href="#cb42-525" aria-hidden="true" tabindex="-1"></a><span class="in">    agegr &lt;- c("Age &gt;=2 to &lt;5", "Age &gt;=5 to &lt;13", "Age &gt;=13 to &lt;18")</span></span>
-<span id="cb42-526"><a href="#cb42-526" aria-hidden="true" tabindex="-1"></a><span class="in">    AGEGROUP &lt;- c(rep(agegr, n1), rep(agegr, n0))</span></span>
-<span id="cb42-527"><a href="#cb42-527" aria-hidden="true" tabindex="-1"></a><span class="in">    strataN &lt;- c(rep(1:3, n1), rep(1:3, n0))</span></span>
-<span id="cb42-528"><a href="#cb42-528" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb42-529"><a href="#cb42-529" aria-hidden="true" tabindex="-1"></a><span class="in">    BASE &lt;- c(unlist(b1), unlist(b0))</span></span>
-<span id="cb42-530"><a href="#cb42-530" aria-hidden="true" tabindex="-1"></a><span class="in">    y &lt;- c(unlist(d1), unlist(d0))</span></span>
-<span id="cb42-531"><a href="#cb42-531" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb42-532"><a href="#cb42-532" aria-hidden="true" tabindex="-1"></a><span class="in">    ### Put generated values into a data frame -----------------------------------</span></span>
-<span id="cb42-533"><a href="#cb42-533" aria-hidden="true" tabindex="-1"></a><span class="in">    out &lt;- data.frame(AGEGRPN = strataN,</span></span>
-<span id="cb42-534"><a href="#cb42-534" aria-hidden="true" tabindex="-1"></a><span class="in">                      AGEGRP  = AGEGROUP,</span></span>
-<span id="cb42-535"><a href="#cb42-535" aria-hidden="true" tabindex="-1"></a><span class="in">                      age_group = relevel(as.factor(strataN), "2"),</span></span>
-<span id="cb42-536"><a href="#cb42-536" aria-hidden="true" tabindex="-1"></a><span class="in">                      active    = rep(c(1, 0), c(sum(n1), sum(n0))),</span></span>
-<span id="cb42-537"><a href="#cb42-537" aria-hidden="true" tabindex="-1"></a><span class="in">                      BASE = BASE,</span></span>
-<span id="cb42-538"><a href="#cb42-538" aria-hidden="true" tabindex="-1"></a><span class="in">                      cBASE= BASE - base_center,</span></span>
-<span id="cb42-539"><a href="#cb42-539" aria-hidden="true" tabindex="-1"></a><span class="in">                      CHG  = y</span></span>
-<span id="cb42-540"><a href="#cb42-540" aria-hidden="true" tabindex="-1"></a><span class="in">                      )</span></span>
-<span id="cb42-541"><a href="#cb42-541" aria-hidden="true" tabindex="-1"></a><span class="in">  out</span></span>
-<span id="cb42-542"><a href="#cb42-542" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb42-543"><a href="#cb42-543" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-544"><a href="#cb42-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-547"><a href="#cb42-547" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-548"><a href="#cb42-548" aria-hidden="true" tabindex="-1"></a>new_dat <span class="ot">&lt;-</span> <span class="fu">simulate_1_trial_ipd</span>(</span>
-<span id="cb42-549"><a href="#cb42-549" aria-hidden="true" tabindex="-1"></a>  <span class="at">n1 =</span> <span class="fu">c</span>(<span class="dv">39</span>, <span class="dv">18</span>, <span class="dv">18</span>),</span>
-<span id="cb42-550"><a href="#cb42-550" aria-hidden="true" tabindex="-1"></a>  <span class="at">n0 =</span> <span class="fu">c</span>(<span class="dv">26</span>, <span class="dv">12</span>, <span class="dv">12</span>),</span>
-<span id="cb42-551"><a href="#cb42-551" aria-hidden="true" tabindex="-1"></a>  <span class="at">e1 =</span> <span class="fu">c</span>( <span class="dv">2</span>,  <span class="dv">1</span>,  <span class="dv">0</span>),</span>
-<span id="cb42-552"><a href="#cb42-552" aria-hidden="true" tabindex="-1"></a>  <span class="at">e0 =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">2</span>),</span>
-<span id="cb42-553"><a href="#cb42-553" aria-hidden="true" tabindex="-1"></a>  <span class="at">s1 =</span> <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">3</span>),</span>
-<span id="cb42-554"><a href="#cb42-554" aria-hidden="true" tabindex="-1"></a>  <span class="at">s0 =</span> <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">3</span>),</span>
-<span id="cb42-555"><a href="#cb42-555" aria-hidden="true" tabindex="-1"></a>  <span class="at">bs1 =</span> <span class="fu">c</span>( <span class="dv">33</span>,<span class="dv">33</span>,<span class="dv">33</span>),</span>
-<span id="cb42-556"><a href="#cb42-556" aria-hidden="true" tabindex="-1"></a>  <span class="at">bs0 =</span> <span class="fu">c</span>( <span class="dv">33</span>,<span class="dv">33</span>,<span class="dv">33</span>),</span>
-<span id="cb42-557"><a href="#cb42-557" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_center=</span>base_mean)</span>
-<span id="cb42-558"><a href="#cb42-558" aria-hidden="true" tabindex="-1"></a>new_dat <span class="ot">&lt;-</span> new_dat <span class="sc">|&gt;</span> </span>
-<span id="cb42-559"><a href="#cb42-559" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Study =</span> <span class="st">"New"</span>)</span>
-<span id="cb42-560"><a href="#cb42-560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-561"><a href="#cb42-561" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(new_dat) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span>
-<span id="cb42-562"><a href="#cb42-562" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-563"><a href="#cb42-563" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-564"><a href="#cb42-564" aria-hidden="true" tabindex="-1"></a>We first calculate simple summary statistics for the simulated data:</span>
-<span id="cb42-567"><a href="#cb42-567" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-568"><a href="#cb42-568" aria-hidden="true" tabindex="-1"></a>new_dat <span class="sc">|&gt;</span> </span>
-<span id="cb42-569"><a href="#cb42-569" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">BASE =</span> <span class="fu">mean</span>(BASE),</span>
-<span id="cb42-570"><a href="#cb42-570" aria-hidden="true" tabindex="-1"></a>              <span class="at">cBASE =</span> <span class="fu">mean</span>(cBASE),</span>
-<span id="cb42-571"><a href="#cb42-571" aria-hidden="true" tabindex="-1"></a>              <span class="at">CHGm  =</span> <span class="fu">mean</span>(CHG),</span>
-<span id="cb42-572"><a href="#cb42-572" aria-hidden="true" tabindex="-1"></a>              <span class="at">CHGsd =</span> <span class="fu">sd</span>(CHG),</span>
-<span id="cb42-573"><a href="#cb42-573" aria-hidden="true" tabindex="-1"></a>              <span class="at">n     =</span> <span class="fu">n</span>(),</span>
-<span id="cb42-574"><a href="#cb42-574" aria-hidden="true" tabindex="-1"></a>              <span class="at">CHGse =</span> CHGsd <span class="sc">/</span> <span class="fu">sqrt</span>(n),</span>
-<span id="cb42-575"><a href="#cb42-575" aria-hidden="true" tabindex="-1"></a>              <span class="at">.by=</span><span class="fu">c</span>(Study, AGEGRPN, AGEGRP, age_group, active)) <span class="sc">|&gt;</span></span>
-<span id="cb42-576"><a href="#cb42-576" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span>
-<span id="cb42-577"><a href="#cb42-577" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-578"><a href="#cb42-578" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-579"><a href="#cb42-579" aria-hidden="true" tabindex="-1"></a>We must define the model to be used. Note that now, since we have individual patient</span>
-<span id="cb42-580"><a href="#cb42-580" aria-hidden="true" tabindex="-1"></a>level data, we use only <span class="in">`CHG`</span> as response variable. Hence, the</span>
-<span id="cb42-581"><a href="#cb42-581" aria-hidden="true" tabindex="-1"></a>sampling standard deviation is estimated from the data (requiring us</span>
-<span id="cb42-582"><a href="#cb42-582" aria-hidden="true" tabindex="-1"></a>to set a prior for this parameter as well). It is obviously important</span>
-<span id="cb42-583"><a href="#cb42-583" aria-hidden="true" tabindex="-1"></a>that we must use the very same model specification as before, since</span>
-<span id="cb42-584"><a href="#cb42-584" aria-hidden="true" tabindex="-1"></a>otherwise we could not use the derived MAP prior easily:</span>
-<span id="cb42-585"><a href="#cb42-585" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-588"><a href="#cb42-588" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-589"><a href="#cb42-589" aria-hidden="true" tabindex="-1"></a>joint_model_ipd <span class="ot">&lt;-</span> <span class="fu">bf</span>(CHG <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age_group <span class="sc">+</span> cBASE <span class="sc">+</span> active,</span>
-<span id="cb42-590"><a href="#cb42-590" aria-hidden="true" tabindex="-1"></a>                      <span class="at">family=</span>gaussian, <span class="at">center=</span><span class="cn">FALSE</span>)</span>
-<span id="cb42-591"><a href="#cb42-591" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-592"><a href="#cb42-592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-593"><a href="#cb42-593" aria-hidden="true" tabindex="-1"></a>And then use <span class="in">`brm`</span> to put it altogether. To use the previously derived priors,</span>
-<span id="cb42-594"><a href="#cb42-594" aria-hidden="true" tabindex="-1"></a>we need to use two options in the brm funciton. The <span class="in">`prior`</span> option indicates</span>
-<span id="cb42-595"><a href="#cb42-595" aria-hidden="true" tabindex="-1"></a>that a multivariate normal prior will be used, while the <span class="in">`stanvars`</span> will pass </span>
-<span id="cb42-596"><a href="#cb42-596" aria-hidden="true" tabindex="-1"></a>the actual prior distribution, which is a mixture distribution.</span>
-<span id="cb42-597"><a href="#cb42-597" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-598"><a href="#cb42-598" aria-hidden="true" tabindex="-1"></a><span class="in">```{r message=FALSE, warning=FALSE}</span></span>
-<span id="cb42-599"><a href="#cb42-599" aria-hidden="true" tabindex="-1"></a><span class="in"># Fit with historical data priors -------------------------------------------</span></span>
-<span id="cb42-600"><a href="#cb42-600" aria-hidden="true" tabindex="-1"></a><span class="in">mcmc_seed &lt;- 573391</span></span>
-<span id="cb42-601"><a href="#cb42-601" aria-hidden="true" tabindex="-1"></a><span class="in"># use the MAP prior for the coefficients and encode with the gamma</span></span>
-<span id="cb42-602"><a href="#cb42-602" aria-hidden="true" tabindex="-1"></a><span class="in"># prior on the sigma that we anticipate an sd of 5</span></span>
-<span id="cb42-603"><a href="#cb42-603" aria-hidden="true" tabindex="-1"></a><span class="in">map_prior &lt;- prior(mixmvnorm(prior_mix_w, prior_mix_m, prior_mix_sigma_L), class=b) +</span></span>
-<span id="cb42-604"><a href="#cb42-604" aria-hidden="true" tabindex="-1"></a><span class="in">    prior(gamma(5,1), class=sigma)</span></span>
-<span id="cb42-605"><a href="#cb42-605" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_stage2_ipd &lt;- brm(formula  = joint_model_ipd,</span></span>
-<span id="cb42-606"><a href="#cb42-606" aria-hidden="true" tabindex="-1"></a><span class="in">                       prior    = map_prior,</span></span>
-<span id="cb42-607"><a href="#cb42-607" aria-hidden="true" tabindex="-1"></a><span class="in">                       stanvars = mixstanvar(prior_mix = post_coefs_mix),</span></span>
-<span id="cb42-608"><a href="#cb42-608" aria-hidden="true" tabindex="-1"></a><span class="in">                       data     = new_dat,</span></span>
-<span id="cb42-609"><a href="#cb42-609" aria-hidden="true" tabindex="-1"></a><span class="in">                       seed    = mcmc_seed,</span></span>
-<span id="cb42-610"><a href="#cb42-610" aria-hidden="true" tabindex="-1"></a><span class="in">                       refresh = 0,</span></span>
-<span id="cb42-611"><a href="#cb42-611" aria-hidden="true" tabindex="-1"></a><span class="in">                       backend = "cmdstanr")</span></span>
-<span id="cb42-612"><a href="#cb42-612" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_stage2_ipd</span></span>
-<span id="cb42-613"><a href="#cb42-613" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-614"><a href="#cb42-614" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-615"><a href="#cb42-615" aria-hidden="true" tabindex="-1"></a>Having fit the model, the last step is to use it to test the statistical </span>
-<span id="cb42-616"><a href="#cb42-616" aria-hidden="true" tabindex="-1"></a>hypothesis:</span>
-<span id="cb42-617"><a href="#cb42-617" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-620"><a href="#cb42-620" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-621"><a href="#cb42-621" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(bfit_stage2_ipd, <span class="st">"active &gt; 0"</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
-<span id="cb42-622"><a href="#cb42-622" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-623"><a href="#cb42-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-381"><a href="#cb42-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-382"><a href="#cb42-382" aria-hidden="true" tabindex="-1"></a><span class="co"># Whenever one also models the covariate effects to be varying between</span></span>
+<span id="cb42-383"><a href="#cb42-383" aria-hidden="true" tabindex="-1"></a><span class="co"># studies, one needs to smaple the random effect directly, since brms</span></span>
+<span id="cb42-384"><a href="#cb42-384" aria-hidden="true" tabindex="-1"></a><span class="co"># always simulates the linear predictor by convention. In this case</span></span>
+<span id="cb42-385"><a href="#cb42-385" aria-hidden="true" tabindex="-1"></a><span class="co"># one needs to sample the random intercept directly from the posterior.</span></span>
+<span id="cb42-386"><a href="#cb42-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-387"><a href="#cb42-387" aria-hidden="true" tabindex="-1"></a><span class="co"># Add variability to the intercept to capture random between study variation</span></span>
+<span id="cb42-388"><a href="#cb42-388" aria-hidden="true" tabindex="-1"></a>rv_study_sim_inter_alt <span class="ot">&lt;-</span> <span class="fu">with</span>(hist_post_draws,</span>
+<span id="cb42-389"><a href="#cb42-389" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">rvar_rng</span>(rnorm, <span class="dv">1</span>, b_Intercept, sd_Study__Intercept, <span class="at">ndraws=</span><span class="fu">ndraws</span>(hist_post_draws)))</span>
+<span id="cb42-390"><a href="#cb42-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-391"><a href="#cb42-391" aria-hidden="true" tabindex="-1"></a><span class="co"># Get draws for the fixed effects from the model posterior</span></span>
+<span id="cb42-392"><a href="#cb42-392" aria-hidden="true" tabindex="-1"></a>hist_post_coefs <span class="ot">&lt;-</span> <span class="fu">subset_draws</span>(hist_post_draws,</span>
+<span id="cb42-393"><a href="#cb42-393" aria-hidden="true" tabindex="-1"></a>                                <span class="at">variable=</span><span class="st">"^b_"</span>,</span>
+<span id="cb42-394"><a href="#cb42-394" aria-hidden="true" tabindex="-1"></a>                                <span class="at">regex=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-395"><a href="#cb42-395" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_matrix</span>()</span>
+<span id="cb42-396"><a href="#cb42-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-397"><a href="#cb42-397" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the intercept draws with the intercept and added variability</span></span>
+<span id="cb42-398"><a href="#cb42-398" aria-hidden="true" tabindex="-1"></a>hist_post_coefs[,<span class="st">"b_Intercept"</span>] <span class="ot">&lt;-</span> <span class="fu">as_draws_matrix</span>(rv_study_sim_inter)[,<span class="dv">1</span>]</span>
+<span id="cb42-399"><a href="#cb42-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-400"><a href="#cb42-400" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a descriptive statistics for posterior draws by coefficient</span></span>
+<span id="cb42-401"><a href="#cb42-401" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize_draws</span>(hist_post_coefs) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span>
+<span id="cb42-402"><a href="#cb42-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-403"><a href="#cb42-403" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize as mixture multi-variate normal  MAP distribution</span></span>
+<span id="cb42-404"><a href="#cb42-404" aria-hidden="true" tabindex="-1"></a>post_coefs_mix <span class="ot">&lt;-</span> <span class="fu">mixfit</span>(<span class="at">sample =</span> hist_post_coefs, <span class="at">type =</span> <span class="st">"mvnorm"</span>, <span class="at">Nc =</span> <span class="dv">3</span>)</span>
+<span id="cb42-405"><a href="#cb42-405" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(post_coefs_mix)</span>
+<span id="cb42-406"><a href="#cb42-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-407"><a href="#cb42-407" aria-hidden="true" tabindex="-1"></a><span class="co"># notice the considerable correlations present in the posterior</span></span>
+<span id="cb42-408"><a href="#cb42-408" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(hist_post_coefs), <span class="dv">2</span>)</span>
+<span id="cb42-409"><a href="#cb42-409" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-410"><a href="#cb42-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-411"><a href="#cb42-411" aria-hidden="true" tabindex="-1"></a>And a comparison of the fitted density vs the histogram of the MCMC</span>
+<span id="cb42-412"><a href="#cb42-412" aria-hidden="true" tabindex="-1"></a>sample is available as:</span>
+<span id="cb42-413"><a href="#cb42-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-416"><a href="#cb42-416" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-417"><a href="#cb42-417" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(post_coefs_mix)</span>
+<span id="cb42-418"><a href="#cb42-418" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-419"><a href="#cb42-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-422"><a href="#cb42-422" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-423"><a href="#cb42-423" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary statistics for the posteriors draws of coefficients</span></span>
+<span id="cb42-424"><a href="#cb42-424" aria-hidden="true" tabindex="-1"></a>hist_post_coefs_df <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(hist_post_coefs)</span>
+<span id="cb42-425"><a href="#cb42-425" aria-hidden="true" tabindex="-1"></a>hist_post_coefs_df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb42-426"><a href="#cb42-426" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(hist_post_coefs_df[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb42-427"><a href="#cb42-427" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-428"><a href="#cb42-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-429"><a href="#cb42-429" aria-hidden="true" tabindex="-1"></a>These MAP priors summaries for the coefficients of the model are displayed in </span>
+<span id="cb42-430"><a href="#cb42-430" aria-hidden="true" tabindex="-1"></a>the table below. Note that since the historical data did not contain data in</span>
+<span id="cb42-431"><a href="#cb42-431" aria-hidden="true" tabindex="-1"></a>both the treatment and control arms, the parameter related to the treatment </span>
+<span id="cb42-432"><a href="#cb42-432" aria-hidden="true" tabindex="-1"></a>effect (<span class="in">`b_active`</span>) will remain with a weakly informative prior. </span>
+<span id="cb42-433"><a href="#cb42-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-436"><a href="#cb42-436" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-437"><a href="#cb42-437" aria-hidden="true" tabindex="-1"></a>map_coef_table <span class="ot">&lt;-</span> hist_post_coefs_df <span class="sc">|&gt;</span></span>
+<span id="cb42-438"><a href="#cb42-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_draws</span>(median, <span class="sc">~</span><span class="fu">quantile2</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb42-439"><a href="#cb42-439" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">lower =</span> q2<span class="fl">.5</span>,</span>
+<span id="cb42-440"><a href="#cb42-440" aria-hidden="true" tabindex="-1"></a>         <span class="at">upper =</span> q97<span class="fl">.5</span>)</span>
+<span id="cb42-441"><a href="#cb42-441" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-442"><a href="#cb42-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-443"><a href="#cb42-443" aria-hidden="true" tabindex="-1"></a>Often it is of interest to evaluate the properties of the MAP prior at</span>
+<span id="cb42-444"><a href="#cb42-444" aria-hidden="true" tabindex="-1"></a>the design stage. This is complicated in this example due to the</span>
+<span id="cb42-445"><a href="#cb42-445" aria-hidden="true" tabindex="-1"></a>requirement to assume a certain baseline value for the used</span>
+<span id="cb42-446"><a href="#cb42-446" aria-hidden="true" tabindex="-1"></a>covariates. However, note that these evaluations can be repeated once</span>
+<span id="cb42-447"><a href="#cb42-447" aria-hidden="true" tabindex="-1"></a>the trial has enrolled the study population given that only baseline</span>
+<span id="cb42-448"><a href="#cb42-448" aria-hidden="true" tabindex="-1"></a>data is needed for this. Here we assume a baseline score of 20:</span>
+<span id="cb42-449"><a href="#cb42-449" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-452"><a href="#cb42-452" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-453"><a href="#cb42-453" aria-hidden="true" tabindex="-1"></a>agegroups <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Age &gt;=2 to &lt;5"</span>,</span>
+<span id="cb42-454"><a href="#cb42-454" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Age &gt;=5 to &lt;13"</span>,</span>
+<span id="cb42-455"><a href="#cb42-455" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Age &gt;=13 to &lt;18"</span>)</span>
+<span id="cb42-456"><a href="#cb42-456" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a value for the baseline score</span></span>
+<span id="cb42-457"><a href="#cb42-457" aria-hidden="true" tabindex="-1"></a>base_score_new <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb42-458"><a href="#cb42-458" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary statistics for the posteriors draws of means across subgroups</span></span>
+<span id="cb42-459"><a href="#cb42-459" aria-hidden="true" tabindex="-1"></a>new_study_base20 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Study=</span><span class="st">"new_study"</span>,</span>
+<span id="cb42-460"><a href="#cb42-460" aria-hidden="true" tabindex="-1"></a>                           <span class="at">age_group=</span><span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>),</span>
+<span id="cb42-461"><a href="#cb42-461" aria-hidden="true" tabindex="-1"></a>                           <span class="at">cBASE=</span>base_score_new<span class="sc">-</span>base_mean,</span>
+<span id="cb42-462"><a href="#cb42-462" aria-hidden="true" tabindex="-1"></a>                           <span class="at">CHGse=</span><span class="dv">0</span>,</span>
+<span id="cb42-463"><a href="#cb42-463" aria-hidden="true" tabindex="-1"></a>                           <span class="at">active=</span><span class="dv">0</span>L)</span>
+<span id="cb42-464"><a href="#cb42-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-465"><a href="#cb42-465" aria-hidden="true" tabindex="-1"></a>map_resp_table <span class="ot">&lt;-</span> new_study_base20 <span class="sc">|&gt;</span></span>
+<span id="cb42-466"><a href="#cb42-466" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">add_epred_rvars</span>(map_mc_brms, <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>, <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>, <span class="at">value=</span><span class="st">"MAP"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-467"><a href="#cb42-467" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">summarise_draws</span>(MAP, <span class="sc">~</span><span class="fu">quantile2</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))),</span>
+<span id="cb42-468"><a href="#cb42-468" aria-hidden="true" tabindex="-1"></a>           <span class="at">MAP_ess=</span><span class="fu">ess</span>(<span class="fu">mixfit</span>(<span class="fu">draws_of</span>(MAP)[,<span class="dv">1</span>], <span class="at">Nc=</span><span class="dv">3</span>), <span class="at">sigma=</span><span class="dv">5</span>),</span>
+<span id="cb42-469"><a href="#cb42-469" aria-hidden="true" tabindex="-1"></a>           <span class="at">treatment =</span> <span class="st">"Control"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-470"><a href="#cb42-470" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">median=</span> q50,</span>
+<span id="cb42-471"><a href="#cb42-471" aria-hidden="true" tabindex="-1"></a>           <span class="at">lower =</span> q2<span class="fl">.5</span>,</span>
+<span id="cb42-472"><a href="#cb42-472" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper =</span> q97<span class="fl">.5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-473"><a href="#cb42-473" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(MAP, treatment, MAP_ess, median, lower, upper)</span>
+<span id="cb42-474"><a href="#cb42-474" aria-hidden="true" tabindex="-1"></a>map_resp_table <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span>
+<span id="cb42-475"><a href="#cb42-475" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-476"><a href="#cb42-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-477"><a href="#cb42-477" aria-hidden="true" tabindex="-1"></a>At this point we can use these MAP priors in the analysis of the pivotal</span>
+<span id="cb42-478"><a href="#cb42-478" aria-hidden="true" tabindex="-1"></a>trial as outlined in the following section.</span>
+<span id="cb42-479"><a href="#cb42-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-480"><a href="#cb42-480" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analysis of a new study</span></span>
+<span id="cb42-481"><a href="#cb42-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-482"><a href="#cb42-482" aria-hidden="true" tabindex="-1"></a>Assume now that the trial reads out and you have to analyze the study</span>
+<span id="cb42-483"><a href="#cb42-483" aria-hidden="true" tabindex="-1"></a>using the MAP prior that were derived. For this exercise  will use a simulated </span>
+<span id="cb42-484"><a href="#cb42-484" aria-hidden="true" tabindex="-1"></a>data set, see code below for reference.</span>
+<span id="cb42-485"><a href="#cb42-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-486"><a href="#cb42-486" aria-hidden="true" tabindex="-1"></a><span class="in">```{r simulate_trial }</span></span>
+<span id="cb42-487"><a href="#cb42-487" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb42-488"><a href="#cb42-488" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-summary: "Show the code"</span></span>
+<span id="cb42-489"><a href="#cb42-489" aria-hidden="true" tabindex="-1"></a><span class="in"># Simulate summary data for 1 trial</span></span>
+<span id="cb42-490"><a href="#cb42-490" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
+<span id="cb42-491"><a href="#cb42-491" aria-hidden="true" tabindex="-1"></a><span class="in"># @param n1 The sample size in the 3 strata of the treatment arm. A vector of length 3</span></span>
+<span id="cb42-492"><a href="#cb42-492" aria-hidden="true" tabindex="-1"></a><span class="in"># @param n0 The sample size in the 3 strata of the control arm. A vector of length 3</span></span>
+<span id="cb42-493"><a href="#cb42-493" aria-hidden="true" tabindex="-1"></a><span class="in"># @param e1 The mean change from baseline at month 12 for the 3 strata of the treatment arm. A vector of length 3</span></span>
+<span id="cb42-494"><a href="#cb42-494" aria-hidden="true" tabindex="-1"></a><span class="in"># @param e0 The mean change from baseline at month 12 for the 3 strata of the control arm. A vector of length 3</span></span>
+<span id="cb42-495"><a href="#cb42-495" aria-hidden="true" tabindex="-1"></a><span class="in"># @param s1 The se of the response in the 3 strata of the treatment arm. A vector of length 3</span></span>
+<span id="cb42-496"><a href="#cb42-496" aria-hidden="true" tabindex="-1"></a><span class="in"># @param s0 The se of the response in the 3 strata of the control arm. A vector of length 3</span></span>
+<span id="cb42-497"><a href="#cb42-497" aria-hidden="true" tabindex="-1"></a><span class="in"># @param s1 The baseline score in the 3 strata of the treatment arm. A vector of length 3</span></span>
+<span id="cb42-498"><a href="#cb42-498" aria-hidden="true" tabindex="-1"></a><span class="in"># @param s0 The baseline score in the 3 strata of the control arm. A vector of length 3</span></span>
+<span id="cb42-499"><a href="#cb42-499" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
+<span id="cb42-500"><a href="#cb42-500" aria-hidden="true" tabindex="-1"></a><span class="in"># @return A data frame with simulated trial data</span></span>
+<span id="cb42-501"><a href="#cb42-501" aria-hidden="true" tabindex="-1"></a><span class="in">#</span></span>
+<span id="cb42-502"><a href="#cb42-502" aria-hidden="true" tabindex="-1"></a><span class="in">simulate_1_trial_ipd &lt;- function(n1 = c(39, 18, 18),</span></span>
+<span id="cb42-503"><a href="#cb42-503" aria-hidden="true" tabindex="-1"></a><span class="in">                                 n0 = c(26, 12, 12),</span></span>
+<span id="cb42-504"><a href="#cb42-504" aria-hidden="true" tabindex="-1"></a><span class="in">                                 e1 = c( 5,  5,  5),</span></span>
+<span id="cb42-505"><a href="#cb42-505" aria-hidden="true" tabindex="-1"></a><span class="in">                                 e0 = c( 0,  0,  0),</span></span>
+<span id="cb42-506"><a href="#cb42-506" aria-hidden="true" tabindex="-1"></a><span class="in">                                 s1 = rep(5, 3),</span></span>
+<span id="cb42-507"><a href="#cb42-507" aria-hidden="true" tabindex="-1"></a><span class="in">                                 s0 = rep(5, 3),</span></span>
+<span id="cb42-508"><a href="#cb42-508" aria-hidden="true" tabindex="-1"></a><span class="in">                                 bs1 = c( 33,33,33),</span></span>
+<span id="cb42-509"><a href="#cb42-509" aria-hidden="true" tabindex="-1"></a><span class="in">                                 bs0 = c( 33,33,33),</span></span>
+<span id="cb42-510"><a href="#cb42-510" aria-hidden="true" tabindex="-1"></a><span class="in">                                 base_center=base_mean) {</span></span>
+<span id="cb42-511"><a href="#cb42-511" aria-hidden="true" tabindex="-1"></a><span class="in">    # Arm 1: Treatment</span></span>
+<span id="cb42-512"><a href="#cb42-512" aria-hidden="true" tabindex="-1"></a><span class="in">    # Arm 0: Control</span></span>
+<span id="cb42-513"><a href="#cb42-513" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb42-514"><a href="#cb42-514" aria-hidden="true" tabindex="-1"></a><span class="in">    # AGEGRPN 1: Age &gt;=2 to &lt;5</span></span>
+<span id="cb42-515"><a href="#cb42-515" aria-hidden="true" tabindex="-1"></a><span class="in">    # AGEGRPN 2: Age &gt;=5 to &lt;13</span></span>
+<span id="cb42-516"><a href="#cb42-516" aria-hidden="true" tabindex="-1"></a><span class="in">    # AGEGRPN 3: Age &gt;=13 to &lt;18</span></span>
+<span id="cb42-517"><a href="#cb42-517" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb42-518"><a href="#cb42-518" aria-hidden="true" tabindex="-1"></a><span class="in">    # Simulate individual patient data  -------</span></span>
+<span id="cb42-519"><a href="#cb42-519" aria-hidden="true" tabindex="-1"></a><span class="in">    d1 &lt;- sapply(1:3, function(i) rnorm(n = n1[i], mean = e1[i], sd = s1[i]))</span></span>
+<span id="cb42-520"><a href="#cb42-520" aria-hidden="true" tabindex="-1"></a><span class="in">    d0 &lt;- sapply(1:3, function(i) rnorm(n = n0[i], mean = e0[i], sd = s0[i]))</span></span>
+<span id="cb42-521"><a href="#cb42-521" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb42-522"><a href="#cb42-522" aria-hidden="true" tabindex="-1"></a><span class="in">    # Simulate individual patient data for the baseline score -------</span></span>
+<span id="cb42-523"><a href="#cb42-523" aria-hidden="true" tabindex="-1"></a><span class="in">    b1 &lt;- sapply(1:3, function(i) rnorm(n = n1[i], mean = bs1[i], sd = s1[i]))</span></span>
+<span id="cb42-524"><a href="#cb42-524" aria-hidden="true" tabindex="-1"></a><span class="in">    b0 &lt;- sapply(1:3, function(i) rnorm(n = n0[i], mean = bs0[i], sd = s0[i]))</span></span>
+<span id="cb42-525"><a href="#cb42-525" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb42-526"><a href="#cb42-526" aria-hidden="true" tabindex="-1"></a><span class="in">    agegr &lt;- c("Age &gt;=2 to &lt;5", "Age &gt;=5 to &lt;13", "Age &gt;=13 to &lt;18")</span></span>
+<span id="cb42-527"><a href="#cb42-527" aria-hidden="true" tabindex="-1"></a><span class="in">    AGEGROUP &lt;- c(rep(agegr, n1), rep(agegr, n0))</span></span>
+<span id="cb42-528"><a href="#cb42-528" aria-hidden="true" tabindex="-1"></a><span class="in">    strataN &lt;- c(rep(1:3, n1), rep(1:3, n0))</span></span>
+<span id="cb42-529"><a href="#cb42-529" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb42-530"><a href="#cb42-530" aria-hidden="true" tabindex="-1"></a><span class="in">    BASE &lt;- c(unlist(b1), unlist(b0))</span></span>
+<span id="cb42-531"><a href="#cb42-531" aria-hidden="true" tabindex="-1"></a><span class="in">    y &lt;- c(unlist(d1), unlist(d0))</span></span>
+<span id="cb42-532"><a href="#cb42-532" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb42-533"><a href="#cb42-533" aria-hidden="true" tabindex="-1"></a><span class="in">    ### Put generated values into a data frame -----------------------------------</span></span>
+<span id="cb42-534"><a href="#cb42-534" aria-hidden="true" tabindex="-1"></a><span class="in">    out &lt;- data.frame(AGEGRPN = strataN,</span></span>
+<span id="cb42-535"><a href="#cb42-535" aria-hidden="true" tabindex="-1"></a><span class="in">                      AGEGRP  = AGEGROUP,</span></span>
+<span id="cb42-536"><a href="#cb42-536" aria-hidden="true" tabindex="-1"></a><span class="in">                      age_group = relevel(as.factor(strataN), "2"),</span></span>
+<span id="cb42-537"><a href="#cb42-537" aria-hidden="true" tabindex="-1"></a><span class="in">                      active    = rep(c(1, 0), c(sum(n1), sum(n0))),</span></span>
+<span id="cb42-538"><a href="#cb42-538" aria-hidden="true" tabindex="-1"></a><span class="in">                      BASE = BASE,</span></span>
+<span id="cb42-539"><a href="#cb42-539" aria-hidden="true" tabindex="-1"></a><span class="in">                      cBASE= BASE - base_center,</span></span>
+<span id="cb42-540"><a href="#cb42-540" aria-hidden="true" tabindex="-1"></a><span class="in">                      CHG  = y</span></span>
+<span id="cb42-541"><a href="#cb42-541" aria-hidden="true" tabindex="-1"></a><span class="in">                      )</span></span>
+<span id="cb42-542"><a href="#cb42-542" aria-hidden="true" tabindex="-1"></a><span class="in">  out</span></span>
+<span id="cb42-543"><a href="#cb42-543" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb42-544"><a href="#cb42-544" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-545"><a href="#cb42-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-548"><a href="#cb42-548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-549"><a href="#cb42-549" aria-hidden="true" tabindex="-1"></a>new_dat <span class="ot">&lt;-</span> <span class="fu">simulate_1_trial_ipd</span>(</span>
+<span id="cb42-550"><a href="#cb42-550" aria-hidden="true" tabindex="-1"></a>  <span class="at">n1 =</span> <span class="fu">c</span>(<span class="dv">39</span>, <span class="dv">18</span>, <span class="dv">18</span>),</span>
+<span id="cb42-551"><a href="#cb42-551" aria-hidden="true" tabindex="-1"></a>  <span class="at">n0 =</span> <span class="fu">c</span>(<span class="dv">26</span>, <span class="dv">12</span>, <span class="dv">12</span>),</span>
+<span id="cb42-552"><a href="#cb42-552" aria-hidden="true" tabindex="-1"></a>  <span class="at">e1 =</span> <span class="fu">c</span>( <span class="dv">2</span>,  <span class="dv">1</span>,  <span class="dv">0</span>),</span>
+<span id="cb42-553"><a href="#cb42-553" aria-hidden="true" tabindex="-1"></a>  <span class="at">e0 =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">2</span>),</span>
+<span id="cb42-554"><a href="#cb42-554" aria-hidden="true" tabindex="-1"></a>  <span class="at">s1 =</span> <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">3</span>),</span>
+<span id="cb42-555"><a href="#cb42-555" aria-hidden="true" tabindex="-1"></a>  <span class="at">s0 =</span> <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">3</span>),</span>
+<span id="cb42-556"><a href="#cb42-556" aria-hidden="true" tabindex="-1"></a>  <span class="at">bs1 =</span> <span class="fu">c</span>( <span class="dv">33</span>,<span class="dv">33</span>,<span class="dv">33</span>),</span>
+<span id="cb42-557"><a href="#cb42-557" aria-hidden="true" tabindex="-1"></a>  <span class="at">bs0 =</span> <span class="fu">c</span>( <span class="dv">33</span>,<span class="dv">33</span>,<span class="dv">33</span>),</span>
+<span id="cb42-558"><a href="#cb42-558" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_center=</span>base_mean)</span>
+<span id="cb42-559"><a href="#cb42-559" aria-hidden="true" tabindex="-1"></a>new_dat <span class="ot">&lt;-</span> new_dat <span class="sc">|&gt;</span> </span>
+<span id="cb42-560"><a href="#cb42-560" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Study =</span> <span class="st">"New"</span>)</span>
+<span id="cb42-561"><a href="#cb42-561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-562"><a href="#cb42-562" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(new_dat) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span>
+<span id="cb42-563"><a href="#cb42-563" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-564"><a href="#cb42-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-565"><a href="#cb42-565" aria-hidden="true" tabindex="-1"></a>We first calculate simple summary statistics for the simulated data:</span>
+<span id="cb42-568"><a href="#cb42-568" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-569"><a href="#cb42-569" aria-hidden="true" tabindex="-1"></a>new_dat <span class="sc">|&gt;</span> </span>
+<span id="cb42-570"><a href="#cb42-570" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">BASE =</span> <span class="fu">mean</span>(BASE),</span>
+<span id="cb42-571"><a href="#cb42-571" aria-hidden="true" tabindex="-1"></a>              <span class="at">cBASE =</span> <span class="fu">mean</span>(cBASE),</span>
+<span id="cb42-572"><a href="#cb42-572" aria-hidden="true" tabindex="-1"></a>              <span class="at">CHGm  =</span> <span class="fu">mean</span>(CHG),</span>
+<span id="cb42-573"><a href="#cb42-573" aria-hidden="true" tabindex="-1"></a>              <span class="at">CHGsd =</span> <span class="fu">sd</span>(CHG),</span>
+<span id="cb42-574"><a href="#cb42-574" aria-hidden="true" tabindex="-1"></a>              <span class="at">n     =</span> <span class="fu">n</span>(),</span>
+<span id="cb42-575"><a href="#cb42-575" aria-hidden="true" tabindex="-1"></a>              <span class="at">CHGse =</span> CHGsd <span class="sc">/</span> <span class="fu">sqrt</span>(n),</span>
+<span id="cb42-576"><a href="#cb42-576" aria-hidden="true" tabindex="-1"></a>              <span class="at">.by=</span><span class="fu">c</span>(Study, AGEGRPN, AGEGRP, age_group, active)) <span class="sc">|&gt;</span></span>
+<span id="cb42-577"><a href="#cb42-577" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span>
+<span id="cb42-578"><a href="#cb42-578" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-579"><a href="#cb42-579" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-580"><a href="#cb42-580" aria-hidden="true" tabindex="-1"></a>We must define the model to be used. Note that now, since we have individual patient</span>
+<span id="cb42-581"><a href="#cb42-581" aria-hidden="true" tabindex="-1"></a>level data, we use only <span class="in">`CHG`</span> as response variable. Hence, the</span>
+<span id="cb42-582"><a href="#cb42-582" aria-hidden="true" tabindex="-1"></a>sampling standard deviation is estimated from the data (requiring us</span>
+<span id="cb42-583"><a href="#cb42-583" aria-hidden="true" tabindex="-1"></a>to set a prior for this parameter as well). It is obviously important</span>
+<span id="cb42-584"><a href="#cb42-584" aria-hidden="true" tabindex="-1"></a>that we must use the very same model specification as before, since</span>
+<span id="cb42-585"><a href="#cb42-585" aria-hidden="true" tabindex="-1"></a>otherwise we could not use the derived MAP prior easily:</span>
+<span id="cb42-586"><a href="#cb42-586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-589"><a href="#cb42-589" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-590"><a href="#cb42-590" aria-hidden="true" tabindex="-1"></a>joint_model_ipd <span class="ot">&lt;-</span> <span class="fu">bf</span>(CHG <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age_group <span class="sc">+</span> cBASE <span class="sc">+</span> active,</span>
+<span id="cb42-591"><a href="#cb42-591" aria-hidden="true" tabindex="-1"></a>                      <span class="at">family=</span>gaussian, <span class="at">center=</span><span class="cn">FALSE</span>)</span>
+<span id="cb42-592"><a href="#cb42-592" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-593"><a href="#cb42-593" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-594"><a href="#cb42-594" aria-hidden="true" tabindex="-1"></a>And then use <span class="in">`brm`</span> to put it altogether. To use the previously derived priors,</span>
+<span id="cb42-595"><a href="#cb42-595" aria-hidden="true" tabindex="-1"></a>we need to use two options in the brm funciton. The <span class="in">`prior`</span> option indicates</span>
+<span id="cb42-596"><a href="#cb42-596" aria-hidden="true" tabindex="-1"></a>that a multivariate normal prior will be used, while the <span class="in">`stanvars`</span> will pass </span>
+<span id="cb42-597"><a href="#cb42-597" aria-hidden="true" tabindex="-1"></a>the actual prior distribution, which is a mixture distribution.</span>
+<span id="cb42-598"><a href="#cb42-598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-599"><a href="#cb42-599" aria-hidden="true" tabindex="-1"></a><span class="in">```{r message=FALSE, warning=FALSE}</span></span>
+<span id="cb42-600"><a href="#cb42-600" aria-hidden="true" tabindex="-1"></a><span class="in"># Fit with historical data priors -------------------------------------------</span></span>
+<span id="cb42-601"><a href="#cb42-601" aria-hidden="true" tabindex="-1"></a><span class="in">mcmc_seed &lt;- 573391</span></span>
+<span id="cb42-602"><a href="#cb42-602" aria-hidden="true" tabindex="-1"></a><span class="in"># use the MAP prior for the coefficients and encode with the gamma</span></span>
+<span id="cb42-603"><a href="#cb42-603" aria-hidden="true" tabindex="-1"></a><span class="in"># prior on the sigma that we anticipate an sd of 5</span></span>
+<span id="cb42-604"><a href="#cb42-604" aria-hidden="true" tabindex="-1"></a><span class="in">map_prior &lt;- prior(mixmvnorm(prior_mix_w, prior_mix_m, prior_mix_sigma_L), class=b) +</span></span>
+<span id="cb42-605"><a href="#cb42-605" aria-hidden="true" tabindex="-1"></a><span class="in">    prior(gamma(5,1), class=sigma)</span></span>
+<span id="cb42-606"><a href="#cb42-606" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_stage2_ipd &lt;- brm(formula  = joint_model_ipd,</span></span>
+<span id="cb42-607"><a href="#cb42-607" aria-hidden="true" tabindex="-1"></a><span class="in">                       prior    = map_prior,</span></span>
+<span id="cb42-608"><a href="#cb42-608" aria-hidden="true" tabindex="-1"></a><span class="in">                       stanvars = mixstanvar(prior_mix = post_coefs_mix),</span></span>
+<span id="cb42-609"><a href="#cb42-609" aria-hidden="true" tabindex="-1"></a><span class="in">                       data     = new_dat,</span></span>
+<span id="cb42-610"><a href="#cb42-610" aria-hidden="true" tabindex="-1"></a><span class="in">                       seed    = mcmc_seed,</span></span>
+<span id="cb42-611"><a href="#cb42-611" aria-hidden="true" tabindex="-1"></a><span class="in">                       refresh = 0,</span></span>
+<span id="cb42-612"><a href="#cb42-612" aria-hidden="true" tabindex="-1"></a><span class="in">                       backend = "cmdstanr")</span></span>
+<span id="cb42-613"><a href="#cb42-613" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_stage2_ipd</span></span>
+<span id="cb42-614"><a href="#cb42-614" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-615"><a href="#cb42-615" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-616"><a href="#cb42-616" aria-hidden="true" tabindex="-1"></a>Having fit the model, the last step is to use it to test the statistical </span>
+<span id="cb42-617"><a href="#cb42-617" aria-hidden="true" tabindex="-1"></a>hypothesis:</span>
+<span id="cb42-618"><a href="#cb42-618" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-621"><a href="#cb42-621" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-622"><a href="#cb42-622" aria-hidden="true" tabindex="-1"></a><span class="fu">hypothesis</span>(bfit_stage2_ipd, <span class="st">"active &gt; 0"</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span>
+<span id="cb42-623"><a href="#cb42-623" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-624"><a href="#cb42-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-625"><a href="#cb42-625" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
-<span id="cb42-626"><a href="#cb42-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-627"><a href="#cb42-627" aria-hidden="true" tabindex="-1"></a>This case study demonstrated how a random-effects meta-analysis model</span>
-<span id="cb42-628"><a href="#cb42-628" aria-hidden="true" tabindex="-1"></a>has been implemented with <span class="in">`brms`</span>. The model was implemented in a</span>
-<span id="cb42-629"><a href="#cb42-629" aria-hidden="true" tabindex="-1"></a>two-stage approach where first the model is fit with historical data</span>
-<span id="cb42-630"><a href="#cb42-630" aria-hidden="true" tabindex="-1"></a>to obtain meta-analytic-predictive priors. Later, when data from the</span>
-<span id="cb42-631"><a href="#cb42-631" aria-hidden="true" tabindex="-1"></a>study of interest is available, the model is fit using the study data</span>
-<span id="cb42-632"><a href="#cb42-632" aria-hidden="true" tabindex="-1"></a>and MAP priors.</span>
-<span id="cb42-633"><a href="#cb42-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-634"><a href="#cb42-634" aria-hidden="true" tabindex="-1"></a>The model enables borrowing between historical studies and age groups</span>
-<span id="cb42-635"><a href="#cb42-635" aria-hidden="true" tabindex="-1"></a>and hence a more informative MAP prior.</span>
-<span id="cb42-636"><a href="#cb42-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-637"><a href="#cb42-637" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises</span></span>
-<span id="cb42-638"><a href="#cb42-638" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-639"><a href="#cb42-639" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Fit a model where only weakly informative priors are considered to</span>
-<span id="cb42-640"><a href="#cb42-640" aria-hidden="true" tabindex="-1"></a>  analyze the data from the new study. This will help providing</span>
-<span id="cb42-641"><a href="#cb42-641" aria-hidden="true" tabindex="-1"></a>  insights of the impact of using the historical data.</span>
-<span id="cb42-642"><a href="#cb42-642" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-643"><a href="#cb42-643" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>To add robustification to the MAP prior, non-informative components can added</span>
-<span id="cb42-644"><a href="#cb42-644" aria-hidden="true" tabindex="-1"></a>  to the mixture distributions to protect against prior-data conflicts (Schmidli et al 2014). </span>
-<span id="cb42-645"><a href="#cb42-645" aria-hidden="true" tabindex="-1"></a>  Fit a model where the MAP priors are robustified where the weight for the  </span>
-<span id="cb42-646"><a href="#cb42-646" aria-hidden="true" tabindex="-1"></a>  non-informative component is 20%. </span>
-<span id="cb42-647"><a href="#cb42-647" aria-hidden="true" tabindex="-1"></a>  The non-informative component is normally distributed with the mean 0 and </span>
-<span id="cb42-648"><a href="#cb42-648" aria-hidden="true" tabindex="-1"></a>  variance $\sigma^2$.</span>
-<span id="cb42-649"><a href="#cb42-649" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-625"><a href="#cb42-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-626"><a href="#cb42-626" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb42-627"><a href="#cb42-627" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-628"><a href="#cb42-628" aria-hidden="true" tabindex="-1"></a>This case study demonstrated how a random-effects meta-analysis model</span>
+<span id="cb42-629"><a href="#cb42-629" aria-hidden="true" tabindex="-1"></a>has been implemented with <span class="in">`brms`</span>. The model was implemented in a</span>
+<span id="cb42-630"><a href="#cb42-630" aria-hidden="true" tabindex="-1"></a>two-stage approach where first the model is fit with historical data</span>
+<span id="cb42-631"><a href="#cb42-631" aria-hidden="true" tabindex="-1"></a>to obtain meta-analytic-predictive priors. Later, when data from the</span>
+<span id="cb42-632"><a href="#cb42-632" aria-hidden="true" tabindex="-1"></a>study of interest is available, the model is fit using the study data</span>
+<span id="cb42-633"><a href="#cb42-633" aria-hidden="true" tabindex="-1"></a>and MAP priors.</span>
+<span id="cb42-634"><a href="#cb42-634" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-635"><a href="#cb42-635" aria-hidden="true" tabindex="-1"></a>The model enables borrowing between historical studies and age groups</span>
+<span id="cb42-636"><a href="#cb42-636" aria-hidden="true" tabindex="-1"></a>and hence a more informative MAP prior.</span>
+<span id="cb42-637"><a href="#cb42-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-638"><a href="#cb42-638" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises</span></span>
+<span id="cb42-639"><a href="#cb42-639" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-640"><a href="#cb42-640" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Fit a model where only weakly informative priors are considered to</span>
+<span id="cb42-641"><a href="#cb42-641" aria-hidden="true" tabindex="-1"></a>  analyze the data from the new study. This will help providing</span>
+<span id="cb42-642"><a href="#cb42-642" aria-hidden="true" tabindex="-1"></a>  insights of the impact of using the historical data.</span>
+<span id="cb42-643"><a href="#cb42-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-644"><a href="#cb42-644" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>To add robustification to the MAP prior, non-informative components can added</span>
+<span id="cb42-645"><a href="#cb42-645" aria-hidden="true" tabindex="-1"></a>  to the mixture distributions to protect against prior-data conflicts (Schmidli et al 2014). </span>
+<span id="cb42-646"><a href="#cb42-646" aria-hidden="true" tabindex="-1"></a>  Fit a model where the MAP priors are robustified where the weight for the  </span>
+<span id="cb42-647"><a href="#cb42-647" aria-hidden="true" tabindex="-1"></a>  non-informative component is 20%. </span>
+<span id="cb42-648"><a href="#cb42-648" aria-hidden="true" tabindex="-1"></a>  The non-informative component is normally distributed with the mean 0 and </span>
+<span id="cb42-649"><a href="#cb42-649" aria-hidden="true" tabindex="-1"></a>  variance $\sigma^2$.</span>
 <span id="cb42-650"><a href="#cb42-650" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-651"><a href="#cb42-651" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution to exercises</span></span>
-<span id="cb42-652"><a href="#cb42-652" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-655"><a href="#cb42-655" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-656"><a href="#cb42-656" aria-hidden="true" tabindex="-1"></a>get2sidedCI <span class="ot">&lt;-</span> <span class="cf">function</span>(h1side, h2side) {</span>
-<span id="cb42-657"><a href="#cb42-657" aria-hidden="true" tabindex="-1"></a>  xx <span class="ot">=</span> h2side<span class="sc">$</span>hypothesis <span class="sc">|&gt;</span></span>
-<span id="cb42-658"><a href="#cb42-658" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Hypothesis, CI.Lower, CI.Upper) <span class="sc">|&gt;</span></span>
-<span id="cb42-659"><a href="#cb42-659" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">CI.95.Lower=</span>CI.Lower,</span>
-<span id="cb42-660"><a href="#cb42-660" aria-hidden="true" tabindex="-1"></a>           <span class="at">CI.95.Upper=</span>CI.Upper)</span>
-<span id="cb42-661"><a href="#cb42-661" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(h1side<span class="sc">$</span>hypothesis, xx)</span>
-<span id="cb42-662"><a href="#cb42-662" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb42-663"><a href="#cb42-663" aria-hidden="true" tabindex="-1"></a>get1sidehyp2sidedCI <span class="ot">=</span> <span class="cf">function</span>(brm_res) {</span>
-<span id="cb42-664"><a href="#cb42-664" aria-hidden="true" tabindex="-1"></a>  h1side <span class="ot">=</span> <span class="fu">hypothesis</span>(brm_res, <span class="st">"active &gt; 0"</span>, <span class="at">alpha=</span><span class="fl">0.025</span>)</span>
-<span id="cb42-665"><a href="#cb42-665" aria-hidden="true" tabindex="-1"></a>  h2side <span class="ot">=</span> <span class="fu">hypothesis</span>(brm_res, <span class="st">"active &gt; 0"</span>, <span class="at">alpha=</span><span class="fl">0.05</span>)</span>
-<span id="cb42-666"><a href="#cb42-666" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb42-667"><a href="#cb42-667" aria-hidden="true" tabindex="-1"></a>  xx <span class="ot">=</span> h2side<span class="sc">$</span>hypothesis <span class="sc">|&gt;</span></span>
-<span id="cb42-668"><a href="#cb42-668" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Hypothesis, CI.Lower, CI.Upper) <span class="sc">|&gt;</span></span>
-<span id="cb42-669"><a href="#cb42-669" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">CI.95.Lower=</span>CI.Lower,</span>
-<span id="cb42-670"><a href="#cb42-670" aria-hidden="true" tabindex="-1"></a>           <span class="at">CI.95.Upper=</span>CI.Upper)</span>
-<span id="cb42-671"><a href="#cb42-671" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(h1side<span class="sc">$</span>hypothesis, xx)</span>
-<span id="cb42-672"><a href="#cb42-672" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb42-673"><a href="#cb42-673" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-674"><a href="#cb42-674" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-651"><a href="#cb42-651" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-652"><a href="#cb42-652" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution to exercises</span></span>
+<span id="cb42-653"><a href="#cb42-653" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-656"><a href="#cb42-656" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-657"><a href="#cb42-657" aria-hidden="true" tabindex="-1"></a>get2sidedCI <span class="ot">&lt;-</span> <span class="cf">function</span>(h1side, h2side) {</span>
+<span id="cb42-658"><a href="#cb42-658" aria-hidden="true" tabindex="-1"></a>  xx <span class="ot">=</span> h2side<span class="sc">$</span>hypothesis <span class="sc">|&gt;</span></span>
+<span id="cb42-659"><a href="#cb42-659" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Hypothesis, CI.Lower, CI.Upper) <span class="sc">|&gt;</span></span>
+<span id="cb42-660"><a href="#cb42-660" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">CI.95.Lower=</span>CI.Lower,</span>
+<span id="cb42-661"><a href="#cb42-661" aria-hidden="true" tabindex="-1"></a>           <span class="at">CI.95.Upper=</span>CI.Upper)</span>
+<span id="cb42-662"><a href="#cb42-662" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(h1side<span class="sc">$</span>hypothesis, xx)</span>
+<span id="cb42-663"><a href="#cb42-663" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-664"><a href="#cb42-664" aria-hidden="true" tabindex="-1"></a>get1sidehyp2sidedCI <span class="ot">=</span> <span class="cf">function</span>(brm_res) {</span>
+<span id="cb42-665"><a href="#cb42-665" aria-hidden="true" tabindex="-1"></a>  h1side <span class="ot">=</span> <span class="fu">hypothesis</span>(brm_res, <span class="st">"active &gt; 0"</span>, <span class="at">alpha=</span><span class="fl">0.025</span>)</span>
+<span id="cb42-666"><a href="#cb42-666" aria-hidden="true" tabindex="-1"></a>  h2side <span class="ot">=</span> <span class="fu">hypothesis</span>(brm_res, <span class="st">"active &gt; 0"</span>, <span class="at">alpha=</span><span class="fl">0.05</span>)</span>
+<span id="cb42-667"><a href="#cb42-667" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-668"><a href="#cb42-668" aria-hidden="true" tabindex="-1"></a>  xx <span class="ot">=</span> h2side<span class="sc">$</span>hypothesis <span class="sc">|&gt;</span></span>
+<span id="cb42-669"><a href="#cb42-669" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Hypothesis, CI.Lower, CI.Upper) <span class="sc">|&gt;</span></span>
+<span id="cb42-670"><a href="#cb42-670" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">CI.95.Lower=</span>CI.Lower,</span>
+<span id="cb42-671"><a href="#cb42-671" aria-hidden="true" tabindex="-1"></a>           <span class="at">CI.95.Upper=</span>CI.Upper)</span>
+<span id="cb42-672"><a href="#cb42-672" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(h1side<span class="sc">$</span>hypothesis, xx)</span>
+<span id="cb42-673"><a href="#cb42-673" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-674"><a href="#cb42-674" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-675"><a href="#cb42-675" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-676"><a href="#cb42-676" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
-<span id="cb42-677"><a href="#cb42-677" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb42-678"><a href="#cb42-678" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-summary: "Show the code"</span></span>
-<span id="cb42-679"><a href="#cb42-679" aria-hidden="true" tabindex="-1"></a><span class="in">## Fit Non-Informative Prior using default priors -----------------------</span></span>
-<span id="cb42-680"><a href="#cb42-680" aria-hidden="true" tabindex="-1"></a><span class="in">head(new_dat)</span></span>
-<span id="cb42-681"><a href="#cb42-681" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_trial_ipd_noninf_flat &lt;- brm(joint_model_ipd,</span></span>
-<span id="cb42-682"><a href="#cb42-682" aria-hidden="true" tabindex="-1"></a><span class="in">                                  seed = mcmc_seed, </span></span>
-<span id="cb42-683"><a href="#cb42-683" aria-hidden="true" tabindex="-1"></a><span class="in">                                  refresh = 0,</span></span>
-<span id="cb42-684"><a href="#cb42-684" aria-hidden="true" tabindex="-1"></a><span class="in">                                  data = new_dat)</span></span>
-<span id="cb42-685"><a href="#cb42-685" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-686"><a href="#cb42-686" aria-hidden="true" tabindex="-1"></a><span class="in">## Fit Non-Informative Prior using wide Normal priors ------------------------</span></span>
-<span id="cb42-687"><a href="#cb42-687" aria-hidden="true" tabindex="-1"></a><span class="in">trial_prior_mix &lt;- mixmvnorm(flat = c(1, rep(0, 5), diag(sd^2, 5)))</span></span>
-<span id="cb42-688"><a href="#cb42-688" aria-hidden="true" tabindex="-1"></a><span class="in">joint_model_ipd &lt;- bf(CHG ~ 1 + age_group + BASE + active,</span></span>
-<span id="cb42-689"><a href="#cb42-689" aria-hidden="true" tabindex="-1"></a><span class="in">                      family=gaussian, center=FALSE)</span></span>
-<span id="cb42-690"><a href="#cb42-690" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_trial_ipd_noninf_norm &lt;- brm(joint_model_ipd,</span></span>
-<span id="cb42-691"><a href="#cb42-691" aria-hidden="true" tabindex="-1"></a><span class="in">                                  prior = mix_prior,</span></span>
-<span id="cb42-692"><a href="#cb42-692" aria-hidden="true" tabindex="-1"></a><span class="in">                                  stanvars = mixstanvar(prior_mix = trial_prior_mix),</span></span>
-<span id="cb42-693"><a href="#cb42-693" aria-hidden="true" tabindex="-1"></a><span class="in">                                  seed = mcmc_seed, refresh = 0,</span></span>
-<span id="cb42-694"><a href="#cb42-694" aria-hidden="true" tabindex="-1"></a><span class="in">                                  backend = "cmdstanr",</span></span>
-<span id="cb42-695"><a href="#cb42-695" aria-hidden="true" tabindex="-1"></a><span class="in">                                  data = new_dat)</span></span>
-<span id="cb42-696"><a href="#cb42-696" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-697"><a href="#cb42-697" aria-hidden="true" tabindex="-1"></a><span class="in">## Fit with historical data MAP Priors -------------------------------------------</span></span>
-<span id="cb42-698"><a href="#cb42-698" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_stage2_ipd &lt;- brm(joint_model_ipd,</span></span>
-<span id="cb42-699"><a href="#cb42-699" aria-hidden="true" tabindex="-1"></a><span class="in">                       prior = mix_prior,</span></span>
-<span id="cb42-700"><a href="#cb42-700" aria-hidden="true" tabindex="-1"></a><span class="in">                       stanvars = mixstanvar(prior_mix = post_coefs_mix),</span></span>
-<span id="cb42-701"><a href="#cb42-701" aria-hidden="true" tabindex="-1"></a><span class="in">                       seed = mcmc_seed, refresh = 0, backend = "cmdstanr")</span></span>
-<span id="cb42-702"><a href="#cb42-702" aria-hidden="true" tabindex="-1"></a><span class="in">                       data = new_dat)</span></span>
-<span id="cb42-703"><a href="#cb42-703" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-704"><a href="#cb42-704" aria-hidden="true" tabindex="-1"></a><span class="in">## Fit with historical data MAP Priors with robustification ----------------------</span></span>
-<span id="cb42-705"><a href="#cb42-705" aria-hidden="true" tabindex="-1"></a><span class="in">ps = seq(0, 1, 0.2)</span></span>
-<span id="cb42-706"><a href="#cb42-706" aria-hidden="true" tabindex="-1"></a><span class="in">hp_ipd =  hn_ipd = list()</span></span>
-<span id="cb42-707"><a href="#cb42-707" aria-hidden="true" tabindex="-1"></a><span class="in">for (i in 1:length(ps)){</span></span>
-<span id="cb42-708"><a href="#cb42-708" aria-hidden="true" tabindex="-1"></a><span class="in">  p = ps[i]</span></span>
-<span id="cb42-709"><a href="#cb42-709" aria-hidden="true" tabindex="-1"></a><span class="in">  rob_post_coefs_mix &lt;- mixcombine(flat = trial_prior_mix, </span></span>
-<span id="cb42-710"><a href="#cb42-710" aria-hidden="true" tabindex="-1"></a><span class="in">                                   MAP = post_coefs_mix, </span></span>
-<span id="cb42-711"><a href="#cb42-711" aria-hidden="true" tabindex="-1"></a><span class="in">                                   weight=c(p, 1 - p))</span></span>
-<span id="cb42-712"><a href="#cb42-712" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb42-713"><a href="#cb42-713" aria-hidden="true" tabindex="-1"></a><span class="in">  bfit_stage2_rob_ipd &lt;- brm(joint_model_ipd,</span></span>
-<span id="cb42-714"><a href="#cb42-714" aria-hidden="true" tabindex="-1"></a><span class="in">                             prior = mix_prior,</span></span>
-<span id="cb42-715"><a href="#cb42-715" aria-hidden="true" tabindex="-1"></a><span class="in">                             stanvars = mixstanvar(prior_mix = rob_post_coefs_mix),</span></span>
-<span id="cb42-716"><a href="#cb42-716" aria-hidden="true" tabindex="-1"></a><span class="in">                             seed = mcmc_seed, refresh = 0, backend = "cmdstanr")</span></span>
-<span id="cb42-717"><a href="#cb42-717" aria-hidden="true" tabindex="-1"></a><span class="in">                             data = new_dat)</span></span>
-<span id="cb42-718"><a href="#cb42-718" aria-hidden="true" tabindex="-1"></a><span class="in">  hp_ipd[[i]] = get1sidehyp2sidedCI(bfit_stage2_rob_ipd)</span></span>
-<span id="cb42-719"><a href="#cb42-719" aria-hidden="true" tabindex="-1"></a><span class="in">  hn_ipd[[i]] = glue::glue("MAP prior {p*100}% robust")</span></span>
-<span id="cb42-720"><a href="#cb42-720" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb42-721"><a href="#cb42-721" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-722"><a href="#cb42-722" aria-hidden="true" tabindex="-1"></a><span class="in">h1_ipd_noninf_flat = get1sidehyp2sidedCI(bfit_trial_ipd_noninf_flat)</span></span>
-<span id="cb42-723"><a href="#cb42-723" aria-hidden="true" tabindex="-1"></a><span class="in">h1_ipd_noninf_norm = get1sidehyp2sidedCI(bfit_trial_ipd_noninf_norm)</span></span>
-<span id="cb42-724"><a href="#cb42-724" aria-hidden="true" tabindex="-1"></a><span class="in">h1_ipd_map         = get1sidehyp2sidedCI(bfit_stage2_ipd)</span></span>
-<span id="cb42-725"><a href="#cb42-725" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-726"><a href="#cb42-726" aria-hidden="true" tabindex="-1"></a><span class="in">h1n_ipd = unlist(hn_ipd)</span></span>
-<span id="cb42-727"><a href="#cb42-727" aria-hidden="true" tabindex="-1"></a><span class="in">h1_ipd_rob = do.call(rbind, lapply(hp_ipd, function(x) x))</span></span>
-<span id="cb42-728"><a href="#cb42-728" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-729"><a href="#cb42-729" aria-hidden="true" tabindex="-1"></a><span class="in">res = data.frame(type = c("Non-informative prior. brm default",</span></span>
-<span id="cb42-730"><a href="#cb42-730" aria-hidden="true" tabindex="-1"></a><span class="in">                          "Non-informative prior. wide normal prior",</span></span>
-<span id="cb42-731"><a href="#cb42-731" aria-hidden="true" tabindex="-1"></a><span class="in">                          "MAP prior",</span></span>
-<span id="cb42-732"><a href="#cb42-732" aria-hidden="true" tabindex="-1"></a><span class="in">                          h1n_ipd),</span></span>
-<span id="cb42-733"><a href="#cb42-733" aria-hidden="true" tabindex="-1"></a><span class="in">                 bind_rows(</span></span>
-<span id="cb42-734"><a href="#cb42-734" aria-hidden="true" tabindex="-1"></a><span class="in">                   h1_ipd_noninf_flat,</span></span>
-<span id="cb42-735"><a href="#cb42-735" aria-hidden="true" tabindex="-1"></a><span class="in">                   h1_ipd_noninf_norm,</span></span>
-<span id="cb42-736"><a href="#cb42-736" aria-hidden="true" tabindex="-1"></a><span class="in">                   h1_ipd_map,</span></span>
-<span id="cb42-737"><a href="#cb42-737" aria-hidden="true" tabindex="-1"></a><span class="in">                   h1_ipd_rob</span></span>
-<span id="cb42-738"><a href="#cb42-738" aria-hidden="true" tabindex="-1"></a><span class="in">                 ))</span></span>
-<span id="cb42-739"><a href="#cb42-739" aria-hidden="true" tabindex="-1"></a><span class="in">res</span></span>
-<span id="cb42-740"><a href="#cb42-740" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-676"><a href="#cb42-676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-677"><a href="#cb42-677" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb42-678"><a href="#cb42-678" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb42-679"><a href="#cb42-679" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-summary: "Show the code"</span></span>
+<span id="cb42-680"><a href="#cb42-680" aria-hidden="true" tabindex="-1"></a><span class="in">## Fit Non-Informative Prior using default priors -----------------------</span></span>
+<span id="cb42-681"><a href="#cb42-681" aria-hidden="true" tabindex="-1"></a><span class="in">head(new_dat)</span></span>
+<span id="cb42-682"><a href="#cb42-682" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_trial_ipd_noninf_flat &lt;- brm(joint_model_ipd,</span></span>
+<span id="cb42-683"><a href="#cb42-683" aria-hidden="true" tabindex="-1"></a><span class="in">                                  seed = mcmc_seed, </span></span>
+<span id="cb42-684"><a href="#cb42-684" aria-hidden="true" tabindex="-1"></a><span class="in">                                  refresh = 0,</span></span>
+<span id="cb42-685"><a href="#cb42-685" aria-hidden="true" tabindex="-1"></a><span class="in">                                  data = new_dat)</span></span>
+<span id="cb42-686"><a href="#cb42-686" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-687"><a href="#cb42-687" aria-hidden="true" tabindex="-1"></a><span class="in">## Fit Non-Informative Prior using wide Normal priors ------------------------</span></span>
+<span id="cb42-688"><a href="#cb42-688" aria-hidden="true" tabindex="-1"></a><span class="in">trial_prior_mix &lt;- mixmvnorm(flat = c(1, rep(0, 5), diag(sd^2, 5)))</span></span>
+<span id="cb42-689"><a href="#cb42-689" aria-hidden="true" tabindex="-1"></a><span class="in">joint_model_ipd &lt;- bf(CHG ~ 1 + age_group + BASE + active,</span></span>
+<span id="cb42-690"><a href="#cb42-690" aria-hidden="true" tabindex="-1"></a><span class="in">                      family=gaussian, center=FALSE)</span></span>
+<span id="cb42-691"><a href="#cb42-691" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_trial_ipd_noninf_norm &lt;- brm(joint_model_ipd,</span></span>
+<span id="cb42-692"><a href="#cb42-692" aria-hidden="true" tabindex="-1"></a><span class="in">                                  prior = mix_prior,</span></span>
+<span id="cb42-693"><a href="#cb42-693" aria-hidden="true" tabindex="-1"></a><span class="in">                                  stanvars = mixstanvar(prior_mix = trial_prior_mix),</span></span>
+<span id="cb42-694"><a href="#cb42-694" aria-hidden="true" tabindex="-1"></a><span class="in">                                  seed = mcmc_seed, refresh = 0,</span></span>
+<span id="cb42-695"><a href="#cb42-695" aria-hidden="true" tabindex="-1"></a><span class="in">                                  backend = "cmdstanr",</span></span>
+<span id="cb42-696"><a href="#cb42-696" aria-hidden="true" tabindex="-1"></a><span class="in">                                  data = new_dat)</span></span>
+<span id="cb42-697"><a href="#cb42-697" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-698"><a href="#cb42-698" aria-hidden="true" tabindex="-1"></a><span class="in">## Fit with historical data MAP Priors -------------------------------------------</span></span>
+<span id="cb42-699"><a href="#cb42-699" aria-hidden="true" tabindex="-1"></a><span class="in">bfit_stage2_ipd &lt;- brm(joint_model_ipd,</span></span>
+<span id="cb42-700"><a href="#cb42-700" aria-hidden="true" tabindex="-1"></a><span class="in">                       prior = mix_prior,</span></span>
+<span id="cb42-701"><a href="#cb42-701" aria-hidden="true" tabindex="-1"></a><span class="in">                       stanvars = mixstanvar(prior_mix = post_coefs_mix),</span></span>
+<span id="cb42-702"><a href="#cb42-702" aria-hidden="true" tabindex="-1"></a><span class="in">                       seed = mcmc_seed, refresh = 0, backend = "cmdstanr")</span></span>
+<span id="cb42-703"><a href="#cb42-703" aria-hidden="true" tabindex="-1"></a><span class="in">                       data = new_dat)</span></span>
+<span id="cb42-704"><a href="#cb42-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-705"><a href="#cb42-705" aria-hidden="true" tabindex="-1"></a><span class="in">## Fit with historical data MAP Priors with robustification ----------------------</span></span>
+<span id="cb42-706"><a href="#cb42-706" aria-hidden="true" tabindex="-1"></a><span class="in">ps = seq(0, 1, 0.2)</span></span>
+<span id="cb42-707"><a href="#cb42-707" aria-hidden="true" tabindex="-1"></a><span class="in">hp_ipd =  hn_ipd = list()</span></span>
+<span id="cb42-708"><a href="#cb42-708" aria-hidden="true" tabindex="-1"></a><span class="in">for (i in 1:length(ps)){</span></span>
+<span id="cb42-709"><a href="#cb42-709" aria-hidden="true" tabindex="-1"></a><span class="in">  p = ps[i]</span></span>
+<span id="cb42-710"><a href="#cb42-710" aria-hidden="true" tabindex="-1"></a><span class="in">  rob_post_coefs_mix &lt;- mixcombine(flat = trial_prior_mix, </span></span>
+<span id="cb42-711"><a href="#cb42-711" aria-hidden="true" tabindex="-1"></a><span class="in">                                   MAP = post_coefs_mix, </span></span>
+<span id="cb42-712"><a href="#cb42-712" aria-hidden="true" tabindex="-1"></a><span class="in">                                   weight=c(p, 1 - p))</span></span>
+<span id="cb42-713"><a href="#cb42-713" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb42-714"><a href="#cb42-714" aria-hidden="true" tabindex="-1"></a><span class="in">  bfit_stage2_rob_ipd &lt;- brm(joint_model_ipd,</span></span>
+<span id="cb42-715"><a href="#cb42-715" aria-hidden="true" tabindex="-1"></a><span class="in">                             prior = mix_prior,</span></span>
+<span id="cb42-716"><a href="#cb42-716" aria-hidden="true" tabindex="-1"></a><span class="in">                             stanvars = mixstanvar(prior_mix = rob_post_coefs_mix),</span></span>
+<span id="cb42-717"><a href="#cb42-717" aria-hidden="true" tabindex="-1"></a><span class="in">                             seed = mcmc_seed, refresh = 0, backend = "cmdstanr")</span></span>
+<span id="cb42-718"><a href="#cb42-718" aria-hidden="true" tabindex="-1"></a><span class="in">                             data = new_dat)</span></span>
+<span id="cb42-719"><a href="#cb42-719" aria-hidden="true" tabindex="-1"></a><span class="in">  hp_ipd[[i]] = get1sidehyp2sidedCI(bfit_stage2_rob_ipd)</span></span>
+<span id="cb42-720"><a href="#cb42-720" aria-hidden="true" tabindex="-1"></a><span class="in">  hn_ipd[[i]] = glue::glue("MAP prior {p*100}% robust")</span></span>
+<span id="cb42-721"><a href="#cb42-721" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb42-722"><a href="#cb42-722" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-723"><a href="#cb42-723" aria-hidden="true" tabindex="-1"></a><span class="in">h1_ipd_noninf_flat = get1sidehyp2sidedCI(bfit_trial_ipd_noninf_flat)</span></span>
+<span id="cb42-724"><a href="#cb42-724" aria-hidden="true" tabindex="-1"></a><span class="in">h1_ipd_noninf_norm = get1sidehyp2sidedCI(bfit_trial_ipd_noninf_norm)</span></span>
+<span id="cb42-725"><a href="#cb42-725" aria-hidden="true" tabindex="-1"></a><span class="in">h1_ipd_map         = get1sidehyp2sidedCI(bfit_stage2_ipd)</span></span>
+<span id="cb42-726"><a href="#cb42-726" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-727"><a href="#cb42-727" aria-hidden="true" tabindex="-1"></a><span class="in">h1n_ipd = unlist(hn_ipd)</span></span>
+<span id="cb42-728"><a href="#cb42-728" aria-hidden="true" tabindex="-1"></a><span class="in">h1_ipd_rob = do.call(rbind, lapply(hp_ipd, function(x) x))</span></span>
+<span id="cb42-729"><a href="#cb42-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-730"><a href="#cb42-730" aria-hidden="true" tabindex="-1"></a><span class="in">res = data.frame(type = c("Non-informative prior. brm default",</span></span>
+<span id="cb42-731"><a href="#cb42-731" aria-hidden="true" tabindex="-1"></a><span class="in">                          "Non-informative prior. wide normal prior",</span></span>
+<span id="cb42-732"><a href="#cb42-732" aria-hidden="true" tabindex="-1"></a><span class="in">                          "MAP prior",</span></span>
+<span id="cb42-733"><a href="#cb42-733" aria-hidden="true" tabindex="-1"></a><span class="in">                          h1n_ipd),</span></span>
+<span id="cb42-734"><a href="#cb42-734" aria-hidden="true" tabindex="-1"></a><span class="in">                 bind_rows(</span></span>
+<span id="cb42-735"><a href="#cb42-735" aria-hidden="true" tabindex="-1"></a><span class="in">                   h1_ipd_noninf_flat,</span></span>
+<span id="cb42-736"><a href="#cb42-736" aria-hidden="true" tabindex="-1"></a><span class="in">                   h1_ipd_noninf_norm,</span></span>
+<span id="cb42-737"><a href="#cb42-737" aria-hidden="true" tabindex="-1"></a><span class="in">                   h1_ipd_map,</span></span>
+<span id="cb42-738"><a href="#cb42-738" aria-hidden="true" tabindex="-1"></a><span class="in">                   h1_ipd_rob</span></span>
+<span id="cb42-739"><a href="#cb42-739" aria-hidden="true" tabindex="-1"></a><span class="in">                 ))</span></span>
+<span id="cb42-740"><a href="#cb42-740" aria-hidden="true" tabindex="-1"></a><span class="in">res</span></span>
+<span id="cb42-741"><a href="#cb42-741" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
