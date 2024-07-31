@@ -1,4 +1,4 @@
-here::i_am("/home/beanan1/work/brms_course/slides/R/02_hist_control.R")
+here::i_am("slides/R/02_hist_control.R")
 library(here)
 
 library(here)
