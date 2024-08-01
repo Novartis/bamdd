@@ -14,9 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Background
 
-These exercises accompany the case study [Use of Historical Control
-Data](TODO:link) as part of the training course "Workshop
-on applied modeling in drug development using brms."
+These exercises accompany the case study [Use of Historical Control Data](https://opensource.nibr.com/bamdd/src/02a_meta_analysis.html) as part of the training course "Workshop on applied modeling in drug development using brms."
 
 ## Preliminary code
 
