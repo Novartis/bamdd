@@ -131,7 +131,7 @@ AS_region_all <- data.frame(region=c("asia", "europe", "north_america", "other")
 ## Exercise 3
 
 Run the analysis for the normal endpoint in the `crohn` data set of
-`RBesT`. Refer to the `RBesT` vignette for a [normal endpoint](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html)
+`RBesT`. Refer to the `RBesT` vignette for a [normal endpoint](https://opensource.nibr.com/RBesT/articles/introduction_normal.html)
    on more details and context.  
 Steps:
 * Use as `family=gaussian` and use the `se` response modifier in place
