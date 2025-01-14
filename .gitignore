@@ -36,3 +36,4 @@ videos
 *.mp4
 
 /.quarto/
+**/.DS_Store

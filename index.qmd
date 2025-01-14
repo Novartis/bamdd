@@ -15,11 +15,14 @@ clinical questions that were addressed via Bayesian modelling with the `brms` pa
 
 ::: {.content-visible when-profile="public"}
 ::: {.callout-tip}
-## Short course at JSM -- Portland, OR -- August 5th 2024
+## Courses in Göttingen (Germany), Dec 5/6<sup>th</sup> and at JSM (Portland, OR), Aug 5<sup>th</sup> 2024
 
-We will offer a short course based on this material at the 2024 Joint Statistical Meetings in Portland on August 5. The materials are available here:
+We offered two courses based on this material in 2024:
 
-- [Slides](workshops/jsm2024/slides/bamdd_jsm2024.pdf) & [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/jsm2024)
+1. A course at the workshop ["Hierarchical models in preclinical research"](https://www.biometrische-gesellschaft.de/arbeitsgruppen/bayes-methodik/workshops/2024-goettingen.html) of the IBS-DR working groups Non-clinical statistics and Bayes Methods on December 5/6<sup>th</sup>. The materials are available here:
+   [Slides](workshops/goettingen2024/slides/bamdd_goettingen2024.html) & [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/goettingen2024)
+2. A short course at the 2024 Joint Statistical Meetings in Portland on August 5<sup>th</sup>. The materials are available here:
+   [Slides](workshops/jsm2024/slides/bamdd_jsm2024.pdf) & [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/jsm2024)
 
 :::
 :::
@@ -46,6 +49,8 @@ appropiate. Key changes to the web-site are tracked here:
 
 
 ::: {.content-visible when-profile="public"}
+- 13th January 2025: Linked materials from the course in Göttingen 
+  in December 2024.
 - 31st July 2024: Linked materials from JSM Portland 2024 short course
 - 5th June 2024: Added @sec-pos on assessing probability of success of
   in Phase-III based on a single-arm trial in Phase-II
