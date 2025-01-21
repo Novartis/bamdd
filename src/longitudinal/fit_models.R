@@ -126,7 +126,7 @@ emm <- clustermq::Q_rows(
     walltime = 120,
     job_name = "longitudinal_child",
     log_file = here("reports", "longitudinal_child_%I.log"),
-    memory = 3000,
+    memory = 8000,
     cores = 4
   ),
   job_size = 1
