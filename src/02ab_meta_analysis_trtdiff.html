@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,10 +73,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dae0c6bc22119658871cc71cf262671b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -585,7 +585,7 @@ Formula: log_hr | se(log_hr_stderr) ~ 1
 
 Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -0.13      0.03    -0.18    -0.07 1.00     1269      961
+Intercept    -0.13      0.03    -0.19    -0.08 1.00      959      832
 
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
@@ -612,12 +612,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.2 seconds.
-Chain 3 finished in 0.2 seconds.
+Chain 3 finished in 0.1 seconds.
 Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.0 seconds.</code></pre>
+Total execution time: 1.1 seconds.</code></pre>
 </div>
 </div>
 <p>As we noted before, there’s at least two ways of performing posterior inference after fitting the model above: 1. inference about the mean effect of the SGLT-2 inhibitors across studies, or 2. inference about the predicted effect in a new study drawn from the same distribution of studies as the studies under analysis. This difference becomes very clear when working in a Bayesian regression setting using <code>brms</code>, but is somewhat obscured when we use standard meta-analysis software.</p>
@@ -634,11 +634,11 @@ Formula: log_hr | se(log_hr_stderr) ~ 1 + (1 | studyno)
 Multilevel Hyperparameters:
 ~studyno (Number of levels: 7) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.07      0.06     0.00     0.21 1.00      900     1196
+sd(Intercept)     0.07      0.05     0.00     0.19 1.00     1196     1647
 
 Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -0.14      0.05    -0.24    -0.05 1.01     1296      752
+Intercept    -0.14      0.05    -0.24    -0.05 1.00     1651      993
 
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
@@ -654,8 +654,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">newdata=</span><span class="fu">tibble</span>(<span class="at">studyno=</span><span class="st">"New study"</span>, <span class="at">log_hr_stderr=</span><span class="fl">10e-19</span>), </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>, <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      Estimate Est.Error       Q2.5      Q97.5
-[1,] -0.136144 0.1063063 -0.3576894 0.06951252</code></pre>
+<pre><code>       Estimate Est.Error       Q2.5      Q97.5
+[1,] -0.1373729 0.0957787 -0.3472731 0.05168975</code></pre>
 </div>
 </div>
 </section>
@@ -690,7 +690,7 @@ Chain 4 finished in 0.1 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.1 seconds.
-Total execution time: 0.8 seconds.</code></pre>
+Total execution time: 0.6 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -705,23 +705,23 @@ Formula: cases | rate(py_to_evt_or_cens) ~ 0 + study + treatment
 
 Regression Coefficients:
                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-studyCANVAS                -3.49      0.04    -3.57    -3.40 1.00     3087
-studyCANVASMR              -3.44      0.05    -3.55    -3.33 1.00     3473
-studyCREDENCE              -3.07      0.05    -3.16    -2.97 1.00     3662
-studyDECLARE–TIMI58        -3.69      0.03    -3.75    -3.63 1.00     3198
-studyEMPAMREGOUTCOME       -3.14      0.04    -3.22    -3.06 1.00     2870
-studySCORED                -2.83      0.04    -2.90    -2.76 1.00     3392
-studyVERTISCV              -3.15      0.04    -3.22    -3.08 1.00     2877
-treatmentSGLT2inhibitor    -0.13      0.03    -0.19    -0.08 1.00     2006
+studyCANVAS                -3.49      0.04    -3.58    -3.40 1.00     3169
+studyCANVASMR              -3.44      0.06    -3.55    -3.33 1.00     4175
+studyCREDENCE              -3.07      0.05    -3.16    -2.98 1.00     3550
+studyDECLARE–TIMI58        -3.69      0.03    -3.75    -3.64 1.00     3266
+studyEMPAMREGOUTCOME       -3.15      0.04    -3.23    -3.07 1.00     2938
+studySCORED                -2.83      0.04    -2.90    -2.75 1.00     3228
+studyVERTISCV              -3.15      0.04    -3.22    -3.08 1.00     2555
+treatmentSGLT2inhibitor    -0.13      0.03    -0.18    -0.08 1.00     1946
                         Tail_ESS
-studyCANVAS                 2689
-studyCANVASMR               2766
-studyCREDENCE               3039
-studyDECLARE–TIMI58         2772
-studyEMPAMREGOUTCOME        2544
-studySCORED                 2811
-studyVERTISCV               2830
-treatmentSGLT2inhibitor     2787
+studyCANVAS                 2901
+studyCANVASMR               3052
+studyCREDENCE               2567
+studyDECLARE–TIMI58         3104
+studyEMPAMREGOUTCOME        2439
+studySCORED                 2881
+studyVERTISCV               3040
+treatmentSGLT2inhibitor     2765
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -738,7 +738,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code># A tibble: 1 × 10
   variable      mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 hazard ratio 0.876  0.876 0.0242 0.0241 0.837 0.917  1.00    2006.    2787.</code></pre>
+1 hazard ratio 0.877  0.877 0.0237 0.0242 0.839 0.916  1.00    1946.    2765.</code></pre>
 </div>
 </div>
 <p>This <code>brms</code> code performs a random-effects meta-analysis with arm-based data as inputs.</p>
@@ -760,14 +760,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.4 seconds.
-Chain 2 finished in 0.5 seconds.
-Chain 3 finished in 0.4 seconds.
+Chain 1 finished in 0.5 seconds.
+Chain 2 finished in 0.4 seconds.
+Chain 3 finished in 0.5 seconds.
 Chain 4 finished in 0.5 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.5 seconds.
-Total execution time: 2.1 seconds.</code></pre>
+Total execution time: 2.3 seconds.</code></pre>
 </div>
 </div>
 <p>As before, we can easily obtain inference about the mean effect of the SGLT-2 inhibitors across studies or the predicted effect in a new study drawn from the same distribution of studies as the studies under analysis.</p>
@@ -792,9 +792,9 @@ Total execution time: 2.1 seconds.</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">hazard ratio</td>
-<td style="text-align: right;">0.869</td>
-<td style="text-align: right;">0.805</td>
-<td style="text-align: right;">0.932</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">0.802</td>
+<td style="text-align: right;">0.934</td>
 </tr>
 </tbody>
 </table>
@@ -823,9 +823,9 @@ Total execution time: 2.1 seconds.</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">hazard ratio</td>
-<td style="text-align: right;">0.869</td>
-<td style="text-align: right;">0.73</td>
-<td style="text-align: right;">1.017</td>
+<td style="text-align: right;">0.871</td>
+<td style="text-align: right;">0.728</td>
+<td style="text-align: right;">1.024</td>
 </tr>
 </tbody>
 </table>
@@ -1014,8 +1014,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1177,7 +1175,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

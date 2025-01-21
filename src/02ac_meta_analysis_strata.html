@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,10 +73,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dae0c6bc22119658871cc71cf262671b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -745,15 +745,15 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">b_Intercept</td>
-<td style="text-align: right;">-1.13</td>
-<td style="text-align: right;">-1.18</td>
-<td style="text-align: right;">2.17</td>
-<td style="text-align: right;">1.98</td>
-<td style="text-align: right;">-4.56</td>
-<td style="text-align: right;">2.51</td>
+<td style="text-align: right;">-1.12</td>
+<td style="text-align: right;">-1.14</td>
+<td style="text-align: right;">2.20</td>
+<td style="text-align: right;">2.02</td>
+<td style="text-align: right;">-4.63</td>
+<td style="text-align: right;">2.59</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1399</td>
-<td style="text-align: right;">1977</td>
+<td style="text-align: right;">1357</td>
+<td style="text-align: right;">1853</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">b_age_group1</td>
@@ -811,42 +811,42 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(post_coefs_mix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>EM for Multivariate Normal Mixture Model
-Log-Likelihood = -31919
+Log-Likelihood = -32009
 
 Multivariate normal mixture
 Outcome dimension: 5
 Mixture Components:
-                               comp1   comp2   comp3  
-w                               0.4859  0.3154  0.1987
-m[b_Intercept]                 -1.5044 -0.9425 -0.5248
-m[b_age_group1]                 1.6795  0.8011  0.3247
-m[b_age_group3]                 0.7281  0.1149  0.0021
-m[b_cBASE]                      0.1104  0.0053  0.0099
-m[b_active]                     0.0679 -0.5843  0.3802
-s[b_Intercept]                  1.7090  2.0014  3.0738
-s[b_age_group1]                 2.4312  2.6651  3.0882
-s[b_age_group3]                 2.6813  2.4730  2.7127
-s[b_cBASE]                      0.3044  0.2898  0.3417
-s[b_active]                     4.7858  5.4600  4.3371
-rho[b_age_group1,b_Intercept]  -0.9415 -0.8036 -0.6678
-rho[b_age_group3,b_Intercept]  -0.8571 -0.6405 -0.6325
-rho[b_cBASE,b_Intercept]       -0.8732 -0.7460 -0.6279
-rho[b_active,b_Intercept]       0.0163  0.0216 -0.0528
-rho[b_age_group3,b_age_group1]  0.8631  0.7917  0.8673
-rho[b_cBASE,b_age_group1]       0.9211  0.9209  0.9358
-rho[b_active,b_age_group1]     -0.0054 -0.0461  0.0604
-rho[b_cBASE,b_age_group3]       0.8493  0.8157  0.8716
-rho[b_active,b_age_group3]      0.0283 -0.0285  0.0701
-rho[b_active,b_cBASE]          -0.0015 -0.0276  0.0158</code></pre>
+                               comp1  comp2  comp3 
+w                               0.388  0.325  0.287
+m[b_Intercept]                 -1.897 -0.592 -0.652
+m[b_age_group1]                 2.120  0.502  0.514
+m[b_age_group3]                 1.232 -0.371  0.115
+m[b_cBASE]                      0.170 -0.041  0.015
+m[b_active]                    -1.846  2.286 -0.358
+s[b_Intercept]                  1.718  1.573  2.959
+s[b_age_group1]                 2.435  2.229  3.115
+s[b_age_group3]                 2.554  2.462  2.646
+s[b_cBASE]                      0.289  0.274  0.333
+s[b_active]                     4.594  4.524  4.762
+rho[b_age_group1,b_Intercept]  -0.933 -0.862 -0.663
+rho[b_age_group3,b_Intercept]  -0.815 -0.727 -0.602
+rho[b_cBASE,b_Intercept]       -0.858 -0.762 -0.617
+rho[b_active,b_Intercept]      -0.200 -0.206  0.044
+rho[b_age_group3,b_age_group1]  0.837  0.808  0.853
+rho[b_cBASE,b_age_group1]       0.907  0.912  0.937
+rho[b_active,b_age_group1]      0.182  0.190 -0.086
+rho[b_cBASE,b_age_group3]       0.832  0.817  0.855
+rho[b_active,b_age_group3]      0.181  0.192 -0.036
+rho[b_active,b_cBASE]           0.215  0.173 -0.075</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># notice the considerable correlations present in the posterior</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(hist_post_coefs), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             b_Intercept b_age_group1 b_age_group3 b_cBASE b_active
-b_Intercept         1.00        -0.81        -0.71   -0.75     0.00
-b_age_group1       -0.81         1.00         0.84    0.92     0.00
-b_age_group3       -0.71         0.84         1.00    0.85     0.02
-b_cBASE            -0.75         0.92         0.85    1.00     0.00
+b_Intercept         1.00        -0.80        -0.70   -0.73     0.00
+b_age_group1       -0.80         1.00         0.84    0.92     0.00
+b_age_group3       -0.70         0.84         1.00    0.85     0.02
+b_cBASE            -0.73         0.92         0.85    1.00     0.00
 b_active            0.00         0.00         0.02    0.00     1.00</code></pre>
 </div>
 </div>
@@ -879,16 +879,16 @@ Please note that these are subject to changes in future releases.</code></pre>
 <pre><code># A tibble: 4,000 × 5
    b_Intercept b_age_group1 b_age_group3 b_cBASE b_active
          &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
- 1      -2.93         3.09         2.93   0.424    -5.78 
- 2       1.43        -1.35        -0.711  0.154     2.07 
- 3      -0.500        0.419       -3.26  -0.0461   -3.52 
- 4       2.02        -2.83        -2.24  -0.465     1.13 
- 5      -1.41        -1.13        -1.40  -0.116    -0.732
- 6      -2.67         4.09         3.57   0.346     1.80 
- 7      -2.27         4.67         2.69   0.145    -4.13 
- 8       0.273       -0.224       -0.208  0.303    -7.01 
- 9      -0.517        1.68         0.173  0.225    -7.50 
-10      -0.525        0.535        0.821  0.0112   -1.57 
+ 1      -3.51         3.09         2.93   0.424    -5.78 
+ 2       1.27        -1.35        -0.711  0.154     2.07 
+ 3      -0.755        0.419       -3.26  -0.0461   -3.52 
+ 4       0.549       -2.83        -2.24  -0.465     1.13 
+ 5      -0.904       -1.13        -1.40  -0.116    -0.732
+ 6      -3.34         4.09         3.57   0.346     1.80 
+ 7      -5.49         4.67         2.69   0.145    -4.13 
+ 8      -2.03        -0.224       -0.208  0.303    -7.01 
+ 9      -0.834        1.68         0.173  0.225    -7.50 
+10      -0.458        0.535        0.821  0.0112   -1.57 
 # ℹ 3,990 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(hist_post_coefs_df[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -948,28 +948,28 @@ Please note that these are subject to changes in future releases.</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">-0.061 ± 1.4</td>
+<td style="text-align: left;">-0.095 ± 1.4</td>
 <td style="text-align: left;">Control</td>
 <td style="text-align: right;">19</td>
-<td style="text-align: right;">-0.04</td>
-<td style="text-align: right;">-3.0</td>
-<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">-0.09</td>
+<td style="text-align: right;">-3.2</td>
+<td style="text-align: right;">2.7</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">-1.194 ± 2.5</td>
+<td style="text-align: left;">-1.228 ± 2.5</td>
 <td style="text-align: left;">Control</td>
 <td style="text-align: right;">19</td>
-<td style="text-align: right;">-1.22</td>
+<td style="text-align: right;">-1.24</td>
 <td style="text-align: right;">-6.2</td>
 <td style="text-align: right;">4.0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">-0.804 ± 1.8</td>
+<td style="text-align: left;">-0.838 ± 1.8</td>
 <td style="text-align: left;">Control</td>
 <td style="text-align: right;">19</td>
-<td style="text-align: right;">-0.84</td>
-<td style="text-align: right;">-4.2</td>
-<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">-0.85</td>
+<td style="text-align: right;">-4.4</td>
+<td style="text-align: right;">2.7</td>
 </tr>
 </tbody>
 </table>
@@ -1076,8 +1076,8 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">36</td>
-<td style="text-align: right;">14.8</td>
-<td style="text-align: right;">-7.77</td>
+<td style="text-align: right;">14.1</td>
+<td style="text-align: right;">6.54</td>
 <td style="text-align: left;">New</td>
 </tr>
 <tr class="even">
@@ -1085,9 +1085,9 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=2 to &lt;5</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">7.8</td>
-<td style="text-align: right;">4.18</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">-3.43</td>
 <td style="text-align: left;">New</td>
 </tr>
 <tr class="odd">
@@ -1095,9 +1095,9 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=2 to &lt;5</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">11.0</td>
-<td style="text-align: right;">-0.31</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">0.74</td>
 <td style="text-align: left;">New</td>
 </tr>
 <tr class="even">
@@ -1105,9 +1105,9 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=2 to &lt;5</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">7.8</td>
-<td style="text-align: right;">6.82</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">22.9</td>
+<td style="text-align: right;">4.66</td>
 <td style="text-align: left;">New</td>
 </tr>
 <tr class="odd">
@@ -1115,9 +1115,9 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=2 to &lt;5</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">1.3</td>
-<td style="text-align: right;">3.13</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">15.6</td>
+<td style="text-align: right;">8.63</td>
 <td style="text-align: left;">New</td>
 </tr>
 <tr class="even">
@@ -1125,9 +1125,9 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=2 to &lt;5</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">42</td>
-<td style="text-align: right;">20.8</td>
-<td style="text-align: right;">4.99</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">4.05</td>
 <td style="text-align: left;">New</td>
 </tr>
 </tbody>
@@ -1183,11 +1183,11 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">33</td>
-<td style="text-align: right;">11.6</td>
-<td style="text-align: right;">0.80</td>
-<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1.94</td>
+<td style="text-align: right;">5.4</td>
 <td style="text-align: right;">39</td>
-<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">0.87</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">New</td>
@@ -1195,12 +1195,12 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=5 to &lt;13</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">9.7</td>
-<td style="text-align: right;">2.27</td>
-<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">-0.17</td>
+<td style="text-align: right;">5.5</td>
 <td style="text-align: right;">18</td>
-<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">1.31</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">New</td>
@@ -1208,12 +1208,12 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=13 to &lt;18</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">13.0</td>
-<td style="text-align: right;">0.14</td>
-<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">1.23</td>
+<td style="text-align: right;">5.4</td>
 <td style="text-align: right;">18</td>
-<td style="text-align: right;">1.11</td>
+<td style="text-align: right;">1.27</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">New</td>
@@ -1221,12 +1221,12 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=2 to &lt;5</td>
 <td style="text-align: left;">1</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">11.4</td>
-<td style="text-align: right;">-2.83</td>
-<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">-3.55</td>
+<td style="text-align: right;">5.3</td>
 <td style="text-align: right;">26</td>
-<td style="text-align: right;">1.12</td>
+<td style="text-align: right;">1.04</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">New</td>
@@ -1234,12 +1234,12 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=5 to &lt;13</td>
 <td style="text-align: left;">2</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">9.8</td>
-<td style="text-align: right;">-1.38</td>
-<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">-2.32</td>
+<td style="text-align: right;">2.8</td>
 <td style="text-align: right;">12</td>
-<td style="text-align: right;">1.05</td>
+<td style="text-align: right;">0.81</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">New</td>
@@ -1247,12 +1247,12 @@ Please note that these are subject to changes in future releases.</code></pre>
 <td style="text-align: left;">Age &gt;=13 to &lt;18</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">11.5</td>
-<td style="text-align: right;">-2.37</td>
-<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">34</td>
 <td style="text-align: right;">12</td>
-<td style="text-align: right;">1.55</td>
+<td style="text-align: right;">-1.65</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1.06</td>
 </tr>
 </tbody>
 </table>
@@ -1301,15 +1301,15 @@ Formula: CHG ~ 1 + age_group + cBASE + active
 
 Regression Coefficients:
            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     -1.00      1.03    -3.18     0.86 1.00     2513     2417
-age_group1    -0.51      0.74    -1.92     0.95 1.00     2996     2860
-age_group3    -0.90      0.88    -2.64     0.89 1.00     3313     3163
-cBASE         -0.04      0.07    -0.17     0.09 1.00     3054     2563
-active         2.94      0.83     1.33     4.57 1.00     3938     2420
+Intercept     -2.34      1.34    -5.28    -0.07 1.00     1913     2394
+age_group1     0.53      0.79    -1.02     2.07 1.00     2533     2788
+age_group3     0.45      0.96    -1.45     2.37 1.00     2767     2695
+cBASE         -0.02      0.07    -0.15     0.13 1.00     2268     2782
+active         3.40      0.93     1.56     5.26 1.00     3243     2598
 
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     4.75      0.30     4.21     5.37 1.00     3901     2834
+sigma     5.15      0.33     4.55     5.86 1.00     3744     2625
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1322,7 +1322,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Tests for class b:
     Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
-1 (active) &gt; 0      2.9      0.83      1.6      4.3       3999         1    *
+1 (active) &gt; 0      3.4      0.93      1.9      4.9        Inf         1    *
 ---
 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -1520,8 +1520,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1683,7 +1681,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dae0c6bc22119658871cc71cf262671b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -643,14 +643,14 @@ Y_i|(U_i=u_i \text{ and } T_i=t_i) \sim \text{Poisson}(\mu u_i t_i).
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 11.4 seconds.
-Chain 2 finished in 10.6 seconds.
-Chain 3 finished in 13.7 seconds.
-Chain 4 finished in 13.3 seconds.
+Chain 1 finished in 11.3 seconds.
+Chain 2 finished in 11.3 seconds.
+Chain 3 finished in 13.4 seconds.
+Chain 4 finished in 13.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 12.3 seconds.
-Total execution time: 49.4 seconds.</code></pre>
+Mean chain execution time: 12.4 seconds.
+Total execution time: 49.8 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictions for missing (lost-to-follow-up) post-treatment values</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output format is a matrix with each column being a patient record and each row being one imputation</span></span>
@@ -694,14 +694,14 @@ Total execution time: 49.4 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 10.2 seconds.
-Chain 2 finished in 10.1 seconds.
-Chain 3 finished in 12.8 seconds.
-Chain 4 finished in 12.1 seconds.
+Chain 1 finished in 12.4 seconds.
+Chain 2 finished in 10.6 seconds.
+Chain 3 finished in 10.0 seconds.
+Chain 4 finished in 9.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 11.3 seconds.
-Total execution time: 45.6 seconds.</code></pre>
+Mean chain execution time: 10.6 seconds.
+Total execution time: 42.8 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>imputations2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(brmfit2, </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata=</span>count_data <span class="sc">%&gt;%</span> </span>
@@ -739,14 +739,14 @@ Total execution time: 45.6 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 12.6 seconds.
-Chain 2 finished in 9.6 seconds.
-Chain 3 finished in 10.2 seconds.
-Chain 4 finished in 12.9 seconds.
+Chain 1 finished in 12.4 seconds.
+Chain 2 finished in 9.7 seconds.
+Chain 3 finished in 9.6 seconds.
+Chain 4 finished in 12.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 11.3 seconds.
-Total execution time: 45.6 seconds.</code></pre>
+Mean chain execution time: 11.0 seconds.
+Total execution time: 44.5 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>imputations3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(brmfit3, </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata=</span>count_data <span class="sc">%&gt;%</span> </span>
@@ -793,21 +793,21 @@ Total execution time: 45.6 seconds.</code></pre>
  1 0         On-treatment      Hypothetical (MAR)                 1.61 
  2 0         On-treatment      Jump-to-reference (J2R)            1.61 
  3 0         On-treatment      Retrieved drop-out imputation      1.61 
- 4 0         Post-treatment    Hypothetical (MAR)                 1.68 
+ 4 0         Post-treatment    Hypothetical (MAR)                 1.64 
  5 0         Post-treatment    Jump-to-reference (J2R)            1.48 
  6 0         Post-treatment    Retrieved drop-out imputation      1.48 
- 7 0         Lost-to-follow-up Hypothetical (MAR)                 1.56 
- 8 0         Lost-to-follow-up Jump-to-reference (J2R)            1.55 
- 9 0         Lost-to-follow-up Retrieved drop-out imputation      1.54 
+ 7 0         Lost-to-follow-up Hypothetical (MAR)                 1.57 
+ 8 0         Lost-to-follow-up Jump-to-reference (J2R)            1.56 
+ 9 0         Lost-to-follow-up Retrieved drop-out imputation      1.61 
 10 1         On-treatment      Hypothetical (MAR)                 0.830
 11 1         On-treatment      Jump-to-reference (J2R)            0.830
 12 1         On-treatment      Retrieved drop-out imputation      0.830
-13 1         Post-treatment    Hypothetical (MAR)                 0.859
+13 1         Post-treatment    Hypothetical (MAR)                 0.874
 14 1         Post-treatment    Jump-to-reference (J2R)            1.49 
 15 1         Post-treatment    Retrieved drop-out imputation      1.49 
-16 1         Lost-to-follow-up Hypothetical (MAR)                 0.899
+16 1         Lost-to-follow-up Hypothetical (MAR)                 0.892
 17 1         Lost-to-follow-up Jump-to-reference (J2R)            1.75 
-18 1         Lost-to-follow-up Retrieved drop-out imputation      1.49 </code></pre>
+18 1         Lost-to-follow-up Retrieved drop-out imputation      1.48 </code></pre>
 </div>
 </div>
 </section>
@@ -1272,8 +1272,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1435,7 +1433,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
