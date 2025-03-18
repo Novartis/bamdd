@@ -6,8 +6,6 @@ profile:
 project:
    type: book
    execute-dir: project
-   pre-render: src/install_dependencies.R
-   
    resources:
    - resources/**
 
