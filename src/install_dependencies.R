@@ -67,6 +67,7 @@ c(
 "tibble",
 "tidybayes",
 "tidyr",
+"tidyverse",
 "utils",
 "vctrs",
 "viridis",

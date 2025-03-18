@@ -74,6 +74,7 @@ Imports:
   tibble,
   tidybayes,
   tidyr,
+  tidyverse,
   utils,
   vctrs,
   viridis,
