@@ -59,7 +59,6 @@ c(
 "rmarkdown",
 "rstan",
 "rstantools",
-"SBC",
 "scales",
 "simsurv",
 "stringr",
