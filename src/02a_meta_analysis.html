@@ -718,7 +718,7 @@ Chain 2 finished in 0.3 seconds.</code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/Rtmp0Vz3WH/model-c00c6647f91c.stan', line 53, column 4 to column 50)</code></pre>
+<pre><code>Chain 3 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpMX1VAV/model-27cd22d326b7.stan', line 53, column 4 to column 50)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -735,7 +735,7 @@ Chain 4 finished in 0.4 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.4 seconds.
-Total execution time: 1.7 seconds.</code></pre>
+Total execution time: 1.8 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>post_region_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">newdata=</span>AS_region_new,</span>
