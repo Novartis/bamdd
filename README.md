@@ -16,14 +16,22 @@ with the `brms` package.
 
 - quarto 
 - cmdstanr and cmdstan (`cmdstanr::install_cmdstan()`)
-- other R package dependencies (see Imports under the dummy `DESCRIPTION` file)
+- other R package dependencies (see Imports under the dummy `DESCRIPTION` file, `devtools::install_deps()`)
+
+## Quickstart
+
+Rendering the book from Quarto source can be done using the provided `Makefile`:
+
+```bash
+make website QUARTO_PROFILE=public
+```
 
 ## License
 
 ### Code 
 
-The code is licensed under GPL-2 ([LICENSE])
+The code is licensed under GPL-2 ([LICENSE](LICENSE))
 
 ### Materials
 
-The book itself is licensed under CC BY 4.0 ([docs/public/LICENSE])
+The book itself is licensed under CC BY 4.0 ([docs/public/LICENSE](docs/public/LICENSE))
