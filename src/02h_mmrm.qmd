@@ -600,12 +600,12 @@ lmer(data=simulated_data,
 ```
 Note that the choice of the particular optimizer via 
 `control = lmerControl(optimizer="nlminbwrap")` was chosen based on trying 
-different ones to resolve convergence warnings. This process, as well as other
-tricks (like scaling and centering covariates) are conveniently wrapped in the
-dedicated 
-[`mmrm` `R` package](https://cran.r-project.org/web/packages/mmrm/index.html).
-For this reason the `mmrm` package is preferable and its usage is demonstrated 
-below:
+different ones to resolve convergence warnings. 
+
+Unfortunately, Daniel found out later that the `lme4` package route does not allow the fitting of MMRM with more visits, as it can easily lead to very long computation times and low convergence rates. Therefore, he started prototyping the dedicated [`mmrm` `R` package](https://cran.r-project.org/package=mmrm), which was then quickly adopted as the first open source project of the [`openstatsware`](https://openstatsware.org) group. The `mmrm` package is a completely new implementation of the MMRM, and implements the log-likelihood function in C++ with the help of the [`TMB` package]((https://cran.r-project.org/package=TMB)), which allows for automatic differentiation. It is similar with regards to the architecture to the [`glmmTMB` package](https://cran.r-project.org/package=glmmTMB), but it provides the important Satterthwaite and Kenward-Roger degrees of freedom methods. More details are available e.g. in the [R/Pharma workshop by Daniel and Doug Kelkhoff](https://rinpharma.com/publication/rinpharma_327/).
+
+For this reason the `mmrm` package is preferable and its usage is demonstrated below:
+
 ```{r mmrm_package_example}
 mmrm_fit <- mmrm(
   formula = CHG ~ TRT01P + AVISIT + BASE + AVISIT:TRT01P + AVISIT:BASE + us(AVISIT | USUBJID),
@@ -735,8 +735,12 @@ non-identifability of the conditional approach.
 The model formula above specifies that the correlation structure is the
 same across all treatment groups. This is not an assumption we have to
 make and SAS provides the `GROUP=TRT01P` option in the `REPEATED`
-statement to avoid it.  At the time of writing this chapter, `brms`,
-`lme4` and the `mmrm` package do not have an option for allowing
+statement to avoid it. Similarly, the `mmrm` package allows the user to specify
+group specific covariance parameter estimates 
+using the `us(AVISIT | TRT01P / USUBJID)` syntax 
+(so "group / subject" on the right hand side, see 
+[here](https://openpharma.github.io/mmrm/latest-tag/articles/introduction.html#grouped-covariance-structure)
+for details). On the other hand, the `brms` and `lme4` packages do not have an option for allowing
 separate unstructed covariance matrices for the different treatment
 groups. However, `brms` offers more flexibility than the other two
 packages regarding the variation at different visits and treatment groups through
