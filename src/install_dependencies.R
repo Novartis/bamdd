@@ -72,7 +72,8 @@ dependencies <- c(
 "viridis",
 "withr",
 "tidyverse",
-"BH"
+"BH",
+"StanHeaders"
 )
 
 all_pkgs <- .packages(all.available = TRUE)

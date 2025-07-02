@@ -79,4 +79,5 @@ Imports:
   viridis,
   withr,
   tidyverse,
-  BH
+  BH,
+  StanHeaders
