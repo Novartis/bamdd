@@ -59,7 +59,7 @@ dependencies <- c(
 "rmarkdown",
 "rstan",
 "rstantools",
-"SBC",
+##"SBC",
 "scales",
 "simsurv",
 "stringr",
