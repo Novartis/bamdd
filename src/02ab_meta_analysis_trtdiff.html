@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,8 +23,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -68,15 +69,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../src/02ac_meta_analysis_strata.html" rel="next">
 <link href="../src/02a_meta_analysis.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-17b130513c03c63eda25ebab28eba857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b619e7580ba2a849d98fc8631a679bb4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -138,7 +140,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../bamdd.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -402,16 +404,16 @@ window.Quarto = {
 <p>Let us look at a meta-analysis for the effect of <a href="https://en.wikipedia.org/wiki/SGLT2_inhibitor">sodium-glucose transport protein 2 (SGLT-2) inhibitors</a> on major adverse cardiovascular events (MACE). MACE is a composite endpoint defined by the occurrence of either cardiovascular death, myocardial infarction or stroke. It is usually analyzed using time-to-first-event methods. We will use the data from all 7 SGLT-2 inhibitor trials in the <a href="https://doi.org/10.1007/s10741-021-10083-z">meta-analysis of Barbarawi et al.</a>, for which MACE results have been published. This example lets us try out different approaches and input data formats.</p>
 <p>The first way of inputting data that we will look at is using estimated treatment differences from each study and their standard erorrs. Here, the treatment effect estimate from each study is a hazard ratio from a Cox regression model. The figure below shows the estimate hazard ratios with their 95% confidence intervals from each of the 7 studies with a log-scaled x-axis. For hazard ratios (and similarly for odds and rate ratios) it is preferable to work on the log-scale, because using a normal approximation to the sampling distribution of the estimator works a lot better for smaller sample sizes. Thus, we work with log-hazard ratios and their standard errors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sglt2_hr <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">trial =</span> <span class="fu">c</span>(<span class="st">"DECLARE–TIMI 58"</span>, <span class="st">"EMPA-REG OUTCOME"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"CANVAS"</span>, <span class="st">"CANVAS-R"</span>, <span class="st">"CREDENCE"</span>, </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"SCORED"</span>, <span class="st">"VERTIS CV"</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">drug =</span> <span class="fu">c</span>(<span class="st">"dapagliflozin"</span>, <span class="st">"empagliflozin"</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"canagliflozin"</span>, <span class="st">"canagliflozin"</span>, <span class="st">"canagliflozin"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"sotagliflozin"</span>, <span class="st">"ertugliflozin"</span>),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">studyno =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">hr =</span> <span class="fu">c</span>(<span class="fl">0.93</span>, <span class="fl">0.86</span>, <span class="fl">0.88</span>, <span class="fl">0.82</span>, <span class="fl">0.80</span>, <span class="fl">0.77</span>, <span class="fl">0.97</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">hr_lcl =</span> <span class="fu">c</span>(<span class="fl">0.84</span>, <span class="fl">0.74</span>, <span class="fl">0.75</span>, <span class="fl">0.66</span>, <span class="fl">0.67</span>, <span class="fl">0.65</span>, <span class="fl">0.85</span>),</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">hr_ucl =</span> <span class="fu">c</span>(<span class="fl">1.03</span>, <span class="fl">0.99</span>, <span class="fl">1.03</span>, <span class="fl">1.01</span>, <span class="fl">0.95</span>, <span class="fl">0.91</span>, <span class="fl">1.11</span>)) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sglt2_hr <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">trial =</span> <span class="fu">c</span>(<span class="st">"DECLARE–TIMI 58"</span>, <span class="st">"EMPA-REG OUTCOME"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"CANVAS"</span>, <span class="st">"CANVAS-R"</span>, <span class="st">"CREDENCE"</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"SCORED"</span>, <span class="st">"VERTIS CV"</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">drug =</span> <span class="fu">c</span>(<span class="st">"dapagliflozin"</span>, <span class="st">"empagliflozin"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"canagliflozin"</span>, <span class="st">"canagliflozin"</span>, <span class="st">"canagliflozin"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"sotagliflozin"</span>, <span class="st">"ertugliflozin"</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">studyno =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">hr =</span> <span class="fu">c</span>(<span class="fl">0.93</span>, <span class="fl">0.86</span>, <span class="fl">0.88</span>, <span class="fl">0.82</span>, <span class="fl">0.80</span>, <span class="fl">0.77</span>, <span class="fl">0.97</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">hr_lcl =</span> <span class="fu">c</span>(<span class="fl">0.84</span>, <span class="fl">0.74</span>, <span class="fl">0.75</span>, <span class="fl">0.66</span>, <span class="fl">0.67</span>, <span class="fl">0.65</span>, <span class="fl">0.85</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">hr_ucl =</span> <span class="fu">c</span>(<span class="fl">1.03</span>, <span class="fl">0.99</span>, <span class="fl">1.03</span>, <span class="fl">1.01</span>, <span class="fl">0.95</span>, <span class="fl">0.91</span>, <span class="fl">1.11</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(studyno)) <span class="sc">%&gt;%</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">studyno =</span> <span class="fu">factor</span>(studyno, <span class="at">levels=</span>studyno, <span class="at">labels=</span>trial),</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_hr =</span> <span class="fu">log</span>(hr),</span>
@@ -440,7 +442,7 @@ window.Quarto = {
 <p>The second type of input to meta-analyses that we will use is outcomes for each treatment group. While meta-analyses more commonly use treatment differences as an input, we do not have to use that approach. Instead, we can use outcomes from each treatment group in each study as an input. Often, the two approaches are essentially equivalent, but especially when there is more than two treatment groups per study an approach using treatment differences does need modification in order to correctly capture the correlation of multiple treatment differences compared with the same control group. In contrast, an arm-based approach will automatically reflect this correlation.</p>
 <p>In the SGLT-2 inhibitor case study, we will assume that event times approximately follow an exponential distribution, which allows us to conduct an arm-based meta-analysis with the number of cases per arm and the total follow-up time to firstevent or censoring per arm as inputs. These are the sufficient statistics for exponentially distributed event times with right-censoring.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sglt2 <span class="ot">=</span> <span class="st">"record, study, trialid, studyno, drugname, treatment, cases, patients, py_to_evt_or_cens, cases_per_py</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sglt2 <span class="ot">&lt;-</span> <span class="st">"record, study, trialid, studyno, drugname, treatment, cases, patients, py_to_evt_or_cens, cases_per_py</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">1,CANVAS,NCT01032629, 1,canagliflozin, 1, 425, 2888, 15799.25651, 0.0269</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">2,CANVAS,NCT01032629, 1,canagliflozin, 0, 233, 1442, 7664.473684, 0.0304</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">3,CANVAS-R,NCT01989754, 2,canagliflozin, 1, 160, 2907, 5904.059041, 0.0271</span></span>
@@ -552,11 +554,11 @@ window.Quarto = {
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="meta-analysis-with-treatment-effects-as-inputs"><span class="header-section-number">5.4.1</span> Meta-analysis with treatment effects as inputs</h3>
 <p>We will first implement a Bayesian version of the “traditional” meta-analysis approach, where we use the estimates of a treatment effect and their standard errors as inputs. The <code>brms</code> code below performs a fixed-effects meta-analysis with log-hazard ratios and their standard errors as inputs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> log_hr <span class="sc">|</span> <span class="fu">se</span>(log_hr_stderr) <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"Intercept"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">refresh =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">formula =</span> log_hr <span class="sc">|</span> <span class="fu">se</span>(log_hr_stderr) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"Intercept"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">refresh =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Start sampling</code></pre>
 </div>
@@ -598,21 +600,21 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>This <code>brms</code> code performs a random-effects meta-analysis with log-hazard ratios and their standard errors as inputs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>brmfit2 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> log_hr <span class="sc">|</span> <span class="fu">se</span>(log_hr_stderr) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>studyno),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"Intercept"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"sd"</span>, <span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">refresh =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>brmfit2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">formula =</span> log_hr <span class="sc">|</span> <span class="fu">se</span>(log_hr_stderr) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>studyno),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"Intercept"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"sd"</span>, <span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">refresh =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Start sampling</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.2 seconds.
+Chain 1 finished in 0.3 seconds.
 Chain 2 finished in 0.2 seconds.
-Chain 3 finished in 0.2 seconds.
+Chain 3 finished in 0.1 seconds.
 Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
@@ -663,20 +665,20 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="meta-analysis-with-data-from-each-arm-as-inputs"><span class="header-section-number">5.4.2</span> Meta-analysis with data from each arm as inputs</h3>
 <p>This <code>brms</code> code performs a fixed-effects meta-analysis with arm-based data as inputs. We now need to assume prior distributions for the placebo group log-hazard rate in each trial, for this we use an extremely wide Student-t prior with 3 degrees of freedom centered on <span class="math inline">\(-3\)</span>, because when exponentiated <span class="math inline">\(e^-3 \approx 0.05\)</span> corresponds to a plausible yearly event rate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>brmfit3 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> cases <span class="sc">|</span> <span class="fu">rate</span>(py_to_evt_or_cens) <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> study <span class="sc">+</span> treatment,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link=</span><span class="st">"log"</span>),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>, <span class="at">coef=</span><span class="st">"treatmentSGLT2inhibitor"</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVAS"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVASMR"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCREDENCE"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyDECLARE–TIMI58"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyEMPAMREGOUTCOME"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studySCORED"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyVERTISCV"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)),</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">refresh =</span> <span class="dv">0</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>brmfit3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">formula =</span> cases <span class="sc">|</span> <span class="fu">rate</span>(py_to_evt_or_cens) <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> study <span class="sc">+</span> treatment,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link=</span><span class="st">"log"</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>, <span class="at">coef=</span><span class="st">"treatmentSGLT2inhibitor"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVAS"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVASMR"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCREDENCE"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyDECLARE–TIMI58"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyEMPAMREGOUTCOME"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studySCORED"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyVERTISCV"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)),</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">refresh =</span> <span class="dv">0</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Start sampling</code></pre>
 </div>
@@ -933,287 +935,293 @@ Total execution time: 2.2 seconds.</code></pre>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/opensource\.nibr\.com\/bamdd\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
+      return false;
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
         }
-        return container.innerHTML
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/opensource\.nibr\.com\/bamdd\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1221,185 +1229,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../src/02a_meta_analysis.html" class="pagination-link" aria-label="Use of historical control data">
@@ -1423,23 +1407,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>To run the R code of this section please ensure to load these libraries first:</span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggrepel)</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="in">library(brms)</span></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="in">library(posterior)</span></span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="in">library(meta)</span></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="in"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="in">options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))</span></span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="in"># create cache directory if not yet available</span></span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="in">dir.create(here("_brms-cache"), FALSE)</span></span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(979356)</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(meta)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">979356</span>)</span>
 <span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a><span class="in"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="in"># {{&lt; include setup.R &gt;}}</span></span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="in">source("setup.R")</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt; include setup.R &gt;}}</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
 <span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background</span></span>
@@ -1505,16 +1489,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-91"><a href="#cb29-91" aria-hidden="true" tabindex="-1"></a>ratios and their standard errors.</span>
 <span id="cb29-92"><a href="#cb29-92" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-95"><a href="#cb29-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-96"><a href="#cb29-96" aria-hidden="true" tabindex="-1"></a>sglt2_hr <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">trial =</span> <span class="fu">c</span>(<span class="st">"DECLARE–TIMI 58"</span>, <span class="st">"EMPA-REG OUTCOME"</span>,</span>
-<span id="cb29-97"><a href="#cb29-97" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"CANVAS"</span>, <span class="st">"CANVAS-R"</span>, <span class="st">"CREDENCE"</span>, </span>
-<span id="cb29-98"><a href="#cb29-98" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"SCORED"</span>, <span class="st">"VERTIS CV"</span>),</span>
-<span id="cb29-99"><a href="#cb29-99" aria-hidden="true" tabindex="-1"></a>                  <span class="at">drug =</span> <span class="fu">c</span>(<span class="st">"dapagliflozin"</span>, <span class="st">"empagliflozin"</span>,</span>
-<span id="cb29-100"><a href="#cb29-100" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"canagliflozin"</span>, <span class="st">"canagliflozin"</span>, <span class="st">"canagliflozin"</span>,</span>
-<span id="cb29-101"><a href="#cb29-101" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"sotagliflozin"</span>, <span class="st">"ertugliflozin"</span>),</span>
-<span id="cb29-102"><a href="#cb29-102" aria-hidden="true" tabindex="-1"></a>                  <span class="at">studyno =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
-<span id="cb29-103"><a href="#cb29-103" aria-hidden="true" tabindex="-1"></a>                  <span class="at">hr =</span> <span class="fu">c</span>(<span class="fl">0.93</span>, <span class="fl">0.86</span>, <span class="fl">0.88</span>, <span class="fl">0.82</span>, <span class="fl">0.80</span>, <span class="fl">0.77</span>, <span class="fl">0.97</span>),</span>
-<span id="cb29-104"><a href="#cb29-104" aria-hidden="true" tabindex="-1"></a>                  <span class="at">hr_lcl =</span> <span class="fu">c</span>(<span class="fl">0.84</span>, <span class="fl">0.74</span>, <span class="fl">0.75</span>, <span class="fl">0.66</span>, <span class="fl">0.67</span>, <span class="fl">0.65</span>, <span class="fl">0.85</span>),</span>
-<span id="cb29-105"><a href="#cb29-105" aria-hidden="true" tabindex="-1"></a>                  <span class="at">hr_ucl =</span> <span class="fu">c</span>(<span class="fl">1.03</span>, <span class="fl">0.99</span>, <span class="fl">1.03</span>, <span class="fl">1.01</span>, <span class="fl">0.95</span>, <span class="fl">0.91</span>, <span class="fl">1.11</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-96"><a href="#cb29-96" aria-hidden="true" tabindex="-1"></a>sglt2_hr <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">trial =</span> <span class="fu">c</span>(<span class="st">"DECLARE–TIMI 58"</span>, <span class="st">"EMPA-REG OUTCOME"</span>,</span>
+<span id="cb29-97"><a href="#cb29-97" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"CANVAS"</span>, <span class="st">"CANVAS-R"</span>, <span class="st">"CREDENCE"</span>, </span>
+<span id="cb29-98"><a href="#cb29-98" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"SCORED"</span>, <span class="st">"VERTIS CV"</span>),</span>
+<span id="cb29-99"><a href="#cb29-99" aria-hidden="true" tabindex="-1"></a>                   <span class="at">drug =</span> <span class="fu">c</span>(<span class="st">"dapagliflozin"</span>, <span class="st">"empagliflozin"</span>,</span>
+<span id="cb29-100"><a href="#cb29-100" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"canagliflozin"</span>, <span class="st">"canagliflozin"</span>, <span class="st">"canagliflozin"</span>,</span>
+<span id="cb29-101"><a href="#cb29-101" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"sotagliflozin"</span>, <span class="st">"ertugliflozin"</span>),</span>
+<span id="cb29-102"><a href="#cb29-102" aria-hidden="true" tabindex="-1"></a>                   <span class="at">studyno =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
+<span id="cb29-103"><a href="#cb29-103" aria-hidden="true" tabindex="-1"></a>                   <span class="at">hr =</span> <span class="fu">c</span>(<span class="fl">0.93</span>, <span class="fl">0.86</span>, <span class="fl">0.88</span>, <span class="fl">0.82</span>, <span class="fl">0.80</span>, <span class="fl">0.77</span>, <span class="fl">0.97</span>),</span>
+<span id="cb29-104"><a href="#cb29-104" aria-hidden="true" tabindex="-1"></a>                   <span class="at">hr_lcl =</span> <span class="fu">c</span>(<span class="fl">0.84</span>, <span class="fl">0.74</span>, <span class="fl">0.75</span>, <span class="fl">0.66</span>, <span class="fl">0.67</span>, <span class="fl">0.65</span>, <span class="fl">0.85</span>),</span>
+<span id="cb29-105"><a href="#cb29-105" aria-hidden="true" tabindex="-1"></a>                   <span class="at">hr_ucl =</span> <span class="fu">c</span>(<span class="fl">1.03</span>, <span class="fl">0.99</span>, <span class="fl">1.03</span>, <span class="fl">1.01</span>, <span class="fl">0.95</span>, <span class="fl">0.91</span>, <span class="fl">1.11</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb29-106"><a href="#cb29-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(studyno)) <span class="sc">%&gt;%</span></span>
 <span id="cb29-107"><a href="#cb29-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">studyno =</span> <span class="fu">factor</span>(studyno, <span class="at">levels=</span>studyno, <span class="at">labels=</span>trial),</span>
 <span id="cb29-108"><a href="#cb29-108" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_hr =</span> <span class="fu">log</span>(hr),</span>
@@ -1553,7 +1537,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-141"><a href="#cb29-141" aria-hidden="true" tabindex="-1"></a>times with right-censoring.</span>
 <span id="cb29-142"><a href="#cb29-142" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-145"><a href="#cb29-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-146"><a href="#cb29-146" aria-hidden="true" tabindex="-1"></a>sglt2 <span class="ot">=</span> <span class="st">"record, study, trialid, studyno, drugname, treatment, cases, patients, py_to_evt_or_cens, cases_per_py</span></span>
+<span id="cb29-146"><a href="#cb29-146" aria-hidden="true" tabindex="-1"></a>sglt2 <span class="ot">&lt;-</span> <span class="st">"record, study, trialid, studyno, drugname, treatment, cases, patients, py_to_evt_or_cens, cases_per_py</span></span>
 <span id="cb29-147"><a href="#cb29-147" aria-hidden="true" tabindex="-1"></a><span class="st">1,CANVAS,NCT01032629, 1,canagliflozin, 1, 425, 2888, 15799.25651, 0.0269</span></span>
 <span id="cb29-148"><a href="#cb29-148" aria-hidden="true" tabindex="-1"></a><span class="st">2,CANVAS,NCT01032629, 1,canagliflozin, 0, 233, 1442, 7664.473684, 0.0304</span></span>
 <span id="cb29-149"><a href="#cb29-149" aria-hidden="true" tabindex="-1"></a><span class="st">3,CANVAS-R,NCT01989754, 2,canagliflozin, 1, 160, 2907, 5904.059041, 0.0271</span></span>
@@ -1780,11 +1764,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-372"><a href="#cb29-372" aria-hidden="true" tabindex="-1"></a>errors as inputs.</span>
 <span id="cb29-373"><a href="#cb29-373" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-376"><a href="#cb29-376" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-377"><a href="#cb29-377" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
-<span id="cb29-378"><a href="#cb29-378" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> log_hr <span class="sc">|</span> <span class="fu">se</span>(log_hr_stderr) <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb29-379"><a href="#cb29-379" aria-hidden="true" tabindex="-1"></a>              <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"Intercept"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)),</span>
-<span id="cb29-380"><a href="#cb29-380" aria-hidden="true" tabindex="-1"></a>              <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
-<span id="cb29-381"><a href="#cb29-381" aria-hidden="true" tabindex="-1"></a>              <span class="at">refresh =</span> <span class="dv">0</span>)</span>
+<span id="cb29-377"><a href="#cb29-377" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
+<span id="cb29-378"><a href="#cb29-378" aria-hidden="true" tabindex="-1"></a>               <span class="at">formula =</span> log_hr <span class="sc">|</span> <span class="fu">se</span>(log_hr_stderr) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb29-379"><a href="#cb29-379" aria-hidden="true" tabindex="-1"></a>               <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"Intercept"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)),</span>
+<span id="cb29-380"><a href="#cb29-380" aria-hidden="true" tabindex="-1"></a>               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
+<span id="cb29-381"><a href="#cb29-381" aria-hidden="true" tabindex="-1"></a>               <span class="at">refresh =</span> <span class="dv">0</span>)</span>
 <span id="cb29-382"><a href="#cb29-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-383"><a href="#cb29-383" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-386"><a href="#cb29-386" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -1795,12 +1779,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-391"><a href="#cb29-391" aria-hidden="true" tabindex="-1"></a>ratios and their standard errors as inputs.</span>
 <span id="cb29-392"><a href="#cb29-392" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-395"><a href="#cb29-395" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-396"><a href="#cb29-396" aria-hidden="true" tabindex="-1"></a>brmfit2 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
-<span id="cb29-397"><a href="#cb29-397" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> log_hr <span class="sc">|</span> <span class="fu">se</span>(log_hr_stderr) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>studyno),</span>
-<span id="cb29-398"><a href="#cb29-398" aria-hidden="true" tabindex="-1"></a>              <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"Intercept"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
-<span id="cb29-399"><a href="#cb29-399" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"sd"</span>, <span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
-<span id="cb29-400"><a href="#cb29-400" aria-hidden="true" tabindex="-1"></a>              <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
-<span id="cb29-401"><a href="#cb29-401" aria-hidden="true" tabindex="-1"></a>              <span class="at">refresh =</span> <span class="dv">0</span>)</span>
+<span id="cb29-396"><a href="#cb29-396" aria-hidden="true" tabindex="-1"></a>brmfit2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2_hr,</span>
+<span id="cb29-397"><a href="#cb29-397" aria-hidden="true" tabindex="-1"></a>               <span class="at">formula =</span> log_hr <span class="sc">|</span> <span class="fu">se</span>(log_hr_stderr) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>studyno),</span>
+<span id="cb29-398"><a href="#cb29-398" aria-hidden="true" tabindex="-1"></a>               <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"Intercept"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
+<span id="cb29-399"><a href="#cb29-399" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"sd"</span>, <span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
+<span id="cb29-400"><a href="#cb29-400" aria-hidden="true" tabindex="-1"></a>               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
+<span id="cb29-401"><a href="#cb29-401" aria-hidden="true" tabindex="-1"></a>               <span class="at">refresh =</span> <span class="dv">0</span>)</span>
 <span id="cb29-402"><a href="#cb29-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-403"><a href="#cb29-403" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-404"><a href="#cb29-404" aria-hidden="true" tabindex="-1"></a>As we noted before, there's at least two ways of performing posterior</span>
@@ -1810,188 +1794,189 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-408"><a href="#cb29-408" aria-hidden="true" tabindex="-1"></a>studies as the studies under analysis. This difference becomes very</span>
 <span id="cb29-409"><a href="#cb29-409" aria-hidden="true" tabindex="-1"></a>clear when working in a Bayesian regression setting using <span class="in">`brms`</span>, but is</span>
 <span id="cb29-410"><a href="#cb29-410" aria-hidden="true" tabindex="-1"></a>somewhat obscured when we use standard meta-analysis software.</span>
-<span id="cb29-413"><a href="#cb29-413" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-414"><a href="#cb29-414" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brmfit2)</span>
-<span id="cb29-415"><a href="#cb29-415" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-416"><a href="#cb29-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-419"><a href="#cb29-419" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-420"><a href="#cb29-420" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(<span class="at">object=</span>brmfit2, </span>
-<span id="cb29-421"><a href="#cb29-421" aria-hidden="true" tabindex="-1"></a>        <span class="at">newdata=</span><span class="fu">tibble</span>(<span class="at">studyno=</span><span class="st">"New study"</span>, <span class="at">log_hr_stderr=</span><span class="fl">10e-19</span>), </span>
-<span id="cb29-422"><a href="#cb29-422" aria-hidden="true" tabindex="-1"></a>        <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>, <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span>)</span>
-<span id="cb29-423"><a href="#cb29-423" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-424"><a href="#cb29-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-425"><a href="#cb29-425" aria-hidden="true" tabindex="-1"></a><span class="fu">### Meta-analysis with data from each arm as inputs</span></span>
-<span id="cb29-426"><a href="#cb29-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-427"><a href="#cb29-427" aria-hidden="true" tabindex="-1"></a>This <span class="in">`brms`</span> code performs a fixed-effects meta-analysis with arm-based</span>
-<span id="cb29-428"><a href="#cb29-428" aria-hidden="true" tabindex="-1"></a>data as inputs. We now need to assume prior distributions for the placebo group </span>
-<span id="cb29-429"><a href="#cb29-429" aria-hidden="true" tabindex="-1"></a>log-hazard  rate in each trial, for this we use an extremely wide Student-t prior with </span>
-<span id="cb29-430"><a href="#cb29-430" aria-hidden="true" tabindex="-1"></a>3 degrees of freedom centered on $-3$, because when exponentiated $e^-3 \approx 0.05$ corresponds to a plausible yearly event rate.</span>
-<span id="cb29-431"><a href="#cb29-431" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-434"><a href="#cb29-434" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-435"><a href="#cb29-435" aria-hidden="true" tabindex="-1"></a>brmfit3 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2,</span>
-<span id="cb29-436"><a href="#cb29-436" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> cases <span class="sc">|</span> <span class="fu">rate</span>(py_to_evt_or_cens) <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> study <span class="sc">+</span> treatment,</span>
-<span id="cb29-437"><a href="#cb29-437" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link=</span><span class="st">"log"</span>),</span>
-<span id="cb29-438"><a href="#cb29-438" aria-hidden="true" tabindex="-1"></a>              <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>, <span class="at">coef=</span><span class="st">"treatmentSGLT2inhibitor"</span>,</span>
-<span id="cb29-439"><a href="#cb29-439" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
-<span id="cb29-440"><a href="#cb29-440" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVAS"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb29-441"><a href="#cb29-441" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVASMR"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb29-442"><a href="#cb29-442" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCREDENCE"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb29-443"><a href="#cb29-443" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyDECLARE–TIMI58"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb29-444"><a href="#cb29-444" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyEMPAMREGOUTCOME"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb29-445"><a href="#cb29-445" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studySCORED"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb29-446"><a href="#cb29-446" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyVERTISCV"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)),</span>
-<span id="cb29-447"><a href="#cb29-447" aria-hidden="true" tabindex="-1"></a>              <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
-<span id="cb29-448"><a href="#cb29-448" aria-hidden="true" tabindex="-1"></a>              <span class="at">refresh =</span> <span class="dv">0</span>) </span>
-<span id="cb29-449"><a href="#cb29-449" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-450"><a href="#cb29-450" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-453"><a href="#cb29-453" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-454"><a href="#cb29-454" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brmfit3)</span>
-<span id="cb29-455"><a href="#cb29-455" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-456"><a href="#cb29-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-411"><a href="#cb29-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-414"><a href="#cb29-414" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-415"><a href="#cb29-415" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brmfit2)</span>
+<span id="cb29-416"><a href="#cb29-416" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-417"><a href="#cb29-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-420"><a href="#cb29-420" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-421"><a href="#cb29-421" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(<span class="at">object=</span>brmfit2, </span>
+<span id="cb29-422"><a href="#cb29-422" aria-hidden="true" tabindex="-1"></a>        <span class="at">newdata=</span><span class="fu">tibble</span>(<span class="at">studyno=</span><span class="st">"New study"</span>, <span class="at">log_hr_stderr=</span><span class="fl">10e-19</span>), </span>
+<span id="cb29-423"><a href="#cb29-423" aria-hidden="true" tabindex="-1"></a>        <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>, <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span>)</span>
+<span id="cb29-424"><a href="#cb29-424" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-425"><a href="#cb29-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-426"><a href="#cb29-426" aria-hidden="true" tabindex="-1"></a><span class="fu">### Meta-analysis with data from each arm as inputs</span></span>
+<span id="cb29-427"><a href="#cb29-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-428"><a href="#cb29-428" aria-hidden="true" tabindex="-1"></a>This <span class="in">`brms`</span> code performs a fixed-effects meta-analysis with arm-based</span>
+<span id="cb29-429"><a href="#cb29-429" aria-hidden="true" tabindex="-1"></a>data as inputs. We now need to assume prior distributions for the placebo group </span>
+<span id="cb29-430"><a href="#cb29-430" aria-hidden="true" tabindex="-1"></a>log-hazard  rate in each trial, for this we use an extremely wide Student-t prior with </span>
+<span id="cb29-431"><a href="#cb29-431" aria-hidden="true" tabindex="-1"></a>3 degrees of freedom centered on $-3$, because when exponentiated $e^-3 \approx 0.05$ corresponds to a plausible yearly event rate.</span>
+<span id="cb29-432"><a href="#cb29-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-435"><a href="#cb29-435" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-436"><a href="#cb29-436" aria-hidden="true" tabindex="-1"></a>brmfit3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2,</span>
+<span id="cb29-437"><a href="#cb29-437" aria-hidden="true" tabindex="-1"></a>               <span class="at">formula =</span> cases <span class="sc">|</span> <span class="fu">rate</span>(py_to_evt_or_cens) <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> study <span class="sc">+</span> treatment,</span>
+<span id="cb29-438"><a href="#cb29-438" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link=</span><span class="st">"log"</span>),</span>
+<span id="cb29-439"><a href="#cb29-439" aria-hidden="true" tabindex="-1"></a>               <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>, <span class="at">coef=</span><span class="st">"treatmentSGLT2inhibitor"</span>,</span>
+<span id="cb29-440"><a href="#cb29-440" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
+<span id="cb29-441"><a href="#cb29-441" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVAS"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-442"><a href="#cb29-442" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVASMR"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-443"><a href="#cb29-443" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCREDENCE"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-444"><a href="#cb29-444" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyDECLARE–TIMI58"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-445"><a href="#cb29-445" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyEMPAMREGOUTCOME"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-446"><a href="#cb29-446" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studySCORED"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-447"><a href="#cb29-447" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyVERTISCV"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)),</span>
+<span id="cb29-448"><a href="#cb29-448" aria-hidden="true" tabindex="-1"></a>               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
+<span id="cb29-449"><a href="#cb29-449" aria-hidden="true" tabindex="-1"></a>               <span class="at">refresh =</span> <span class="dv">0</span>) </span>
+<span id="cb29-450"><a href="#cb29-450" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-451"><a href="#cb29-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-454"><a href="#cb29-454" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-455"><a href="#cb29-455" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brmfit3)</span>
+<span id="cb29-456"><a href="#cb29-456" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-457"><a href="#cb29-457" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-460"><a href="#cb29-460" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-461"><a href="#cb29-461" aria-hidden="true" tabindex="-1"></a>brmfit3 <span class="sc">%&gt;%</span></span>
-<span id="cb29-462"><a href="#cb29-462" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-463"><a href="#cb29-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-464"><a href="#cb29-464" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-465"><a href="#cb29-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_draws</span>()</span>
-<span id="cb29-466"><a href="#cb29-466" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-467"><a href="#cb29-467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-468"><a href="#cb29-468" aria-hidden="true" tabindex="-1"></a>This <span class="in">`brms`</span> code performs a random-effects meta-analysis with arm-based</span>
-<span id="cb29-469"><a href="#cb29-469" aria-hidden="true" tabindex="-1"></a>data as inputs.</span>
-<span id="cb29-470"><a href="#cb29-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-471"><a href="#cb29-471" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE}</span></span>
-<span id="cb29-472"><a href="#cb29-472" aria-hidden="true" tabindex="-1"></a><span class="in">brmfit4 = brm(data=sglt2 %&gt;% mutate(trtno = 1L*(treatment=="SGLT2 inhibitor")),</span></span>
-<span id="cb29-473"><a href="#cb29-473" aria-hidden="true" tabindex="-1"></a><span class="in">              formula = cases | rate(py_to_evt_or_cens) ~ 0 + study + treatment + (0+trtno|study),</span></span>
-<span id="cb29-474"><a href="#cb29-474" aria-hidden="true" tabindex="-1"></a><span class="in">              family = poisson(link="log"),</span></span>
-<span id="cb29-475"><a href="#cb29-475" aria-hidden="true" tabindex="-1"></a><span class="in">              prior = prior(class="b", coef="treatmentSGLT2inhibitor", student_t(3, 0, 2.5)) +</span></span>
-<span id="cb29-476"><a href="#cb29-476" aria-hidden="true" tabindex="-1"></a><span class="in">                prior(class="b",  coef="studyCANVAS",   student_t(3, -3, 5)) +</span></span>
-<span id="cb29-477"><a href="#cb29-477" aria-hidden="true" tabindex="-1"></a><span class="in">                prior(class="b",  coef="studyCANVASMR",  student_t(3, -3, 5)) +</span></span>
-<span id="cb29-478"><a href="#cb29-478" aria-hidden="true" tabindex="-1"></a><span class="in">                prior(class="b",  coef="studyCREDENCE",  student_t(3, -3, 5)) +</span></span>
-<span id="cb29-479"><a href="#cb29-479" aria-hidden="true" tabindex="-1"></a><span class="in">                prior(class="b",  coef="studyDECLARE–TIMI58",  student_t(3, -3, 5)) +</span></span>
-<span id="cb29-480"><a href="#cb29-480" aria-hidden="true" tabindex="-1"></a><span class="in">                prior(class="b",  coef="studyEMPAMREGOUTCOME",  student_t(3, -3, 5)) +</span></span>
-<span id="cb29-481"><a href="#cb29-481" aria-hidden="true" tabindex="-1"></a><span class="in">                prior(class="b",  coef="studySCORED",  student_t(3, -3, 5)) +</span></span>
-<span id="cb29-482"><a href="#cb29-482" aria-hidden="true" tabindex="-1"></a><span class="in">                prior(class="b",  coef="studyVERTISCV",  student_t(3, -3, 5)) +</span></span>
-<span id="cb29-483"><a href="#cb29-483" aria-hidden="true" tabindex="-1"></a><span class="in">                prior(class="sd", normal(0,1)),</span></span>
-<span id="cb29-484"><a href="#cb29-484" aria-hidden="true" tabindex="-1"></a><span class="in">              control=list(adapt_delta=0.99),</span></span>
-<span id="cb29-485"><a href="#cb29-485" aria-hidden="true" tabindex="-1"></a><span class="in">              refresh = 0) </span></span>
-<span id="cb29-486"><a href="#cb29-486" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-487"><a href="#cb29-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-488"><a href="#cb29-488" aria-hidden="true" tabindex="-1"></a>As before, we can easily obtain inference about the mean effect of the</span>
-<span id="cb29-489"><a href="#cb29-489" aria-hidden="true" tabindex="-1"></a>SGLT-2 inhibitors across studies or the predicted effect in a new study</span>
-<span id="cb29-490"><a href="#cb29-490" aria-hidden="true" tabindex="-1"></a>drawn from the same distribution of studies as the studies under</span>
-<span id="cb29-491"><a href="#cb29-491" aria-hidden="true" tabindex="-1"></a>analysis.</span>
-<span id="cb29-492"><a href="#cb29-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-495"><a href="#cb29-495" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-496"><a href="#cb29-496" aria-hidden="true" tabindex="-1"></a>brmfit4 <span class="sc">%&gt;%</span></span>
-<span id="cb29-497"><a href="#cb29-497" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-498"><a href="#cb29-498" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-499"><a href="#cb29-499" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-500"><a href="#cb29-500" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-501"><a href="#cb29-501" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(variable, median, q5, q95) <span class="sc">%&gt;%</span></span>
-<span id="cb29-502"><a href="#cb29-502" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">3</span>)</span>
-<span id="cb29-503"><a href="#cb29-503" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-504"><a href="#cb29-504" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-507"><a href="#cb29-507" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-508"><a href="#cb29-508" aria-hidden="true" tabindex="-1"></a>brmfit4 <span class="sc">%&gt;%</span></span>
-<span id="cb29-509"><a href="#cb29-509" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-510"><a href="#cb29-510" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor <span class="sc">+</span> </span>
-<span id="cb29-511"><a href="#cb29-511" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">rnorm</span>(<span class="at">n=</span><span class="fu">length</span>(b_treatmentSGLT2inhibitor), </span>
-<span id="cb29-512"><a href="#cb29-512" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>sd_study__trtno))) <span class="sc">%&gt;%</span></span>
-<span id="cb29-513"><a href="#cb29-513" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-514"><a href="#cb29-514" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-515"><a href="#cb29-515" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(variable, median, q5, q95) <span class="sc">%&gt;%</span></span>
-<span id="cb29-516"><a href="#cb29-516" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">3</span>)</span>
-<span id="cb29-517"><a href="#cb29-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-518"><a href="#cb29-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-519"><a href="#cb29-519" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
-<span id="cb29-520"><a href="#cb29-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-521"><a href="#cb29-521" aria-hidden="true" tabindex="-1"></a>Let us combine all the results including also a standard frequentist analysis. As we can see, particularly when using log-hazard-ratios as our analysis inputs, the results of the different models are extremely similar. There seems to be substantial evidence that on average there is a benefit on MACE from SGLT-2 inhibitors in type 2 diabetes patients. </span>
-<span id="cb29-522"><a href="#cb29-522" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-523"><a href="#cb29-523" aria-hidden="true" tabindex="-1"></a>The uncertainty from random effects models is greater - especially when predicting for a new trial. When using arm-based inputs, the prior we put on the results for each arm appears to influence there results - perhaps we should make those rates exchangeable between trials to make a more data-informed decision on those rates?</span>
-<span id="cb29-524"><a href="#cb29-524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-527"><a href="#cb29-527" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb29-528"><a href="#cb29-528" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(meta)</span>
-<span id="cb29-529"><a href="#cb29-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-530"><a href="#cb29-530" aria-hidden="true" tabindex="-1"></a>frequentist_ma <span class="ot">=</span> <span class="fu">metagen</span>(<span class="at">data =</span> sglt2_hr,</span>
-<span id="cb29-531"><a href="#cb29-531" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sm =</span> <span class="st">"HR"</span>,</span>
-<span id="cb29-532"><a href="#cb29-532" aria-hidden="true" tabindex="-1"></a>                         <span class="at">TE=</span>log_hr,</span>
-<span id="cb29-533"><a href="#cb29-533" aria-hidden="true" tabindex="-1"></a>                         <span class="at">seTE=</span>log_hr_stderr, </span>
-<span id="cb29-534"><a href="#cb29-534" aria-hidden="true" tabindex="-1"></a>                         <span class="at">studlab=</span>trial)</span>
-<span id="cb29-535"><a href="#cb29-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-536"><a href="#cb29-536" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb29-537"><a href="#cb29-537" aria-hidden="true" tabindex="-1"></a>  brmfit1 <span class="sc">%&gt;%</span></span>
-<span id="cb29-538"><a href="#cb29-538" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-539"><a href="#cb29-539" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_Intercept)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-540"><a href="#cb29-540" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-541"><a href="#cb29-541" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-542"><a href="#cb29-542" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Fixed effects - log-hazard ratios"</span>),</span>
-<span id="cb29-543"><a href="#cb29-543" aria-hidden="true" tabindex="-1"></a>   brmfit2 <span class="sc">%&gt;%</span></span>
-<span id="cb29-544"><a href="#cb29-544" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-545"><a href="#cb29-545" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_Intercept)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-546"><a href="#cb29-546" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-547"><a href="#cb29-547" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-548"><a href="#cb29-548" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Random effects - log-hazard ratios;inference on mean"</span>),</span>
-<span id="cb29-549"><a href="#cb29-549" aria-hidden="true" tabindex="-1"></a>  brmfit2 <span class="sc">%&gt;%</span></span>
-<span id="cb29-550"><a href="#cb29-550" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-551"><a href="#cb29-551" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_Intercept <span class="sc">+</span></span>
-<span id="cb29-552"><a href="#cb29-552" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">rnorm</span>(<span class="at">n=</span><span class="fu">length</span>(b_Intercept), </span>
-<span id="cb29-553"><a href="#cb29-553" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">mean=</span><span class="dv">0</span>, </span>
-<span id="cb29-554"><a href="#cb29-554" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">sd=</span>sd_studyno__Intercept))) <span class="sc">%&gt;%</span></span>
-<span id="cb29-555"><a href="#cb29-555" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-556"><a href="#cb29-556" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-557"><a href="#cb29-557" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Random effects - log-hazard ratios;inference for new trial"</span>),</span>
-<span id="cb29-558"><a href="#cb29-558" aria-hidden="true" tabindex="-1"></a>  brmfit3 <span class="sc">%&gt;%</span></span>
-<span id="cb29-559"><a href="#cb29-559" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-560"><a href="#cb29-560" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-561"><a href="#cb29-561" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-562"><a href="#cb29-562" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb29-563"><a href="#cb29-563" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Fixed effects - rates by arm"</span>),</span>
-<span id="cb29-564"><a href="#cb29-564" aria-hidden="true" tabindex="-1"></a>  brmfit4 <span class="sc">%&gt;%</span></span>
-<span id="cb29-565"><a href="#cb29-565" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-566"><a href="#cb29-566" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-567"><a href="#cb29-567" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-568"><a href="#cb29-568" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-569"><a href="#cb29-569" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Random effects - rates by arm; inference on mean"</span>),</span>
-<span id="cb29-570"><a href="#cb29-570" aria-hidden="true" tabindex="-1"></a>  brmfit4 <span class="sc">%&gt;%</span></span>
-<span id="cb29-571"><a href="#cb29-571" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-572"><a href="#cb29-572" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor <span class="sc">+</span> </span>
-<span id="cb29-573"><a href="#cb29-573" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">rnorm</span>(<span class="at">n=</span><span class="fu">length</span>(b_treatmentSGLT2inhibitor), </span>
-<span id="cb29-574"><a href="#cb29-574" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>sd_study__trtno))) <span class="sc">%&gt;%</span></span>
-<span id="cb29-575"><a href="#cb29-575" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb29-576"><a href="#cb29-576" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb29-577"><a href="#cb29-577" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Random effects - rates by arm; inference for new trial"</span>),</span>
-<span id="cb29-578"><a href="#cb29-578" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Method =</span> <span class="fu">c</span>(<span class="st">"Fixed effects - frequentist"</span>, <span class="st">"Random effects - frequentist"</span>),</span>
-<span id="cb29-579"><a href="#cb29-579" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable=</span><span class="st">"hazard ratio"</span>,</span>
-<span id="cb29-580"><a href="#cb29-580" aria-hidden="true" tabindex="-1"></a>         <span class="at">median=</span><span class="fu">exp</span>(<span class="fu">c</span>(frequentist_ma<span class="sc">$</span>TE.fixed, frequentist_ma<span class="sc">$</span>TE.random)), </span>
-<span id="cb29-581"><a href="#cb29-581" aria-hidden="true" tabindex="-1"></a>         <span class="at">q5=</span><span class="fu">exp</span>(<span class="fu">c</span>(frequentist_ma<span class="sc">$</span>lower.fixed, frequentist_ma<span class="sc">$</span>lower.random)), </span>
-<span id="cb29-582"><a href="#cb29-582" aria-hidden="true" tabindex="-1"></a>         <span class="at">q95=</span><span class="fu">exp</span>(<span class="fu">c</span>(frequentist_ma<span class="sc">$</span>upper.fixed, frequentist_ma<span class="sc">$</span>upper.random)))) <span class="sc">%&gt;%</span></span>
-<span id="cb29-583"><a href="#cb29-583" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Method, variable, median, q5, q95) <span class="sc">%&gt;%</span></span>
-<span id="cb29-584"><a href="#cb29-584" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method_class =</span> <span class="fu">case_when</span>(</span>
-<span id="cb29-585"><a href="#cb29-585" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Fixed effects - frequentist"</span><span class="sc">~</span><span class="dv">1</span>L,</span>
-<span id="cb29-586"><a href="#cb29-586" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Fixed effects - log-hazard ratios"</span> <span class="sc">~</span> <span class="dv">2</span>L,</span>
-<span id="cb29-587"><a href="#cb29-587" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Fixed effects - rates by arm"</span><span class="sc">~</span><span class="dv">3</span>L,</span>
-<span id="cb29-588"><a href="#cb29-588" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - frequentist"</span><span class="sc">~</span><span class="dv">4</span>L,</span>
-<span id="cb29-589"><a href="#cb29-589" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - log-hazard ratios;inference on mean"</span><span class="sc">~</span><span class="dv">5</span>L,</span>
-<span id="cb29-590"><a href="#cb29-590" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - rates by arm; inference on mean"</span><span class="sc">~</span><span class="dv">6</span>L,</span>
-<span id="cb29-591"><a href="#cb29-591" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - log-hazard ratios;inference for new trial"</span><span class="sc">~</span><span class="dv">7</span>L,</span>
-<span id="cb29-592"><a href="#cb29-592" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - rates by arm; inference for new trial"</span><span class="sc">~</span><span class="dv">8</span>L,</span>
-<span id="cb29-593"><a href="#cb29-593" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span><span class="sc">~</span><span class="dv">9</span>L)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-594"><a href="#cb29-594" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(method_class)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-595"><a href="#cb29-595" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method_class =</span> <span class="fu">factor</span>(method_class, <span class="at">levels=</span><span class="dv">8</span>L<span class="sc">:</span><span class="dv">1</span>L, <span class="at">labels=</span><span class="fu">gsub</span>(<span class="st">" - "</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, Method))) <span class="sc">%&gt;%</span></span>
-<span id="cb29-596"><a href="#cb29-596" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>median, <span class="at">y=</span>method_class, <span class="at">xmin=</span>q5, <span class="at">xmax=</span>q95)) <span class="sc">+</span></span>
-<span id="cb29-597"><a href="#cb29-597" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">1</span>, <span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb29-598"><a href="#cb29-598" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">19</span>) <span class="sc">+</span></span>
-<span id="cb29-599"><a href="#cb29-599" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="at">height=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb29-600"><a href="#cb29-600" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
-<span id="cb29-601"><a href="#cb29-601" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Hazard ratio for MACE (&lt;1 indicates</span><span class="sc">\n</span><span class="st">hazard rate reduction vs. placebo)"</span>) <span class="sc">+</span></span>
-<span id="cb29-602"><a href="#cb29-602" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span>
-<span id="cb29-603"><a href="#cb29-603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-604"><a href="#cb29-604" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-605"><a href="#cb29-605" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-606"><a href="#cb29-606" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
-<span id="cb29-607"><a href="#cb29-607" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-608"><a href="#cb29-608" aria-hidden="true" tabindex="-1"></a>As we saw, <span class="in">`brms`</span> makes it extremely easy to fit various meta-analysis models. Looking at these from a regression perspective makes it easier to see their connections and makes the extension of meta-analysis to meta-regression seem like just one little logical step.</span>
+<span id="cb29-458"><a href="#cb29-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-461"><a href="#cb29-461" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-462"><a href="#cb29-462" aria-hidden="true" tabindex="-1"></a>brmfit3 <span class="sc">%&gt;%</span></span>
+<span id="cb29-463"><a href="#cb29-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-464"><a href="#cb29-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-465"><a href="#cb29-465" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-466"><a href="#cb29-466" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_draws</span>()</span>
+<span id="cb29-467"><a href="#cb29-467" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-468"><a href="#cb29-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-469"><a href="#cb29-469" aria-hidden="true" tabindex="-1"></a>This <span class="in">`brms`</span> code performs a random-effects meta-analysis with arm-based</span>
+<span id="cb29-470"><a href="#cb29-470" aria-hidden="true" tabindex="-1"></a>data as inputs.</span>
+<span id="cb29-471"><a href="#cb29-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-472"><a href="#cb29-472" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message = FALSE}</span></span>
+<span id="cb29-473"><a href="#cb29-473" aria-hidden="true" tabindex="-1"></a>brmfit4 <span class="ot">=</span> <span class="fu">brm</span>(<span class="at">data=</span>sglt2 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">trtno =</span> <span class="dv">1</span>L<span class="sc">*</span>(treatment<span class="sc">==</span><span class="st">"SGLT2 inhibitor"</span>)),</span>
+<span id="cb29-474"><a href="#cb29-474" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> cases <span class="sc">|</span> <span class="fu">rate</span>(py_to_evt_or_cens) <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> study <span class="sc">+</span> treatment <span class="sc">+</span> (<span class="dv">0</span><span class="sc">+</span>trtno<span class="sc">|</span>study),</span>
+<span id="cb29-475"><a href="#cb29-475" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link=</span><span class="st">"log"</span>),</span>
+<span id="cb29-476"><a href="#cb29-476" aria-hidden="true" tabindex="-1"></a>              <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>, <span class="at">coef=</span><span class="st">"treatmentSGLT2inhibitor"</span>, <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>)) <span class="sc">+</span></span>
+<span id="cb29-477"><a href="#cb29-477" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVAS"</span>,   <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-478"><a href="#cb29-478" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCANVASMR"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-479"><a href="#cb29-479" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyCREDENCE"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-480"><a href="#cb29-480" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyDECLARE–TIMI58"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-481"><a href="#cb29-481" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyEMPAMREGOUTCOME"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-482"><a href="#cb29-482" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studySCORED"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-483"><a href="#cb29-483" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"b"</span>,  <span class="at">coef=</span><span class="st">"studyVERTISCV"</span>,  <span class="fu">student_t</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb29-484"><a href="#cb29-484" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="at">class=</span><span class="st">"sd"</span>, <span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
+<span id="cb29-485"><a href="#cb29-485" aria-hidden="true" tabindex="-1"></a>              <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>),</span>
+<span id="cb29-486"><a href="#cb29-486" aria-hidden="true" tabindex="-1"></a>              <span class="at">refresh =</span> <span class="dv">0</span>) </span>
+<span id="cb29-487"><a href="#cb29-487" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-488"><a href="#cb29-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-489"><a href="#cb29-489" aria-hidden="true" tabindex="-1"></a>As before, we can easily obtain inference about the mean effect of the</span>
+<span id="cb29-490"><a href="#cb29-490" aria-hidden="true" tabindex="-1"></a>SGLT-2 inhibitors across studies or the predicted effect in a new study</span>
+<span id="cb29-491"><a href="#cb29-491" aria-hidden="true" tabindex="-1"></a>drawn from the same distribution of studies as the studies under</span>
+<span id="cb29-492"><a href="#cb29-492" aria-hidden="true" tabindex="-1"></a>analysis.</span>
+<span id="cb29-493"><a href="#cb29-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-496"><a href="#cb29-496" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-497"><a href="#cb29-497" aria-hidden="true" tabindex="-1"></a>brmfit4 <span class="sc">%&gt;%</span></span>
+<span id="cb29-498"><a href="#cb29-498" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-499"><a href="#cb29-499" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-500"><a href="#cb29-500" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-501"><a href="#cb29-501" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-502"><a href="#cb29-502" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(variable, median, q5, q95) <span class="sc">%&gt;%</span></span>
+<span id="cb29-503"><a href="#cb29-503" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb29-504"><a href="#cb29-504" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-505"><a href="#cb29-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-508"><a href="#cb29-508" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-509"><a href="#cb29-509" aria-hidden="true" tabindex="-1"></a>brmfit4 <span class="sc">%&gt;%</span></span>
+<span id="cb29-510"><a href="#cb29-510" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-511"><a href="#cb29-511" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor <span class="sc">+</span> </span>
+<span id="cb29-512"><a href="#cb29-512" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">rnorm</span>(<span class="at">n=</span><span class="fu">length</span>(b_treatmentSGLT2inhibitor), </span>
+<span id="cb29-513"><a href="#cb29-513" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>sd_study__trtno))) <span class="sc">%&gt;%</span></span>
+<span id="cb29-514"><a href="#cb29-514" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-515"><a href="#cb29-515" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-516"><a href="#cb29-516" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(variable, median, q5, q95) <span class="sc">%&gt;%</span></span>
+<span id="cb29-517"><a href="#cb29-517" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">3</span>)</span>
+<span id="cb29-518"><a href="#cb29-518" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-519"><a href="#cb29-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-520"><a href="#cb29-520" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb29-521"><a href="#cb29-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-522"><a href="#cb29-522" aria-hidden="true" tabindex="-1"></a>Let us combine all the results including also a standard frequentist analysis. As we can see, particularly when using log-hazard-ratios as our analysis inputs, the results of the different models are extremely similar. There seems to be substantial evidence that on average there is a benefit on MACE from SGLT-2 inhibitors in type 2 diabetes patients. </span>
+<span id="cb29-523"><a href="#cb29-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-524"><a href="#cb29-524" aria-hidden="true" tabindex="-1"></a>The uncertainty from random effects models is greater - especially when predicting for a new trial. When using arm-based inputs, the prior we put on the results for each arm appears to influence there results - perhaps we should make those rates exchangeable between trials to make a more data-informed decision on those rates?</span>
+<span id="cb29-525"><a href="#cb29-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-528"><a href="#cb29-528" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-529"><a href="#cb29-529" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(meta)</span>
+<span id="cb29-530"><a href="#cb29-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-531"><a href="#cb29-531" aria-hidden="true" tabindex="-1"></a>frequentist_ma <span class="ot">=</span> <span class="fu">metagen</span>(<span class="at">data =</span> sglt2_hr,</span>
+<span id="cb29-532"><a href="#cb29-532" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sm =</span> <span class="st">"HR"</span>,</span>
+<span id="cb29-533"><a href="#cb29-533" aria-hidden="true" tabindex="-1"></a>                         <span class="at">TE=</span>log_hr,</span>
+<span id="cb29-534"><a href="#cb29-534" aria-hidden="true" tabindex="-1"></a>                         <span class="at">seTE=</span>log_hr_stderr, </span>
+<span id="cb29-535"><a href="#cb29-535" aria-hidden="true" tabindex="-1"></a>                         <span class="at">studlab=</span>trial)</span>
+<span id="cb29-536"><a href="#cb29-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-537"><a href="#cb29-537" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb29-538"><a href="#cb29-538" aria-hidden="true" tabindex="-1"></a>  brmfit1 <span class="sc">%&gt;%</span></span>
+<span id="cb29-539"><a href="#cb29-539" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-540"><a href="#cb29-540" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_Intercept)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-541"><a href="#cb29-541" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-542"><a href="#cb29-542" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-543"><a href="#cb29-543" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Fixed effects - log-hazard ratios"</span>),</span>
+<span id="cb29-544"><a href="#cb29-544" aria-hidden="true" tabindex="-1"></a>   brmfit2 <span class="sc">%&gt;%</span></span>
+<span id="cb29-545"><a href="#cb29-545" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-546"><a href="#cb29-546" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_Intercept)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-547"><a href="#cb29-547" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-548"><a href="#cb29-548" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-549"><a href="#cb29-549" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Random effects - log-hazard ratios;inference on mean"</span>),</span>
+<span id="cb29-550"><a href="#cb29-550" aria-hidden="true" tabindex="-1"></a>  brmfit2 <span class="sc">%&gt;%</span></span>
+<span id="cb29-551"><a href="#cb29-551" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-552"><a href="#cb29-552" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_Intercept <span class="sc">+</span></span>
+<span id="cb29-553"><a href="#cb29-553" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">rnorm</span>(<span class="at">n=</span><span class="fu">length</span>(b_Intercept), </span>
+<span id="cb29-554"><a href="#cb29-554" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">mean=</span><span class="dv">0</span>, </span>
+<span id="cb29-555"><a href="#cb29-555" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">sd=</span>sd_studyno__Intercept))) <span class="sc">%&gt;%</span></span>
+<span id="cb29-556"><a href="#cb29-556" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-557"><a href="#cb29-557" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-558"><a href="#cb29-558" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Random effects - log-hazard ratios;inference for new trial"</span>),</span>
+<span id="cb29-559"><a href="#cb29-559" aria-hidden="true" tabindex="-1"></a>  brmfit3 <span class="sc">%&gt;%</span></span>
+<span id="cb29-560"><a href="#cb29-560" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-561"><a href="#cb29-561" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-562"><a href="#cb29-562" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-563"><a href="#cb29-563" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>()  <span class="sc">%&gt;%</span></span>
+<span id="cb29-564"><a href="#cb29-564" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Fixed effects - rates by arm"</span>),</span>
+<span id="cb29-565"><a href="#cb29-565" aria-hidden="true" tabindex="-1"></a>  brmfit4 <span class="sc">%&gt;%</span></span>
+<span id="cb29-566"><a href="#cb29-566" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-567"><a href="#cb29-567" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-568"><a href="#cb29-568" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-569"><a href="#cb29-569" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-570"><a href="#cb29-570" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Random effects - rates by arm; inference on mean"</span>),</span>
+<span id="cb29-571"><a href="#cb29-571" aria-hidden="true" tabindex="-1"></a>  brmfit4 <span class="sc">%&gt;%</span></span>
+<span id="cb29-572"><a href="#cb29-572" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-573"><a href="#cb29-573" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_variables</span>(<span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">exp</span>(b_treatmentSGLT2inhibitor <span class="sc">+</span> </span>
+<span id="cb29-574"><a href="#cb29-574" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">rnorm</span>(<span class="at">n=</span><span class="fu">length</span>(b_treatmentSGLT2inhibitor), </span>
+<span id="cb29-575"><a href="#cb29-575" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>sd_study__trtno))) <span class="sc">%&gt;%</span></span>
+<span id="cb29-576"><a href="#cb29-576" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(.chain, .iteration, .draw, <span class="st">`</span><span class="at">hazard ratio</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-577"><a href="#cb29-577" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_draws</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb29-578"><a href="#cb29-578" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="st">"Random effects - rates by arm; inference for new trial"</span>),</span>
+<span id="cb29-579"><a href="#cb29-579" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Method =</span> <span class="fu">c</span>(<span class="st">"Fixed effects - frequentist"</span>, <span class="st">"Random effects - frequentist"</span>),</span>
+<span id="cb29-580"><a href="#cb29-580" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable=</span><span class="st">"hazard ratio"</span>,</span>
+<span id="cb29-581"><a href="#cb29-581" aria-hidden="true" tabindex="-1"></a>         <span class="at">median=</span><span class="fu">exp</span>(<span class="fu">c</span>(frequentist_ma<span class="sc">$</span>TE.fixed, frequentist_ma<span class="sc">$</span>TE.random)), </span>
+<span id="cb29-582"><a href="#cb29-582" aria-hidden="true" tabindex="-1"></a>         <span class="at">q5=</span><span class="fu">exp</span>(<span class="fu">c</span>(frequentist_ma<span class="sc">$</span>lower.fixed, frequentist_ma<span class="sc">$</span>lower.random)), </span>
+<span id="cb29-583"><a href="#cb29-583" aria-hidden="true" tabindex="-1"></a>         <span class="at">q95=</span><span class="fu">exp</span>(<span class="fu">c</span>(frequentist_ma<span class="sc">$</span>upper.fixed, frequentist_ma<span class="sc">$</span>upper.random)))) <span class="sc">%&gt;%</span></span>
+<span id="cb29-584"><a href="#cb29-584" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Method, variable, median, q5, q95) <span class="sc">%&gt;%</span></span>
+<span id="cb29-585"><a href="#cb29-585" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method_class =</span> <span class="fu">case_when</span>(</span>
+<span id="cb29-586"><a href="#cb29-586" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Fixed effects - frequentist"</span><span class="sc">~</span><span class="dv">1</span>L,</span>
+<span id="cb29-587"><a href="#cb29-587" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Fixed effects - log-hazard ratios"</span> <span class="sc">~</span> <span class="dv">2</span>L,</span>
+<span id="cb29-588"><a href="#cb29-588" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Fixed effects - rates by arm"</span><span class="sc">~</span><span class="dv">3</span>L,</span>
+<span id="cb29-589"><a href="#cb29-589" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - frequentist"</span><span class="sc">~</span><span class="dv">4</span>L,</span>
+<span id="cb29-590"><a href="#cb29-590" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - log-hazard ratios;inference on mean"</span><span class="sc">~</span><span class="dv">5</span>L,</span>
+<span id="cb29-591"><a href="#cb29-591" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - rates by arm; inference on mean"</span><span class="sc">~</span><span class="dv">6</span>L,</span>
+<span id="cb29-592"><a href="#cb29-592" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - log-hazard ratios;inference for new trial"</span><span class="sc">~</span><span class="dv">7</span>L,</span>
+<span id="cb29-593"><a href="#cb29-593" aria-hidden="true" tabindex="-1"></a>    Method<span class="sc">==</span><span class="st">"Random effects - rates by arm; inference for new trial"</span><span class="sc">~</span><span class="dv">8</span>L,</span>
+<span id="cb29-594"><a href="#cb29-594" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span><span class="sc">~</span><span class="dv">9</span>L)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-595"><a href="#cb29-595" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(method_class)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-596"><a href="#cb29-596" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method_class =</span> <span class="fu">factor</span>(method_class, <span class="at">levels=</span><span class="dv">8</span>L<span class="sc">:</span><span class="dv">1</span>L, <span class="at">labels=</span><span class="fu">gsub</span>(<span class="st">" - "</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, Method))) <span class="sc">%&gt;%</span></span>
+<span id="cb29-597"><a href="#cb29-597" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>median, <span class="at">y=</span>method_class, <span class="at">xmin=</span>q5, <span class="at">xmax=</span>q95)) <span class="sc">+</span></span>
+<span id="cb29-598"><a href="#cb29-598" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">1</span>, <span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb29-599"><a href="#cb29-599" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">19</span>) <span class="sc">+</span></span>
+<span id="cb29-600"><a href="#cb29-600" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="at">height=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb29-601"><a href="#cb29-601" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb29-602"><a href="#cb29-602" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Hazard ratio for MACE (&lt;1 indicates</span><span class="sc">\n</span><span class="st">hazard rate reduction vs. placebo)"</span>) <span class="sc">+</span></span>
+<span id="cb29-603"><a href="#cb29-603" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span>
+<span id="cb29-604"><a href="#cb29-604" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-605"><a href="#cb29-605" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-606"><a href="#cb29-606" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-607"><a href="#cb29-607" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb29-608"><a href="#cb29-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-609"><a href="#cb29-609" aria-hidden="true" tabindex="-1"></a>As we saw, <span class="in">`brms`</span> makes it extremely easy to fit various meta-analysis models. Looking at these from a regression perspective makes it easier to see their connections and makes the extension of meta-analysis to meta-regression seem like just one little logical step.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

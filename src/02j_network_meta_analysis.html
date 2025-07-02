@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,8 +23,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -88,15 +89,16 @@ div.csl-indent {
 <meta name="quarto:offset" content="../">
 <link href="../src/03a_stan_code.html" rel="next">
 <link href="../src/02i_time_to_event.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-17b130513c03c63eda25ebab28eba857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b619e7580ba2a849d98fc8631a679bb4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -158,7 +160,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../bamdd.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -2653,287 +2655,293 @@ Warren, Fiona C., Keith R. Abrams, and Alex J. Sutton. 2014. <span>“Hierarchic
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/opensource\.nibr\.com\/bamdd\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
+      return false;
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
         }
-        return container.innerHTML
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/opensource\.nibr\.com\/bamdd\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -2941,185 +2949,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../src/02i_time_to_event.html" class="pagination-link" aria-label="Time-to-event data">
@@ -3152,28 +3136,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>libraries and options first:</span>
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="in">library(brms)</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="in">library(posterior)</span></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="in">library(knitr)</span></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="in">library(gt)</span></span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="in">library(netmeta) # for graphing the network &amp; other NMA utils</span></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="in"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="in">options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))</span></span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="in"># create cache directory if not yet available</span></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="in">dir.create(here("_brms-cache"), FALSE)</span></span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(5675798)</span></span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="in"># allow for wider printouts without line-breaking</span></span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="in">options(width=120)</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(netmeta) <span class="co"># for graphing the network &amp; other NMA utils</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5675798</span>)</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="co"># allow for wider printouts without line-breaking</span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width=</span><span class="dv">120</span>)</span>
 <span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="in">control_args &lt;- list(adapt_delta=0.95)</span></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>control_args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>)</span>
 <span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="in"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="in"># {{&lt; include setup.R &gt;}}</span></span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a><span class="in">source("setup.R")</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt; include setup.R &gt;}}</span></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
 <span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a></span>
@@ -3217,28 +3201,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a>terms of the odds of patients managing to stop smoking.</span>
 <span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r smoking_cessation_data}</span></span>
-<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a><span class="in">data("smokingcessation", package = "netmeta")</span></span>
+<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"smokingcessation"</span>, <span class="at">package =</span> <span class="st">"netmeta"</span>)</span>
 <span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a><span class="in">recode_trt &lt;- c("A" = "No_intervention",</span></span>
-<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a><span class="in">                "B" = "Self_help",</span></span>
-<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a><span class="in">                "C" = "Individual_counselling",</span></span>
-<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a><span class="in">                "D" = "Group_counselling")</span></span>
+<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>recode_trt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span> <span class="ot">=</span> <span class="st">"No_intervention"</span>,</span>
+<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a>                <span class="st">"B"</span> <span class="ot">=</span> <span class="st">"Self_help"</span>,</span>
+<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a>                <span class="st">"C"</span> <span class="ot">=</span> <span class="st">"Individual_counselling"</span>,</span>
+<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a>                <span class="st">"D"</span> <span class="ot">=</span> <span class="st">"Group_counselling"</span>)</span>
 <span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a><span class="in">smoking &lt;- smokingcessation %&gt;%</span></span>
-<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(studyn = 1:n()) %&gt;%</span></span>
-<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_longer(-studyn,</span></span>
-<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a><span class="in">               names_to = c(".value", "trtid"),</span></span>
-<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a><span class="in">               names_pattern = "(.*)([1-9])") %&gt;%</span></span>
-<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(!is.na(n)) %&gt;%</span></span>
-<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(</span></span>
-<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a><span class="in">    study = factor(studyn),</span></span>
-<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a><span class="in">    trtc = factor(recode_trt[treat], unname(recode_trt)),</span></span>
-<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a><span class="in">    trtn = as.numeric(trtc),</span></span>
-<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a><span class="in">    r = event,</span></span>
-<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a><span class="in">    n</span></span>
-<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a>smoking <span class="ot">&lt;-</span> smokingcessation <span class="sc">%&gt;%</span></span>
+<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">studyn =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>studyn,</span>
+<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"trtid"</span>),</span>
+<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">"(.*)([1-9])"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a>    <span class="at">study =</span> <span class="fu">factor</span>(studyn),</span>
+<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a>    <span class="at">trtc =</span> <span class="fu">factor</span>(recode_trt[treat], <span class="fu">unname</span>(recode_trt)),</span>
+<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a>    <span class="at">trtn =</span> <span class="fu">as.numeric</span>(trtc),</span>
+<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a>    <span class="at">r =</span> event,</span>
+<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a>    n</span>
+<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a><span class="in">gt_preview(smoking)</span></span>
+<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a><span class="fu">gt_preview</span>(smoking)</span>
 <span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -3385,15 +3369,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-255"><a href="#cb18-255" aria-hidden="true" tabindex="-1"></a>writing <span class="in">`0 + study + trtc + (0 + trtc |study)`</span>:</span>
 <span id="cb18-256"><a href="#cb18-256" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-257"><a href="#cb18-257" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, results='hide', message=FALSE, warning=FALSE}</span></span>
-<span id="cb18-258"><a href="#cb18-258" aria-hidden="true" tabindex="-1"></a><span class="in">brmfit &lt;- brm(</span></span>
-<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a><span class="in">  data = smoking,</span></span>
-<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a><span class="in">  formula = r | trials(n) ~ 0 + study + trtc + (0 + trtc || study),</span></span>
-<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a><span class="in">  family = binomial(),</span></span>
-<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a><span class="in">  control = control_args,</span></span>
-<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a><span class="in">  prior = prior(class = b, normal(0, 3.14)),</span></span>
-<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a><span class="in">  silent = 2,</span></span>
-<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a><span class="in">  refresh = 0</span></span>
-<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-258"><a href="#cb18-258" aria-hidden="true" tabindex="-1"></a>brmfit <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> smoking,</span>
+<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> study <span class="sc">+</span> trtc <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> trtc <span class="sc">||</span> study),</span>
+<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
+<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> control_args,</span>
+<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class =</span> b, <span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">3.14</span>)),</span>
+<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a>  <span class="at">silent =</span> <span class="dv">2</span>,</span>
+<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span></span>
+<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a>As we can see from the summary of the fitted model, there are coefficients for</span>
@@ -3436,42 +3420,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-308"><a href="#cb18-308" aria-hidden="true" tabindex="-1"></a>automated way. </span>
 <span id="cb18-309"><a href="#cb18-309" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-310"><a href="#cb18-310" aria-hidden="true" tabindex="-1"></a><span class="in">```{r piepho_model2, results='hide', message=FALSE, warning=FALSE}</span></span>
-<span id="cb18-311"><a href="#cb18-311" aria-hidden="true" tabindex="-1"></a><span class="in">B &lt;- model.matrix(~ 0 + trtc, data = smoking)</span></span>
-<span id="cb18-312"><a href="#cb18-312" aria-hidden="true" tabindex="-1"></a><span class="in">S &lt;- model.matrix(~ 0 + study, data = smoking)</span></span>
+<span id="cb18-311"><a href="#cb18-311" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> trtc, <span class="at">data =</span> smoking)</span>
+<span id="cb18-312"><a href="#cb18-312" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> study, <span class="at">data =</span> smoking)</span>
 <span id="cb18-313"><a href="#cb18-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-314"><a href="#cb18-314" aria-hidden="true" tabindex="-1"></a><span class="in">smoking_with_dummies &lt;- bind_cols(</span></span>
-<span id="cb18-315"><a href="#cb18-315" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(smoking, r, n, study, trtc),</span></span>
-<span id="cb18-316"><a href="#cb18-316" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble(B),</span></span>
-<span id="cb18-317"><a href="#cb18-317" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble(S)</span></span>
-<span id="cb18-318"><a href="#cb18-318" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-314"><a href="#cb18-314" aria-hidden="true" tabindex="-1"></a>smoking_with_dummies <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb18-315"><a href="#cb18-315" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(smoking, r, n, study, trtc),</span>
+<span id="cb18-316"><a href="#cb18-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(B),</span>
+<span id="cb18-317"><a href="#cb18-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(S)</span>
+<span id="cb18-318"><a href="#cb18-318" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb18-319"><a href="#cb18-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-320"><a href="#cb18-320" aria-hidden="true" tabindex="-1"></a><span class="in">f &lt;- as.formula(paste(</span></span>
-<span id="cb18-321"><a href="#cb18-321" aria-hidden="true" tabindex="-1"></a><span class="in">  "r | trials(n) ~ 0 + study +",</span></span>
-<span id="cb18-322"><a href="#cb18-322" aria-hidden="true" tabindex="-1"></a><span class="in">  paste(colnames(B), collapse = " + "),</span></span>
-<span id="cb18-323"><a href="#cb18-323" aria-hidden="true" tabindex="-1"></a><span class="in">  "+ (0 + trtc || study)"</span></span>
-<span id="cb18-324"><a href="#cb18-324" aria-hidden="true" tabindex="-1"></a><span class="in">))</span></span>
+<span id="cb18-320"><a href="#cb18-320" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(</span>
+<span id="cb18-321"><a href="#cb18-321" aria-hidden="true" tabindex="-1"></a>  <span class="st">"r | trials(n) ~ 0 + study +"</span>,</span>
+<span id="cb18-322"><a href="#cb18-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(<span class="fu">colnames</span>(B), <span class="at">collapse =</span> <span class="st">" + "</span>),</span>
+<span id="cb18-323"><a href="#cb18-323" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ (0 + trtc || study)"</span></span>
+<span id="cb18-324"><a href="#cb18-324" aria-hidden="true" tabindex="-1"></a>))</span>
 <span id="cb18-325"><a href="#cb18-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-326"><a href="#cb18-326" aria-hidden="true" tabindex="-1"></a><span class="in"># could also do:</span></span>
-<span id="cb18-327"><a href="#cb18-327" aria-hidden="true" tabindex="-1"></a><span class="in"># f &lt;- as.formula(paste(</span></span>
-<span id="cb18-328"><a href="#cb18-328" aria-hidden="true" tabindex="-1"></a><span class="in">#     "r | trials(n) ~ 0 + trtc +",</span></span>
-<span id="cb18-329"><a href="#cb18-329" aria-hidden="true" tabindex="-1"></a><span class="in">#     paste(colnames(S), collapse = " + "),</span></span>
-<span id="cb18-330"><a href="#cb18-330" aria-hidden="true" tabindex="-1"></a><span class="in">#     "+ (0 + trtc || study)"</span></span>
-<span id="cb18-331"><a href="#cb18-331" aria-hidden="true" tabindex="-1"></a><span class="in"># ))</span></span>
+<span id="cb18-326"><a href="#cb18-326" aria-hidden="true" tabindex="-1"></a><span class="co"># could also do:</span></span>
+<span id="cb18-327"><a href="#cb18-327" aria-hidden="true" tabindex="-1"></a><span class="co"># f &lt;- as.formula(paste(</span></span>
+<span id="cb18-328"><a href="#cb18-328" aria-hidden="true" tabindex="-1"></a><span class="co">#     "r | trials(n) ~ 0 + trtc +",</span></span>
+<span id="cb18-329"><a href="#cb18-329" aria-hidden="true" tabindex="-1"></a><span class="co">#     paste(colnames(S), collapse = " + "),</span></span>
+<span id="cb18-330"><a href="#cb18-330" aria-hidden="true" tabindex="-1"></a><span class="co">#     "+ (0 + trtc || study)"</span></span>
+<span id="cb18-331"><a href="#cb18-331" aria-hidden="true" tabindex="-1"></a><span class="co"># ))</span></span>
 <span id="cb18-332"><a href="#cb18-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-333"><a href="#cb18-333" aria-hidden="true" tabindex="-1"></a><span class="in">brmfit_with_dummies &lt;- brm(data = smoking_with_dummies,</span></span>
-<span id="cb18-334"><a href="#cb18-334" aria-hidden="true" tabindex="-1"></a><span class="in">                           formula = f,</span></span>
-<span id="cb18-335"><a href="#cb18-335" aria-hidden="true" tabindex="-1"></a><span class="in">                           family = binomial(),</span></span>
-<span id="cb18-336"><a href="#cb18-336" aria-hidden="true" tabindex="-1"></a><span class="in">                           control = control_args,</span></span>
-<span id="cb18-337"><a href="#cb18-337" aria-hidden="true" tabindex="-1"></a><span class="in">                           prior = prior(class=b, normal(0, 3.14)),</span></span>
-<span id="cb18-338"><a href="#cb18-338" aria-hidden="true" tabindex="-1"></a><span class="in">                           silent = 2,</span></span>
-<span id="cb18-339"><a href="#cb18-339" aria-hidden="true" tabindex="-1"></a><span class="in">                           refresh = 0)</span></span>
+<span id="cb18-333"><a href="#cb18-333" aria-hidden="true" tabindex="-1"></a>brmfit_with_dummies <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">data =</span> smoking_with_dummies,</span>
+<span id="cb18-334"><a href="#cb18-334" aria-hidden="true" tabindex="-1"></a>                           <span class="at">formula =</span> f,</span>
+<span id="cb18-335"><a href="#cb18-335" aria-hidden="true" tabindex="-1"></a>                           <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
+<span id="cb18-336"><a href="#cb18-336" aria-hidden="true" tabindex="-1"></a>                           <span class="at">control =</span> control_args,</span>
+<span id="cb18-337"><a href="#cb18-337" aria-hidden="true" tabindex="-1"></a>                           <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">3.14</span>)),</span>
+<span id="cb18-338"><a href="#cb18-338" aria-hidden="true" tabindex="-1"></a>                           <span class="at">silent =</span> <span class="dv">2</span>,</span>
+<span id="cb18-339"><a href="#cb18-339" aria-hidden="true" tabindex="-1"></a>                           <span class="at">refresh =</span> <span class="dv">0</span>)</span>
 <span id="cb18-340"><a href="#cb18-340" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-341"><a href="#cb18-341" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-342"><a href="#cb18-342" aria-hidden="true" tabindex="-1"></a>When we now summarize the model fit, we have regression coefficients for all </span>
 <span id="cb18-343"><a href="#cb18-343" aria-hidden="true" tabindex="-1"></a>treatment groups and studies.</span>
 <span id="cb18-344"><a href="#cb18-344" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-345"><a href="#cb18-345" aria-hidden="true" tabindex="-1"></a><span class="in">```{r piepho_results2}</span></span>
-<span id="cb18-346"><a href="#cb18-346" aria-hidden="true" tabindex="-1"></a><span class="in">summary(brmfit_with_dummies)</span></span>
+<span id="cb18-346"><a href="#cb18-346" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brmfit_with_dummies)</span>
 <span id="cb18-347"><a href="#cb18-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-348"><a href="#cb18-348" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-349"><a href="#cb18-349" aria-hidden="true" tabindex="-1"></a>While the coefficients for each treatment have changed compared to the previous</span>
@@ -3550,21 +3534,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-424"><a href="#cb18-424" aria-hidden="true" tabindex="-1"></a>coefficients should still be looked at in contrast to each other.</span>
 <span id="cb18-425"><a href="#cb18-425" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-426"><a href="#cb18-426" aria-hidden="true" tabindex="-1"></a><span class="in">```{r piepho_model3, results='hide', message=FALSE, warning=FALSE, eval = TRUE}</span></span>
-<span id="cb18-427"><a href="#cb18-427" aria-hidden="true" tabindex="-1"></a><span class="in">smoking_with_centered_dummies &lt;- bind_cols(</span></span>
-<span id="cb18-428"><a href="#cb18-428" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(smoking, r, n, study, trtc),</span></span>
-<span id="cb18-429"><a href="#cb18-429" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble(B - 0.5),</span></span>
-<span id="cb18-430"><a href="#cb18-430" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble(S)</span></span>
-<span id="cb18-431"><a href="#cb18-431" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-427"><a href="#cb18-427" aria-hidden="true" tabindex="-1"></a>smoking_with_centered_dummies <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb18-428"><a href="#cb18-428" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(smoking, r, n, study, trtc),</span>
+<span id="cb18-429"><a href="#cb18-429" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(B <span class="sc">-</span> <span class="fl">0.5</span>),</span>
+<span id="cb18-430"><a href="#cb18-430" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(S)</span>
+<span id="cb18-431"><a href="#cb18-431" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb18-432"><a href="#cb18-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-433"><a href="#cb18-433" aria-hidden="true" tabindex="-1"></a><span class="in">brmfit_with_centered_dummies &lt;- brm(</span></span>
-<span id="cb18-434"><a href="#cb18-434" aria-hidden="true" tabindex="-1"></a><span class="in">    data = smoking_with_centered_dummies,</span></span>
-<span id="cb18-435"><a href="#cb18-435" aria-hidden="true" tabindex="-1"></a><span class="in">    formula = f,</span></span>
-<span id="cb18-436"><a href="#cb18-436" aria-hidden="true" tabindex="-1"></a><span class="in">    family = binomial(),</span></span>
-<span id="cb18-437"><a href="#cb18-437" aria-hidden="true" tabindex="-1"></a><span class="in">    control = control_args,</span></span>
-<span id="cb18-438"><a href="#cb18-438" aria-hidden="true" tabindex="-1"></a><span class="in">    prior = prior(class=b, normal(0, 3.14)),</span></span>
-<span id="cb18-439"><a href="#cb18-439" aria-hidden="true" tabindex="-1"></a><span class="in">    silent = 2,</span></span>
-<span id="cb18-440"><a href="#cb18-440" aria-hidden="true" tabindex="-1"></a><span class="in">    refresh = 0</span></span>
-<span id="cb18-441"><a href="#cb18-441" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-433"><a href="#cb18-433" aria-hidden="true" tabindex="-1"></a>brmfit_with_centered_dummies <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb18-434"><a href="#cb18-434" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> smoking_with_centered_dummies,</span>
+<span id="cb18-435"><a href="#cb18-435" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> f,</span>
+<span id="cb18-436"><a href="#cb18-436" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
+<span id="cb18-437"><a href="#cb18-437" aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> control_args,</span>
+<span id="cb18-438"><a href="#cb18-438" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">3.14</span>)),</span>
+<span id="cb18-439"><a href="#cb18-439" aria-hidden="true" tabindex="-1"></a>    <span class="at">silent =</span> <span class="dv">2</span>,</span>
+<span id="cb18-440"><a href="#cb18-440" aria-hidden="true" tabindex="-1"></a>    <span class="at">refresh =</span> <span class="dv">0</span></span>
+<span id="cb18-441"><a href="#cb18-441" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb18-442"><a href="#cb18-442" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-443"><a href="#cb18-443" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-444"><a href="#cb18-444" aria-hidden="true" tabindex="-1"></a>With the relatively low-information priors we've chosen here, all three of these models produce similar results</span>
@@ -3623,88 +3607,88 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb18-501"><a href="#cb18-501" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-502"><a href="#cb18-502" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-503"><a href="#cb18-503" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.height=7}</span></span>
-<span id="cb18-504"><a href="#cb18-504" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb18-505"><a href="#cb18-505" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-summary: "Show the code"</span></span>
-<span id="cb18-506"><a href="#cb18-506" aria-hidden="true" tabindex="-1"></a><span class="in"># identify the A vs C studies</span></span>
-<span id="cb18-507"><a href="#cb18-507" aria-hidden="true" tabindex="-1"></a><span class="in">ac_studies &lt;- smoking %&gt;%</span></span>
-<span id="cb18-508"><a href="#cb18-508" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(trtc %in% c("No_intervention", "Individual_counselling")) %&gt;%</span></span>
-<span id="cb18-509"><a href="#cb18-509" aria-hidden="true" tabindex="-1"></a><span class="in">  add_count(study, name = "num_treatments") %&gt;%</span></span>
-<span id="cb18-510"><a href="#cb18-510" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(num_treatments == 2) %&gt;%</span></span>
-<span id="cb18-511"><a href="#cb18-511" aria-hidden="true" tabindex="-1"></a><span class="in">  arrange(study, trtc)</span></span>
+<span id="cb18-504"><a href="#cb18-504" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb18-505"><a href="#cb18-505" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Show the code"</span></span>
+<span id="cb18-506"><a href="#cb18-506" aria-hidden="true" tabindex="-1"></a><span class="co"># identify the A vs C studies</span></span>
+<span id="cb18-507"><a href="#cb18-507" aria-hidden="true" tabindex="-1"></a>ac_studies <span class="ot">&lt;-</span> smoking <span class="sc">%&gt;%</span></span>
+<span id="cb18-508"><a href="#cb18-508" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(trtc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"No_intervention"</span>, <span class="st">"Individual_counselling"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-509"><a href="#cb18-509" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(study, <span class="at">name =</span> <span class="st">"num_treatments"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-510"><a href="#cb18-510" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(num_treatments <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-511"><a href="#cb18-511" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(study, trtc)</span>
 <span id="cb18-512"><a href="#cb18-512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-513"><a href="#cb18-513" aria-hidden="true" tabindex="-1"></a><span class="in"># summarize the A vs C log odds ratio using Beta-Binomial models independently</span></span>
-<span id="cb18-514"><a href="#cb18-514" aria-hidden="true" tabindex="-1"></a><span class="in"># across studies and arms</span></span>
-<span id="cb18-515"><a href="#cb18-515" aria-hidden="true" tabindex="-1"></a><span class="in">arm_level_beta_binom &lt;- ac_studies %&gt;%</span></span>
-<span id="cb18-516"><a href="#cb18-516" aria-hidden="true" tabindex="-1"></a><span class="in">  rowwise() %&gt;%</span></span>
-<span id="cb18-517"><a href="#cb18-517" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(p = map2(r, n, ~ rbeta(10000, r + 0.5, n - r + 0.5))) %&gt;%</span></span>
-<span id="cb18-518"><a href="#cb18-518" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(study, trtc, p) %&gt;%</span></span>
-<span id="cb18-519"><a href="#cb18-519" aria-hidden="true" tabindex="-1"></a><span class="in">  pivot_wider(names_from = trtc, values_from = p)</span></span>
+<span id="cb18-513"><a href="#cb18-513" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize the A vs C log odds ratio using Beta-Binomial models independently</span></span>
+<span id="cb18-514"><a href="#cb18-514" aria-hidden="true" tabindex="-1"></a><span class="co"># across studies and arms</span></span>
+<span id="cb18-515"><a href="#cb18-515" aria-hidden="true" tabindex="-1"></a>arm_level_beta_binom <span class="ot">&lt;-</span> ac_studies <span class="sc">%&gt;%</span></span>
+<span id="cb18-516"><a href="#cb18-516" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb18-517"><a href="#cb18-517" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">map2</span>(r, n, <span class="sc">~</span> <span class="fu">rbeta</span>(<span class="dv">10000</span>, r <span class="sc">+</span> <span class="fl">0.5</span>, n <span class="sc">-</span> r <span class="sc">+</span> <span class="fl">0.5</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb18-518"><a href="#cb18-518" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(study, trtc, p) <span class="sc">%&gt;%</span></span>
+<span id="cb18-519"><a href="#cb18-519" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> trtc, <span class="at">values_from =</span> p)</span>
 <span id="cb18-520"><a href="#cb18-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-521"><a href="#cb18-521" aria-hidden="true" tabindex="-1"></a><span class="in">study_effects &lt;- arm_level_beta_binom %&gt;%</span></span>
-<span id="cb18-522"><a href="#cb18-522" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(log_odds_ratio = map2(No_intervention, Individual_counselling,</span></span>
-<span id="cb18-523"><a href="#cb18-523" aria-hidden="true" tabindex="-1"></a><span class="in">                               ~ log(.x) + log(1 - .y) - log(1 - .x) - log(.y)),</span></span>
-<span id="cb18-524"><a href="#cb18-524" aria-hidden="true" tabindex="-1"></a><span class="in">         out = map(log_odds_ratio, ~ summarize_draws(matrix(.), mean, sd, ~ quantile(., probs = c(0.025, 0.5, 0.975))))) %&gt;%</span></span>
-<span id="cb18-525"><a href="#cb18-525" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(study = factor(study), out) %&gt;%</span></span>
-<span id="cb18-526"><a href="#cb18-526" aria-hidden="true" tabindex="-1"></a><span class="in">  unnest(out) %&gt;%</span></span>
-<span id="cb18-527"><a href="#cb18-527" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(-variable)</span></span>
+<span id="cb18-521"><a href="#cb18-521" aria-hidden="true" tabindex="-1"></a>study_effects <span class="ot">&lt;-</span> arm_level_beta_binom <span class="sc">%&gt;%</span></span>
+<span id="cb18-522"><a href="#cb18-522" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_odds_ratio =</span> <span class="fu">map2</span>(No_intervention, Individual_counselling,</span>
+<span id="cb18-523"><a href="#cb18-523" aria-hidden="true" tabindex="-1"></a>                               <span class="sc">~</span> <span class="fu">log</span>(.x) <span class="sc">+</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> .y) <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> .x) <span class="sc">-</span> <span class="fu">log</span>(.y)),</span>
+<span id="cb18-524"><a href="#cb18-524" aria-hidden="true" tabindex="-1"></a>         <span class="at">out =</span> <span class="fu">map</span>(log_odds_ratio, <span class="sc">~</span> <span class="fu">summarize_draws</span>(<span class="fu">matrix</span>(.), mean, sd, <span class="sc">~</span> <span class="fu">quantile</span>(., <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))))) <span class="sc">%&gt;%</span></span>
+<span id="cb18-525"><a href="#cb18-525" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">study =</span> <span class="fu">factor</span>(study), out) <span class="sc">%&gt;%</span></span>
+<span id="cb18-526"><a href="#cb18-526" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(out) <span class="sc">%&gt;%</span></span>
+<span id="cb18-527"><a href="#cb18-527" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>variable)</span>
 <span id="cb18-528"><a href="#cb18-528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-529"><a href="#cb18-529" aria-hidden="true" tabindex="-1"></a><span class="in"># pairwise meta-analysis of the log odds ratios based on summary statistics</span></span>
-<span id="cb18-530"><a href="#cb18-530" aria-hidden="true" tabindex="-1"></a><span class="in">rbest_fit &lt;- RBesT::gMAP(cbind(mean, sd) ~ 1 | study,</span></span>
-<span id="cb18-531"><a href="#cb18-531" aria-hidden="true" tabindex="-1"></a><span class="in">                         data = study_effects,</span></span>
-<span id="cb18-532"><a href="#cb18-532" aria-hidden="true" tabindex="-1"></a><span class="in">                         tau.dist = "HalfNormal",</span></span>
-<span id="cb18-533"><a href="#cb18-533" aria-hidden="true" tabindex="-1"></a><span class="in">                         tau.prior = 1,</span></span>
-<span id="cb18-534"><a href="#cb18-534" aria-hidden="true" tabindex="-1"></a><span class="in">                         beta.prior = cbind(0,2))</span></span>
+<span id="cb18-529"><a href="#cb18-529" aria-hidden="true" tabindex="-1"></a><span class="co"># pairwise meta-analysis of the log odds ratios based on summary statistics</span></span>
+<span id="cb18-530"><a href="#cb18-530" aria-hidden="true" tabindex="-1"></a>rbest_fit <span class="ot">&lt;-</span> RBesT<span class="sc">::</span><span class="fu">gMAP</span>(<span class="fu">cbind</span>(mean, sd) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> study,</span>
+<span id="cb18-531"><a href="#cb18-531" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> study_effects,</span>
+<span id="cb18-532"><a href="#cb18-532" aria-hidden="true" tabindex="-1"></a>                         <span class="at">tau.dist =</span> <span class="st">"HalfNormal"</span>,</span>
+<span id="cb18-533"><a href="#cb18-533" aria-hidden="true" tabindex="-1"></a>                         <span class="at">tau.prior =</span> <span class="dv">1</span>,</span>
+<span id="cb18-534"><a href="#cb18-534" aria-hidden="true" tabindex="-1"></a>                         <span class="at">beta.prior =</span> <span class="fu">cbind</span>(<span class="dv">0</span>,<span class="dv">2</span>))</span>
 <span id="cb18-535"><a href="#cb18-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-536"><a href="#cb18-536" aria-hidden="true" tabindex="-1"></a><span class="in"># study-level treatment-effect estimates from RBesT</span></span>
-<span id="cb18-537"><a href="#cb18-537" aria-hidden="true" tabindex="-1"></a><span class="in">fitted_rbest &lt;- bind_cols(dplyr::select(study_effects, study), fitted(rbest_fit))</span></span>
+<span id="cb18-536"><a href="#cb18-536" aria-hidden="true" tabindex="-1"></a><span class="co"># study-level treatment-effect estimates from RBesT</span></span>
+<span id="cb18-537"><a href="#cb18-537" aria-hidden="true" tabindex="-1"></a>fitted_rbest <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(study_effects, study), <span class="fu">fitted</span>(rbest_fit))</span>
 <span id="cb18-538"><a href="#cb18-538" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-539"><a href="#cb18-539" aria-hidden="true" tabindex="-1"></a><span class="in"># study-level treatment effect estimates from the NMA model</span></span>
-<span id="cb18-540"><a href="#cb18-540" aria-hidden="true" tabindex="-1"></a><span class="in">nd &lt;- inner_join(smoking_with_dummies,</span></span>
-<span id="cb18-541"><a href="#cb18-541" aria-hidden="true" tabindex="-1"></a><span class="in">                 dplyr::select(ac_studies, study, trtc),</span></span>
-<span id="cb18-542"><a href="#cb18-542" aria-hidden="true" tabindex="-1"></a><span class="in">                 c("study", "trtc")) %&gt;%</span></span>
-<span id="cb18-543"><a href="#cb18-543" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(n = 1)</span></span>
+<span id="cb18-539"><a href="#cb18-539" aria-hidden="true" tabindex="-1"></a><span class="co"># study-level treatment effect estimates from the NMA model</span></span>
+<span id="cb18-540"><a href="#cb18-540" aria-hidden="true" tabindex="-1"></a>nd <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(smoking_with_dummies,</span>
+<span id="cb18-541"><a href="#cb18-541" aria-hidden="true" tabindex="-1"></a>                 dplyr<span class="sc">::</span><span class="fu">select</span>(ac_studies, study, trtc),</span>
+<span id="cb18-542"><a href="#cb18-542" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"study"</span>, <span class="st">"trtc"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-543"><a href="#cb18-543" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="dv">1</span>)</span>
 <span id="cb18-544"><a href="#cb18-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-545"><a href="#cb18-545" aria-hidden="true" tabindex="-1"></a><span class="in">lp &lt;- posterior_epred(brmfit, newdata = nd)</span></span>
-<span id="cb18-546"><a href="#cb18-546" aria-hidden="true" tabindex="-1"></a><span class="in">lpA &lt;- lp[,nd$trtc == "No_intervention"]</span></span>
-<span id="cb18-547"><a href="#cb18-547" aria-hidden="true" tabindex="-1"></a><span class="in">lpC &lt;- lp[,nd$trtc == "Individual_counselling"]</span></span>
-<span id="cb18-548"><a href="#cb18-548" aria-hidden="true" tabindex="-1"></a><span class="in">lor &lt;- log(lpA) + log(1 - lpC) - log(1 - lpA) - log(lpC)</span></span>
+<span id="cb18-545"><a href="#cb18-545" aria-hidden="true" tabindex="-1"></a>lp <span class="ot">&lt;-</span> <span class="fu">posterior_epred</span>(brmfit, <span class="at">newdata =</span> nd)</span>
+<span id="cb18-546"><a href="#cb18-546" aria-hidden="true" tabindex="-1"></a>lpA <span class="ot">&lt;-</span> lp[,nd<span class="sc">$</span>trtc <span class="sc">==</span> <span class="st">"No_intervention"</span>]</span>
+<span id="cb18-547"><a href="#cb18-547" aria-hidden="true" tabindex="-1"></a>lpC <span class="ot">&lt;-</span> lp[,nd<span class="sc">$</span>trtc <span class="sc">==</span> <span class="st">"Individual_counselling"</span>]</span>
+<span id="cb18-548"><a href="#cb18-548" aria-hidden="true" tabindex="-1"></a>lor <span class="ot">&lt;-</span> <span class="fu">log</span>(lpA) <span class="sc">+</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> lpC) <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> lpA) <span class="sc">-</span> <span class="fu">log</span>(lpC)</span>
 <span id="cb18-549"><a href="#cb18-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-550"><a href="#cb18-550" aria-hidden="true" tabindex="-1"></a><span class="in">fitted_nma &lt;- bind_cols(</span></span>
-<span id="cb18-551"><a href="#cb18-551" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(study_effects, study),</span></span>
-<span id="cb18-552"><a href="#cb18-552" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::select(summarize_draws(lor, mean, sd, ~ quantile(., probs = c(0.025, 0.5, 0.975))), -variable)</span></span>
-<span id="cb18-553"><a href="#cb18-553" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-550"><a href="#cb18-550" aria-hidden="true" tabindex="-1"></a>fitted_nma <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb18-551"><a href="#cb18-551" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(study_effects, study),</span>
+<span id="cb18-552"><a href="#cb18-552" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">summarize_draws</span>(lor, mean, sd, <span class="sc">~</span> <span class="fu">quantile</span>(., <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))), <span class="sc">-</span>variable)</span>
+<span id="cb18-553"><a href="#cb18-553" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb18-554"><a href="#cb18-554" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-555"><a href="#cb18-555" aria-hidden="true" tabindex="-1"></a><span class="in"># mean and MAP treatment effect estimates from RBesT</span></span>
-<span id="cb18-556"><a href="#cb18-556" aria-hidden="true" tabindex="-1"></a><span class="in">mean_rbest &lt;- summary(rbest_fit, type="response")[c("theta.pred", "theta")] %&gt;% </span></span>
-<span id="cb18-557"><a href="#cb18-557" aria-hidden="true" tabindex="-1"></a><span class="in">  do.call(what = "rbind") %&gt;%</span></span>
-<span id="cb18-558"><a href="#cb18-558" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble(rownames = "study") %&gt;% </span></span>
-<span id="cb18-559"><a href="#cb18-559" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(type = "pairwise meta",</span></span>
-<span id="cb18-560"><a href="#cb18-560" aria-hidden="true" tabindex="-1"></a><span class="in">         study = c("theta_resp_pred" = "MAP", "theta_resp" = "Mean")[study])</span></span>
+<span id="cb18-555"><a href="#cb18-555" aria-hidden="true" tabindex="-1"></a><span class="co"># mean and MAP treatment effect estimates from RBesT</span></span>
+<span id="cb18-556"><a href="#cb18-556" aria-hidden="true" tabindex="-1"></a>mean_rbest <span class="ot">&lt;-</span> <span class="fu">summary</span>(rbest_fit, <span class="at">type=</span><span class="st">"response"</span>)[<span class="fu">c</span>(<span class="st">"theta.pred"</span>, <span class="st">"theta"</span>)] <span class="sc">%&gt;%</span> </span>
+<span id="cb18-557"><a href="#cb18-557" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do.call</span>(<span class="at">what =</span> <span class="st">"rbind"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-558"><a href="#cb18-558" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"study"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-559"><a href="#cb18-559" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">"pairwise meta"</span>,</span>
+<span id="cb18-560"><a href="#cb18-560" aria-hidden="true" tabindex="-1"></a>         <span class="at">study =</span> <span class="fu">c</span>(<span class="st">"theta_resp_pred"</span> <span class="ot">=</span> <span class="st">"MAP"</span>, <span class="st">"theta_resp"</span> <span class="ot">=</span> <span class="st">"Mean"</span>)[study])</span>
 <span id="cb18-561"><a href="#cb18-561" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-562"><a href="#cb18-562" aria-hidden="true" tabindex="-1"></a><span class="in"># mean treatment effect estimate from NMA model</span></span>
-<span id="cb18-563"><a href="#cb18-563" aria-hidden="true" tabindex="-1"></a><span class="in">mean_nma &lt;- summarize_contrasts(brmfit, variable = "trtc", model_name = "nma", mean, sd,</span></span>
-<span id="cb18-564"><a href="#cb18-564" aria-hidden="true" tabindex="-1"></a><span class="in">                                ~ quantile(., probs = c(0.025, 0.5, 0.975))) %&gt;%</span></span>
-<span id="cb18-565"><a href="#cb18-565" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(variable == "No_intervention vs Individual_counselling") %&gt;%</span></span>
-<span id="cb18-566"><a href="#cb18-566" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(study = "Mean", type = "network meta")</span></span>
+<span id="cb18-562"><a href="#cb18-562" aria-hidden="true" tabindex="-1"></a><span class="co"># mean treatment effect estimate from NMA model</span></span>
+<span id="cb18-563"><a href="#cb18-563" aria-hidden="true" tabindex="-1"></a>mean_nma <span class="ot">&lt;-</span> <span class="fu">summarize_contrasts</span>(brmfit, <span class="at">variable =</span> <span class="st">"trtc"</span>, <span class="at">model_name =</span> <span class="st">"nma"</span>, mean, sd,</span>
+<span id="cb18-564"><a href="#cb18-564" aria-hidden="true" tabindex="-1"></a>                                <span class="sc">~</span> <span class="fu">quantile</span>(., <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb18-565"><a href="#cb18-565" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"No_intervention vs Individual_counselling"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-566"><a href="#cb18-566" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">study =</span> <span class="st">"Mean"</span>, <span class="at">type =</span> <span class="st">"network meta"</span>)</span>
 <span id="cb18-567"><a href="#cb18-567" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-568"><a href="#cb18-568" aria-hidden="true" tabindex="-1"></a><span class="in">all_ests &lt;- bind_rows(</span></span>
-<span id="cb18-569"><a href="#cb18-569" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(study_effects, type = "stratified", estimate_type = "Study-level"),</span></span>
-<span id="cb18-570"><a href="#cb18-570" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(fitted_rbest, type = "pairwise meta", estimate_type = "Study-level"),</span></span>
-<span id="cb18-571"><a href="#cb18-571" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(fitted_nma, type = "network meta", estimate_type = "Study-level"),</span></span>
-<span id="cb18-572"><a href="#cb18-572" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(mean_rbest, estimate_type = "Mean"),</span></span>
-<span id="cb18-573"><a href="#cb18-573" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(mean_nma, estimate_type = "Mean")</span></span>
-<span id="cb18-574"><a href="#cb18-574" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb18-568"><a href="#cb18-568" aria-hidden="true" tabindex="-1"></a>all_ests <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb18-569"><a href="#cb18-569" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(study_effects, <span class="at">type =</span> <span class="st">"stratified"</span>, <span class="at">estimate_type =</span> <span class="st">"Study-level"</span>),</span>
+<span id="cb18-570"><a href="#cb18-570" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(fitted_rbest, <span class="at">type =</span> <span class="st">"pairwise meta"</span>, <span class="at">estimate_type =</span> <span class="st">"Study-level"</span>),</span>
+<span id="cb18-571"><a href="#cb18-571" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(fitted_nma, <span class="at">type =</span> <span class="st">"network meta"</span>, <span class="at">estimate_type =</span> <span class="st">"Study-level"</span>),</span>
+<span id="cb18-572"><a href="#cb18-572" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(mean_rbest, <span class="at">estimate_type =</span> <span class="st">"Mean"</span>),</span>
+<span id="cb18-573"><a href="#cb18-573" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(mean_nma, <span class="at">estimate_type =</span> <span class="st">"Mean"</span>)</span>
+<span id="cb18-574"><a href="#cb18-574" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb18-575"><a href="#cb18-575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-576"><a href="#cb18-576" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(all_ests, aes(y = study, x = mean, xmin = `2.5%`, xmax = `97.5%`,</span></span>
-<span id="cb18-577"><a href="#cb18-577" aria-hidden="true" tabindex="-1"></a><span class="in">                     group = type, color = type)) +</span></span>
-<span id="cb18-578"><a href="#cb18-578" aria-hidden="true" tabindex="-1"></a><span class="in">    geom_pointrange(position = position_dodge(0.4)) +</span></span>
-<span id="cb18-579"><a href="#cb18-579" aria-hidden="true" tabindex="-1"></a><span class="in">    facet_grid(estimate_type ~ ., space = "free", scales = "free") +</span></span>
-<span id="cb18-580"><a href="#cb18-580" aria-hidden="true" tabindex="-1"></a><span class="in">    geom_vline(xintercept = 0, linetype = "dashed") +</span></span>
-<span id="cb18-581"><a href="#cb18-581" aria-hidden="true" tabindex="-1"></a><span class="in">    scale_x_continuous(breaks=seq(-5,1,by=1)) +</span></span>
-<span id="cb18-582"><a href="#cb18-582" aria-hidden="true" tabindex="-1"></a><span class="in">    coord_cartesian(xlim=c(-5,0.5)) +</span></span>
-<span id="cb18-583"><a href="#cb18-583" aria-hidden="true" tabindex="-1"></a><span class="in">    labs(x = "Log odds ratio for individual counselling vs no intervention",</span></span>
-<span id="cb18-584"><a href="#cb18-584" aria-hidden="true" tabindex="-1"></a><span class="in">         y = "Study", color = "Analysis\nmethod") +</span></span>
-<span id="cb18-585"><a href="#cb18-585" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(legend.position = "bottom")</span></span>
+<span id="cb18-576"><a href="#cb18-576" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_ests, <span class="fu">aes</span>(<span class="at">y =</span> study, <span class="at">x =</span> mean, <span class="at">xmin =</span> <span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>, <span class="at">xmax =</span> <span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>,</span>
+<span id="cb18-577"><a href="#cb18-577" aria-hidden="true" tabindex="-1"></a>                     <span class="at">group =</span> type, <span class="at">color =</span> type)) <span class="sc">+</span></span>
+<span id="cb18-578"><a href="#cb18-578" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.4</span>)) <span class="sc">+</span></span>
+<span id="cb18-579"><a href="#cb18-579" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(estimate_type <span class="sc">~</span> ., <span class="at">space =</span> <span class="st">"free"</span>, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb18-580"><a href="#cb18-580" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb18-581"><a href="#cb18-581" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">1</span>,<span class="at">by=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb18-582"><a href="#cb18-582" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb18-583"><a href="#cb18-583" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Log odds ratio for individual counselling vs no intervention"</span>,</span>
+<span id="cb18-584"><a href="#cb18-584" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Study"</span>, <span class="at">color =</span> <span class="st">"Analysis</span><span class="sc">\n</span><span class="st">method"</span>) <span class="sc">+</span></span>
+<span id="cb18-585"><a href="#cb18-585" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
 <span id="cb18-586"><a href="#cb18-586" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-587"><a href="#cb18-587" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-588"><a href="#cb18-588" aria-hidden="true" tabindex="-1"></a></span>

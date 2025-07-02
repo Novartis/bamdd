@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,8 +23,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,15 +88,16 @@ div.csl-indent {
 <meta name="quarto:offset" content="../">
 <link href="../src/02b_dose_finding.html" rel="next">
 <link href="../src/02ac_meta_analysis_strata.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-17b130513c03c63eda25ebab28eba857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b619e7580ba2a849d98fc8631a679bb4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -157,7 +159,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../bamdd.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -3377,287 +3379,293 @@ Statistical Association</em> 117: 862–74. <a href="https://doi.org/10.1080/016
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/opensource\.nibr\.com\/bamdd\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
+      return false;
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
         }
-        return container.innerHTML
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/opensource\.nibr\.com\/bamdd\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -3665,185 +3673,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../src/02ac_meta_analysis_strata.html" class="pagination-link" aria-label="Use of historical control data with stratification">
@@ -3880,33 +3864,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>To run the R code of this section please ensure to load these libraries first:</span>
 <span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r basesetup,eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}</span></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="in">library(brms)</span></span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="in">library(RBesT)</span></span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="in">library(knitr)</span></span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="in">library(gt)</span></span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggdist) # Great ggplo2 extension package for visualizing distributions/priors/posteriors</span></span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="in">library(distributional) # Defines distribution (that we then use in via ggdist)</span></span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="in">library(posterior)</span></span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RBesT)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdist) <span class="co"># Great ggplo2 extension package for visualizing distributions/priors/posteriors</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(distributional) <span class="co"># Defines distribution (that we then use in via ggdist)</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="in"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="in">options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))</span></span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="in"># create cache directory if not yet available</span></span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="in">dir.create(here("_brms-cache"), FALSE)</span></span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(678571)</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">678571</span>)</span>
 <span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a><span class="in"># default controls args passed to Stan</span></span>
-<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a><span class="in">control_args &lt;- list(adapt_delta=0.99, step_size=0.1)</span></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a><span class="co"># default controls args passed to Stan</span></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>control_args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>, <span class="at">step_size=</span><span class="fl">0.1</span>)</span>
 <span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a><span class="in"># nice common ggplot2 theme</span></span>
-<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="in">theme_set(theme_bw(base_size=18))</span></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a><span class="co"># nice common ggplot2 theme</span></span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size=</span><span class="dv">18</span>))</span>
 <span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
-<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="in"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="in"># {{&lt; include setup.R &gt;}}</span></span>
-<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="in">source("setup.R")</span></span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt; include setup.R &gt;}}</span></span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
 <span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a></span>
@@ -4002,9 +3986,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb21-146"><a href="#cb21-146" aria-hidden="true" tabindex="-1"></a>When we plot this mixture distribution, it looks as follows:</span>
 <span id="cb21-147"><a href="#cb21-147" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-148"><a href="#cb21-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot_mixture}</span></span>
-<span id="cb21-149"><a href="#cb21-149" aria-hidden="true" tabindex="-1"></a><span class="in">plot(mixture_prior) + </span></span>
-<span id="cb21-150"><a href="#cb21-150" aria-hidden="true" tabindex="-1"></a><span class="in">  xlab("Log-odds ratio for response\non drug compared with placebo") +</span></span>
-<span id="cb21-151"><a href="#cb21-151" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position="bottom")</span></span>
+<span id="cb21-149"><a href="#cb21-149" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mixture_prior) <span class="sc">+</span> </span>
+<span id="cb21-150"><a href="#cb21-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log-odds ratio for response</span><span class="sc">\n</span><span class="st">on drug compared with placebo"</span>) <span class="sc">+</span></span>
+<span id="cb21-151"><a href="#cb21-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>)</span>
 <span id="cb21-152"><a href="#cb21-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-153"><a href="#cb21-153" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-154"><a href="#cb21-154" aria-hidden="true" tabindex="-1"></a>The hypothetical single arm trial data for NVS101 are given below:</span>
@@ -4153,368 +4137,375 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb21-305"><a href="#cb21-305" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb21-306"><a href="#cb21-306" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-307"><a href="#cb21-307" aria-hidden="true" tabindex="-1"></a>The resulting prior distribution looks as shown in the figure below.</span>
-<span id="cb21-310"><a href="#cb21-310" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-311"><a href="#cb21-311" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="sc">-</span><span class="fl">1.67</span>, <span class="at">sd=</span><span class="fl">1.0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-312"><a href="#cb21-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
-<span id="cb21-313"><a href="#cb21-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"darkorange"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb21-314"><a href="#cb21-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>), </span>
-<span id="cb21-315"><a href="#cb21-315" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">(="</span>, </span>
-<span id="cb21-316"><a href="#cb21-316" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">round</span>(<span class="fu">inv_logit</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>)),<span class="dv">2</span>)<span class="sc">*</span><span class="dv">100</span>,<span class="st">"%)"</span>)) <span class="sc">+</span></span>
-<span id="cb21-317"><a href="#cb21-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Average placebo log-odds"</span>) <span class="sc">+</span></span>
-<span id="cb21-318"><a href="#cb21-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span>
-<span id="cb21-319"><a href="#cb21-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-320"><a href="#cb21-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-321"><a href="#cb21-321" aria-hidden="true" tabindex="-1"></a>::: {.alert .alert-info}</span>
-<span id="cb21-322"><a href="#cb21-322" aria-hidden="true" tabindex="-1"></a>**NOTE**: The <span class="in">`ggdist`</span> and <span class="in">`distributional`</span> packages are an amazing</span>
-<span id="cb21-323"><a href="#cb21-323" aria-hidden="true" tabindex="-1"></a>combo for understanding distributions. <span class="in">`ggdist`</span> extends <span class="in">`ggplot2`</span> to</span>
-<span id="cb21-324"><a href="#cb21-324" aria-hidden="true" tabindex="-1"></a>help us with visualizing distributions (see</span>
-<span id="cb21-325"><a href="#cb21-325" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">here</span><span class="co">](https://mjskay.github.io/ggdist/)</span> for more information).</span>
-<span id="cb21-326"><a href="#cb21-326" aria-hidden="true" tabindex="-1"></a><span class="in">`distributional`</span> lets us work with distributions including many commonly</span>
-<span id="cb21-327"><a href="#cb21-327" aria-hidden="true" tabindex="-1"></a>used ones, truncated distributions (e.g. half-normal as</span>
-<span id="cb21-328"><a href="#cb21-328" aria-hidden="true" tabindex="-1"></a><span class="in">`dist_truncated(dist_normal(mu = 0, sigma=2.5), lower=0)`</span>),</span>
-<span id="cb21-329"><a href="#cb21-329" aria-hidden="true" tabindex="-1"></a>distributions of transformed random variables (e.g.</span>
-<span id="cb21-330"><a href="#cb21-330" aria-hidden="true" tabindex="-1"></a><span class="in">`dist_transformed(dist=dist_normal(0, 0.5), transform=exp, inverse=log) |&gt; mean()`</span>)</span>
-<span id="cb21-331"><a href="#cb21-331" aria-hidden="true" tabindex="-1"></a>and mixture distributions (e.g.</span>
-<span id="cb21-332"><a href="#cb21-332" aria-hidden="true" tabindex="-1"></a><span class="in">`dist_mixture(dist_normal(0, 1), dist_normal(1.5, 5), weights = c(0.5, 0.5))`</span>).</span>
-<span id="cb21-333"><a href="#cb21-333" aria-hidden="true" tabindex="-1"></a>With the <span class="in">`distributional`</span> package, we can also obtain information on</span>
-<span id="cb21-334"><a href="#cb21-334" aria-hidden="true" tabindex="-1"></a>distributions such as their mean, median, quantiles, variance, skewness</span>
-<span id="cb21-335"><a href="#cb21-335" aria-hidden="true" tabindex="-1"></a>and so on (e.g. <span class="in">`dist_student_t(df=3, mu = 0, sigma = 1) |&gt; median()`</span>).</span>
-<span id="cb21-336"><a href="#cb21-336" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb21-337"><a href="#cb21-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-338"><a href="#cb21-338" aria-hidden="true" tabindex="-1"></a>Now that we have a prior for the average true response proportion, we </span>
-<span id="cb21-339"><a href="#cb21-339" aria-hidden="true" tabindex="-1"></a>consider how much the true proportion might vary from study to study. </span>
-<span id="cb21-340"><a href="#cb21-340" aria-hidden="true" tabindex="-1"></a>To set a prior distribution on the between trial SD, we asked experts</span>
-<span id="cb21-341"><a href="#cb21-341" aria-hidden="true" tabindex="-1"></a>about the narrowest and widest random effects distributions</span>
-<span id="cb21-342"><a href="#cb21-342" aria-hidden="true" tabindex="-1"></a>they consider plausible. </span>
-<span id="cb21-343"><a href="#cb21-343" aria-hidden="true" tabindex="-1"></a>When discussing with our experts, we fixed the </span>
-<span id="cb21-344"><a href="#cb21-344" aria-hidden="true" tabindex="-1"></a>random effects mean to a plausible value to make it </span>
-<span id="cb21-345"><a href="#cb21-345" aria-hidden="true" tabindex="-1"></a>easier for them to express their prior belief on a scale they are </span>
-<span id="cb21-346"><a href="#cb21-346" aria-hidden="true" tabindex="-1"></a>comfortable on. We then assumed that the same distribution width is </span>
-<span id="cb21-347"><a href="#cb21-347" aria-hidden="true" tabindex="-1"></a>approximately plausible for other mean values, too.</span>
-<span id="cb21-348"><a href="#cb21-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-349"><a href="#cb21-349" aria-hidden="true" tabindex="-1"></a>For a hypothetical scenario with an average true reponse proportion of 15\%,</span>
-<span id="cb21-350"><a href="#cb21-350" aria-hidden="true" tabindex="-1"></a>clinical experts expressed that it would be unlikely that a few</span>
-<span id="cb21-351"><a href="#cb21-351" aria-hidden="true" tabindex="-1"></a>studies would not end up having a true responder proportion of 20\% and</span>
-<span id="cb21-352"><a href="#cb21-352" aria-hidden="true" tabindex="-1"></a>that it is possible that variability could be so high that some could</span>
-<span id="cb21-353"><a href="#cb21-353" aria-hidden="true" tabindex="-1"></a>reach 40\%.</span>
-<span id="cb21-354"><a href="#cb21-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-355"><a href="#cb21-355" aria-hidden="true" tabindex="-1"></a>Thus, we considered that for the narrowest plausible random effects </span>
-<span id="cb21-356"><a href="#cb21-356" aria-hidden="true" tabindex="-1"></a>distribution (conditional on the the middle of the distribution being 15\%),</span>
-<span id="cb21-357"><a href="#cb21-357" aria-hidden="true" tabindex="-1"></a>there should be 2.5\% probability that studies could vary to 20\% or higher.</span>
-<span id="cb21-358"><a href="#cb21-358" aria-hidden="true" tabindex="-1"></a>Similarly, for the widest plausible distribution, we assigned 2.5% probability</span>
-<span id="cb21-359"><a href="#cb21-359" aria-hidden="true" tabindex="-1"></a>that studies would vary to 40% or more. Normal distributions on the logit scale</span>
-<span id="cb21-360"><a href="#cb21-360" aria-hidden="true" tabindex="-1"></a>that fulfill these criteria are shown in the figure below.</span>
-<span id="cb21-361"><a href="#cb21-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-364"><a href="#cb21-364" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-365"><a href="#cb21-365" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mu=</span><span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="at">sigma=</span><span class="fu">c</span>(<span class="fl">0.18</span>, <span class="fl">0.68</span>) ) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-366"><a href="#cb21-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res=</span><span class="fu">map2</span>(mu, sigma, \(mu,sigma) <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>,<span class="fl">0.5</span>,<span class="fl">0.001</span>), <span class="at">y=</span><span class="fu">dnorm</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>,<span class="fl">0.5</span>,<span class="fl">0.001</span>), mu, sigma)))) <span class="sc">%&gt;%</span></span>
-<span id="cb21-367"><a href="#cb21-367" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(res) <span class="sc">%&gt;%</span></span>
-<span id="cb21-368"><a href="#cb21-368" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grouping =</span> <span class="fu">factor</span>(<span class="fu">case_when</span>(</span>
-<span id="cb21-369"><a href="#cb21-369" aria-hidden="true" tabindex="-1"></a>    (sigma<span class="sc">==</span><span class="fl">0.18</span> <span class="sc">&amp;</span> x<span class="sc">&gt;</span><span class="fu">qlogis</span>(<span class="fl">0.2</span>)) <span class="sc">~</span> <span class="dv">1</span>L,</span>
-<span id="cb21-370"><a href="#cb21-370" aria-hidden="true" tabindex="-1"></a>    sigma<span class="sc">==</span><span class="fl">0.18</span> <span class="sc">~</span> <span class="dv">2</span>L,</span>
-<span id="cb21-371"><a href="#cb21-371" aria-hidden="true" tabindex="-1"></a>    (x<span class="sc">&gt;</span><span class="fu">qlogis</span>(<span class="fl">0.4</span>)) <span class="sc">~</span> <span class="dv">3</span>L,</span>
-<span id="cb21-372"><a href="#cb21-372" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">4</span>L), <span class="at">levels=</span><span class="fu">rev</span>(<span class="dv">1</span>L<span class="sc">:</span><span class="dv">4</span>L))) <span class="sc">%&gt;%</span></span>
-<span id="cb21-373"><a href="#cb21-373" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>y, <span class="at">col=</span>grouping,  <span class="at">fill=</span>grouping)) <span class="sc">+</span></span>
-<span id="cb21-374"><a href="#cb21-374" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb21-375"><a href="#cb21-375" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb21-376"><a href="#cb21-376" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb21-377"><a href="#cb21-377" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"darkred"</span>) <span class="sc">+</span></span>
-<span id="cb21-378"><a href="#cb21-378" aria-hidden="true" tabindex="-1"></a>  <span class="co">#stat_slab(slab_alpha=0.5, n=10000) +</span></span>
-<span id="cb21-379"><a href="#cb21-379" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb21-380"><a href="#cb21-380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.2</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb21-381"><a href="#cb21-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">qlogis</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.05</span>)),</span>
-<span id="cb21-382"><a href="#cb21-382" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">round</span>(<span class="fu">qlogis</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.05</span>)), <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">="</span>, <span class="dv">100</span><span class="sc">*</span><span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.05</span>), <span class="st">"%"</span>)) <span class="sc">+</span></span>
-<span id="cb21-383"><a href="#cb21-383" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">label=</span>label),</span>
-<span id="cb21-384"><a href="#cb21-384" aria-hidden="true" tabindex="-1"></a>             <span class="at">data=</span><span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.62</span>, <span class="sc">-</span><span class="fl">1.4</span>, <span class="sc">-</span><span class="fl">1.1</span>, <span class="sc">-</span><span class="fl">0.9</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">0.8</span>, <span class="fl">0.6</span>, <span class="fl">0.4</span>), </span>
-<span id="cb21-385"><a href="#cb21-385" aria-hidden="true" tabindex="-1"></a>                         <span class="at">label=</span><span class="fu">c</span>(<span class="st">"SD of 0.18"</span>,</span>
-<span id="cb21-386"><a href="#cb21-386" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">paste0</span>(<span class="st">"P(probability&gt;=20%)="</span>,<span class="fu">round</span>(<span class="dv">100-100</span><span class="sc">*</span><span class="fu">pnorm</span>(<span class="at">q=</span><span class="fu">qlogis</span>(<span class="fl">0.2</span>), <span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="fl">0.18</span>),<span class="dv">1</span>), <span class="st">"%"</span>),</span>
-<span id="cb21-387"><a href="#cb21-387" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"SD of 0.68"</span>,</span>
-<span id="cb21-388"><a href="#cb21-388" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">paste0</span>(<span class="st">"P(probability&gt;=40%)="</span>,<span class="fu">round</span>(<span class="dv">100-100</span><span class="sc">*</span><span class="fu">pnorm</span>(<span class="at">q=</span><span class="fu">qlogis</span>(<span class="fl">0.4</span>), <span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="fl">0.68</span>),<span class="dv">1</span>), <span class="st">"%"</span>)),</span>
-<span id="cb21-389"><a href="#cb21-389" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mu=</span><span class="dv">0</span>, <span class="at">sigma=</span><span class="fu">c</span>(<span class="fl">0.18</span>, <span class="fl">0.18</span>, <span class="fl">0.68</span>, <span class="fl">0.68</span>), <span class="at">grouping=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">2</span>L, <span class="dv">1</span>L, <span class="dv">4</span>L, <span class="dv">3</span>L), <span class="at">levels=</span><span class="fu">rev</span>(<span class="dv">1</span>L<span class="sc">:</span><span class="dv">4</span>L))), <span class="at">size=</span><span class="dv">6</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb21-390"><a href="#cb21-390" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"True logit-response-probability for new trial</span><span class="sc">\n</span><span class="st">given average trial is -1.73 (=15%)"</span>) <span class="sc">+</span></span>
-<span id="cb21-391"><a href="#cb21-391" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>) <span class="sc">+</span></span>
-<span id="cb21-392"><a href="#cb21-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">"darkred"</span>, <span class="st">"#E69F00"</span>, <span class="st">"darkblue"</span>, <span class="st">"#56B4E9"</span>))) <span class="sc">+</span></span>
-<span id="cb21-393"><a href="#cb21-393" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">"darkred"</span>, <span class="st">"#E69F00"</span>, <span class="st">"darkblue"</span>, <span class="st">"#56B4E9"</span>))) <span class="sc">+</span></span>
-<span id="cb21-394"><a href="#cb21-394" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Narrowest &amp; widest plausible random effects</span><span class="sc">\n</span><span class="st">distribution conditional on a mean of logit(0.15)"</span>)</span>
-<span id="cb21-395"><a href="#cb21-395" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-396"><a href="#cb21-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-397"><a href="#cb21-397" aria-hidden="true" tabindex="-1"></a>Now, we translate these beliefs into a prior for the between-trial SD.</span>
-<span id="cb21-398"><a href="#cb21-398" aria-hidden="true" tabindex="-1"></a>Given that we consider 0.18 and 0.68 as on the edge of what is plausible </span>
-<span id="cb21-399"><a href="#cb21-399" aria-hidden="true" tabindex="-1"></a>for the between-trial SD, we pick a log-normal distribution for the </span>
-<span id="cb21-400"><a href="#cb21-400" aria-hidden="true" tabindex="-1"></a>between-trial SD that has these two values approximately as its </span>
-<span id="cb21-401"><a href="#cb21-401" aria-hidden="true" tabindex="-1"></a>2.5th and 97.5th percentiles. For such a normal distribution on the logit-scale </span>
-<span id="cb21-402"><a href="#cb21-402" aria-hidden="true" tabindex="-1"></a>centered on logit(0.15), this implies a standard deviation of</span>
-<span id="cb21-403"><a href="#cb21-403" aria-hidden="true" tabindex="-1"></a><span class="in">`(logit(0.2)-logit(0.15)) / qnorm(0.975)`</span> $\approx$ <span class="in">`r round((logit(0.2)-logit(0.15)) / qnorm(0.975),2)`</span> to</span>
-<span id="cb21-404"><a href="#cb21-404" aria-hidden="true" tabindex="-1"></a><span class="in">`(logit(0.4)-logit(0.15)) / qnorm(0.975)`</span> $\approx$ <span class="in">`r round((logit(0.4)-logit(0.15)) / qnorm(0.975),2)`</span>. This can be</span>
-<span id="cb21-405"><a href="#cb21-405" aria-hidden="true" tabindex="-1"></a>described by a log-normal prior distribution on the standard deviation</span>
-<span id="cb21-406"><a href="#cb21-406" aria-hidden="true" tabindex="-1"></a>with location -1.06 and scale 0.35, as we can see by observing that</span>
-<span id="cb21-407"><a href="#cb21-407" aria-hidden="true" tabindex="-1"></a>`dist_lognormal(mu = -1.06, sigma = 0.35) |&gt; quantile(p=c(0.025,</span>
-<span id="cb21-408"><a href="#cb21-408" aria-hidden="true" tabindex="-1"></a>0.975)) |&gt; unlist()`</span>
-<span id="cb21-409"><a href="#cb21-409" aria-hidden="true" tabindex="-1"></a>=</span>
-<span id="cb21-410"><a href="#cb21-410" aria-hidden="true" tabindex="-1"></a><span class="in">`r round(dist_lognormal(mu = -1.06, sigma = 0.35) |&gt; quantile(p=c(0.025, 0.975)) |&gt; unlist(), 3)`</span>.</span>
-<span id="cb21-411"><a href="#cb21-411" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-414"><a href="#cb21-414" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-415"><a href="#cb21-415" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mu=</span><span class="sc">-</span><span class="fl">1.06</span>, <span class="at">sigma=</span><span class="fl">0.35</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-416"><a href="#cb21-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_lognormal</span>(<span class="at">mu=</span>mu, <span class="at">sigma=</span>sigma))) <span class="sc">+</span></span>
-<span id="cb21-417"><a href="#cb21-417" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fl">0.18</span>, <span class="at">col=</span><span class="st">"#E69F00"</span>, <span class="at">linewidth=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb21-418"><a href="#cb21-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fl">0.68</span>, <span class="at">col=</span><span class="st">"#56B4E9"</span>, <span class="at">linewidth=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb21-419"><a href="#cb21-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span><span class="fu">tibble</span>(<span class="at">mu=</span><span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.8</span>), </span>
-<span id="cb21-420"><a href="#cb21-420" aria-hidden="true" tabindex="-1"></a>                        <span class="at">sigma=</span><span class="fu">c</span>(<span class="fl">0.96</span>, <span class="fl">0.5</span>), </span>
-<span id="cb21-421"><a href="#cb21-421" aria-hidden="true" tabindex="-1"></a>                        <span class="at">label=</span><span class="fu">c</span>(<span class="st">"SD of 0.18"</span>, <span class="st">"SD of 0.68"</span>)),</span>
-<span id="cb21-422"><a href="#cb21-422" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x=</span>mu, <span class="at">y=</span>sigma, <span class="at">label=</span>label),</span>
-<span id="cb21-423"><a href="#cb21-423" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span><span class="dv">6</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>)) <span class="sc">+</span></span>
-<span id="cb21-424"><a href="#cb21-424" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">n=</span><span class="dv">10000</span>, <span class="at">fill=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb21-425"><a href="#cb21-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>)) <span class="sc">+</span></span>
-<span id="cb21-426"><a href="#cb21-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>) <span class="sc">+</span></span>
-<span id="cb21-427"><a href="#cb21-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Between trial SD"</span>)</span>
-<span id="cb21-428"><a href="#cb21-428" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-429"><a href="#cb21-429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-430"><a href="#cb21-430" aria-hidden="true" tabindex="-1"></a>When asked how much lower the responder proportion over 52 vs. 12 weeks would </span>
-<span id="cb21-431"><a href="#cb21-431" aria-hidden="true" tabindex="-1"></a>be, the clinicians judge it likely that the proportion would decline a little</span>
-<span id="cb21-432"><a href="#cb21-432" aria-hidden="true" tabindex="-1"></a>bit. Their rationale was that while the disease does not progress fast enough</span>
-<span id="cb21-433"><a href="#cb21-433" aria-hidden="true" tabindex="-1"></a>to change substantially over 9 months, a longer duration offers additional </span>
-<span id="cb21-434"><a href="#cb21-434" aria-hidden="true" tabindex="-1"></a>opportunities for a low red blood cell count to occur (even if by chance) that</span>
-<span id="cb21-435"><a href="#cb21-435" aria-hidden="true" tabindex="-1"></a>might lead to a blood transfusion.</span>
-<span id="cb21-436"><a href="#cb21-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-437"><a href="#cb21-437" aria-hidden="true" tabindex="-1"></a>The resulting prior distribution looks as shown in the figure below.</span>
-<span id="cb21-440"><a href="#cb21-440" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-441"><a href="#cb21-441" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="sc">-</span><span class="fl">0.1</span>, <span class="at">sd=</span>.<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-442"><a href="#cb21-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
-<span id="cb21-443"><a href="#cb21-443" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"#e7298a"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb21-444"><a href="#cb21-444" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>)), </span>
-<span id="cb21-445"><a href="#cb21-445" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">abs</span>(<span class="fu">round</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>) <span class="sc">*</span> <span class="dv">100</span>,<span class="dv">0</span>)), </span>
-<span id="cb21-446"><a href="#cb21-446" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>, </span>
-<span id="cb21-447"><a href="#cb21-447" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"lower</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"higher</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">2</span>)))) <span class="sc">+</span></span>
-<span id="cb21-448"><a href="#cb21-448" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log-odds of response over 52 compared with 12 weeks"</span>) <span class="sc">+</span></span>
-<span id="cb21-449"><a href="#cb21-449" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span>
-<span id="cb21-450"><a href="#cb21-450" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-451"><a href="#cb21-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-452"><a href="#cb21-452" aria-hidden="true" tabindex="-1"></a>Finally, the clinicians were unsure whether a 52 week vs. a 12 week study</span>
-<span id="cb21-453"><a href="#cb21-453" aria-hidden="true" tabindex="-1"></a>would result in a higher or lower log-odds-ratio for drug vs. placebo.</span>
-<span id="cb21-454"><a href="#cb21-454" aria-hidden="true" tabindex="-1"></a>However, they expressed that the effect would be relatively small, because</span>
-<span id="cb21-455"><a href="#cb21-455" aria-hidden="true" tabindex="-1"></a>the drug should not be disease modifying (i.e. treatment effect should not</span>
-<span id="cb21-456"><a href="#cb21-456" aria-hidden="true" tabindex="-1"></a>grow over time) and there is no reason to speculate that the effect on </span>
-<span id="cb21-457"><a href="#cb21-457" aria-hidden="true" tabindex="-1"></a>red blood cell counts would somehow decline over time, either. On this basis,</span>
-<span id="cb21-458"><a href="#cb21-458" aria-hidden="true" tabindex="-1"></a>they expressed the following prior distribution:</span>
-<span id="cb21-461"><a href="#cb21-461" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-462"><a href="#cb21-462" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>.<span class="dv">1</span><span class="sc">/</span><span class="fl">1.96</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-463"><a href="#cb21-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
-<span id="cb21-464"><a href="#cb21-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"royalblue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb21-465"><a href="#cb21-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>)), </span>
-<span id="cb21-466"><a href="#cb21-466" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">abs</span>(<span class="fu">round</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>) <span class="sc">*</span> <span class="dv">100</span>,<span class="dv">0</span>)), </span>
-<span id="cb21-467"><a href="#cb21-467" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>, </span>
-<span id="cb21-468"><a href="#cb21-468" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"lower</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"higher</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">2</span>)))) <span class="sc">+</span></span>
-<span id="cb21-469"><a href="#cb21-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Change in log-odds ratio of drug vs. placebo</span><span class="sc">\n</span><span class="st">when increasing trial duration from 12 to 52 weeks"</span>) <span class="sc">+</span></span>
-<span id="cb21-470"><a href="#cb21-470" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span>
-<span id="cb21-471"><a href="#cb21-471" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-472"><a href="#cb21-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-473"><a href="#cb21-473" aria-hidden="true" tabindex="-1"></a>Thus, we can set out prior distributions as below. To see what particular</span>
-<span id="cb21-474"><a href="#cb21-474" aria-hidden="true" tabindex="-1"></a>coefficients are named, <span class="in">`get_prior(model_formula, our_data)`</span> is a useful</span>
-<span id="cb21-475"><a href="#cb21-475" aria-hidden="true" tabindex="-1"></a>command.</span>
-<span id="cb21-476"><a href="#cb21-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-479"><a href="#cb21-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-480"><a href="#cb21-480" aria-hidden="true" tabindex="-1"></a>brms_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span>Intercept, <span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.67</span>, <span class="fl">1.0</span>)) <span class="sc">+</span> <span class="co"># prior average placebo effect </span></span>
-<span id="cb21-481"><a href="#cb21-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>trial, <span class="fu">lognormal</span>( <span class="sc">-</span><span class="fl">1.06</span>, <span class="fl">0.35</span>)) <span class="sc">+</span> <span class="co"># prior on the between-study SD in  placebo log-odds</span></span>
-<span id="cb21-482"><a href="#cb21-482" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span>long_study, <span class="fu">normal</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>)) <span class="sc">+</span> <span class="co"># prior for effect of long-study (26 vs. 12 weeks) on responder rate</span></span>
-<span id="cb21-483"><a href="#cb21-483" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span><span class="st">"treatmentNVS101:long_study"</span>, <span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.1</span><span class="sc">/</span><span class="fl">1.96</span>)) <span class="sc">+</span> <span class="co"># Prior on the log-odds-ratio for drug vs. placebo when switching from shor to long study</span></span>
-<span id="cb21-484"><a href="#cb21-484" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">mixnorm</span>(map_w, map_m, map_s), <span class="at">class=</span>b, <span class="at">coef=</span>treatmentNVS101) <span class="co">#  Syntax for specifying mixture prior</span></span>
-<span id="cb21-485"><a href="#cb21-485" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-486"><a href="#cb21-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-487"><a href="#cb21-487" aria-hidden="true" tabindex="-1"></a>::: {.alert .alert-info}</span>
-<span id="cb21-488"><a href="#cb21-488" aria-hidden="true" tabindex="-1"></a>**NOTE**: Thanks to the new functionality in the <span class="in">`RBesT`</span> package, we were able</span>
-<span id="cb21-489"><a href="#cb21-489" aria-hidden="true" tabindex="-1"></a>to just write <span class="in">`prior(mixture_prior, class=b, coef=treatmentNVS10)`</span> to specify</span>
-<span id="cb21-490"><a href="#cb21-490" aria-hidden="true" tabindex="-1"></a>a mixture prior. Alternatively, we could have written</span>
-<span id="cb21-491"><a href="#cb21-491" aria-hidden="true" tabindex="-1"></a><span class="in">`prior(mixnorm(map_w, map_m, map_s), class=b, coef=treatmentNovDrug)`</span>. </span>
-<span id="cb21-492"><a href="#cb21-492" aria-hidden="true" tabindex="-1"></a><span class="in">`map_w`</span>, <span class="in">`map_m`</span> and <span class="in">`map_s`</span> would specify the weights, means and standard</span>
-<span id="cb21-493"><a href="#cb21-493" aria-hidden="true" tabindex="-1"></a>deviations of the mixture components, respectively. If we did not have this</span>
-<span id="cb21-494"><a href="#cb21-494" aria-hidden="true" tabindex="-1"></a><span class="in">`RBesT`</span> functionality available, we would have to manually write down the</span>
-<span id="cb21-495"><a href="#cb21-495" aria-hidden="true" tabindex="-1"></a>log-probability-density-function of the mixture, which involves weighted sums</span>
-<span id="cb21-496"><a href="#cb21-496" aria-hidden="true" tabindex="-1"></a>on the probability scale e.g. using the <span class="in">`log_sum_exp`</span> function. For</span>
-<span id="cb21-497"><a href="#cb21-497" aria-hidden="true" tabindex="-1"></a>further details on the <span class="in">`mixstanvars`</span> feature, please refer to its</span>
-<span id="cb21-498"><a href="#cb21-498" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">online manual</span><span class="co">](https://opensource.nibr.com/RBesT/reference/mixstanvar.html)</span>.</span>
-<span id="cb21-499"><a href="#cb21-499" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb21-500"><a href="#cb21-500" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-501"><a href="#cb21-501" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model fitting and predictions</span></span>
-<span id="cb21-502"><a href="#cb21-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-503"><a href="#cb21-503" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fitmodel, results='hide',message=FALSE,warning=FALSE}</span></span>
-<span id="cb21-504"><a href="#cb21-504" aria-hidden="true" tabindex="-1"></a><span class="in">brmfit1 &lt;- brm(formula = model_formula,</span></span>
-<span id="cb21-505"><a href="#cb21-505" aria-hidden="true" tabindex="-1"></a><span class="in">               data = our_data,</span></span>
-<span id="cb21-506"><a href="#cb21-506" aria-hidden="true" tabindex="-1"></a><span class="in">               # By doing 11,000 samples per chain (default 4 chains) incl. 1000</span></span>
-<span id="cb21-507"><a href="#cb21-507" aria-hidden="true" tabindex="-1"></a><span class="in">               # warmup samples, we'll get 4 * 10,000= 40,000 samples, which is</span></span>
-<span id="cb21-508"><a href="#cb21-508" aria-hidden="true" tabindex="-1"></a><span class="in">               # what we'll need in the PoS app.</span></span>
-<span id="cb21-509"><a href="#cb21-509" aria-hidden="true" tabindex="-1"></a><span class="in">               #iter = 11000, warmup=1000, </span></span>
-<span id="cb21-510"><a href="#cb21-510" aria-hidden="true" tabindex="-1"></a><span class="in">               # Now we specify our prior distributions:</span></span>
-<span id="cb21-511"><a href="#cb21-511" aria-hidden="true" tabindex="-1"></a><span class="in">               prior = brms_prior,</span></span>
-<span id="cb21-512"><a href="#cb21-512" aria-hidden="true" tabindex="-1"></a><span class="in">               # Note that we define "map=mixture_prior" below. This</span></span>
-<span id="cb21-513"><a href="#cb21-513" aria-hidden="true" tabindex="-1"></a><span class="in">               # matches the prefix "map" defined in the previous</span></span>
-<span id="cb21-514"><a href="#cb21-514" aria-hidden="true" tabindex="-1"></a><span class="in">               # prior definition statement:</span></span>
-<span id="cb21-515"><a href="#cb21-515" aria-hidden="true" tabindex="-1"></a><span class="in">               stanvars = mixstanvar(map=mixture_prior),</span></span>
-<span id="cb21-516"><a href="#cb21-516" aria-hidden="true" tabindex="-1"></a><span class="in">               control = control_args,</span></span>
-<span id="cb21-517"><a href="#cb21-517" aria-hidden="true" tabindex="-1"></a><span class="in">               seed = 5674574,</span></span>
-<span id="cb21-518"><a href="#cb21-518" aria-hidden="true" tabindex="-1"></a><span class="in">               silent = 2, </span></span>
-<span id="cb21-519"><a href="#cb21-519" aria-hidden="true" tabindex="-1"></a><span class="in">               refresh = 0</span></span>
-<span id="cb21-520"><a href="#cb21-520" aria-hidden="true" tabindex="-1"></a><span class="in">               )</span></span>
-<span id="cb21-521"><a href="#cb21-521" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-522"><a href="#cb21-522" aria-hidden="true" tabindex="-1"></a>We can now generate predictions for a new Phase 3 trial </span>
-<span id="cb21-523"><a href="#cb21-523" aria-hidden="true" tabindex="-1"></a>for NVS101 compared with placebo of 52 week duration. While the predictions</span>
-<span id="cb21-524"><a href="#cb21-524" aria-hidden="true" tabindex="-1"></a>for each arm of the new trial are by default for the true log-odds of response,</span>
-<span id="cb21-525"><a href="#cb21-525" aria-hidden="true" tabindex="-1"></a>we can derive all desired quantities from this:</span>
-<span id="cb21-526"><a href="#cb21-526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-527"><a href="#cb21-527" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ph3preds}</span></span>
-<span id="cb21-528"><a href="#cb21-528" aria-hidden="true" tabindex="-1"></a><span class="in"># we are using the inv_logit function on rvars for which we need to</span></span>
-<span id="cb21-529"><a href="#cb21-529" aria-hidden="true" tabindex="-1"></a><span class="in"># prepare the funnction to handle rvar arguments</span></span>
-<span id="cb21-530"><a href="#cb21-530" aria-hidden="true" tabindex="-1"></a><span class="in">rvar_inv_logit &lt;- rfun(inv_logit)</span></span>
-<span id="cb21-531"><a href="#cb21-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-532"><a href="#cb21-532" aria-hidden="true" tabindex="-1"></a><span class="in">new_ph3_trial &lt;- tibble(trial="New trial",</span></span>
-<span id="cb21-533"><a href="#cb21-533" aria-hidden="true" tabindex="-1"></a><span class="in">                        treatment=c("placebo", "NVS101"),</span></span>
-<span id="cb21-534"><a href="#cb21-534" aria-hidden="true" tabindex="-1"></a><span class="in">                        long_study=1,</span></span>
-<span id="cb21-535"><a href="#cb21-535" aria-hidden="true" tabindex="-1"></a><span class="in">                        patients=c(25, 50))</span></span>
-<span id="cb21-536"><a href="#cb21-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-537"><a href="#cb21-537" aria-hidden="true" tabindex="-1"></a><span class="in">ph3_predictions &lt;- new_ph3_trial |&gt;</span></span>
-<span id="cb21-538"><a href="#cb21-538" aria-hidden="true" tabindex="-1"></a><span class="in">    tidybayes::add_linpred_rvars(brmfit1,</span></span>
-<span id="cb21-539"><a href="#cb21-539" aria-hidden="true" tabindex="-1"></a><span class="in">                                 allow_new_levels=TRUE,</span></span>
-<span id="cb21-540"><a href="#cb21-540" aria-hidden="true" tabindex="-1"></a><span class="in">                                 sample_new_levels="gaussian",</span></span>
-<span id="cb21-541"><a href="#cb21-541" aria-hidden="true" tabindex="-1"></a><span class="in">                                 value="logodds") |&gt;</span></span>
-<span id="cb21-542"><a href="#cb21-542" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(proportion=rvar_inv_logit(logodds))</span></span>
-<span id="cb21-543"><a href="#cb21-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-544"><a href="#cb21-544" aria-hidden="true" tabindex="-1"></a><span class="in"># One can have tibbles contain columns of rvars, which one can</span></span>
-<span id="cb21-545"><a href="#cb21-545" aria-hidden="true" tabindex="-1"></a><span class="in"># recognize by the reported mean and standard deviation of the</span></span>
-<span id="cb21-546"><a href="#cb21-546" aria-hidden="true" tabindex="-1"></a><span class="in"># sample they represent:</span></span>
-<span id="cb21-547"><a href="#cb21-547" aria-hidden="true" tabindex="-1"></a><span class="in">ph3_predictions</span></span>
-<span id="cb21-548"><a href="#cb21-548" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-549"><a href="#cb21-549" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-550"><a href="#cb21-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-551"><a href="#cb21-551" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-552"><a href="#cb21-552" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
-<span id="cb21-553"><a href="#cb21-553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-554"><a href="#cb21-554" aria-hidden="true" tabindex="-1"></a>Here is a plot of the predicted Phase 3 placebo and NVS101 responder proportion.</span>
-<span id="cb21-557"><a href="#cb21-557" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-558"><a href="#cb21-558" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
-<span id="cb21-559"><a href="#cb21-559" aria-hidden="true" tabindex="-1"></a>     <span class="fu">tibble</span>(<span class="at">proportion_NVS101  =</span> proportion[<span class="dv">2</span>],</span>
-<span id="cb21-560"><a href="#cb21-560" aria-hidden="true" tabindex="-1"></a>            <span class="at">proportion_placebo =</span> proportion[<span class="dv">1</span>])) <span class="sc">|&gt;</span></span>
-<span id="cb21-561"><a href="#cb21-561" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">unnest_rvars</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-562"><a href="#cb21-562" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>proportion_placebo, <span class="at">y=</span>proportion_NVS101)) <span class="sc">+</span></span>
-<span id="cb21-563"><a href="#cb21-563" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
-<span id="cb21-564"><a href="#cb21-564" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_continuous</span>() <span class="sc">+</span></span>
-<span id="cb21-565"><a href="#cb21-565" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
-<span id="cb21-566"><a href="#cb21-566" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-567"><a href="#cb21-567" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-568"><a href="#cb21-568" aria-hidden="true" tabindex="-1"></a>Additionally, we can look at various measures of a treatment effect:</span>
-<span id="cb21-571"><a href="#cb21-571" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-572"><a href="#cb21-572" aria-hidden="true" tabindex="-1"></a>ph3_predictions <span class="sc">|&gt;</span></span>
-<span id="cb21-573"><a href="#cb21-573" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist=</span>proportion)) <span class="sc">+</span></span>
-<span id="cb21-574"><a href="#cb21-574" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_slabinterval</span>() <span class="sc">+</span></span>
-<span id="cb21-575"><a href="#cb21-575" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">labeller=</span>label_both, <span class="at">scales=</span><span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb21-576"><a href="#cb21-576" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Proportion"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="cn">NULL</span>)</span>
-<span id="cb21-577"><a href="#cb21-577" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-578"><a href="#cb21-578" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
-<span id="cb21-579"><a href="#cb21-579" aria-hidden="true" tabindex="-1"></a>     <span class="fu">tibble</span>(<span class="at">measure=</span><span class="fu">c</span>(<span class="st">"logodds"</span>, <span class="st">"lograte"</span>, <span class="st">"proportion_diff"</span>),</span>
-<span id="cb21-580"><a href="#cb21-580" aria-hidden="true" tabindex="-1"></a>            <span class="at">posterior=</span><span class="fu">c</span>(<span class="fu">diff</span>(logodds),</span>
-<span id="cb21-581"><a href="#cb21-581" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">diff</span>(<span class="fu">log</span>(proportion)),</span>
-<span id="cb21-582"><a href="#cb21-582" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">diff</span>(proportion)),</span>
-<span id="cb21-583"><a href="#cb21-583" aria-hidden="true" tabindex="-1"></a>            <span class="at">ref=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb21-584"><a href="#cb21-584" aria-hidden="true" tabindex="-1"></a>            )) <span class="sc">|&gt;</span></span>
-<span id="cb21-585"><a href="#cb21-585" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist=</span>posterior)) <span class="sc">+</span></span>
-<span id="cb21-586"><a href="#cb21-586" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_slabinterval</span>() <span class="sc">+</span></span>
-<span id="cb21-587"><a href="#cb21-587" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span>ref), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"darkred"</span>) <span class="sc">+</span></span>
-<span id="cb21-588"><a href="#cb21-588" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>measure, <span class="at">scales=</span><span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb21-589"><a href="#cb21-589" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="cn">NULL</span>)</span>
-<span id="cb21-590"><a href="#cb21-590" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb21-591"><a href="#cb21-591" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-592"><a href="#cb21-592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-593"><a href="#cb21-593" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-594"><a href="#cb21-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-595"><a href="#cb21-595" aria-hidden="true" tabindex="-1"></a>Let's say the target product profile (TPP) for the drug demands a risk difference</span>
-<span id="cb21-596"><a href="#cb21-596" aria-hidden="true" tabindex="-1"></a>of &gt;= 45\%. We can simulate Phase III outcomes to find the probability of </span>
-<span id="cb21-597"><a href="#cb21-597" aria-hidden="true" tabindex="-1"></a>meeting this TPP and having a significant study, which the Novartis internal</span>
-<span id="cb21-598"><a href="#cb21-598" aria-hidden="true" tabindex="-1"></a>PoS app would do for us.</span>
+<span id="cb21-308"><a href="#cb21-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-311"><a href="#cb21-311" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-312"><a href="#cb21-312" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="sc">-</span><span class="fl">1.67</span>, <span class="at">sd=</span><span class="fl">1.0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-313"><a href="#cb21-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
+<span id="cb21-314"><a href="#cb21-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"darkorange"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb21-315"><a href="#cb21-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>), </span>
+<span id="cb21-316"><a href="#cb21-316" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">(="</span>, </span>
+<span id="cb21-317"><a href="#cb21-317" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">round</span>(<span class="fu">inv_logit</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>)),<span class="dv">2</span>)<span class="sc">*</span><span class="dv">100</span>,<span class="st">"%)"</span>)) <span class="sc">+</span></span>
+<span id="cb21-318"><a href="#cb21-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Average placebo log-odds"</span>) <span class="sc">+</span></span>
+<span id="cb21-319"><a href="#cb21-319" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span>
+<span id="cb21-320"><a href="#cb21-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-321"><a href="#cb21-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-322"><a href="#cb21-322" aria-hidden="true" tabindex="-1"></a>::: {.alert .alert-info}</span>
+<span id="cb21-323"><a href="#cb21-323" aria-hidden="true" tabindex="-1"></a>**NOTE**: The <span class="in">`ggdist`</span> and <span class="in">`distributional`</span> packages are an amazing</span>
+<span id="cb21-324"><a href="#cb21-324" aria-hidden="true" tabindex="-1"></a>combo for understanding distributions. <span class="in">`ggdist`</span> extends <span class="in">`ggplot2`</span> to</span>
+<span id="cb21-325"><a href="#cb21-325" aria-hidden="true" tabindex="-1"></a>help us with visualizing distributions (see</span>
+<span id="cb21-326"><a href="#cb21-326" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">here</span><span class="co">](https://mjskay.github.io/ggdist/)</span> for more information).</span>
+<span id="cb21-327"><a href="#cb21-327" aria-hidden="true" tabindex="-1"></a><span class="in">`distributional`</span> lets us work with distributions including many commonly</span>
+<span id="cb21-328"><a href="#cb21-328" aria-hidden="true" tabindex="-1"></a>used ones, truncated distributions (e.g. half-normal as</span>
+<span id="cb21-329"><a href="#cb21-329" aria-hidden="true" tabindex="-1"></a><span class="in">`dist_truncated(dist_normal(mu = 0, sigma=2.5), lower=0)`</span>),</span>
+<span id="cb21-330"><a href="#cb21-330" aria-hidden="true" tabindex="-1"></a>distributions of transformed random variables (e.g.</span>
+<span id="cb21-331"><a href="#cb21-331" aria-hidden="true" tabindex="-1"></a><span class="in">`dist_transformed(dist=dist_normal(0, 0.5), transform=exp, inverse=log) |&gt; mean()`</span>)</span>
+<span id="cb21-332"><a href="#cb21-332" aria-hidden="true" tabindex="-1"></a>and mixture distributions (e.g.</span>
+<span id="cb21-333"><a href="#cb21-333" aria-hidden="true" tabindex="-1"></a><span class="in">`dist_mixture(dist_normal(0, 1), dist_normal(1.5, 5), weights = c(0.5, 0.5))`</span>).</span>
+<span id="cb21-334"><a href="#cb21-334" aria-hidden="true" tabindex="-1"></a>With the <span class="in">`distributional`</span> package, we can also obtain information on</span>
+<span id="cb21-335"><a href="#cb21-335" aria-hidden="true" tabindex="-1"></a>distributions such as their mean, median, quantiles, variance, skewness</span>
+<span id="cb21-336"><a href="#cb21-336" aria-hidden="true" tabindex="-1"></a>and so on (e.g. <span class="in">`dist_student_t(df=3, mu = 0, sigma = 1) |&gt; median()`</span>).</span>
+<span id="cb21-337"><a href="#cb21-337" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb21-338"><a href="#cb21-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-339"><a href="#cb21-339" aria-hidden="true" tabindex="-1"></a>Now that we have a prior for the average true response proportion, we </span>
+<span id="cb21-340"><a href="#cb21-340" aria-hidden="true" tabindex="-1"></a>consider how much the true proportion might vary from study to study. </span>
+<span id="cb21-341"><a href="#cb21-341" aria-hidden="true" tabindex="-1"></a>To set a prior distribution on the between trial SD, we asked experts</span>
+<span id="cb21-342"><a href="#cb21-342" aria-hidden="true" tabindex="-1"></a>about the narrowest and widest random effects distributions</span>
+<span id="cb21-343"><a href="#cb21-343" aria-hidden="true" tabindex="-1"></a>they consider plausible. </span>
+<span id="cb21-344"><a href="#cb21-344" aria-hidden="true" tabindex="-1"></a>When discussing with our experts, we fixed the </span>
+<span id="cb21-345"><a href="#cb21-345" aria-hidden="true" tabindex="-1"></a>random effects mean to a plausible value to make it </span>
+<span id="cb21-346"><a href="#cb21-346" aria-hidden="true" tabindex="-1"></a>easier for them to express their prior belief on a scale they are </span>
+<span id="cb21-347"><a href="#cb21-347" aria-hidden="true" tabindex="-1"></a>comfortable on. We then assumed that the same distribution width is </span>
+<span id="cb21-348"><a href="#cb21-348" aria-hidden="true" tabindex="-1"></a>approximately plausible for other mean values, too.</span>
+<span id="cb21-349"><a href="#cb21-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-350"><a href="#cb21-350" aria-hidden="true" tabindex="-1"></a>For a hypothetical scenario with an average true reponse proportion of 15\%,</span>
+<span id="cb21-351"><a href="#cb21-351" aria-hidden="true" tabindex="-1"></a>clinical experts expressed that it would be unlikely that a few</span>
+<span id="cb21-352"><a href="#cb21-352" aria-hidden="true" tabindex="-1"></a>studies would not end up having a true responder proportion of 20\% and</span>
+<span id="cb21-353"><a href="#cb21-353" aria-hidden="true" tabindex="-1"></a>that it is possible that variability could be so high that some could</span>
+<span id="cb21-354"><a href="#cb21-354" aria-hidden="true" tabindex="-1"></a>reach 40\%.</span>
+<span id="cb21-355"><a href="#cb21-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-356"><a href="#cb21-356" aria-hidden="true" tabindex="-1"></a>Thus, we considered that for the narrowest plausible random effects </span>
+<span id="cb21-357"><a href="#cb21-357" aria-hidden="true" tabindex="-1"></a>distribution (conditional on the the middle of the distribution being 15\%),</span>
+<span id="cb21-358"><a href="#cb21-358" aria-hidden="true" tabindex="-1"></a>there should be 2.5\% probability that studies could vary to 20\% or higher.</span>
+<span id="cb21-359"><a href="#cb21-359" aria-hidden="true" tabindex="-1"></a>Similarly, for the widest plausible distribution, we assigned 2.5% probability</span>
+<span id="cb21-360"><a href="#cb21-360" aria-hidden="true" tabindex="-1"></a>that studies would vary to 40% or more. Normal distributions on the logit scale</span>
+<span id="cb21-361"><a href="#cb21-361" aria-hidden="true" tabindex="-1"></a>that fulfill these criteria are shown in the figure below.</span>
+<span id="cb21-362"><a href="#cb21-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-365"><a href="#cb21-365" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-366"><a href="#cb21-366" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mu=</span><span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="at">sigma=</span><span class="fu">c</span>(<span class="fl">0.18</span>, <span class="fl">0.68</span>) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-367"><a href="#cb21-367" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res=</span><span class="fu">map2</span>(mu, sigma, \(mu,sigma) <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>,<span class="fl">0.5</span>,<span class="fl">0.001</span>), <span class="at">y=</span><span class="fu">dnorm</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>,<span class="fl">0.5</span>,<span class="fl">0.001</span>), mu, sigma)))) <span class="sc">%&gt;%</span></span>
+<span id="cb21-368"><a href="#cb21-368" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(res) <span class="sc">%&gt;%</span></span>
+<span id="cb21-369"><a href="#cb21-369" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grouping =</span> <span class="fu">factor</span>(<span class="fu">case_when</span>(</span>
+<span id="cb21-370"><a href="#cb21-370" aria-hidden="true" tabindex="-1"></a>    (sigma<span class="sc">==</span><span class="fl">0.18</span> <span class="sc">&amp;</span> x<span class="sc">&gt;</span><span class="fu">qlogis</span>(<span class="fl">0.2</span>)) <span class="sc">~</span> <span class="dv">1</span>L,</span>
+<span id="cb21-371"><a href="#cb21-371" aria-hidden="true" tabindex="-1"></a>    sigma<span class="sc">==</span><span class="fl">0.18</span> <span class="sc">~</span> <span class="dv">2</span>L,</span>
+<span id="cb21-372"><a href="#cb21-372" aria-hidden="true" tabindex="-1"></a>    (x<span class="sc">&gt;</span><span class="fu">qlogis</span>(<span class="fl">0.4</span>)) <span class="sc">~</span> <span class="dv">3</span>L,</span>
+<span id="cb21-373"><a href="#cb21-373" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">4</span>L), <span class="at">levels=</span><span class="fu">rev</span>(<span class="dv">1</span>L<span class="sc">:</span><span class="dv">4</span>L))) <span class="sc">%&gt;%</span></span>
+<span id="cb21-374"><a href="#cb21-374" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">ymin=</span><span class="dv">0</span>, <span class="at">ymax=</span>y, <span class="at">col=</span>grouping,  <span class="at">fill=</span>grouping)) <span class="sc">+</span></span>
+<span id="cb21-375"><a href="#cb21-375" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb21-376"><a href="#cb21-376" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb21-377"><a href="#cb21-377" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb21-378"><a href="#cb21-378" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb21-379"><a href="#cb21-379" aria-hidden="true" tabindex="-1"></a>  <span class="co">#stat_slab(slab_alpha=0.5, n=10000) +</span></span>
+<span id="cb21-380"><a href="#cb21-380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb21-381"><a href="#cb21-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.2</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb21-382"><a href="#cb21-382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">qlogis</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb21-383"><a href="#cb21-383" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">round</span>(<span class="fu">qlogis</span>(<span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.05</span>)), <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">="</span>, <span class="dv">100</span><span class="sc">*</span><span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.05</span>), <span class="st">"%"</span>)) <span class="sc">+</span></span>
+<span id="cb21-384"><a href="#cb21-384" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">label=</span>label),</span>
+<span id="cb21-385"><a href="#cb21-385" aria-hidden="true" tabindex="-1"></a>             <span class="at">data=</span><span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.62</span>, <span class="sc">-</span><span class="fl">1.4</span>, <span class="sc">-</span><span class="fl">1.1</span>, <span class="sc">-</span><span class="fl">0.9</span>), <span class="at">y=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">0.8</span>, <span class="fl">0.6</span>, <span class="fl">0.4</span>), </span>
+<span id="cb21-386"><a href="#cb21-386" aria-hidden="true" tabindex="-1"></a>                         <span class="at">label=</span><span class="fu">c</span>(<span class="st">"SD of 0.18"</span>,</span>
+<span id="cb21-387"><a href="#cb21-387" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">paste0</span>(<span class="st">"P(probability&gt;=20%)="</span>,<span class="fu">round</span>(<span class="dv">100-100</span><span class="sc">*</span><span class="fu">pnorm</span>(<span class="at">q=</span><span class="fu">qlogis</span>(<span class="fl">0.2</span>), <span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="fl">0.18</span>),<span class="dv">1</span>), <span class="st">"%"</span>),</span>
+<span id="cb21-388"><a href="#cb21-388" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"SD of 0.68"</span>,</span>
+<span id="cb21-389"><a href="#cb21-389" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">paste0</span>(<span class="st">"P(probability&gt;=40%)="</span>,<span class="fu">round</span>(<span class="dv">100-100</span><span class="sc">*</span><span class="fu">pnorm</span>(<span class="at">q=</span><span class="fu">qlogis</span>(<span class="fl">0.4</span>), <span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="fl">0.68</span>),<span class="dv">1</span>), <span class="st">"%"</span>)),</span>
+<span id="cb21-390"><a href="#cb21-390" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mu=</span><span class="dv">0</span>, <span class="at">sigma=</span><span class="fu">c</span>(<span class="fl">0.18</span>, <span class="fl">0.18</span>, <span class="fl">0.68</span>, <span class="fl">0.68</span>), <span class="at">grouping=</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">2</span>L, <span class="dv">1</span>L, <span class="dv">4</span>L, <span class="dv">3</span>L), <span class="at">levels=</span><span class="fu">rev</span>(<span class="dv">1</span>L<span class="sc">:</span><span class="dv">4</span>L))), <span class="at">size=</span><span class="dv">6</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb21-391"><a href="#cb21-391" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"True logit-response-probability for new trial</span><span class="sc">\n</span><span class="st">given average trial is -1.73 (=15%)"</span>) <span class="sc">+</span></span>
+<span id="cb21-392"><a href="#cb21-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>) <span class="sc">+</span></span>
+<span id="cb21-393"><a href="#cb21-393" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">"darkred"</span>, <span class="st">"#E69F00"</span>, <span class="st">"darkblue"</span>, <span class="st">"#56B4E9"</span>))) <span class="sc">+</span></span>
+<span id="cb21-394"><a href="#cb21-394" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">"darkred"</span>, <span class="st">"#E69F00"</span>, <span class="st">"darkblue"</span>, <span class="st">"#56B4E9"</span>))) <span class="sc">+</span></span>
+<span id="cb21-395"><a href="#cb21-395" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Narrowest &amp; widest plausible random effects</span><span class="sc">\n</span><span class="st">distribution conditional on a mean of logit(0.15)"</span>)</span>
+<span id="cb21-396"><a href="#cb21-396" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-397"><a href="#cb21-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-398"><a href="#cb21-398" aria-hidden="true" tabindex="-1"></a>Now, we translate these beliefs into a prior for the between-trial SD.</span>
+<span id="cb21-399"><a href="#cb21-399" aria-hidden="true" tabindex="-1"></a>Given that we consider 0.18 and 0.68 as on the edge of what is plausible </span>
+<span id="cb21-400"><a href="#cb21-400" aria-hidden="true" tabindex="-1"></a>for the between-trial SD, we pick a log-normal distribution for the </span>
+<span id="cb21-401"><a href="#cb21-401" aria-hidden="true" tabindex="-1"></a>between-trial SD that has these two values approximately as its </span>
+<span id="cb21-402"><a href="#cb21-402" aria-hidden="true" tabindex="-1"></a>2.5th and 97.5th percentiles. For such a normal distribution on the logit-scale </span>
+<span id="cb21-403"><a href="#cb21-403" aria-hidden="true" tabindex="-1"></a>centered on logit(0.15), this implies a standard deviation of</span>
+<span id="cb21-404"><a href="#cb21-404" aria-hidden="true" tabindex="-1"></a><span class="in">`(logit(0.2)-logit(0.15)) / qnorm(0.975)`</span> $\approx$ <span class="in">`r round((logit(0.2)-logit(0.15)) / qnorm(0.975),2)`</span> to</span>
+<span id="cb21-405"><a href="#cb21-405" aria-hidden="true" tabindex="-1"></a><span class="in">`(logit(0.4)-logit(0.15)) / qnorm(0.975)`</span> $\approx$ <span class="in">`r round((logit(0.4)-logit(0.15)) / qnorm(0.975),2)`</span>. This can be</span>
+<span id="cb21-406"><a href="#cb21-406" aria-hidden="true" tabindex="-1"></a>described by a log-normal prior distribution on the standard deviation</span>
+<span id="cb21-407"><a href="#cb21-407" aria-hidden="true" tabindex="-1"></a>with location -1.06 and scale 0.35, as we can see by observing that</span>
+<span id="cb21-408"><a href="#cb21-408" aria-hidden="true" tabindex="-1"></a>`dist_lognormal(mu = -1.06, sigma = 0.35) |&gt; quantile(p=c(0.025,</span>
+<span id="cb21-409"><a href="#cb21-409" aria-hidden="true" tabindex="-1"></a>0.975)) |&gt; unlist()`</span>
+<span id="cb21-410"><a href="#cb21-410" aria-hidden="true" tabindex="-1"></a>=</span>
+<span id="cb21-411"><a href="#cb21-411" aria-hidden="true" tabindex="-1"></a><span class="in">`r round(dist_lognormal(mu = -1.06, sigma = 0.35) |&gt; quantile(p=c(0.025, 0.975)) |&gt; unlist(), 3)`</span>.</span>
+<span id="cb21-412"><a href="#cb21-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-415"><a href="#cb21-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-416"><a href="#cb21-416" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mu=</span><span class="sc">-</span><span class="fl">1.06</span>, <span class="at">sigma=</span><span class="fl">0.35</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-417"><a href="#cb21-417" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_lognormal</span>(<span class="at">mu=</span>mu, <span class="at">sigma=</span>sigma))) <span class="sc">+</span></span>
+<span id="cb21-418"><a href="#cb21-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fl">0.18</span>, <span class="at">col=</span><span class="st">"#E69F00"</span>, <span class="at">linewidth=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb21-419"><a href="#cb21-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fl">0.68</span>, <span class="at">col=</span><span class="st">"#56B4E9"</span>, <span class="at">linewidth=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb21-420"><a href="#cb21-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span><span class="fu">tibble</span>(<span class="at">mu=</span><span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.8</span>), </span>
+<span id="cb21-421"><a href="#cb21-421" aria-hidden="true" tabindex="-1"></a>                        <span class="at">sigma=</span><span class="fu">c</span>(<span class="fl">0.96</span>, <span class="fl">0.5</span>), </span>
+<span id="cb21-422"><a href="#cb21-422" aria-hidden="true" tabindex="-1"></a>                        <span class="at">label=</span><span class="fu">c</span>(<span class="st">"SD of 0.18"</span>, <span class="st">"SD of 0.68"</span>)),</span>
+<span id="cb21-423"><a href="#cb21-423" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x=</span>mu, <span class="at">y=</span>sigma, <span class="at">label=</span>label),</span>
+<span id="cb21-424"><a href="#cb21-424" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span><span class="dv">6</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>)) <span class="sc">+</span></span>
+<span id="cb21-425"><a href="#cb21-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">n=</span><span class="dv">10000</span>, <span class="at">fill=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb21-426"><a href="#cb21-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>)) <span class="sc">+</span></span>
+<span id="cb21-427"><a href="#cb21-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>) <span class="sc">+</span></span>
+<span id="cb21-428"><a href="#cb21-428" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Between trial SD"</span>)</span>
+<span id="cb21-429"><a href="#cb21-429" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-430"><a href="#cb21-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-431"><a href="#cb21-431" aria-hidden="true" tabindex="-1"></a>When asked how much lower the responder proportion over 52 vs. 12 weeks would </span>
+<span id="cb21-432"><a href="#cb21-432" aria-hidden="true" tabindex="-1"></a>be, the clinicians judge it likely that the proportion would decline a little</span>
+<span id="cb21-433"><a href="#cb21-433" aria-hidden="true" tabindex="-1"></a>bit. Their rationale was that while the disease does not progress fast enough</span>
+<span id="cb21-434"><a href="#cb21-434" aria-hidden="true" tabindex="-1"></a>to change substantially over 9 months, a longer duration offers additional </span>
+<span id="cb21-435"><a href="#cb21-435" aria-hidden="true" tabindex="-1"></a>opportunities for a low red blood cell count to occur (even if by chance) that</span>
+<span id="cb21-436"><a href="#cb21-436" aria-hidden="true" tabindex="-1"></a>might lead to a blood transfusion.</span>
+<span id="cb21-437"><a href="#cb21-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-438"><a href="#cb21-438" aria-hidden="true" tabindex="-1"></a>The resulting prior distribution looks as shown in the figure below.</span>
+<span id="cb21-439"><a href="#cb21-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-442"><a href="#cb21-442" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-443"><a href="#cb21-443" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="sc">-</span><span class="fl">0.1</span>, <span class="at">sd=</span>.<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-444"><a href="#cb21-444" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
+<span id="cb21-445"><a href="#cb21-445" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"#e7298a"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb21-446"><a href="#cb21-446" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>)), </span>
+<span id="cb21-447"><a href="#cb21-447" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">abs</span>(<span class="fu">round</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>) <span class="sc">*</span> <span class="dv">100</span>,<span class="dv">0</span>)), </span>
+<span id="cb21-448"><a href="#cb21-448" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>, </span>
+<span id="cb21-449"><a href="#cb21-449" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"lower</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"higher</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">2</span>)))) <span class="sc">+</span></span>
+<span id="cb21-450"><a href="#cb21-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log-odds of response over 52 compared with 12 weeks"</span>) <span class="sc">+</span></span>
+<span id="cb21-451"><a href="#cb21-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span>
+<span id="cb21-452"><a href="#cb21-452" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-453"><a href="#cb21-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-454"><a href="#cb21-454" aria-hidden="true" tabindex="-1"></a>Finally, the clinicians were unsure whether a 52 week vs. a 12 week study</span>
+<span id="cb21-455"><a href="#cb21-455" aria-hidden="true" tabindex="-1"></a>would result in a higher or lower log-odds-ratio for drug vs. placebo.</span>
+<span id="cb21-456"><a href="#cb21-456" aria-hidden="true" tabindex="-1"></a>However, they expressed that the effect would be relatively small, because</span>
+<span id="cb21-457"><a href="#cb21-457" aria-hidden="true" tabindex="-1"></a>the drug should not be disease modifying (i.e. treatment effect should not</span>
+<span id="cb21-458"><a href="#cb21-458" aria-hidden="true" tabindex="-1"></a>grow over time) and there is no reason to speculate that the effect on </span>
+<span id="cb21-459"><a href="#cb21-459" aria-hidden="true" tabindex="-1"></a>red blood cell counts would somehow decline over time, either. On this basis,</span>
+<span id="cb21-460"><a href="#cb21-460" aria-hidden="true" tabindex="-1"></a>they expressed the following prior distribution:</span>
+<span id="cb21-461"><a href="#cb21-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-464"><a href="#cb21-464" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-465"><a href="#cb21-465" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>.<span class="dv">1</span><span class="sc">/</span><span class="fl">1.96</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-466"><a href="#cb21-466" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
+<span id="cb21-467"><a href="#cb21-467" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"royalblue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb21-468"><a href="#cb21-468" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>)), </span>
+<span id="cb21-469"><a href="#cb21-469" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">abs</span>(<span class="fu">round</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>) <span class="sc">*</span> <span class="dv">100</span>,<span class="dv">0</span>)), </span>
+<span id="cb21-470"><a href="#cb21-470" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>, </span>
+<span id="cb21-471"><a href="#cb21-471" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"lower</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"higher</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">2</span>)))) <span class="sc">+</span></span>
+<span id="cb21-472"><a href="#cb21-472" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Change in log-odds ratio of drug vs. placebo</span><span class="sc">\n</span><span class="st">when increasing trial duration from 12 to 52 weeks"</span>) <span class="sc">+</span></span>
+<span id="cb21-473"><a href="#cb21-473" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span>
+<span id="cb21-474"><a href="#cb21-474" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-475"><a href="#cb21-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-476"><a href="#cb21-476" aria-hidden="true" tabindex="-1"></a>Thus, we can set out prior distributions as below. To see what particular</span>
+<span id="cb21-477"><a href="#cb21-477" aria-hidden="true" tabindex="-1"></a>coefficients are named, <span class="in">`get_prior(model_formula, our_data)`</span> is a useful</span>
+<span id="cb21-478"><a href="#cb21-478" aria-hidden="true" tabindex="-1"></a>command.</span>
+<span id="cb21-479"><a href="#cb21-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-482"><a href="#cb21-482" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-483"><a href="#cb21-483" aria-hidden="true" tabindex="-1"></a>brms_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span>Intercept, <span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.67</span>, <span class="fl">1.0</span>)) <span class="sc">+</span> <span class="co"># prior average placebo effect </span></span>
+<span id="cb21-484"><a href="#cb21-484" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>trial, <span class="fu">lognormal</span>( <span class="sc">-</span><span class="fl">1.06</span>, <span class="fl">0.35</span>)) <span class="sc">+</span> <span class="co"># prior on the between-study SD in  placebo log-odds</span></span>
+<span id="cb21-485"><a href="#cb21-485" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span>long_study, <span class="fu">normal</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>)) <span class="sc">+</span> <span class="co"># prior for effect of long-study (26 vs. 12 weeks) on responder rate</span></span>
+<span id="cb21-486"><a href="#cb21-486" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span><span class="st">"treatmentNVS101:long_study"</span>, <span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.1</span><span class="sc">/</span><span class="fl">1.96</span>)) <span class="sc">+</span> <span class="co"># Prior on the log-odds-ratio for drug vs. placebo when switching from shor to long study</span></span>
+<span id="cb21-487"><a href="#cb21-487" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">mixnorm</span>(map_w, map_m, map_s), <span class="at">class=</span>b, <span class="at">coef=</span>treatmentNVS101) <span class="co">#  Syntax for specifying mixture prior</span></span>
+<span id="cb21-488"><a href="#cb21-488" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-489"><a href="#cb21-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-490"><a href="#cb21-490" aria-hidden="true" tabindex="-1"></a>::: {.alert .alert-info}</span>
+<span id="cb21-491"><a href="#cb21-491" aria-hidden="true" tabindex="-1"></a>**NOTE**: Thanks to the new functionality in the <span class="in">`RBesT`</span> package, we were able</span>
+<span id="cb21-492"><a href="#cb21-492" aria-hidden="true" tabindex="-1"></a>to just write <span class="in">`prior(mixture_prior, class=b, coef=treatmentNVS10)`</span> to specify</span>
+<span id="cb21-493"><a href="#cb21-493" aria-hidden="true" tabindex="-1"></a>a mixture prior. Alternatively, we could have written</span>
+<span id="cb21-494"><a href="#cb21-494" aria-hidden="true" tabindex="-1"></a><span class="in">`prior(mixnorm(map_w, map_m, map_s), class=b, coef=treatmentNovDrug)`</span>. </span>
+<span id="cb21-495"><a href="#cb21-495" aria-hidden="true" tabindex="-1"></a><span class="in">`map_w`</span>, <span class="in">`map_m`</span> and <span class="in">`map_s`</span> would specify the weights, means and standard</span>
+<span id="cb21-496"><a href="#cb21-496" aria-hidden="true" tabindex="-1"></a>deviations of the mixture components, respectively. If we did not have this</span>
+<span id="cb21-497"><a href="#cb21-497" aria-hidden="true" tabindex="-1"></a><span class="in">`RBesT`</span> functionality available, we would have to manually write down the</span>
+<span id="cb21-498"><a href="#cb21-498" aria-hidden="true" tabindex="-1"></a>log-probability-density-function of the mixture, which involves weighted sums</span>
+<span id="cb21-499"><a href="#cb21-499" aria-hidden="true" tabindex="-1"></a>on the probability scale e.g. using the <span class="in">`log_sum_exp`</span> function. For</span>
+<span id="cb21-500"><a href="#cb21-500" aria-hidden="true" tabindex="-1"></a>further details on the <span class="in">`mixstanvars`</span> feature, please refer to its</span>
+<span id="cb21-501"><a href="#cb21-501" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">online manual</span><span class="co">](https://opensource.nibr.com/RBesT/reference/mixstanvar.html)</span>.</span>
+<span id="cb21-502"><a href="#cb21-502" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb21-503"><a href="#cb21-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-504"><a href="#cb21-504" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model fitting and predictions</span></span>
+<span id="cb21-505"><a href="#cb21-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-506"><a href="#cb21-506" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fitmodel, results='hide',message=FALSE,warning=FALSE}</span></span>
+<span id="cb21-507"><a href="#cb21-507" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> model_formula,</span>
+<span id="cb21-508"><a href="#cb21-508" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> our_data,</span>
+<span id="cb21-509"><a href="#cb21-509" aria-hidden="true" tabindex="-1"></a>               <span class="co"># By doing 11,000 samples per chain (default 4 chains) incl. 1000</span></span>
+<span id="cb21-510"><a href="#cb21-510" aria-hidden="true" tabindex="-1"></a>               <span class="co"># warmup samples, we'll get 4 * 10,000= 40,000 samples, which is</span></span>
+<span id="cb21-511"><a href="#cb21-511" aria-hidden="true" tabindex="-1"></a>               <span class="co"># what we'll need in the PoS app.</span></span>
+<span id="cb21-512"><a href="#cb21-512" aria-hidden="true" tabindex="-1"></a>               <span class="co">#iter = 11000, warmup=1000, </span></span>
+<span id="cb21-513"><a href="#cb21-513" aria-hidden="true" tabindex="-1"></a>               <span class="co"># Now we specify our prior distributions:</span></span>
+<span id="cb21-514"><a href="#cb21-514" aria-hidden="true" tabindex="-1"></a>               <span class="at">prior =</span> brms_prior,</span>
+<span id="cb21-515"><a href="#cb21-515" aria-hidden="true" tabindex="-1"></a>               <span class="co"># Note that we define "map=mixture_prior" below. This</span></span>
+<span id="cb21-516"><a href="#cb21-516" aria-hidden="true" tabindex="-1"></a>               <span class="co"># matches the prefix "map" defined in the previous</span></span>
+<span id="cb21-517"><a href="#cb21-517" aria-hidden="true" tabindex="-1"></a>               <span class="co"># prior definition statement:</span></span>
+<span id="cb21-518"><a href="#cb21-518" aria-hidden="true" tabindex="-1"></a>               <span class="at">stanvars =</span> <span class="fu">mixstanvar</span>(<span class="at">map=</span>mixture_prior),</span>
+<span id="cb21-519"><a href="#cb21-519" aria-hidden="true" tabindex="-1"></a>               <span class="at">control =</span> control_args,</span>
+<span id="cb21-520"><a href="#cb21-520" aria-hidden="true" tabindex="-1"></a>               <span class="at">seed =</span> <span class="dv">5674574</span>,</span>
+<span id="cb21-521"><a href="#cb21-521" aria-hidden="true" tabindex="-1"></a>               <span class="at">silent =</span> <span class="dv">2</span>, </span>
+<span id="cb21-522"><a href="#cb21-522" aria-hidden="true" tabindex="-1"></a>               <span class="at">refresh =</span> <span class="dv">0</span></span>
+<span id="cb21-523"><a href="#cb21-523" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb21-524"><a href="#cb21-524" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-525"><a href="#cb21-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-526"><a href="#cb21-526" aria-hidden="true" tabindex="-1"></a>We can now generate predictions for a new Phase 3 trial </span>
+<span id="cb21-527"><a href="#cb21-527" aria-hidden="true" tabindex="-1"></a>for NVS101 compared with placebo of 52 week duration. While the predictions</span>
+<span id="cb21-528"><a href="#cb21-528" aria-hidden="true" tabindex="-1"></a>for each arm of the new trial are by default for the true log-odds of response,</span>
+<span id="cb21-529"><a href="#cb21-529" aria-hidden="true" tabindex="-1"></a>we can derive all desired quantities from this:</span>
+<span id="cb21-530"><a href="#cb21-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-531"><a href="#cb21-531" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ph3preds}</span></span>
+<span id="cb21-532"><a href="#cb21-532" aria-hidden="true" tabindex="-1"></a><span class="co"># we are using the inv_logit function on rvars for which we need to</span></span>
+<span id="cb21-533"><a href="#cb21-533" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the funnction to handle rvar arguments</span></span>
+<span id="cb21-534"><a href="#cb21-534" aria-hidden="true" tabindex="-1"></a>rvar_inv_logit <span class="ot">&lt;-</span> <span class="fu">rfun</span>(inv_logit)</span>
+<span id="cb21-535"><a href="#cb21-535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-536"><a href="#cb21-536" aria-hidden="true" tabindex="-1"></a>new_ph3_trial <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">trial=</span><span class="st">"New trial"</span>,</span>
+<span id="cb21-537"><a href="#cb21-537" aria-hidden="true" tabindex="-1"></a>                        <span class="at">treatment=</span><span class="fu">c</span>(<span class="st">"placebo"</span>, <span class="st">"NVS101"</span>),</span>
+<span id="cb21-538"><a href="#cb21-538" aria-hidden="true" tabindex="-1"></a>                        <span class="at">long_study=</span><span class="dv">1</span>,</span>
+<span id="cb21-539"><a href="#cb21-539" aria-hidden="true" tabindex="-1"></a>                        <span class="at">patients=</span><span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">50</span>))</span>
+<span id="cb21-540"><a href="#cb21-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-541"><a href="#cb21-541" aria-hidden="true" tabindex="-1"></a>ph3_predictions <span class="ot">&lt;-</span> new_ph3_trial <span class="sc">|&gt;</span></span>
+<span id="cb21-542"><a href="#cb21-542" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">add_linpred_rvars</span>(brmfit1,</span>
+<span id="cb21-543"><a href="#cb21-543" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>,</span>
+<span id="cb21-544"><a href="#cb21-544" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>,</span>
+<span id="cb21-545"><a href="#cb21-545" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">value=</span><span class="st">"logodds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-546"><a href="#cb21-546" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">proportion=</span><span class="fu">rvar_inv_logit</span>(logodds))</span>
+<span id="cb21-547"><a href="#cb21-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-548"><a href="#cb21-548" aria-hidden="true" tabindex="-1"></a><span class="co"># One can have tibbles contain columns of rvars, which one can</span></span>
+<span id="cb21-549"><a href="#cb21-549" aria-hidden="true" tabindex="-1"></a><span class="co"># recognize by the reported mean and standard deviation of the</span></span>
+<span id="cb21-550"><a href="#cb21-550" aria-hidden="true" tabindex="-1"></a><span class="co"># sample they represent:</span></span>
+<span id="cb21-551"><a href="#cb21-551" aria-hidden="true" tabindex="-1"></a>ph3_predictions</span>
+<span id="cb21-552"><a href="#cb21-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-553"><a href="#cb21-553" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-554"><a href="#cb21-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-555"><a href="#cb21-555" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-556"><a href="#cb21-556" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb21-557"><a href="#cb21-557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-558"><a href="#cb21-558" aria-hidden="true" tabindex="-1"></a>Here is a plot of the predicted Phase 3 placebo and NVS101 responder</span>
+<span id="cb21-559"><a href="#cb21-559" aria-hidden="true" tabindex="-1"></a>proportion.</span>
+<span id="cb21-560"><a href="#cb21-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-563"><a href="#cb21-563" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-564"><a href="#cb21-564" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
+<span id="cb21-565"><a href="#cb21-565" aria-hidden="true" tabindex="-1"></a>     <span class="fu">tibble</span>(<span class="at">proportion_NVS101  =</span> proportion[<span class="dv">2</span>],</span>
+<span id="cb21-566"><a href="#cb21-566" aria-hidden="true" tabindex="-1"></a>            <span class="at">proportion_placebo =</span> proportion[<span class="dv">1</span>])) <span class="sc">|&gt;</span></span>
+<span id="cb21-567"><a href="#cb21-567" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">unnest_rvars</span>() <span class="sc">|&gt;</span></span>
+<span id="cb21-568"><a href="#cb21-568" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>proportion_placebo, <span class="at">y=</span>proportion_NVS101)) <span class="sc">+</span></span>
+<span id="cb21-569"><a href="#cb21-569" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
+<span id="cb21-570"><a href="#cb21-570" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_continuous</span>() <span class="sc">+</span></span>
+<span id="cb21-571"><a href="#cb21-571" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb21-572"><a href="#cb21-572" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-573"><a href="#cb21-573" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-574"><a href="#cb21-574" aria-hidden="true" tabindex="-1"></a>Additionally, we can look at various measures of a treatment effect:</span>
+<span id="cb21-575"><a href="#cb21-575" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-578"><a href="#cb21-578" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-579"><a href="#cb21-579" aria-hidden="true" tabindex="-1"></a>ph3_predictions <span class="sc">|&gt;</span></span>
+<span id="cb21-580"><a href="#cb21-580" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist=</span>proportion)) <span class="sc">+</span></span>
+<span id="cb21-581"><a href="#cb21-581" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_slabinterval</span>() <span class="sc">+</span></span>
+<span id="cb21-582"><a href="#cb21-582" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">labeller=</span>label_both, <span class="at">scales=</span><span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb21-583"><a href="#cb21-583" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Proportion"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="cn">NULL</span>)</span>
+<span id="cb21-584"><a href="#cb21-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-585"><a href="#cb21-585" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
+<span id="cb21-586"><a href="#cb21-586" aria-hidden="true" tabindex="-1"></a>     <span class="fu">tibble</span>(<span class="at">measure=</span><span class="fu">c</span>(<span class="st">"logodds"</span>, <span class="st">"lograte"</span>, <span class="st">"proportion_diff"</span>),</span>
+<span id="cb21-587"><a href="#cb21-587" aria-hidden="true" tabindex="-1"></a>            <span class="at">posterior=</span><span class="fu">c</span>(<span class="fu">diff</span>(logodds),</span>
+<span id="cb21-588"><a href="#cb21-588" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">diff</span>(<span class="fu">log</span>(proportion)),</span>
+<span id="cb21-589"><a href="#cb21-589" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">diff</span>(proportion)),</span>
+<span id="cb21-590"><a href="#cb21-590" aria-hidden="true" tabindex="-1"></a>            <span class="at">ref=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb21-591"><a href="#cb21-591" aria-hidden="true" tabindex="-1"></a>            )) <span class="sc">|&gt;</span></span>
+<span id="cb21-592"><a href="#cb21-592" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist=</span>posterior)) <span class="sc">+</span></span>
+<span id="cb21-593"><a href="#cb21-593" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_slabinterval</span>() <span class="sc">+</span></span>
+<span id="cb21-594"><a href="#cb21-594" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span>ref), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb21-595"><a href="#cb21-595" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>measure, <span class="at">scales=</span><span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb21-596"><a href="#cb21-596" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="cn">NULL</span>)</span>
+<span id="cb21-597"><a href="#cb21-597" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb21-598"><a href="#cb21-598" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-599"><a href="#cb21-599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-600"><a href="#cb21-600" aria-hidden="true" tabindex="-1"></a>Note that the relativley compact code below does indeed perform a full</span>
-<span id="cb21-601"><a href="#cb21-601" aria-hidden="true" tabindex="-1"></a>trial simulation for possible outcomes for every draw of the</span>
-<span id="cb21-602"><a href="#cb21-602" aria-hidden="true" tabindex="-1"></a>posterior. The use of <span class="in">`rvars`</span> hides essentially that we are handling</span>
-<span id="cb21-603"><a href="#cb21-603" aria-hidden="true" tabindex="-1"></a>entire posteriors here. However, note that we have to wrap the call to</span>
-<span id="cb21-604"><a href="#cb21-604" aria-hidden="true" tabindex="-1"></a>the <span class="in">`fisher.test`</span> funcntion into <span class="in">`rdo`</span> such that the expression is</span>
-<span id="cb21-605"><a href="#cb21-605" aria-hidden="true" tabindex="-1"></a>automatically evaluated for each draw of the posterior.</span>
+<span id="cb21-600"><a href="#cb21-600" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-601"><a href="#cb21-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-602"><a href="#cb21-602" aria-hidden="true" tabindex="-1"></a>Let's say the target product profile (TPP) for the drug demands a risk difference</span>
+<span id="cb21-603"><a href="#cb21-603" aria-hidden="true" tabindex="-1"></a>of &gt;= 45\%. We can simulate Phase III outcomes to find the probability of </span>
+<span id="cb21-604"><a href="#cb21-604" aria-hidden="true" tabindex="-1"></a>meeting this TPP and having a significant study, which the Novartis internal</span>
+<span id="cb21-605"><a href="#cb21-605" aria-hidden="true" tabindex="-1"></a>PoS app would do for us.</span>
 <span id="cb21-606"><a href="#cb21-606" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-609"><a href="#cb21-609" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-610"><a href="#cb21-610" aria-hidden="true" tabindex="-1"></a>pos_simulations <span class="ot">&lt;-</span> new_ph3_trial <span class="sc">|&gt;</span></span>
-<span id="cb21-611"><a href="#cb21-611" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">add_predicted_rvars</span>(brmfit1,</span>
-<span id="cb21-612"><a href="#cb21-612" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>,</span>
-<span id="cb21-613"><a href="#cb21-613" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>,</span>
-<span id="cb21-614"><a href="#cb21-614" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">value=</span><span class="st">"pred"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-615"><a href="#cb21-615" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">predrate=</span>pred<span class="sc">/</span>patients) <span class="sc">|&gt;</span></span>
-<span id="cb21-616"><a href="#cb21-616" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(treatment, pred, predrate, patients) <span class="sc">|&gt;</span></span>
-<span id="cb21-617"><a href="#cb21-617" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="st">"treatment"</span>, <span class="at">values_from=</span><span class="fu">c</span>(<span class="st">"pred"</span>, <span class="st">"predrate"</span>, <span class="st">"patients"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb21-618"><a href="#cb21-618" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">riskdiff_crit =</span> predrate_NVS101 <span class="sc">-</span> predrate_placebo <span class="sc">&gt;=</span> <span class="fl">0.45</span>,</span>
-<span id="cb21-619"><a href="#cb21-619" aria-hidden="true" tabindex="-1"></a>           <span class="at">pvalue =</span> <span class="fu">rdo</span>(<span class="fu">fisher.test</span>(<span class="at">x=</span><span class="fu">matrix</span>(<span class="fu">c</span>(pred_NVS101,  patients_NVS101  <span class="sc">-</span> pred_NVS101,</span>
-<span id="cb21-620"><a href="#cb21-620" aria-hidden="true" tabindex="-1"></a>                                               pred_placebo, patients_placebo <span class="sc">-</span> pred_placebo ),</span>
-<span id="cb21-621"><a href="#cb21-621" aria-hidden="true" tabindex="-1"></a>                                             <span class="dv">2</span>, <span class="dv">2</span> ) )[[<span class="st">"p.value"</span>]] ),</span>
-<span id="cb21-622"><a href="#cb21-622" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">Achieving &gt;= 45% risk difference</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">E</span>(riskdiff_crit),</span>
-<span id="cb21-623"><a href="#cb21-623" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">Achieving significance (p&lt;=0.05)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">E</span>(pvalue <span class="sc">&lt;=</span> <span class="fl">0.05</span>),</span>
-<span id="cb21-624"><a href="#cb21-624" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">Achieving significance &amp; TPP target</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">E</span>(riskdiff_crit <span class="sc">*</span> (pvalue <span class="sc">&lt;=</span> <span class="fl">0.05</span>))</span>
-<span id="cb21-625"><a href="#cb21-625" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb21-626"><a href="#cb21-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-627"><a href="#cb21-627" aria-hidden="true" tabindex="-1"></a>pos_simulations <span class="sc">|&gt;</span></span>
-<span id="cb21-628"><a href="#cb21-628" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"Achieving"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb21-629"><a href="#cb21-629" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">everything</span>(), <span class="at">names_to=</span><span class="st">"Outcome"</span>, <span class="at">values_to =</span> <span class="st">"Probability"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-630"><a href="#cb21-630" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-631"><a href="#cb21-631" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_number</span>(<span class="at">decimals=</span><span class="dv">3</span>)</span>
-<span id="cb21-632"><a href="#cb21-632" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-607"><a href="#cb21-607" aria-hidden="true" tabindex="-1"></a>Note that the relativley compact code below does indeed perform a full</span>
+<span id="cb21-608"><a href="#cb21-608" aria-hidden="true" tabindex="-1"></a>trial simulation for possible outcomes for every draw of the</span>
+<span id="cb21-609"><a href="#cb21-609" aria-hidden="true" tabindex="-1"></a>posterior. The use of <span class="in">`rvars`</span> hides essentially that we are handling</span>
+<span id="cb21-610"><a href="#cb21-610" aria-hidden="true" tabindex="-1"></a>entire posteriors here. However, note that we have to wrap the call to</span>
+<span id="cb21-611"><a href="#cb21-611" aria-hidden="true" tabindex="-1"></a>the <span class="in">`fisher.test`</span> funcntion into <span class="in">`rdo`</span> such that the expression is</span>
+<span id="cb21-612"><a href="#cb21-612" aria-hidden="true" tabindex="-1"></a>automatically evaluated for each draw of the posterior.</span>
+<span id="cb21-613"><a href="#cb21-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-616"><a href="#cb21-616" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-617"><a href="#cb21-617" aria-hidden="true" tabindex="-1"></a>pos_simulations <span class="ot">&lt;-</span> new_ph3_trial <span class="sc">|&gt;</span></span>
+<span id="cb21-618"><a href="#cb21-618" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">add_predicted_rvars</span>(brmfit1,</span>
+<span id="cb21-619"><a href="#cb21-619" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>,</span>
+<span id="cb21-620"><a href="#cb21-620" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>,</span>
+<span id="cb21-621"><a href="#cb21-621" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">value=</span><span class="st">"pred"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-622"><a href="#cb21-622" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">predrate=</span>pred<span class="sc">/</span>patients) <span class="sc">|&gt;</span></span>
+<span id="cb21-623"><a href="#cb21-623" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(treatment, pred, predrate, patients) <span class="sc">|&gt;</span></span>
+<span id="cb21-624"><a href="#cb21-624" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="st">"treatment"</span>, <span class="at">values_from=</span><span class="fu">c</span>(<span class="st">"pred"</span>, <span class="st">"predrate"</span>, <span class="st">"patients"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb21-625"><a href="#cb21-625" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">riskdiff_crit =</span> predrate_NVS101 <span class="sc">-</span> predrate_placebo <span class="sc">&gt;=</span> <span class="fl">0.45</span>,</span>
+<span id="cb21-626"><a href="#cb21-626" aria-hidden="true" tabindex="-1"></a>           <span class="at">pvalue =</span> <span class="fu">rdo</span>(<span class="fu">fisher.test</span>(<span class="at">x=</span><span class="fu">matrix</span>(<span class="fu">c</span>(pred_NVS101,  patients_NVS101  <span class="sc">-</span> pred_NVS101,</span>
+<span id="cb21-627"><a href="#cb21-627" aria-hidden="true" tabindex="-1"></a>                                               pred_placebo, patients_placebo <span class="sc">-</span> pred_placebo ),</span>
+<span id="cb21-628"><a href="#cb21-628" aria-hidden="true" tabindex="-1"></a>                                             <span class="dv">2</span>, <span class="dv">2</span> ) )[[<span class="st">"p.value"</span>]] ),</span>
+<span id="cb21-629"><a href="#cb21-629" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">Achieving &gt;= 45% risk difference</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">E</span>(riskdiff_crit),</span>
+<span id="cb21-630"><a href="#cb21-630" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">Achieving significance (p&lt;=0.05)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">E</span>(pvalue <span class="sc">&lt;=</span> <span class="fl">0.05</span>),</span>
+<span id="cb21-631"><a href="#cb21-631" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">Achieving significance &amp; TPP target</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">E</span>(riskdiff_crit <span class="sc">*</span> (pvalue <span class="sc">&lt;=</span> <span class="fl">0.05</span>))</span>
+<span id="cb21-632"><a href="#cb21-632" aria-hidden="true" tabindex="-1"></a>           )</span>
 <span id="cb21-633"><a href="#cb21-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-634"><a href="#cb21-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-635"><a href="#cb21-635" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-636"><a href="#cb21-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-637"><a href="#cb21-637" aria-hidden="true" tabindex="-1"></a>As we can see, achieving the TPP risk difference is the greater hurdle than</span>
-<span id="cb21-638"><a href="#cb21-638" aria-hidden="true" tabindex="-1"></a>achieving statistical significance.</span>
+<span id="cb21-634"><a href="#cb21-634" aria-hidden="true" tabindex="-1"></a>pos_simulations <span class="sc">|&gt;</span></span>
+<span id="cb21-635"><a href="#cb21-635" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"Achieving"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb21-636"><a href="#cb21-636" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">everything</span>(), <span class="at">names_to=</span><span class="st">"Outcome"</span>, <span class="at">values_to =</span> <span class="st">"Probability"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-637"><a href="#cb21-637" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb21-638"><a href="#cb21-638" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_number</span>(<span class="at">decimals=</span><span class="dv">3</span>)</span>
 <span id="cb21-639"><a href="#cb21-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-640"><a href="#cb21-640" aria-hidden="true" tabindex="-1"></a>As part of the Novartis PoS framework, we would now account for</span>
-<span id="cb21-641"><a href="#cb21-641" aria-hidden="true" tabindex="-1"></a>the possibility of not obtaining an approval despite a positive Phase 3 study,</span>
-<span id="cb21-642"><a href="#cb21-642" aria-hidden="true" tabindex="-1"></a>a failure in Phase 3 due to a safety issue, and other risks (e.g. relating</span>
-<span id="cb21-643"><a href="#cb21-643" aria-hidden="true" tabindex="-1"></a>to drug manufacturing or market access).</span>
-<span id="cb21-644"><a href="#cb21-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-645"><a href="#cb21-645" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-646"><a href="#cb21-646" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
-<span id="cb21-647"><a href="#cb21-647" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-648"><a href="#cb21-648" aria-hidden="true" tabindex="-1"></a>In the hypothetical case study, there was not a lot of data, but what there was </span>
-<span id="cb21-649"><a href="#cb21-649" aria-hidden="true" tabindex="-1"></a>appeared to be promising. Thus, one would not want to ignore it. </span>
-<span id="cb21-650"><a href="#cb21-650" aria-hidden="true" tabindex="-1"></a>In order to make use of it, we had to use informative prior distributions for </span>
-<span id="cb21-651"><a href="#cb21-651" aria-hidden="true" tabindex="-1"></a>several parameters of a logistic regression model. In this kind of situation,</span>
-<span id="cb21-652"><a href="#cb21-652" aria-hidden="true" tabindex="-1"></a>where we cannot let data inform our prior distributions, there is little choice,</span>
-<span id="cb21-653"><a href="#cb21-653" aria-hidden="true" tabindex="-1"></a>if we want an answer using the available data.</span>
+<span id="cb21-640"><a href="#cb21-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-641"><a href="#cb21-641" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-642"><a href="#cb21-642" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-643"><a href="#cb21-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-644"><a href="#cb21-644" aria-hidden="true" tabindex="-1"></a>As we can see, achieving the TPP risk difference is the greater hurdle than</span>
+<span id="cb21-645"><a href="#cb21-645" aria-hidden="true" tabindex="-1"></a>achieving statistical significance.</span>
+<span id="cb21-646"><a href="#cb21-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-647"><a href="#cb21-647" aria-hidden="true" tabindex="-1"></a>As part of the Novartis PoS framework, we would now account for</span>
+<span id="cb21-648"><a href="#cb21-648" aria-hidden="true" tabindex="-1"></a>the possibility of not obtaining an approval despite a positive Phase 3 study,</span>
+<span id="cb21-649"><a href="#cb21-649" aria-hidden="true" tabindex="-1"></a>a failure in Phase 3 due to a safety issue, and other risks (e.g. relating</span>
+<span id="cb21-650"><a href="#cb21-650" aria-hidden="true" tabindex="-1"></a>to drug manufacturing or market access).</span>
+<span id="cb21-651"><a href="#cb21-651" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-652"><a href="#cb21-652" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-653"><a href="#cb21-653" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
 <span id="cb21-654"><a href="#cb21-654" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-655"><a href="#cb21-655" aria-hidden="true" tabindex="-1"></a>Given how our prior judgments directly affect the inference, we want ot ensure </span>
-<span id="cb21-656"><a href="#cb21-656" aria-hidden="true" tabindex="-1"></a>that the prior judgements reflect our best understanding of the</span>
-<span id="cb21-657"><a href="#cb21-657" aria-hidden="true" tabindex="-1"></a>available scientific evidence. For this purpose a formal prior elicitation</span>
-<span id="cb21-658"><a href="#cb21-658" aria-hidden="true" tabindex="-1"></a>(or predictions for some parameters from historical data) are options, but</span>
-<span id="cb21-659"><a href="#cb21-659" aria-hidden="true" tabindex="-1"></a>when those are not possibler, we should still try to ensure that prior choices</span>
-<span id="cb21-660"><a href="#cb21-660" aria-hidden="true" tabindex="-1"></a>are plausible to the whole team.</span>
+<span id="cb21-655"><a href="#cb21-655" aria-hidden="true" tabindex="-1"></a>In the hypothetical case study, there was not a lot of data, but what there was </span>
+<span id="cb21-656"><a href="#cb21-656" aria-hidden="true" tabindex="-1"></a>appeared to be promising. Thus, one would not want to ignore it. </span>
+<span id="cb21-657"><a href="#cb21-657" aria-hidden="true" tabindex="-1"></a>In order to make use of it, we had to use informative prior distributions for </span>
+<span id="cb21-658"><a href="#cb21-658" aria-hidden="true" tabindex="-1"></a>several parameters of a logistic regression model. In this kind of situation,</span>
+<span id="cb21-659"><a href="#cb21-659" aria-hidden="true" tabindex="-1"></a>where we cannot let data inform our prior distributions, there is little choice,</span>
+<span id="cb21-660"><a href="#cb21-660" aria-hidden="true" tabindex="-1"></a>if we want an answer using the available data.</span>
 <span id="cb21-661"><a href="#cb21-661" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-662"><a href="#cb21-662" aria-hidden="true" tabindex="-1"></a>Note that in this example, there was also an underlying laboratory measurement</span>
-<span id="cb21-663"><a href="#cb21-663" aria-hidden="true" tabindex="-1"></a>(longitudinal measurements of red blood cell counts). It might have been more</span>
-<span id="cb21-664"><a href="#cb21-664" aria-hidden="true" tabindex="-1"></a>efficient to work with these directly, but it would have been necessary </span>
-<span id="cb21-665"><a href="#cb21-665" aria-hidden="true" tabindex="-1"></a>to translate any results into predictions for the Phase III responder endpoint.</span>
-<span id="cb21-666"><a href="#cb21-666" aria-hidden="true" tabindex="-1"></a>Furthermore, the published external competitor data might not report these</span>
-<span id="cb21-667"><a href="#cb21-667" aria-hidden="true" tabindex="-1"></a>laboratory outcomes in sufficient detail.</span>
+<span id="cb21-662"><a href="#cb21-662" aria-hidden="true" tabindex="-1"></a>Given how our prior judgments directly affect the inference, we want ot ensure </span>
+<span id="cb21-663"><a href="#cb21-663" aria-hidden="true" tabindex="-1"></a>that the prior judgements reflect our best understanding of the</span>
+<span id="cb21-664"><a href="#cb21-664" aria-hidden="true" tabindex="-1"></a>available scientific evidence. For this purpose a formal prior elicitation</span>
+<span id="cb21-665"><a href="#cb21-665" aria-hidden="true" tabindex="-1"></a>(or predictions for some parameters from historical data) are options, but</span>
+<span id="cb21-666"><a href="#cb21-666" aria-hidden="true" tabindex="-1"></a>when those are not possibler, we should still try to ensure that prior choices</span>
+<span id="cb21-667"><a href="#cb21-667" aria-hidden="true" tabindex="-1"></a>are plausible to the whole team.</span>
 <span id="cb21-668"><a href="#cb21-668" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-669"><a href="#cb21-669" aria-hidden="true" tabindex="-1"></a>Single arm studies are not ideal. However, when treatment effects are large</span>
-<span id="cb21-670"><a href="#cb21-670" aria-hidden="true" tabindex="-1"></a>compared to how much placebo group outcomes vary, we can still learn</span>
-<span id="cb21-671"><a href="#cb21-671" aria-hidden="true" tabindex="-1"></a>about drug efficacy from them at the cost of additional assumptions.</span>
-<span id="cb21-672"><a href="#cb21-672" aria-hidden="true" tabindex="-1"></a>As part of our case study, we tried to be explicit about our </span>
-<span id="cb21-673"><a href="#cb21-673" aria-hidden="true" tabindex="-1"></a>uncertainties and to transparently describe our prior judgements, as well as </span>
-<span id="cb21-674"><a href="#cb21-674" aria-hidden="true" tabindex="-1"></a>the rationale behind them. If someone disagrees with some of our prior </span>
-<span id="cb21-675"><a href="#cb21-675" aria-hidden="true" tabindex="-1"></a>distributions, they can then do a sensitivity analysis.</span>
-<span id="cb21-676"><a href="#cb21-676" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-677"><a href="#cb21-677" aria-hidden="true" tabindex="-1"></a>A Bayesian approach is also well-suited for PoS calculations, because it lets</span>
-<span id="cb21-678"><a href="#cb21-678" aria-hidden="true" tabindex="-1"></a>us easily propagate uncertainties through different steps of a PoS analysis.</span>
-<span id="cb21-679"><a href="#cb21-679" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-680"><a href="#cb21-680" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises</span></span>
-<span id="cb21-681"><a href="#cb21-681" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-682"><a href="#cb21-682" aria-hidden="true" tabindex="-1"></a>To be added</span>
+<span id="cb21-669"><a href="#cb21-669" aria-hidden="true" tabindex="-1"></a>Note that in this example, there was also an underlying laboratory measurement</span>
+<span id="cb21-670"><a href="#cb21-670" aria-hidden="true" tabindex="-1"></a>(longitudinal measurements of red blood cell counts). It might have been more</span>
+<span id="cb21-671"><a href="#cb21-671" aria-hidden="true" tabindex="-1"></a>efficient to work with these directly, but it would have been necessary </span>
+<span id="cb21-672"><a href="#cb21-672" aria-hidden="true" tabindex="-1"></a>to translate any results into predictions for the Phase III responder endpoint.</span>
+<span id="cb21-673"><a href="#cb21-673" aria-hidden="true" tabindex="-1"></a>Furthermore, the published external competitor data might not report these</span>
+<span id="cb21-674"><a href="#cb21-674" aria-hidden="true" tabindex="-1"></a>laboratory outcomes in sufficient detail.</span>
+<span id="cb21-675"><a href="#cb21-675" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-676"><a href="#cb21-676" aria-hidden="true" tabindex="-1"></a>Single arm studies are not ideal. However, when treatment effects are large</span>
+<span id="cb21-677"><a href="#cb21-677" aria-hidden="true" tabindex="-1"></a>compared to how much placebo group outcomes vary, we can still learn</span>
+<span id="cb21-678"><a href="#cb21-678" aria-hidden="true" tabindex="-1"></a>about drug efficacy from them at the cost of additional assumptions.</span>
+<span id="cb21-679"><a href="#cb21-679" aria-hidden="true" tabindex="-1"></a>As part of our case study, we tried to be explicit about our </span>
+<span id="cb21-680"><a href="#cb21-680" aria-hidden="true" tabindex="-1"></a>uncertainties and to transparently describe our prior judgements, as well as </span>
+<span id="cb21-681"><a href="#cb21-681" aria-hidden="true" tabindex="-1"></a>the rationale behind them. If someone disagrees with some of our prior </span>
+<span id="cb21-682"><a href="#cb21-682" aria-hidden="true" tabindex="-1"></a>distributions, they can then do a sensitivity analysis.</span>
 <span id="cb21-683"><a href="#cb21-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-684"><a href="#cb21-684" aria-hidden="true" tabindex="-1"></a><span class="fu">## References {.unnumbered}</span></span>
-<span id="cb21-685"><a href="#cb21-685" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-686"><a href="#cb21-686" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb21-687"><a href="#cb21-687" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb21-684"><a href="#cb21-684" aria-hidden="true" tabindex="-1"></a>A Bayesian approach is also well-suited for PoS calculations, because it lets</span>
+<span id="cb21-685"><a href="#cb21-685" aria-hidden="true" tabindex="-1"></a>us easily propagate uncertainties through different steps of a PoS analysis.</span>
+<span id="cb21-686"><a href="#cb21-686" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-687"><a href="#cb21-687" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises</span></span>
+<span id="cb21-688"><a href="#cb21-688" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-689"><a href="#cb21-689" aria-hidden="true" tabindex="-1"></a>To be added</span>
+<span id="cb21-690"><a href="#cb21-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-691"><a href="#cb21-691" aria-hidden="true" tabindex="-1"></a><span class="fu">## References {.unnumbered}</span></span>
+<span id="cb21-692"><a href="#cb21-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-693"><a href="#cb21-693" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb21-694"><a href="#cb21-694" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
