@@ -41,7 +41,7 @@ jobs:
       #     to: html # If set, it will be equivalent to `quarto render --to html`
       
       - name: build BAMDD book
-        run: make website QUARTO_PROFILE=public
+        run: make -j4 website QUARTO_PROFILE=public
 
       - name: Deploy to GitHub pages 🚀
         if: github.ref == 'refs/heads/main'
