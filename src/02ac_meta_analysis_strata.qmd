@@ -541,6 +541,7 @@ head(new_dat) |> kable()
 ```
 
 We first calculate simple summary statistics for the simulated data:
+
 ```{r}
 new_dat |> 
     summarise(BASE = mean(BASE),

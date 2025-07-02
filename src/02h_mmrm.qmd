@@ -113,6 +113,7 @@ as well as at 4 post-baseline visits (week 2, 4, 8 and 12).
 (approximately 50 patients per arm). 
 
 We simulate data with the following covariance matrix:
+
 ```{r covariance_matrix}
 # Correlation matrix between visits (baseline + 4 post-baseline visits)
 corr_matrix <- diag(5)
@@ -197,6 +198,7 @@ simulated_data <- rmvnorm(n = N,
 ```
 
 The first 10 rows of the simulated data set are:
+
 ```{r listing_of_data1,echo=FALSE}
 gt_preview(simulated_data, top_n=10) %>% fmt_number(where(is.double), decimals=3)
 ```
@@ -459,7 +461,9 @@ equivalence between MMRM and a by-visit-analysis in the absence of missing data.
 As an illustration of what covariance matrices look like in practice, here
 is the estimated covariance structure reported by 
 [Holzhauer et al. 2015](https://doi.org/10.1002/pst.1705) for the fasting 
-plasma glucose (FPG) values from one treatment group of a diabetes trial.
+plasma glucose (FPG) values from one treatment group of a diabetes
+trial.
+
 ```{r fpgcov_example, echo=FALSE}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -566,6 +570,7 @@ hba1c_cov %>%
 Within a frequentist framework, this model is usually estimated using 
 Restricted Maximum Likelihood Estimation (REML). One popular way of fitting 
 such a model is using SAS code similar to the following
+
 ```{sas, eval = FALSE}
 PROC MIXED DATA=simulated_data;
   CLASS TRT01P AVISIT USUBJID;
@@ -591,13 +596,16 @@ there are no categorical covariates in the model.
 
 In `R` we can obtain a very similar frequentist fit for this model using 
 the `lme4` package using the following `R` code as explained in a 
-[R/PHARMA presentation on implementing MMRM in R by Daniel Sabanés Bové](https://rinpharma.com/publication/rinpharma_143/).
+[R/PHARMA presentation on implementing MMRM in R by Daniel Sabanés
+Bové](https://rinpharma.com/publication/rinpharma_143/).
+
 ```{r lmermodel_example}
 lmer(data=simulated_data,
      CHG ~ TRT01P + AVISIT + BASE + AVISIT*TRT01P + AVISIT*BASE + (0 + AVISIT | USUBJID),
      control = lmerControl(check.nobs.vs.nRE = "ignore", optimizer="nlminbwrap")) %>%
   summary()
 ```
+
 Note that the choice of the particular optimizer via 
 `control = lmerControl(optimizer="nlminbwrap")` was chosen based on trying 
 different ones to resolve convergence warnings. This process, as well as other
@@ -606,6 +614,7 @@ dedicated
 [`mmrm` `R` package](https://cran.r-project.org/web/packages/mmrm/index.html).
 For this reason the `mmrm` package is preferable and its usage is demonstrated 
 below:
+
 ```{r mmrm_package_example}
 mmrm_fit <- mmrm(
   formula = CHG ~ TRT01P + AVISIT + BASE + AVISIT:TRT01P + AVISIT:BASE + us(AVISIT | USUBJID),
@@ -627,11 +636,13 @@ of (categorical baseline covariates). One very convenient way of obtaining
 these inferences is with the `emmeans` R package, which we can use with many
 different types of models including `brms` models. To obtain LS-means by visit
 for each treatment group, we use the `emmeans` function:
+
 ```{r getting_lsmeans_mmrm}
 emm1 <- emmeans(mmrm_fit, ~ TRT01P | AVISIT, 
                 lmer.df="kenward-roger", weights = "proportional")
 print(emm1)
 ```
+
 To get the implied contrasts for each dose compared with the control 
 we use the `contrast` function`:
 
@@ -779,12 +790,15 @@ corresponds to the central 90% credible interval ranging from 1/2x to
 As for the `mmrm` package, we can also easily obtain the equivalent of 
 least-squares means with highest-posterior density (HPD) credible intervals
 for each treatment group by visit using `emmeans`.
+
 ```{r lsmeans_for_brms}
 emm2 <- emmeans(brmfit1, ~ TRT01P | AVISIT, weights="proportional")
 emm2
 ```
+
 We can also get the pairwise treatment comparisons with HPD
 credible intervals in this manner.
+
 ```{r contrasts_with_brms}
 contrast(emm2, adjust="none", method="trt.vs.ctrl")
 
@@ -885,6 +899,7 @@ summarise_draws(mc.contrast.emm2, default_summary_measures())
 As with a model fit using the `mmrm` package, we can also obtain inference
 about the average treatment effect across weeks 8 and 12 using the `emmeans`
 package:
+
 ```{r wk8_12_pooled_with_brms}
 emm2a <- emmeans(brmfit1, ~ TRT01P:AVISIT, weights="proportional")
 contrast(emm2a, 
@@ -1139,9 +1154,11 @@ histfit <- brm(
 Note that our simulation code created a dataset with `STUDYID` column that
 labels the 10 different studies being simulated and in addition has an extra
 11th factor level for a new study.
+
 ```{r, echo=TRUE}
 levels(historical_studies$STUDYID)
 ```
+
 This trick with the extra factor level (plus using the 
 `drop_unused_levels=FALSE` option in `brms`) automatically creates samples 
 from the predictive distribution for the parameters of a new hypothetical study. 
@@ -1150,7 +1167,9 @@ distribution for each MCMC sample in order to get the correlation of predicted
 parameters right. Instead, we can now simply add the population-level parameter 
 estimate plus the study specific parameter estimate for the hypothetical new 
 (11th) study (for which we had no data). This will then already correctly 
-reflect the correlation between the predictions for the different parameters.
+reflect the correlation between the predictions for the different
+parameters.
+
 ```{r predictive_dist_brms, message=FALSE, warning=FALSE}
 predictive_dist <- histfit %>%
     as_draws_rvars(variable=c("^b_", "^r_STUDYID"), regex=TRUE) %>%
@@ -1165,6 +1184,7 @@ predictive_dist <- histfit %>%
     subset_draws(variable=c("^b_Intercept", "^b_AVISIT.*", "^b_BASE.*"), regex=TRUE) %>%
     as_draws_df()
 ```
+
 We could now explore and visualize the joint distribution of these predicted
 parameter values in order to get an idea for the prior distribution induced
 by the historical data.
@@ -1273,6 +1293,7 @@ of the new data differ from the historical data and to assign this parameter
 a "slab-and-spike"-type prior. I.e. a prior distribution that is peaked at zero
 and heavy-tailed such as a double-exponential (DE) distribution (aka "Laplace 
 distribution"). 
+
 ```{r plot_de_dist}
 expand_grid(mean=0, scale=c(0.125, 0.25, 0.5, 1), x=seq(-2.5, 2.5, 0.01)) %>%
     mutate(density = dasym_laplace(x, mean, scale),
@@ -1295,7 +1316,9 @@ that most mass of the prior is centered around 0 while very large
 deviations are allowed for by the long tail of the DE distribution. A
 more detailed analysis of this prior is subject to research.
 
-With these caveats stated, here is how one can implement this model with `brms`:
+With these caveats stated, here is how one can implement this model
+with `brms`:
+
 ```{r fit_rmac_brms, message=FALSE, results="hide"}
 mmrm_rmac_model <- bf( CHG  ~ 1 + AVISIT + BASE + historical + BASE:AVISIT + TRT01P + TRT01P:AVISIT + 
                          AVISIT:historical + BASE:historical + BASE:AVISIT:historical +
@@ -1327,8 +1350,10 @@ rmacfit <- brm(
     refresh = 0
 )
 ```
+
 This gives us the following inference about the treatment effects at 
 each visit:
+
 <!-- ```{r} -->
 <!-- # Or, of course again via  -->
 <!-- # emmeans(brmfit1b, ~ TRT01P | AVISIT, weights = "proportional") -->
@@ -1386,7 +1411,9 @@ brmfit2 <- brm(
   refresh = 0)
 ```
 
-The syntax of `emmeans` would in this case still be very straightforward:
+The syntax of `emmeans` would in this case still be very
+straightforward:
+
 ```{r contrasts_mo_mmrm}
 emmeans(brmfit2, ~ TRT01P | AVISIT, weights="proportional") %>%
     contrast(adjust="none", method="trt.vs.ctrl") %>%
@@ -1470,6 +1497,7 @@ Notice that we would want to set
 warnings that there were divergent transitions (hence an `adapt_delta`
 closer to 1 than before) and poor sampling with many transitions hitting the
 maximum tree depth (hence `max_treedepth` increased from 10 to 13).
+
 ```{r nonlin_brms, results='hide', message=FALSE, warning=FALSE}
 mmrm_dr_model <- bf( CHG ~ E0 + Emax * ndose^h/(ndose^h + ED50^h) * nweek^ht/(nweek^ht + ET50^ht),
                      autocor=~unstr(AVISIT, USUBJID), 
@@ -1506,8 +1534,10 @@ brmfit3 <- brm(
 
 
 ```
+
 Note that here, it is hard to see how to make `emmeans` work. Instead,
 we use `hypothesis` to get treatment differences at each visit. 
+
 ```{r contrasts_nonlin}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -1545,9 +1575,11 @@ comparisons_for_sigemax %>%
 
 Just note that the string specifying the hypothesis become something complex and
 long like
+
 ```{r hypothesis_strings_nonlin, eval=TRUE}
 comparisons_for_sigemax$`Hypothesis string`[1]
 ```
+
 for the difference to placebo for the 10 mg dose at week 2. 
 
 

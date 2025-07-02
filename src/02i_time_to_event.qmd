@@ -850,7 +850,8 @@ contrasts(sim$arm) <- cc[,-1]
 
 Then to check if the contrasts work as expected, we can use a dummy
 fit to see if things get used correctly and the results here are
-consistent with our definitions:  
+consistent with our definitions:
+
 ```{r contrast check}
 lfit1 <- lm(y ~ 1 + arm, sim)
 summary(lfit1)
@@ -997,6 +998,7 @@ quantile(post_mean[,"activeChemoA"] / post_mean[,"controlChemoA"],
 
 
 Now extract posterior coefficients with a 90% credible interval
+
 ```{r}
 post_est <- fixef(fit_weibull, prob=c(0.05, 0.95), robust=TRUE)
 gt(as.data.frame(post_est)) %>% fmt_number(everything(), decimals=2)
@@ -1221,6 +1223,7 @@ model_weibull_mac_prior_all <- model_weibull_mac_prior +
 
 
 Fit the model and compare:
+
 ```{r}
 #| message: FALSE
 fit_all_mac_weibull_ind <- brm(model_mac_weibull_ind_all, data=all_comb_data_ind,

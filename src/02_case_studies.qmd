@@ -9,6 +9,7 @@ format:
 
 
 ::: {.content-visible when-profile="public"}
+
 ```{r, echo = FALSE}
 overview <- dplyr::tribble(
                        ~Problem, ~Technique,
@@ -27,5 +28,6 @@ overview <- dplyr::tribble(
                    )
 knitr::kable(overview)
 ```
+
 :::
 

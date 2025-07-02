@@ -15,13 +15,17 @@ clinical questions that were addressed via Bayesian modelling with the `brms` pa
 
 ::: {.content-visible when-profile="public"}
 ::: {.callout-tip}
-## Courses in Göttingen (Germany), Dec 5/6<sup>th</sup> and at JSM (Portland, OR), Aug 5<sup>th</sup> 2024
+## Courses in Paris (France), July 4<sup>th</sup> 20025, Göttingen (Germany), Dec 5/6<sup>th</sup> 2024 and at JSM (Portland, OR), Aug 5<sup>th</sup> 2024
 
-We offered two courses based on this material in 2024:
+Past course we offered recently:
 
-1. A course at the workshop ["Hierarchical models in preclinical research"](https://www.biometrische-gesellschaft.de/arbeitsgruppen/bayes-methodik/workshops/2024-goettingen.html) of the IBS-DR working groups Non-clinical statistics and Bayes Methods on December 5/6<sup>th</sup>. The materials are available here:
+1. Tutorial at the ["Stan4PMX
+   workshop"](https://stan4pmx2025.sciencesconf.org).  
+   [Slides](workshops/goettingen2024/slides/bamdd_paris2025.html) &
+   [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/paris2025)
+2. A course at the workshop ["Hierarchical models in preclinical research"](https://www.biometrische-gesellschaft.de/arbeitsgruppen/bayes-methodik/workshops/2024-goettingen.html) of the IBS-DR working groups Non-clinical statistics and Bayes Methods on December 5/6<sup>th</sup>. The materials are available here:
    [Slides](workshops/goettingen2024/slides/bamdd_goettingen2024.html) & [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/goettingen2024)
-2. A short course at the 2024 Joint Statistical Meetings in Portland on August 5<sup>th</sup>. The materials are available here:
+3. A short course at the 2024 Joint Statistical Meetings in Portland on August 5<sup>th</sup>. The materials are available here:
    [Slides](workshops/jsm2024/slides/bamdd_jsm2024.pdf) & [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/jsm2024)
 
 :::
