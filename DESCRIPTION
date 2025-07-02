@@ -80,4 +80,5 @@ Imports:
   withr,
   tidyverse,
   BH,
-  StanHeaders
+  StanHeaders,
+  RcppEigen

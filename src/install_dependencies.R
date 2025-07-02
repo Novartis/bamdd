@@ -73,14 +73,13 @@ dependencies <- c(
 "withr",
 "tidyverse",
 "BH",
-"StanHeaders"
+"StanHeaders",
+"RcppEigen"
 )
 
 all_pkgs <- .packages(all.available = TRUE)
 missing_dependencies <- dependencies[!dependencies %in% all_pkgs]
 if(length(missing_dependencies) > 0) {
   cat("Installing missing dependencies:", missing_dependencies, sep = "\n")
-  for(pkg in missing_dependencies) {
-    install.packages(pkg)
-  }
+  pak::pak(missing_dependencies)
 }
