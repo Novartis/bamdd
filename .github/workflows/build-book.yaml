@@ -32,7 +32,7 @@ jobs:
         shell: Rscript {0}
         run: |
           cmdstanr::check_cmdstan_toolchain(fix = TRUE)
-          cmdstanr::install_cmdstan(version = "2.32.2")
+          cmdstanr::install_cmdstan(version = "2.32.2", cores=4)
 
       - uses: quarto-dev/quarto-actions/setup@v2
 
