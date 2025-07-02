@@ -58,6 +58,7 @@ While older literature suggests as few as 3 to 5, or maybe 50 imputations, there
 ## Data
 
 We will need the following R packages in this Section:
+
 ```{r show_packages_2e, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
 library(tidyverse)
 library(brms)
@@ -544,7 +545,9 @@ fitmodel <- function(data) {
 
 #### Fitting the negative binomial regression to the imputed data
 
-Actually fitting negative binomial regression on each imputed datasets is now easy with the function above: 
+Actually fitting negative binomial regression on each imputed datasets
+is now easy with the function above: 
+
 ```{r}
 
 results <- tibble(.imputation = 1:max(imputed$.imputation, na.rm = T)) %>%
@@ -647,9 +650,27 @@ final_results <- results %>%
 
 ### What if we want to do a Bayesian analysis after MI?
 
-If we have multiple imputated datasets and wish to perform Bayesian inference, we would recommend the approach of described in the Bayesian Data Analysis book by Gelman et al. (Gelman, A., Carlin, J.B., Stern, H.S., Dunson, D.B., Vehtari, A. and Rubin, D.B., 2014. Bayesian data analysis (3rd ed.). CRC press. p.452) that uses the (equally weighted) mixture distribution of the posterior distributions as the combined posterior distribution. I.e. we use all the (or a random subset) of the MCMC samples from each analysis as samples from the combined posterior distribution. This has been reported to perform well with a sufficient number of imputations such as 100 (Zhou, X. and Reiter, J.P., 2010. A note on Bayesian inference after multiple imputation. The American Statistician, 64(2), pp.159-163.).
+If we have multiple imputated datasets and wish to perform Bayesian
+inference, we would recommend the approach of described in the
+Bayesian Data Analysis book by Gelman et al. (Gelman, A., Carlin,
+J.B., Stern, H.S., Dunson, D.B., Vehtari, A. and Rubin,
+D.B., 2014. Bayesian data analysis (3rd ed.). CRC press. p.452) that
+uses the (equally weighted) mixture distribution of the posterior
+distributions as the combined posterior distribution. I.e. we use all
+the (or a random subset) of the MCMC samples from each analysis as
+samples from the combined posterior distribution. This has been
+reported to perform well with a sufficient number of imputations such
+as 100 (Zhou, X. and Reiter, J.P., 2010. A note on Bayesian inference
+after multiple imputation. The American Statistician, 64(2),
+pp.159-163.).
 
-We could of course write some code to fit separate Bayesian models for each imputed dataset and then combine the posterior samples, but we do not have to, because `brms` can take care of it for us. E.g. the code below would run 1 MCMC chain for each of 20 imputed datasets (without specifying any prior distributions, which we would in practice of course also do).
+We could of course write some code to fit separate Bayesian models for
+each imputed dataset and then combine the posterior samples, but we do
+not have to, because `brms` can take care of it for us. E.g. the code
+below would run 1 MCMC chain for each of 20 imputed datasets (without
+specifying any prior distributions, which we would in practice of
+course also do).
+
 ```{r, eval=FALSE}
 library(future)
 plan(multisession)
@@ -670,9 +691,9 @@ As we can see the results from imputing explicitly "as if all patients
 had finished treatment" matches the results from a negative binomial
 regression of on-treatment data rather closely. Similarly, the two
 approaches for treatment policy estimands (jump-to-reference or
-imputation based on retrieved drop-outs) give quite similar results, but
-with higher variability when basing imputations on the small number of
-subjects with post-treatment-discontinuation data.
+imputation based on retrieved drop-outs) give quite similar results,
+but with higher variability when basing imputations on the small
+number of subjects with post-treatment-discontinuation data.
 
 ```{r}
 final_results %>%
@@ -694,7 +715,16 @@ We can also fit multivariate imputation models (see the [corresponding `brms` vi
 
 ### Excercise 1: Food allergy
 
-This is example is about a simulated randomized controlled trial of a new treatment compared with placebo for peanut allergy. The primary endpoint is the result of a double-blind, placebo controlled food challenge (DBPCFC), during which patients take increasing amounts of peanut flour (1, 3, 10, 30, 100, 300, 600 and 1000 mg). Tolerating a higher amount of peaanut flour is a better outcome and the proportion of patients tolerating at least 600 mg at week 52 will be analyzed in the primary analysis. DBPCFC is performed at baseline, at week 12, 26 and 52 (1-year). The code below creates a `tibble` with simulated data from a hypothetical study.
+This is example is about a simulated randomized controlled trial of a
+new treatment compared with placebo for peanut allergy. The primary
+endpoint is the result of a double-blind, placebo controlled food
+challenge (DBPCFC), during which patients take increasing amounts of
+peanut flour (1, 3, 10, 30, 100, 300, 600 and 1000 mg). Tolerating a
+higher amount of peaanut flour is a better outcome and the proportion
+of patients tolerating at least 600 mg at week 52 will be analyzed in
+the primary analysis. DBPCFC is performed at baseline, at week 12, 26
+and 52 (1-year). The code below creates a `tibble` with simulated data
+from a hypothetical study.
 
 ```{r food_allergy_missing}
 set.seed(1234)
@@ -736,7 +766,10 @@ model_data = simulated %>%
          visit = factor(visit, levels=c(12L, 26L, 52L)))
 ```
 
-Summarizing the data by treatment group and visit as a bar plot, it appears like the new drug may have a large effect on the outcome of the DBPCFC.
+Summarizing the data by treatment group and visit as a bar plot, it
+appears like the new drug may have a large effect on the outcome of
+the DBPCFC.
+
 ```{r food_allergy_barplot}
 simulated %>%
   mutate(Treatment = factor(Treatment, levels=0L:1L, labels=c("Placebo", "Drug")),
@@ -754,7 +787,11 @@ simulated %>%
         legend.title = element_text(size=rel(0.5)),
         legend.key.size = unit(0.2, "cm"))
 ```
-Or, as an alternative display as a spaghetti plot (note the handy `seed` option in `position_jitter()` to keep the line and point geoms aligned).
+
+Or, as an alternative display as a spaghetti plot (note the handy
+`seed` option in `position_jitter()` to keep the line and point geoms
+aligned).
+
 ```{r food_allergy_spaghetti}
 simulated %>%
   filter(!is.na(aval)) %>%
@@ -769,7 +806,8 @@ simulated %>%
   ylab("Tolerated amount of peanut flour")
 ```
 
-Excercises in increasing order of complexity (\* marks advanced questions):
+Excercises in increasing order of complexity (\* marks advanced
+questions):
 
 1.  Fit a simple logistic regression (i.e. `glm(formula = response ~ Treatment, family=binomial(link="logit"))`) that uses a composite estimand treating discontinuation of treatment as equivalent to the worst response category (not tolerating 1 mg of peanut flour, i.e. `model_data %>% filter(visit == 52L) %>% mutate(aval = ifelse(is.na(aval), 1L, aval), response = 1L*(aval >= 8L))`). Does this support the alternative hypothesis that the new drug is better than placebo? What if we change the null hypothesis to the difference in response rate being less than 10 percentage points higher than the placebo response rate (and the alternative hypothesis to it being 10 or more percentage points better than placebo)?
 

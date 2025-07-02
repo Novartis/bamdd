@@ -91,16 +91,16 @@ a lot better for smaller sample sizes. Thus, we work with log-hazard
 ratios and their standard errors.
 
 ```{r}
-sglt2_hr = tibble(trial = c("DECLARE–TIMI 58", "EMPA-REG OUTCOME",
-                            "CANVAS", "CANVAS-R", "CREDENCE", 
-                            "SCORED", "VERTIS CV"),
-                  drug = c("dapagliflozin", "empagliflozin",
-                           "canagliflozin", "canagliflozin", "canagliflozin",
-                           "sotagliflozin", "ertugliflozin"),
-                  studyno = c(5, 4, 1, 2, 3, 6, 7),
-                  hr = c(0.93, 0.86, 0.88, 0.82, 0.80, 0.77, 0.97),
-                  hr_lcl = c(0.84, 0.74, 0.75, 0.66, 0.67, 0.65, 0.85),
-                  hr_ucl = c(1.03, 0.99, 1.03, 1.01, 0.95, 0.91, 1.11)) %>%
+sglt2_hr <- tibble(trial = c("DECLARE–TIMI 58", "EMPA-REG OUTCOME",
+                             "CANVAS", "CANVAS-R", "CREDENCE", 
+                             "SCORED", "VERTIS CV"),
+                   drug = c("dapagliflozin", "empagliflozin",
+                            "canagliflozin", "canagliflozin", "canagliflozin",
+                            "sotagliflozin", "ertugliflozin"),
+                   studyno = c(5, 4, 1, 2, 3, 6, 7),
+                   hr = c(0.93, 0.86, 0.88, 0.82, 0.80, 0.77, 0.97),
+                   hr_lcl = c(0.84, 0.74, 0.75, 0.66, 0.67, 0.65, 0.85),
+                   hr_ucl = c(1.03, 0.99, 1.03, 1.01, 0.95, 0.91, 1.11)) %>%
   arrange(desc(studyno)) %>%
   mutate(studyno = factor(studyno, levels=studyno, labels=trial),
          log_hr = log(hr),
@@ -139,7 +139,7 @@ These are the sufficient statistics for exponentially distributed event
 times with right-censoring.
 
 ```{r}
-sglt2 = "record, study, trialid, studyno, drugname, treatment, cases, patients, py_to_evt_or_cens, cases_per_py
+sglt2 <- "record, study, trialid, studyno, drugname, treatment, cases, patients, py_to_evt_or_cens, cases_per_py
 1,CANVAS,NCT01032629, 1,canagliflozin, 1, 425, 2888, 15799.25651, 0.0269
 2,CANVAS,NCT01032629, 1,canagliflozin, 0, 233, 1442, 7664.473684, 0.0304
 3,CANVAS-R,NCT01989754, 2,canagliflozin, 1, 160, 2907, 5904.059041, 0.0271
@@ -366,11 +366,11 @@ fixed-effects meta-analysis with log-hazard ratios and their standard
 errors as inputs.
 
 ```{r}
-brmfit1 = brm(data=sglt2_hr,
-              formula = log_hr | se(log_hr_stderr) ~ 1,
-              prior = prior(class="Intercept", student_t(3, 0, 2.5)),
-              control=list(adapt_delta=0.99),
-              refresh = 0)
+brmfit1 <- brm(data=sglt2_hr,
+               formula = log_hr | se(log_hr_stderr) ~ 1,
+               prior = prior(class="Intercept", student_t(3, 0, 2.5)),
+               control=list(adapt_delta=0.99),
+               refresh = 0)
 ```
 
 ```{r}
@@ -381,12 +381,12 @@ This `brms` code performs a random-effects meta-analysis with log-hazard
 ratios and their standard errors as inputs.
 
 ```{r}
-brmfit2 = brm(data=sglt2_hr,
-              formula = log_hr | se(log_hr_stderr) ~ 1 + (1|studyno),
-              prior = prior(class="Intercept", student_t(3, 0, 2.5)) +
-                prior(class="sd", normal(0,1)),
-              control=list(adapt_delta=0.99),
-              refresh = 0)
+brmfit2 <- brm(data=sglt2_hr,
+               formula = log_hr | se(log_hr_stderr) ~ 1 + (1|studyno),
+               prior = prior(class="Intercept", student_t(3, 0, 2.5)) +
+                 prior(class="sd", normal(0,1)),
+               control=list(adapt_delta=0.99),
+               refresh = 0)
 ```
 
 As we noted before, there's at least two ways of performing posterior
@@ -396,6 +396,7 @@ the predicted effect in a new study drawn from the same distribution of
 studies as the studies under analysis. This difference becomes very
 clear when working in a Bayesian regression setting using `brms`, but is
 somewhat obscured when we use standard meta-analysis software.
+
 ```{r}
 summary(brmfit2)
 ```
@@ -414,20 +415,20 @@ log-hazard  rate in each trial, for this we use an extremely wide Student-t prio
 3 degrees of freedom centered on $-3$, because when exponentiated $e^-3 \approx 0.05$ corresponds to a plausible yearly event rate.
 
 ```{r}
-brmfit3 = brm(data=sglt2,
-              formula = cases | rate(py_to_evt_or_cens) ~ 0 + study + treatment,
-              family = poisson(link="log"),
-              prior = prior(class="b", coef="treatmentSGLT2inhibitor",
-                            student_t(3, 0, 2.5)) +
-                prior(class="b",  coef="studyCANVAS",  student_t(3, -3, 5)) +
-                prior(class="b",  coef="studyCANVASMR",  student_t(3, -3, 5)) +
-                prior(class="b",  coef="studyCREDENCE",  student_t(3, -3, 5)) +
-                prior(class="b",  coef="studyDECLARE–TIMI58",  student_t(3, -3, 5)) +
-                prior(class="b",  coef="studyEMPAMREGOUTCOME",  student_t(3, -3, 5)) +
-                prior(class="b",  coef="studySCORED",  student_t(3, -3, 5)) +
-                prior(class="b",  coef="studyVERTISCV",  student_t(3, -3, 5)),
-              control=list(adapt_delta=0.99),
-              refresh = 0) 
+brmfit3 <- brm(data=sglt2,
+               formula = cases | rate(py_to_evt_or_cens) ~ 0 + study + treatment,
+               family = poisson(link="log"),
+               prior = prior(class="b", coef="treatmentSGLT2inhibitor",
+                             student_t(3, 0, 2.5)) +
+                 prior(class="b",  coef="studyCANVAS",  student_t(3, -3, 5)) +
+                 prior(class="b",  coef="studyCANVASMR",  student_t(3, -3, 5)) +
+                 prior(class="b",  coef="studyCREDENCE",  student_t(3, -3, 5)) +
+                 prior(class="b",  coef="studyDECLARE–TIMI58",  student_t(3, -3, 5)) +
+                 prior(class="b",  coef="studyEMPAMREGOUTCOME",  student_t(3, -3, 5)) +
+                 prior(class="b",  coef="studySCORED",  student_t(3, -3, 5)) +
+                 prior(class="b",  coef="studyVERTISCV",  student_t(3, -3, 5)),
+               control=list(adapt_delta=0.99),
+               refresh = 0) 
 ```
 
 ```{r}

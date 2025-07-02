@@ -263,10 +263,12 @@ scale.
 
 In practice one would most certainly not fit the intercept only model,
 which pools the information. The `RBesT::AS` data set is in fact the
-standard example for the use of historical control data. 
+standard example for the use of historical control data.
+
 ```{r warning=FALSE, message=FALSE}
 kable(RBesT::AS)
 ```
+
 To use this data as historical control data one uses instead of the
 intercept only model a random intercept model, which casts this
 into a meta-analtyic model:

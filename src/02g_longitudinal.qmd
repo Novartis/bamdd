@@ -580,21 +580,26 @@ pp_checks <- lapply(
 
 ```
 
-Now we visualize the posterior predictive distribution against the observed data, first for the *Gaussian process* model:
+Now we visualize the posterior predictive distribution against the
+observed data, first for the *Gaussian process* model:
+
 ```{r gp_pp, warning = FALSE, fig.height = 15, fig.width = 8}
 #| code-fold: TRUE
 pp_checks[[1]]$gp / pp_checks[[2]]$gp / pp_checks[[3]]$gp / pp_checks[[4]]$gp
 ```
 
 and next for the *linear-in-time* model:
+
 ```{r lm_pp, warning = FALSE, fig.height = 15, fig.width = 8}
 #| code-fold: TRUE
 pp_checks[[1]]$lm / pp_checks[[2]]$lm / pp_checks[[3]]$lm / pp_checks[[4]]$lm
 ```
 
-Another useful visualization for assessing model involves approximate leave-one-out (LOO) cross-validation techniques.
+Another useful visualization for assessing model involves approximate
+leave-one-out (LOO) cross-validation techniques.
 
-One can numerically compare the approximate expected log predictive density (ELPD) for holdout observations using `loo_compare`.
+One can numerically compare the approximate expected log predictive
+density (ELPD) for holdout observations using `loo_compare`.
 
 ```{r loo_comparison}
 loo_gp <- loo(gp_fit)
@@ -602,14 +607,22 @@ loo_lm <- loo(lm_fit)
 loo_compare(loo_gp, loo_lm)
 ```
 
-This suggests the Gaussian-process based model has a superior model fit.
+This suggests the Gaussian-process based model has a superior model
+fit.
 
-To visualize the predictive densities versus observed values, `pp_check()` with type `"loo_pit"`. In these visualizations, the observed outcomes are compared with their respective leave-one-out predictive distributions using the probability integral transformation (PIT). In an ideal model fit, the resulting PIT-transformed values would be uniformly distributed: i.e. the blue points and dashed lines would align with the distribution function of a Uniform(0,1) variable (solid line).
+To visualize the predictive densities versus observed values,
+`pp_check()` with type `"loo_pit"`. In these visualizations, the
+observed outcomes are compared with their respective leave-one-out
+predictive distributions using the probability integral transformation
+(PIT). In an ideal model fit, the resulting PIT-transformed values
+would be uniformly distributed: i.e. the blue points and dashed lines
+would align with the distribution function of a Uniform(0,1) variable
+(solid line).
 
 ```{r plot_loo_pit}
 #| warning: FALSE
-gp_loo <- pp_check(gp_fit, type = "loo_pit") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: GP model")
-lm_loo <- pp_check(lm_fit, type = "loo_pit") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: linear-in-time model")
+gp_loo <- pp_check(gp_fit, type = "loo_pit_qq") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: GP model")
+lm_loo <- pp_check(lm_fit, type = "loo_pit_qq") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: linear-in-time model")
 gp_loo + lm_loo
 ```
 

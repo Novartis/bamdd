@@ -229,10 +229,20 @@ cycle_info <- tibble(
 )
 
 ```
+<<<<<<< HEAD
 We also generate a reference dosing data set which is formatted like
 an analysis data set, but is only setup to evaluate the final model on
 the predefined set of doses. These will be needed to compute 
 the conditional (or cumulative) DLT probabilities in (up to) cycles 1, 2 and 3:
+=======
+
+We also generate a reference dosing data set which is formatted
+like an analysis data set, but is only setup to evaluate the final
+model on the predefined set of doses. These will be needed to compute
+the conditional (or cumulative) DLT probabilities in (up to) cycles 1,
+2 and 3:
+>>>>>>> origin/develop
+
 ```{r}
 dose_ref_data <- dose_info_long |>
     left_join(cycle_info, by="cycle") |>
@@ -254,7 +264,7 @@ $$
 $$
 
 Here, $U_i$ represents the observed time, and $\delta_i$ indicates
-whether a DLT occurred ($\delta_i = 1$) or not ($\delta_i = 0$).
+whether a DLT occurred $(\delta_i = 1)$ or not ($\delta_i = 0)$.
 
 The primary focus of the model is the risk for DLT events over the
 course of a sequence of cycles. Thus, we do not aim to model
@@ -447,6 +457,7 @@ For the case of a single agent trial we can cast the problem into a
 Poisson regression framework as detailed above and define the `brms`
 model formula as follows. We use here a non-linear model formla
 syntax to enforce a positive slope:
+
 ```{r}
 tte_model <-
     bf(num_toxicities | rate(follow_up) ~ interA + exp(slopeA) * std_A,
@@ -455,13 +466,18 @@ tte_model <-
        nl=TRUE, family=poisson()
   )
 ```
-`brms` helps us to get the list of model parameters requiring prior specifications:
+
+`brms` helps us to get the list of model parameters requiring prior
+specifications:
+
 ```{r}
 get_prior(tte_model, data = ipd)
 ```
+
 We can for instance define a prior with 20% DLT probability after the first 
 treatment cycle at the reference dose. For more details on the $\beta$ parameter
 prior, see the bite-size guidance on [go/BLRM](https://go/BLRM).
+
 ```{r}
 ## -4.83 approx cloglog(0.2) - log(7*4) for drug A
 tte_prior <-
@@ -470,19 +486,24 @@ tte_prior <-
 ```
 
 We then create the Stan model code
+
 ```{r}
 tte_stanmodel <- tte_model |> make_stancode(
   data = ipd, prior = tte_prior
 )
 ```
+
 and data:
+
 ```{r}
 tte_standata <- tte_model |> make_standata(
   data = ipd, prior = tte_prior
 )
 ```
+
 After inspecting the generated code and data for correctness, we compile the 
 model without sampling it (`chains = 0`) yet:
+
 ```{r message=FALSE, warning=FALSE}
 tte_brms_model <- tte_model |> brm(
   data = ipd, prior = tte_prior, chains = 0, silent = 2
@@ -558,6 +579,7 @@ of the decision threshold. In turn we are at least 97.5% certain that
 the decision is robust wrt to fluctuations implied by MCMC sampling
 variability. Here we assume that the statistic is normally
 distributed:
+
 ```{r}
 summarize_probs <- function(draws) {
   summarize_draws(
@@ -576,23 +598,30 @@ summarize_probs <- function(draws) {
 ```
 
 To inspect the prior, we first sample the model ignoring the data:
+
 ```{r, message=FALSE, warning=FALSE}
 tte_model_prioronly <- update(tte_brms_model, chains = 4, sample_prior = "only") 
 ```
 
-Now we can compute the conditional and cumulative DLT probabilities implied by the prior,
+Now we can compute the conditional and cumulative DLT probabilities
+implied by the prior,
+
 ```{r}
 prior_risk <- dose_ref_data |>
   add_risk_rvars(tte_model_prioronly, cycle, schedule_id)
 ```
+
 and display them as a table, i.e., the conditional DLT probabilities
+
 ```{r}
 prior_risk |>
   mutate(summarize_probs(cprob)) |>
   select(-num_toxicities, -std_A, -prob, -cprob) |>
   gt() |> gt_format()
 ```
+
 as well the cumulative probabilities
+
 ```{r}
 prior_risk |>
   mutate(summarize_probs(prob)) |>
@@ -602,6 +631,7 @@ prior_risk |>
 
 
 ### Visualizing the model prior {#sec-onco-tte-prior-vis}
+
 We can also visualize the prior in terms of the sampled curves, and see whether
 this distribution makes sense to us. We can, e.g., see, that the prior we defined
 above is quite sensible in terms of the dose-response curves it implies:
@@ -734,22 +764,28 @@ plot_prob <- function(model, schedules) {
 plot_prob(tte_model_prioronly, dose_ref_data) 
 ```
 ## Examining the model posterior
+
 We now sample the model including the data:
+
 ```{r}
 tte_model_posterior <- update(tte_brms_model, chains = 4)
 ```
 
 ### Inference for model parameters
-It is simple to get summary statistics and graphical displays of the posterior distributions for the model parameters:
+
+It is simple to get summary statistics and graphical displays of the
+posterior distributions for the model parameters:
 
 ```{r}
 posterior_summary(tte_model_posterior)
-```
-```{r}
 brms::mcmc_plot(tte_model_posterior, type = "dens", facet_args = list(ncol = 1))
 ```
+
 ### Inference for conditional and cumulative DLT probabilities
-The conditional and cumulative DLT probabilities are now higher, as expected from the data:
+
+The conditional and cumulative DLT probabilities are now higher, as
+expected from the data:
+
 ```{r}
 plot_cprob(tte_model_posterior, dose_ref_data) 
 ```
@@ -762,14 +798,16 @@ plot_prob(tte_model_posterior, dose_ref_data)
 
 ## Conclusion
 
-`brms` can handle time-to-event modelling for DLTs in an early Oncology dose escalation
-trial using Poisson regression with an offset for the follow-up, and produce all the posterior summaries necessary for guiding
-such trials. There are, of course, *many* possible extensions and complications
-to this methodology, such as hazards varying by treatment cycle (e.g.,
-monotonically decreasing), or by prior treatment (e.g., decreasing
-hazard in case of prior ramp-up dosing), or drug combinations. The
-latter will be the topic of the exercise for this chapter where we showcase
-how to define custom link functions in `brms` to handle the combination case.
+`brms` can handle time-to-event modelling for DLTs in an early
+Oncology dose escalation trial using Poisson regression with an offset
+for the follow-up, and produce all the posterior summaries necessary
+for guiding such trials. There are, of course, *many* possible
+extensions and complications to this methodology, such as hazards
+varying by treatment cycle (e.g., monotonically decreasing), or by
+prior treatment (e.g., decreasing hazard in case of prior ramp-up
+dosing), or drug combinations. The latter will be the topic of the
+exercise for this chapter where we showcase how to define custom link
+functions in `brms` to handle the combination case.
 
 ## Exercise
 Often, investigational cancer drugs are tested on top of a
