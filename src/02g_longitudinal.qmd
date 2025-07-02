@@ -621,8 +621,8 @@ would align with the distribution function of a Uniform(0,1) variable
 
 ```{r plot_loo_pit}
 #| warning: FALSE
-gp_loo <- pp_check(gp_fit, type = "loo_pit") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: GP model")
-lm_loo <- pp_check(lm_fit, type = "loo_pit") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: linear-in-time model")
+gp_loo <- pp_check(gp_fit, type = "loo_pit_qq") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: GP model")
+lm_loo <- pp_check(lm_fit, type = "loo_pit_qq") + geom_abline(intercept = 0, slope = 1) + ggtitle("LOO PIT: linear-in-time model")
 gp_loo + lm_loo
 ```
 
