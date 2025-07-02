@@ -77,4 +77,5 @@ Imports:
   utils,
   vctrs,
   viridis,
-  withr
+  withr,
+  tidyverse

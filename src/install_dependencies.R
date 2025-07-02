@@ -59,7 +59,6 @@ dependencies <- c(
 "rmarkdown",
 "rstan",
 "rstantools",
-##"SBC",
 "scales",
 "simsurv",
 "stringr",
@@ -71,7 +70,8 @@ dependencies <- c(
 "utils",
 "vctrs",
 "viridis",
-"withr"
+"withr",
+"tidyverse"
 )
 
 all_pkgs <- .packages(all.available = TRUE)
