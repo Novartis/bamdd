@@ -78,4 +78,7 @@ Imports:
   vctrs,
   viridis,
   withr,
-  tidyverse
+  tidyverse,
+  BH,
+  StanHeaders,
+  RcppEigen

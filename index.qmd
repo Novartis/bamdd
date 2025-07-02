@@ -21,7 +21,7 @@ Past course we offered recently:
 
 1. Tutorial at the ["Stan4PMX
    workshop"](https://stan4pmx2025.sciencesconf.org).  
-   [Slides](workshops/goettingen2024/slides/bamdd_paris2025.html) &
+   [Slides](workshops/paris2025/slides/bamdd_paris2025.html) &
    [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/paris2025)
 2. A course at the workshop ["Hierarchical models in preclinical research"](https://www.biometrische-gesellschaft.de/arbeitsgruppen/bayes-methodik/workshops/2024-goettingen.html) of the IBS-DR working groups Non-clinical statistics and Bayes Methods on December 5/6<sup>th</sup>. The materials are available here:
    [Slides](workshops/goettingen2024/slides/bamdd_goettingen2024.html) & [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/goettingen2024)
