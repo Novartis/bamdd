@@ -100,11 +100,11 @@ p3
 
 ## ----include=FALSE------------------------------------------------------------
 # This is the PATHWAY DRF data by group
-pathway = tibble(dose = c(0, 70, 210, 280*2),
-                 group = c("placebo", "tezepelumab 70 mg q4w",
-                           "tezepelumab 210 mg q4w", "tezepelumab 280 mg q2w"),
-                 log_est = log(c(0.67, 0.26, 0.19, 0.22)),
-                 log_stderr = c(0.10304, 0.17689, 0.22217, 0.19108))
+pathway <- tibble(dose = c(0, 70, 210, 280*2),
+                  group = c("placebo", "tezepelumab 70 mg q4w",
+                            "tezepelumab 210 mg q4w", "tezepelumab 280 mg q2w"),
+                  log_est = log(c(0.67, 0.26, 0.19, 0.22)),
+                  log_stderr = c(0.10304, 0.17689, 0.22217, 0.19108))
 
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -117,7 +117,7 @@ gt(pathway) %>%
 #| echo: FALSE
 #| fig-height: 6
 # Plot some example sigEmax curves
-expand_grid(Dose=seq(0, 100, 1), Emax=1, E0=0, ED50=c(5,25), h=c(1/3, 1, 3)) %>%
+expand_grid(Dose=seq(0, 100, length.out=51), Emax=1, E0=0, ED50=c(5,25), h=c(1/3, 1, 3)) %>%
   mutate(`Dose response` = E0 + Emax * Dose^h/(Dose^h + ED50^h),
          text = paste0("ED50=", ED50, "/h=",round(h,2))) %>%
   ggplot(aes(x=Dose, y=`Dose response`, col=text, label=text)) +
@@ -153,7 +153,7 @@ prior_sig <- prior(normal(0,1), nlpar=E0) +
 #| echo: FALSE
 #| fig-height: 3
 # Plot some example sigEmax curves
-expand_grid(Dose=seq(0, 100, 1), Emax=1, E0=0, data.frame(ED50=exp(rnorm(n=1000,mean=4,sd=2)), h=exp(rnorm(n=1000)))) |>
+expand_grid(Dose=seq(0, 100, length.out=51), Emax=1, E0=0, data.frame(ED50=exp(rnorm(n=1000,mean=4,sd=2)), h=exp(rnorm(n=1000)))) |>
   mutate(`Dose response` = E0 + Emax * Dose^h/(Dose^h + ED50^h), id=paste0(ED50, "-", h)) |>
   ggplot(aes(x=Dose, y=`Dose response`, group=id)) +
   theme_bw(base_size=24) +
@@ -167,7 +167,7 @@ expand_grid(Dose=seq(0, 100, 1), Emax=1, E0=0, data.frame(ED50=exp(rnorm(n=1000,
 #| echo: FALSE
 #| fig-height: 3
 # Plot some example sigEmax curves
-expand_grid(Dose=c(seq(0, 5, 0.1), seq(6, 100, 1)), Emax=1, E0=0, data.frame(ED50=exp(rnorm(n=1000,mean=4,sd=2)), h=exp(rnorm(n=1000, sd=3)))) |>
+expand_grid(Dose=c(seq(0, 5, 0.1), seq(6, 100, length.out=51)), Emax=1, E0=0, data.frame(ED50=exp(rnorm(n=1000,mean=4,sd=2)), h=exp(rnorm(n=1000, sd=3)))) |>
   mutate(`Dose response` = E0 + Emax * Dose^h/(Dose^h + ED50^h), id=paste0(ED50, "-", h)) |>
   ggplot(aes(x=Dose, y=`Dose response`, group=id)) +
   theme_bw(base_size=24) +
@@ -179,7 +179,7 @@ expand_grid(Dose=c(seq(0, 5, 0.1), seq(6, 100, 1)), Emax=1, E0=0, data.frame(ED5
 
 ## -----------------------------------------------------------------------------
 #| eval: FALSE
-## fit_sig = brm(
+## fit_sig <- brm(
 ##   formula = form_sig,
 ##   data = pathway,
 ##   prior = prior_sig,
@@ -190,7 +190,7 @@ expand_grid(Dose=c(seq(0, 5, 0.1), seq(6, 100, 1)), Emax=1, E0=0, data.frame(ED5
 ## -----------------------------------------------------------------------------
 #| echo: FALSE
 #| results: 'hide'
-fit_sig = brm(
+fit_sig <- brm(
   formula = form_sig, 
   data = pathway, 
   prior = prior_sig,
@@ -206,12 +206,9 @@ summary(fit_sig)
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## tibble(dose = seq(0, 560, 1), log_stderr=1) |>
+## tibble(dose = seq(0, 560, length.out=51), log_stderr=1) |>
 ##   tidybayes::add_epred_rvars(object=fit_sig) |>
-##   (\(x) x |>
-##      left_join(x |> filter(dose==0) |> rename(pbo = .epred) |> dplyr::select(-dose),
-##                by="log_stderr"))() |>
-##   mutate(.delta = .epred - pbo) |>
+##   mutate(.delta = .epred - .epred[dose == 0]) |>
 ##   ggplot(aes(x=dose, ydist=.delta)) +
 ##   ggdist::stat_lineribbon()
 
@@ -219,10 +216,9 @@ summary(fit_sig)
 ## -----------------------------------------------------------------------------
 #| echo: false
 #| fig.height: 4
-tibble(dose = seq(0, 560, 1), log_stderr=1) |>
+tibble(dose = seq(0, 560, length.out=51), log_stderr=1) |>
   add_epred_rvars(object=fit_sig) |>
-  (\(x) x |> left_join(x |> filter(dose==0) |> rename(pbo = .epred) |> dplyr::select(-dose), by="log_stderr"))() |>
-  mutate(.delta = .epred - pbo) |>
+  mutate(.delta = .epred - .epred[dose == 0]) |>
   ggplot(aes(x=dose, ydist=.delta)) +
   theme_bw(base_size=24) +
   theme(legend.position = "right") +
@@ -294,10 +290,9 @@ fit_mbeta <- brm(
 #| echo: false
 #| fig.height: 8
 #| fig.align: center
-tibble(dose = seq(0, 560, 1), log_stderr=1) |>
+tibble(dose = seq(0, 560, length.out=51), log_stderr=1) |>
   add_epred_rvars(object=fit_mbeta) |>
-  (\(x) x |> left_join(x |> filter(dose==0) |> rename(pbo = .epred) |> dplyr::select(-dose), by="log_stderr"))() |>
-  mutate(.delta = .epred - pbo) |>
+  mutate(.delta = .epred - .epred[dose==0]) |>
   ggplot(aes(x=dose, ydist=.delta)) +
   theme_bw(base_size=24) +
   theme(legend.position = "bottom") +
@@ -373,14 +368,17 @@ pe_avg |> select(-log_stderr) |> head(4)
 ## -----------------------------------------------------------------------------
 #| echo: false
 #| fig.height: 6.5
-tibble(dose = seq(0, 560, 1), log_stderr=1) %>%
+tibble(dose = seq(0, 560, length.out=51), log_stderr=1) %>%
   add_epred_rvars(object=fit_sig) %>%
   rename(SigEmax = .epred) %>%
   add_epred_rvars(object=fit_mbeta) %>%
   rename(ModBeta = .epred) %>%
   mutate(Averaged = w_dose["fit_sig"] * SigEmax +  w_dose["fit_mbeta"] * ModBeta) %>%
-  (\(x) x %>% left_join(x %>% filter(dose==0) %>% rename(SigEmaxPbo = SigEmax, ModBetaPbo = ModBeta, AveragedPbo=Averaged) %>% dplyr::select(-dose), by="log_stderr"))() %>%
-  mutate(SigEmax = SigEmax - SigEmaxPbo,
+##  (\(x) x %>% left_join(x %>% filter(dose==0) %>% rename(SigEmaxPbo = SigEmax, ModBetaPbo = ModBeta, AveragedPbo=Averaged) %>% dplyr::select(-dose), by="log_stderr"))() %>%
+  mutate(SigEmaxPbo = SigEmax[dose == 0],
+         ModBetaPbo = ModBeta[dose == 0],
+         AveragedPbo = Averaged[dose == 0],
+         SigEmax = SigEmax - SigEmaxPbo,
          ModBeta = ModBeta - ModBetaPbo,
          Averaged = Averaged - AveragedPbo) %>%
   dplyr::select(-SigEmaxPbo, -ModBetaPbo, -AveragedPbo) %>%
