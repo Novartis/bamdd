@@ -648,14 +648,14 @@ Y_i|(U_i=u_i \text{ and } T_i=t_i) \sim \text{Poisson}(\mu u_i t_i).
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 16.4 seconds.
-Chain 2 finished in 16.6 seconds.
+Chain 1 finished in 16.5 seconds.
+Chain 2 finished in 16.7 seconds.
 Chain 3 finished in 19.8 seconds.
-Chain 4 finished in 19.5 seconds.
+Chain 4 finished in 20.2 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 18.1 seconds.
-Total execution time: 72.9 seconds.</code></pre>
+Mean chain execution time: 18.3 seconds.
+Total execution time: 73.7 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictions for missing (lost-to-follow-up) post-treatment values</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output format is a matrix with each column being a patient record and each row being one imputation</span></span>
@@ -703,13 +703,13 @@ Total execution time: 72.9 seconds.</code></pre>
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 19.0 seconds.
-Chain 2 finished in 24.7 seconds.
-Chain 3 finished in 21.1 seconds.
-Chain 4 finished in 13.8 seconds.
+Chain 2 finished in 22.2 seconds.
+Chain 3 finished in 21.5 seconds.
+Chain 4 finished in 13.6 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 19.7 seconds.
-Total execution time: 79.1 seconds.</code></pre>
+Mean chain execution time: 19.1 seconds.
+Total execution time: 76.9 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>imputations2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(brmfit2, </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata=</span>count_data <span class="sc">%&gt;%</span> </span>
@@ -747,14 +747,14 @@ Total execution time: 79.1 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 18.5 seconds.
+Chain 1 finished in 18.0 seconds.
 Chain 2 finished in 14.3 seconds.
-Chain 3 finished in 22.6 seconds.
-Chain 4 finished in 35.5 seconds.
+Chain 3 finished in 24.3 seconds.
+Chain 4 finished in 35.6 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 22.7 seconds.
-Total execution time: 91.4 seconds.</code></pre>
+Mean chain execution time: 23.0 seconds.
+Total execution time: 92.7 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>imputations3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(brmfit3, </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata=</span>count_data <span class="sc">%&gt;%</span> </span>
