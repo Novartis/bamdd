@@ -622,7 +622,7 @@ Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.4 seconds.</code></pre>
+Total execution time: 1.2 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>map_mc_brms_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -680,7 +680,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code># A tibble: 1 × 10
   variable  mean median     sd    mad    q5   q95  rhat ess_bulk ess_tail
   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 ...1     0.259  0.250 0.0860 0.0672 0.135 0.414  1.00    2466.    2855.</code></pre>
+1 ...1     0.259  0.250 0.0860 0.0672 0.135 0.414 1.000    2466.    2855.</code></pre>
 </div>
 </div>
 <p>These estimates are now very similar to the results reported from <code>RBesT</code> reported above (up to sampling error).</p>
@@ -726,7 +726,7 @@ Chain 2 finished in 0.6 seconds.</code></pre>
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpJQb671/model-246c69a89e26.stan', line 53, column 4 to column 50)</code></pre>
+<pre><code>Chain 3 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpTak1B5/model-27207b50651e.stan', line 53, column 4 to column 50)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -738,12 +738,12 @@ Chain 2 finished in 0.6 seconds.</code></pre>
 <pre><code>Chain 3 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Chain 3 finished in 0.7 seconds.
+<pre><code>Chain 3 finished in 0.8 seconds.
 Chain 4 finished in 0.7 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.7 seconds.
-Total execution time: 3.0 seconds.</code></pre>
+Total execution time: 3.2 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>post_region_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">newdata=</span>AS_region_new,</span>

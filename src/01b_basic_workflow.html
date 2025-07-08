@@ -697,7 +697,7 @@ Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.3 seconds.</code></pre>
+Total execution time: 1.4 seconds.</code></pre>
 </div>
 </div>
 <p>When calling <code>brm</code> a Stan model file will be created, compiled and run with the data provided. The arguments used are:</p>
@@ -730,14 +730,14 @@ Total execution time: 1.3 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.4 seconds.
+Chain 1 finished in 0.3 seconds.
 Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
 Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.3 seconds.
-Total execution time: 1.6 seconds.</code></pre>
+Mean chain execution time: 0.2 seconds.
+Total execution time: 1.2 seconds.</code></pre>
 </div>
 </div>
 <p>As changing the prior results in this case in a need to recompile the model, the benefits of using <code>update</code> are not large in this case. However, whenever a model recompilation is not needed, then using <code>update</code> significantly speeds up the workflow as the compilation step is avoided, e.g.&nbsp;when looking at data subsets:</p>
@@ -867,7 +867,7 @@ Total execution time: 1.0 seconds.</code></pre>
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 0.1 seconds.
-Chain 2 finished in 0.1 seconds.
+Chain 2 finished in 0.0 seconds.
 Chain 3 finished in 0.1 seconds.
 Chain 4 finished in 0.1 seconds.
 
