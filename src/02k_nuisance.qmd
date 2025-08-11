@@ -288,7 +288,7 @@ trial_power <- function(delta, sigma) {
   )$power
 }
 
-trial_power(delta=0.5, sigma=3)
+(standard_power <- trial_power(delta=0.5, sigma=3))
 ```
 
 Taking the uncertainty around the standard deviation into account, we get an
