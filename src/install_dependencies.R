@@ -74,7 +74,8 @@ dependencies <- c(
 "tidyverse",
 "BH",
 "StanHeaders",
-"RcppEigen"
+"RcppEigen",
+"ucminf"
 )
 
 all_pkgs <- .packages(all.available = TRUE)

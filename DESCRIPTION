@@ -81,4 +81,5 @@ Imports:
   tidyverse,
   BH,
   StanHeaders,
-  RcppEigen
+  RcppEigen,
+  ucminf
