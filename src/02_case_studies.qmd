@@ -17,6 +17,7 @@ overview <- dplyr::tribble(
                        "@sec-map-treat-effects", "aggregate data modeling & varying exposure times of count data",
                        "@sec-use-hist-control-data-strata", "meta-analysis with covariates & use of mixture priors",
                        "@sec-pos", "prior elicitation and use of RBesT mixtures as priors",
+                       "@sec-power-expected", "meta-analysis of variances and accounting for nuisance parameter uncertainty", 
                        "@sec-dose-finding", "non-linear models",
                        "@sec-onc-escalation",  "constrained parameters",
                        "@sec-tte-oncology",  "piece-wise constant survival model with Poisson regression & non-linear link function",
@@ -24,7 +25,8 @@ overview <- dplyr::tribble(
                        "@sec-longitudinal-data", "longitudinal modeling with different covariance structures (MMRM)",
                        "@sec-mmrm", "unstructured MMRM for a continuous endpoint",
                        "@sec-tte-data", "parametric time-to-event modeling with customized parametrization by using user-defined contrasts",
-                       "@sec-network-meta", "arm based network meta-analysis"
+                       "@sec-network-meta", "arm based network meta-analysis",
+                       "@sec-diffp", "standardized estimator, priors, use of `rvars`"
                    )
 knitr::kable(overview)
 ```

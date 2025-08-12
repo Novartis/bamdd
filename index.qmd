@@ -63,6 +63,9 @@ appropiate. Key changes to the web-site are tracked here:
 
 
 ::: {.content-visible when-profile="public"}
+- 8th August 2025: New case studies
+  * @sec-power-expected
+  * @sec-diffp
 - 13th January 2025: Linked materials from the course in Göttingen 
   in December 2024.
 - 31st July 2024: Linked materials from JSM Portland 2024 short course

@@ -229,19 +229,12 @@ cycle_info <- tibble(
 )
 
 ```
-<<<<<<< HEAD
-We also generate a reference dosing data set which is formatted like
-an analysis data set, but is only setup to evaluate the final model on
-the predefined set of doses. These will be needed to compute 
-the conditional (or cumulative) DLT probabilities in (up to) cycles 1, 2 and 3:
-=======
 
 We also generate a reference dosing data set which is formatted
 like an analysis data set, but is only setup to evaluate the final
 model on the predefined set of doses. These will be needed to compute
 the conditional (or cumulative) DLT probabilities in (up to) cycles 1,
 2 and 3:
->>>>>>> origin/develop
 
 ```{r}
 dose_ref_data <- dose_info_long |>
