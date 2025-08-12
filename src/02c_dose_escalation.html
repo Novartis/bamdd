@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Andrew Bean - andrew.bean@novartis.com">
 <meta name="author" content="Lukas Widmer - lukas_andreas.widmer@novartis.com">
 
-<title>9&nbsp; Oncology dose escalation – Applied Modelling in Drug Development</title>
+<title>11&nbsp; Oncology dose escalation – Applied Modelling in Drug Development</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,10 +75,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b619e7580ba2a849d98fc8631a679bb4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-989f635e0436309011e17b1a0ac5a5c1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -149,7 +149,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02c_dose_escalation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02c_dose_escalation.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -244,56 +244,74 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../src/02k_nuisance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../src/02l_single_arm_pos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02k_nuisance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02m_proportion_difference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -310,13 +328,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -331,28 +349,28 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">9.1</span> Background</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">9.2</span> Data</a></li>
-  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">9.3</span> Model description</a></li>
-  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">9.4</span> Implementation</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">9.5</span> Results</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">11.1</span> Background</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">11.2</span> Data</a></li>
+  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">11.3</span> Model description</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">11.4</span> Implementation</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">11.5</span> Results</a>
   <ul class="collapse">
-  <li><a href="#inference-for-model-parameters" id="toc-inference-for-model-parameters" class="nav-link" data-scroll-target="#inference-for-model-parameters"><span class="header-section-number">9.5.1</span> Inference for model parameters</a></li>
-  <li><a href="#inference-for-dlt-rates" id="toc-inference-for-dlt-rates" class="nav-link" data-scroll-target="#inference-for-dlt-rates"><span class="header-section-number">9.5.2</span> Inference for DLT rates</a></li>
-  <li><a href="#predictive-inference-for-future-cohorts" id="toc-predictive-inference-for-future-cohorts" class="nav-link" data-scroll-target="#predictive-inference-for-future-cohorts"><span class="header-section-number">9.5.3</span> Predictive inference for future cohorts</a></li>
-  <li><a href="#dose-escalation-decisions" id="toc-dose-escalation-decisions" class="nav-link" data-scroll-target="#dose-escalation-decisions"><span class="header-section-number">9.5.4</span> Dose escalation decisions</a></li>
+  <li><a href="#inference-for-model-parameters" id="toc-inference-for-model-parameters" class="nav-link" data-scroll-target="#inference-for-model-parameters"><span class="header-section-number">11.5.1</span> Inference for model parameters</a></li>
+  <li><a href="#inference-for-dlt-rates" id="toc-inference-for-dlt-rates" class="nav-link" data-scroll-target="#inference-for-dlt-rates"><span class="header-section-number">11.5.2</span> Inference for DLT rates</a></li>
+  <li><a href="#predictive-inference-for-future-cohorts" id="toc-predictive-inference-for-future-cohorts" class="nav-link" data-scroll-target="#predictive-inference-for-future-cohorts"><span class="header-section-number">11.5.3</span> Predictive inference for future cohorts</a></li>
+  <li><a href="#dose-escalation-decisions" id="toc-dose-escalation-decisions" class="nav-link" data-scroll-target="#dose-escalation-decisions"><span class="header-section-number">11.5.4</span> Dose escalation decisions</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9.6</span> Conclusion</a></li>
-  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise"><span class="header-section-number">9.7</span> Exercise</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11.6</span> Conclusion</a></li>
+  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise"><span class="header-section-number">11.7</span> Exercise</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Novartis/bamdd/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02c_dose_escalation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02c_dose_escalation.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-onc-escalation" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-onc-escalation" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -376,15 +394,15 @@ window.Quarto = {
 </header>
 
 
-<section id="background" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="background"><span class="header-section-number">9.1</span> Background</h2>
+<section id="background" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="background"><span class="header-section-number">11.1</span> Background</h2>
 <p>In Oncology, a principal aim of a Phase-I trial is to study the relationship between dose and toxicity. Larger doses of the study drug are understood to increase the likelihood of severe toxic reactions known as dose-limiting toxicities (DLTs). The key estimand in such a trial is the maximum tolerated dose (MTD) or recommended dose (RD).</p>
 <p>The class of trial designs that are typically employed are <em>dose escalation</em> designs. In order to protect patient safety, small cohorts of patients are enrolled sequentially, beginning with low dose levels of the study treatment, and monitored for DLTs. Once a dose level is found to be safe, the dose level may be escalated, and the subsequent cohort enrolled at a higher dose.</p>
 <p>Whereas traditional designs such as the 3+3 design are based on algorithmic rules governing the decision for the subsequent cohort based on the outcome at the current dose, Bayesian model-based designs have proven to provide greater flexibility and improved performance for estimating the MTD, while protecting patient safety.</p>
 <p>In the model-based paradigm for dose escalation, one develops a model for the dose-toxicity relationship. As DLT data accumulates on-study, the model is used to adaptively guide dose escalation decisions. Bayesian approaches are well-suited for this setting, due in part to the limited amount of available data (Phase-I studies are generally small).</p>
 </section>
-<section id="data" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="data"><span class="header-section-number">9.2</span> Data</h2>
+<section id="data" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="data"><span class="header-section-number">11.2</span> Data</h2>
 <p>In the simplest setting of a first-in-human (FIH) study of a new Oncology treatment, the relevant data are the doses, and associated counts of the number of patients evaluated and the number of patients with DLTs.</p>
 <p>For dose levels indexed by <span class="math inline">\(i=1,\ldots, K\)</span>, we observe:</p>
 <p><span class="math display">\[ d_i = \text{dose for the }i^\text{th}\text{ dose level} \]</span> <span class="math display">\[ n_i = \text{number of evaluable patients treated at }d_i \]</span> <span class="math display">\[ Y_i = \text{number of patients with a DLT at }d_i. \]</span></p>
@@ -432,8 +450,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="model-description" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="model-description"><span class="header-section-number">9.3</span> Model description</h2>
+<section id="model-description" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="model-description"><span class="header-section-number">11.3</span> Model description</h2>
 <p><a href="https://doi.org/10.1002/sim.3230">Neuenschwander, Branson, and Gsponer (2008)</a> proposed the following simple Bayesian logistic regression model (BLRM).</p>
 <p><span class="math display">\[ Y_i \, | \, \pi(d_i) \, \sim \, \mathrm{Binom}(n_i, \pi(d_i))\, \, \text{for }i=1,\ldots,K \]</span> <span class="math display">\[ \pi(d_i) \, | \, \alpha, \beta = \mathrm{logit}^{-1}\Bigl( \log\alpha + \beta\log \Bigl(\frac{d_i}{d^*}\Bigr) \Bigr) \]</span> <span class="math display">\[ \log\alpha \, \sim \, N(\mathrm{logit}(p_0), s_\alpha^2) \]</span> <span class="math display">\[ \log\beta \, \sim \, N(m_\beta, s_\beta^2). \]</span></p>
 <p>Note:</p>
@@ -443,8 +461,8 @@ window.Quarto = {
 <li>Hyperparameters <span class="math inline">\(p_0\)</span>, <span class="math inline">\(s_\alpha\)</span>, <span class="math inline">\(m_\beta\)</span>, and <span class="math inline">\(s_\beta\)</span> may be chosen based on clinical understanding at trial outset. Typically, little information is available prior to the FIH study, so weakly informative priors are preferred.</li>
 </ul>
 </section>
-<section id="implementation" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">9.4</span> Implementation</h2>
+<section id="implementation" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">11.4</span> Implementation</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
@@ -514,10 +532,10 @@ Total execution time: 0.8 seconds.</code></pre>
 </div>
 </div>
 </section>
-<section id="results" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="results"><span class="header-section-number">9.5</span> Results</h2>
-<section id="inference-for-model-parameters" class="level3" data-number="9.5.1">
-<h3 data-number="9.5.1" class="anchored" data-anchor-id="inference-for-model-parameters"><span class="header-section-number">9.5.1</span> Inference for model parameters</h3>
+<section id="results" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="results"><span class="header-section-number">11.5</span> Results</h2>
+<section id="inference-for-model-parameters" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="inference-for-model-parameters"><span class="header-section-number">11.5.1</span> Inference for model parameters</h3>
 <p>It is simple to get summary statistics and graphical displays of the posterior distributions for the model parameters.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics for log(alpha) and log(beta)</span></span>
@@ -543,8 +561,8 @@ lp__                 -6.4115472 1.0711427 -9.3632190 -5.383388</code></pre>
 </div>
 <p>However, these parameters are not themselves the primary target of inference for decision making. Rather the dose-DLT curve <span class="math inline">\(\pi(d)\)</span> itself is estimated, in order to guide decision making about future dose levels.</p>
 </section>
-<section id="inference-for-dlt-rates" class="level3" data-number="9.5.2">
-<h3 data-number="9.5.2" class="anchored" data-anchor-id="inference-for-dlt-rates"><span class="header-section-number">9.5.2</span> Inference for DLT rates</h3>
+<section id="inference-for-dlt-rates" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="inference-for-dlt-rates"><span class="header-section-number">11.5.2</span> Inference for DLT rates</h3>
 <p>Estimation of <span class="math inline">\(\pi(d)\)</span> is similarly straightforward. For posterior summary statistics of <span class="math inline">\(\pi(d_i)\)</span> at the observed dose levels <span class="math inline">\(i=1,\ldots,K\)</span>, one can use the <code>poserior::summarize_draws</code> function as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior draws for pi(d)</span></span>
@@ -659,8 +677,8 @@ lp__                 -6.4115472 1.0711427 -9.3632190 -5.383388</code></pre>
 </div>
 </div>
 </section>
-<section id="predictive-inference-for-future-cohorts" class="level3" data-number="9.5.3">
-<h3 data-number="9.5.3" class="anchored" data-anchor-id="predictive-inference-for-future-cohorts"><span class="header-section-number">9.5.3</span> Predictive inference for future cohorts</h3>
+<section id="predictive-inference-for-future-cohorts" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="predictive-inference-for-future-cohorts"><span class="header-section-number">11.5.3</span> Predictive inference for future cohorts</h3>
 <p>Another key quantity for understanding risk of toxicity for patients is the <em>predictive distribution</em> for DLTs in a future, unobserved cohort:</p>
 <p><span class="math display">\[ \Pr(\tilde Y = y \, | \, y_{obs}) = \int \Pr(\tilde Y = y \, | \, \theta) \, d\pi(\theta|y_{obs}). \]</span></p>
 <p>One can easily obtain such information from <code>brms</code>. Suppose we wished to know the predictive distribution for the DLT count in new cohorts of size 4 at a set of candidate dose levels, <span class="math inline">\(d=10, 25, 50\)</span>.</p>
@@ -745,8 +763,8 @@ lp__                 -6.4115472 1.0711427 -9.3632190 -5.383388</code></pre>
 </div>
 </div>
 </section>
-<section id="dose-escalation-decisions" class="level3" data-number="9.5.4">
-<h3 data-number="9.5.4" class="anchored" data-anchor-id="dose-escalation-decisions"><span class="header-section-number">9.5.4</span> Dose escalation decisions</h3>
+<section id="dose-escalation-decisions" class="level3" data-number="11.5.4">
+<h3 data-number="11.5.4" class="anchored" data-anchor-id="dose-escalation-decisions"><span class="header-section-number">11.5.4</span> Dose escalation decisions</h3>
 <p>One common framework for guiding dosing decisions using a model-based dose escalation framework is known as Escalation With Overdose Control (EWOC). Decisions are based on an MTD threshold above which constitutes excessive toxicity <span class="math inline">\(\pi_{over}\)</span> (typically <span class="math inline">\(\pi_{over}\)</span>), and a so-called feasibility bound <span class="math inline">\(c\)</span>:</p>
 <p><span class="math display">\[ \text{EWOC satisfied at }d \iff \Pr( \pi(d) &gt; \pi_{over}) \leq c \]</span></p>
 <p>Furthermore, we often define another cutoff <span class="math inline">\(\pi_{targ}\)</span>, and summarize the posterior probabilities for three intervals,</p>
@@ -813,12 +831,12 @@ lp__                 -6.4115472 1.0711427 -9.3632190 -5.383388</code></pre>
 </div>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.6</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11.6</span> Conclusion</h2>
 <p><code>brms</code> is easily capable of handling this simple logistic regression model, and producing all the posterior summaries necessary for guiding a dose escalation trial with it. There are, of course, <em>many</em> extensions and complications to this basic methodology that we encounter frequently. The <a href="https://cran.r-project.org/package=OncoBayes2">OncoBayes2</a> package is specifically tailored to this class of regression models, and covers all the typical use-cases. However, the approach described above for <code>brms</code> can be extended as well, for example to handle dose escalation for drug combinations, rather than single agents. See [Advanced Topics section on combination dose escalation][Combination dose escalation].</p>
 </section>
-<section id="exercise" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="exercise"><span class="header-section-number">9.7</span> Exercise</h2>
+<section id="exercise" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="exercise"><span class="header-section-number">11.7</span> Exercise</h2>
 <p>An alternative to designs based on the BLRM is the so-called Bayesian Optimal INterval (BOIN) design <a href="https://doi.org/10.18637/jss.v094.i13">(see Yan et al, 2020)</a>. In this exercise we will explore how the estimation of the MTD differs between the BOIN approach vs the BLRM vs a flexible monotone-regression approach that can be easily implemented in <code>brms</code>.</p>
 <p>Suppose are planning a trial with the following provisional doses.</p>
 <div class="cell">
@@ -1435,12 +1453,12 @@ lp__                 -6.4115472 1.0711427 -9.3632190 -5.383388</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../src/02b_dose_finding.html" class="pagination-link" aria-label="Dose finding">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dose finding</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dose finding</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../src/02cb_tte_dose_escalation.html" class="pagination-link" aria-label="Time-to-event modelling in Oncology dose escalation">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

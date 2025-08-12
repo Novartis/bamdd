@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Björn Holzhauer - bjoern.holzhauer@novartis.com">
 <meta name="author" content="Sebastian Weber - sebastian.weber@novartis.com">
 
-<title>7&nbsp; Probability of success from a single arm trial – Applied Modelling in Drug Development</title>
+<title>8&nbsp; Probability of success from a single arm trial – Applied Modelling in Drug Development</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,17 +87,17 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../src/02b_dose_finding.html" rel="next">
-<link href="../src/02ac_meta_analysis_strata.html" rel="prev">
+<link href="../src/02k_nuisance.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b619e7580ba2a849d98fc8631a679bb4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-989f635e0436309011e17b1a0ac5a5c1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -168,7 +168,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02l_single_arm_pos.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02l_single_arm_pos.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -263,56 +263,74 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../src/02k_nuisance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../src/02l_single_arm_pos.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02k_nuisance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02m_proportion_difference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -329,13 +347,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -350,23 +368,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">7.1</span> Background</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">8.1</span> Background</a>
   <ul class="collapse">
-  <li><a href="#probability-of-success" id="toc-probability-of-success" class="nav-link" data-scroll-target="#probability-of-success"><span class="header-section-number">7.1.1</span> Probability of success</a></li>
-  <li><a href="#assurance" id="toc-assurance" class="nav-link" data-scroll-target="#assurance"><span class="header-section-number">7.1.2</span> Assurance</a></li>
-  <li><a href="#background-of-the-hypothetical-example" id="toc-background-of-the-hypothetical-example" class="nav-link" data-scroll-target="#background-of-the-hypothetical-example"><span class="header-section-number">7.1.3</span> Background of the hypothetical example</a></li>
+  <li><a href="#probability-of-success" id="toc-probability-of-success" class="nav-link" data-scroll-target="#probability-of-success"><span class="header-section-number">8.1.1</span> Probability of success</a></li>
+  <li><a href="#assurance" id="toc-assurance" class="nav-link" data-scroll-target="#assurance"><span class="header-section-number">8.1.2</span> Assurance</a></li>
+  <li><a href="#background-of-the-hypothetical-example" id="toc-background-of-the-hypothetical-example" class="nav-link" data-scroll-target="#background-of-the-hypothetical-example"><span class="header-section-number">8.1.3</span> Background of the hypothetical example</a></li>
   </ul></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">7.2</span> Data</a></li>
-  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">7.3</span> Model description</a>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">8.2</span> Data</a></li>
+  <li><a href="#model-description" id="toc-model-description" class="nav-link" data-scroll-target="#model-description"><span class="header-section-number">8.3</span> Model description</a>
   <ul class="collapse">
-  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea"><span class="header-section-number">7.3.1</span> Idea</a></li>
-  <li><a href="#model-specification" id="toc-model-specification" class="nav-link" data-scroll-target="#model-specification"><span class="header-section-number">7.3.2</span> Model specification</a></li>
-  <li><a href="#specification-of-prior-distributions" id="toc-specification-of-prior-distributions" class="nav-link" data-scroll-target="#specification-of-prior-distributions"><span class="header-section-number">7.3.3</span> Specification of prior distributions</a></li>
-  <li><a href="#model-fitting-and-predictions" id="toc-model-fitting-and-predictions" class="nav-link" data-scroll-target="#model-fitting-and-predictions"><span class="header-section-number">7.3.4</span> Model fitting and predictions</a></li>
+  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea"><span class="header-section-number">8.3.1</span> Idea</a></li>
+  <li><a href="#model-specification" id="toc-model-specification" class="nav-link" data-scroll-target="#model-specification"><span class="header-section-number">8.3.2</span> Model specification</a></li>
+  <li><a href="#specification-of-prior-distributions" id="toc-specification-of-prior-distributions" class="nav-link" data-scroll-target="#specification-of-prior-distributions"><span class="header-section-number">8.3.3</span> Specification of prior distributions</a></li>
+  <li><a href="#model-fitting-and-predictions" id="toc-model-fitting-and-predictions" class="nav-link" data-scroll-target="#model-fitting-and-predictions"><span class="header-section-number">8.3.4</span> Model fitting and predictions</a></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">7.4</span> Results</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.5</span> Conclusion</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">7.6</span> Exercises</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">8.4</span> Results</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8.5</span> Conclusion</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">8.6</span> Exercises</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Novartis/bamdd/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -374,9 +392,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02l_single_arm_pos.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02l_single_arm_pos.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-pos" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-pos" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -430,25 +448,25 @@ window.Quarto = {
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># nice common ggplot2 theme</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size=</span><span class="dv">18</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="background" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="background"><span class="header-section-number">7.1</span> Background</h2>
-<section id="probability-of-success" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="probability-of-success"><span class="header-section-number">7.1.1</span> Probability of success</h3>
+<section id="background" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="background"><span class="header-section-number">8.1</span> Background</h2>
+<section id="probability-of-success" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="probability-of-success"><span class="header-section-number">8.1.1</span> Probability of success</h3>
 <p>For pharmaceutical companies it is important to realistically assess the probability of success (PoS) for drug development projects. Together with other information and considerations (e.g.&nbsp;costs of trials, projected timelines, unmet need for new therapies for an indication, competitive landscape, …) this allows for informed decision making about things such as which projects to pursue at all and how much at-risk investment to make into each of them.</p>
 <p>There are a number of ways to define success for PoS calculations, but <a href="https://doi.org/10.1002/pst.2179">at Novartis the definition of success</a> is to get approval meeting a target product profile (TPP). It is assumed that if the drug is approved with a label as good or better than the TPP targets, it will meet an important unmet need for patients, be successful on the market and the sales forecasts (obtained assuming this TPP) would be achieved. <a href="https://doi.org/10.1002/pst.2179">The Novartis PoS framework</a> combines industry benchmark information with data on a drug and team assessments of other risks. This is most easily done when we have directly relevant data, e.g.&nbsp;with a Phase 2 study that is very similar (in terms of population, endpoint, duration and treatment groups) to the planned Phase 3 trial(s). On the other hand, this is harder based on a single arm study that differs from Phase 3 (or worse without Phase 2 data).</p>
 </section>
-<section id="assurance" class="level3" data-number="7.1.2">
-<h3 data-number="7.1.2" class="anchored" data-anchor-id="assurance"><span class="header-section-number">7.1.2</span> Assurance</h3>
+<section id="assurance" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="assurance"><span class="header-section-number">8.1.2</span> Assurance</h3>
 <p><a href="https://doi.org/10.1002/pst.175">Assurance</a> is a <a href="https://doi.org/10.1002/pst.1856">popular</a> related concept to PoS. It describes the probability of a successful trial.</p>
 </section>
-<section id="background-of-the-hypothetical-example" class="level3" data-number="7.1.3">
-<h3 data-number="7.1.3" class="anchored" data-anchor-id="background-of-the-hypothetical-example"><span class="header-section-number">7.1.3</span> Background of the hypothetical example</h3>
+<section id="background-of-the-hypothetical-example" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="background-of-the-hypothetical-example"><span class="header-section-number">8.1.3</span> Background of the hypothetical example</h3>
 <p>A hypothetical drug called NVS101 is already approved as a treatment for some systemic diseases. In a single arm trial in patients with a different systemic disease that leads to anemia, most patients that received NVS101 for 12 weeks were able to achieve an acceptable red blood cell count without needing a blood transfusion. We are now considering to start a pivotal randomized placebo controlled Phase III trial, where the primary endpoint would be having an acceptable red blood cell count without needing a blood transfusion over a 1-year period.</p>
 <p>We wish to assess the PoS of such a pivotal study. I.e. the probability to get approval meeting the TPP of an odds ratio of 8.5 (given an assumed placebo responder rate of 15% this corresponds to a targeted 60% for the drug).</p>
 </section>
 </section>
-<section id="data" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="data"><span class="header-section-number">7.2</span> Data</h2>
+<section id="data" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="data"><span class="header-section-number">8.2</span> Data</h2>
 <p>The <a href="https://doi.org/10.1002/pst.2179">Novartis PoS framework</a> provides us with a prior for the log-odds ratio of response on drug compared with a placebo given a number of project features. For a drug that is past its first approval (a so-called “life-cycle management” situation) such as NVS101, a TPP target of a odds ratio of 8.5 (given an assumed placebo responder rate of 15% this corresponds to a targeted 60% for the drug), we obtain a mixture prior for the log-odds ratio:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mixture_prior <span class="ot">&lt;-</span> RBesT<span class="sc">::</span><span class="fu">mixnorm</span>(<span class="st">"Null component"</span><span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.08289228</span>, <span class="dv">0</span>, <span class="fl">0.91992526</span>),</span>
@@ -2461,10 +2479,10 @@ Components of the mixture prior
 </div>
 </div>
 </section>
-<section id="model-description" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="model-description"><span class="header-section-number">7.3</span> Model description</h2>
-<section id="idea" class="level3" data-number="7.3.1">
-<h3 data-number="7.3.1" class="anchored" data-anchor-id="idea"><span class="header-section-number">7.3.1</span> Idea</h3>
+<section id="model-description" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="model-description"><span class="header-section-number">8.3</span> Model description</h2>
+<section id="idea" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="idea"><span class="header-section-number">8.3.1</span> Idea</h3>
 <p>With this available information and data, what do we do to come to a reasonable belief about the efficacy of NVS101 and the PoS of the drug development project? One approach that is <a href="https://doi.org/10.1002/pst.2179">foreseen in the Novartis PoS framework</a> is to conduct an expert elicitation that relies on experts making judgements about the totality of the available evidence.</p>
 <p>Another approach is to analyze the available data. However, we do not have direct data on</p>
 <ol type="1">
@@ -2474,8 +2492,8 @@ Components of the mixture prior
 </ol>
 <p>Thus, we will still require prior judgements on these questions. However, it could be the case that these questions are easier to make judgements about for experts than if we asked them directly about the efficacy of a drug compared with placebo.</p>
 </section>
-<section id="model-specification" class="level3" data-number="7.3.2">
-<h3 data-number="7.3.2" class="anchored" data-anchor-id="model-specification"><span class="header-section-number">7.3.2</span> Model specification</h3>
+<section id="model-specification" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="model-specification"><span class="header-section-number">8.3.2</span> Model specification</h3>
 <p>we first express a mixed effects logistic regression model ignoring whether we have data to tell us something about all model parameters. We assume a binomial outcome <span class="math inline">\(Y_{ij} \sim \text{Bin}(\pi_{ij}, N_{ij})\)</span> for arm <span class="math inline">\(j\)</span> of trial <span class="math inline">\(i\)</span>. Our model specifies that</p>
 <p><span class="math display">\[\begin{align}
 \text{logit}(\pi_{ij}) =&amp; \; \beta_0  \\
@@ -2497,8 +2515,8 @@ Components of the mixture prior
 </div>
 <p><strong>Note</strong> that we use the option <code>center=FALSE</code> here in order to fully control the parametrization of the linear predictor. By default <code>brms</code> centers the design matrix and treats the intercept separately from the remaining covariates. While this is often desirable to do, this is not appropiate in this case where we want to control all details of the model and intend to set priors deliberately.</p>
 </section>
-<section id="specification-of-prior-distributions" class="level3" data-number="7.3.3">
-<h3 data-number="7.3.3" class="anchored" data-anchor-id="specification-of-prior-distributions"><span class="header-section-number">7.3.3</span> Specification of prior distributions</h3>
+<section id="specification-of-prior-distributions" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="specification-of-prior-distributions"><span class="header-section-number">8.3.3</span> Specification of prior distributions</h3>
 <p>Before we saw the EG-999 Phase 3 study, what might we have believed about the placebo group of such a study? To answer this might be a time consuming process that may require a review of the available literature and/or eliciting the judgements of experts. Conveniently, the sample size section of the clinical trial protocol of the EG-999 Phase 3 study contained a statement that the expected placebo responder rate might be in the range of 5% to 40%. We will interpret this to indicate a 80% prediction interval. The authors of the protocol do not really say so clearly, but we speculate that we cannot rely on this being a 95% prediction interval. Thus, if we assume a normal distribution for the predictive distribution, we get a normal distribution on the logit-scale with mean <code>( logit(0.4) + logit(0.05) )/2</code> <span class="math inline">\(\approx\)</span> -1.67 and standard deviation <code>( logit(0.4) - logit(0.05) ) / 2 / qnorm(0.9)</code> <span class="math inline">\(\approx\)</span> 1.</p>
 <div class="alert alert-info">
 <p>Note that the <code>logit</code> and <code>inv_logit</code> are convenient functions from the <code>RBesT</code> package for converting from probabilities to logit-probabilities and vice versa (in base R you can use <code>qlogis</code> and <code>plogis</code> instead).</p>
@@ -2640,8 +2658,8 @@ Components of the mixture prior
 <p><strong>NOTE</strong>: Thanks to the new functionality in the <code>RBesT</code> package, we were able to just write <code>prior(mixture_prior, class=b, coef=treatmentNVS10)</code> to specify a mixture prior. Alternatively, we could have written <code>prior(mixnorm(map_w, map_m, map_s), class=b, coef=treatmentNovDrug)</code>. <code>map_w</code>, <code>map_m</code> and <code>map_s</code> would specify the weights, means and standard deviations of the mixture components, respectively. If we did not have this <code>RBesT</code> functionality available, we would have to manually write down the log-probability-density-function of the mixture, which involves weighted sums on the probability scale e.g.&nbsp;using the <code>log_sum_exp</code> function. For further details on the <code>mixstanvars</code> feature, please refer to its <a href="https://opensource.nibr.com/RBesT/reference/mixstanvar.html">online manual</a>.</p>
 </div>
 </section>
-<section id="model-fitting-and-predictions" class="level3" data-number="7.3.4">
-<h3 data-number="7.3.4" class="anchored" data-anchor-id="model-fitting-and-predictions"><span class="header-section-number">7.3.4</span> Model fitting and predictions</h3>
+<section id="model-fitting-and-predictions" class="level3" data-number="8.3.4">
+<h3 data-number="8.3.4" class="anchored" data-anchor-id="model-fitting-and-predictions"><span class="header-section-number">8.3.4</span> Model fitting and predictions</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> model_formula,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> our_data,</span>
@@ -2693,8 +2711,8 @@ Components of the mixture prior
 </div>
 </section>
 </section>
-<section id="results" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="results"><span class="header-section-number">7.4</span> Results</h2>
+<section id="results" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="results"><span class="header-section-number">8.4</span> Results</h2>
 <p>Here is a plot of the predicted Phase 3 placebo and NVS101 responder proportion.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
@@ -3252,16 +3270,16 @@ Components of the mixture prior
 <p>As we can see, achieving the TPP risk difference is the greater hurdle than achieving statistical significance.</p>
 <p>As part of the Novartis PoS framework, we would now account for the possibility of not obtaining an approval despite a positive Phase 3 study, a failure in Phase 3 due to a safety issue, and other risks (e.g.&nbsp;relating to drug manufacturing or market access).</p>
 </section>
-<section id="conclusion" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.5</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.5</span> Conclusion</h2>
 <p>In the hypothetical case study, there was not a lot of data, but what there was appeared to be promising. Thus, one would not want to ignore it. In order to make use of it, we had to use informative prior distributions for several parameters of a logistic regression model. In this kind of situation, where we cannot let data inform our prior distributions, there is little choice, if we want an answer using the available data.</p>
 <p>Given how our prior judgments directly affect the inference, we want ot ensure that the prior judgements reflect our best understanding of the available scientific evidence. For this purpose a formal prior elicitation (or predictions for some parameters from historical data) are options, but when those are not possibler, we should still try to ensure that prior choices are plausible to the whole team.</p>
 <p>Note that in this example, there was also an underlying laboratory measurement (longitudinal measurements of red blood cell counts). It might have been more efficient to work with these directly, but it would have been necessary to translate any results into predictions for the Phase III responder endpoint. Furthermore, the published external competitor data might not report these laboratory outcomes in sufficient detail.</p>
 <p>Single arm studies are not ideal. However, when treatment effects are large compared to how much placebo group outcomes vary, we can still learn about drug efficacy from them at the cost of additional assumptions. As part of our case study, we tried to be explicit about our uncertainties and to transparently describe our prior judgements, as well as the rationale behind them. If someone disagrees with some of our prior distributions, they can then do a sensitivity analysis.</p>
 <p>A Bayesian approach is also well-suited for PoS calculations, because it lets us easily propagate uncertainties through different steps of a PoS analysis.</p>
 </section>
-<section id="exercises" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="exercises"><span class="header-section-number">7.6</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="exercises"><span class="header-section-number">8.6</span> Exercises</h2>
 <p>To be added</p>
 </section>
 <section id="references" class="level2 unnumbered">
@@ -3280,12 +3298,18 @@ Combescure, C, DS Courvoisier, G Haller, and TV Perneger. 2012.
 Effect from Survival Probabilities.”</span> <em>Statistical Methods in
 Medical Research</em> 25 (2): 857–71. <a href="https://doi.org/10.1177/0962280212469716">https://doi.org/10.1177/0962280212469716</a>.
 </div>
+<div id="ref-Dias2013evsnth" class="csl-entry" role="listitem">
+Dias, Sofia, Alex J Sutton, A E Ades, and Nicky J Welton. 2013.
+<span>“Evidence Synthesis for Decision Making 2: A Generalized Linear
+Modeling Framework for Pairwise and Network Meta-Analysis of Randomized
+Controlled Trials.”</span> <em>Med. Decis. Making</em> 33 (5): 607–17.
+</div>
 <div id="ref-dias2014" class="csl-entry" role="listitem">
 Dias, S., N. J. Welton, A. J. Sutton, and A. Ades. 2014.
 <span>“<span>NICE DSU</span> Technical Support Document 2: A Generalised
 Linear Modelling Framework for Pairwise and Network Meta-Analysis of
 Randomised Controlled Trials.”</span> Technical report. <span>NICE
-Decision Support Unit</span>.
+Decision Support Unit</span>. <a href="http://www.nicedsu.org.uk/TSD2%20General%20meta%20analysis%20corrected%2015April2014.pdf">http://www.nicedsu.org.uk/TSD2%20General%20meta%20analysis%20corrected%2015April2014.pdf</a>.
 </div>
 <div id="ref-Gelman2014" class="csl-entry" role="listitem">
 Gelman, Andrew, John B Carlin, Hal S Stern, David B Dunson, Aki Vehtari,
@@ -3296,6 +3320,11 @@ Texts in Statistical Science Series</em>. Third edit. <a href="https://doi.org/1
 Gelman, Andrew, Daniel Simpson, and Michael Betancourt. 2017. <span>“The
 Prior Can Often Only Be Understood in the Context of the
 Likelihood.”</span> <em>Entropy</em> 19 (October). <a href="https://doi.org/10.3390/e19100555">https://doi.org/10.3390/e19100555</a>.
+</div>
+<div id="ref-Grieve2022power" class="csl-entry" role="listitem">
+Grieve, Andrew P. 2022. <em>Hybrid Frequentist/Bayesian Power and
+Bayesian Power in Planning Clinical Trials</em>. Chapman &amp; Hall/CRC
+Biostatistics Series. London, England: Taylor &amp; Francis.
 </div>
 <div id="ref-Hasselblad1998" class="csl-entry" role="listitem">
 Hasselblad, Vic. 1998. <span>“Meta-Analysis of Multitreatment
@@ -3309,6 +3338,12 @@ Gastric, Gastro-Oesophageal Junction, and Oesophageal Adenocarcinoma
 (CheckMate 649): A Randomised, Open-Label, Phase 3 Trial.”</span>
 <em>The Lancet</em> 398 (July): 27–40. <a href="https://doi.org/10.1016/S0140-6736(21)00797-2">https://doi.org/10.1016/S0140-6736(21)00797-2</a>.
 </div>
+<div id="ref-Kerman2011" class="csl-entry" role="listitem">
+Kerman, Jouni. 2011. <span>“<span class="nocase">Neutral noninformative
+and informative conjugate beta and gamma prior
+distributions</span>.”</span> <em>Electronic Journal of Statistics</em>
+5 (none): 1450–70. <a href="https://doi.org/10.1214/11-EJS648">https://doi.org/10.1214/11-EJS648</a>.
+</div>
 <div id="ref-Lilienthal2023" class="csl-entry" role="listitem">
 Lilienthal, Jona, Sibylle Sturtz, Christoph Schürmann, Matthias Maiworm,
 Christian Röver, Tim Friede, and Ralf Bender. 2023. <span>“Bayesian
@@ -3321,9 +3356,19 @@ Lu, G., and A. E. Ades. 2004. <span>“Combination of Direct and Indirect
 Evidence in Mixed Treatment Comparisons.”</span> <em>Statistics in
 Medicine</em> 23 (20): 3105–24. <a href="https://doi.org/10.1002/sim.1875">https://doi.org/10.1002/sim.1875</a>.
 </div>
+<div id="ref-Moore2009" class="csl-entry" role="listitem">
+Moore, K. L., and M. J. van der Laan. 2009. <span>“Covariate Adjustment
+in Randomized Trials with Binary Outcomes: Targeted Maximum Likelihood
+Estimation.”</span> <em>Statistics in Medicine</em> 28 (1): 39–64. <a href="https://doi.org/10.1002/sim.3445">https://doi.org/10.1002/sim.3445</a>.
+</div>
 <div id="ref-Neuenschwander2020" class="csl-entry" role="listitem">
 Neuenschwander, Beat, and Heinz Schmidli. 2020. <span>“Use of Historical
 Data.”</span> <a href="https://CRAN.R-project.org/package=RBesT">https://CRAN.R-project.org/package=RBesT</a>.
+</div>
+<div id="ref-OHagan2005assurance" class="csl-entry" role="listitem">
+O’Hagan, Anthony, John W Stevens, and Michael J Campbell. 2005.
+<span>“Assurance in Clinical Trial Design.”</span> <em>Pharm. Stat.</em>
+4 (3): 187–201. <a href="https://doi.org/10.1002/pst.175">https://doi.org/10.1002/pst.175</a>.
 </div>
 <div id="ref-Piepho2012" class="csl-entry" role="listitem">
 Piepho, H. P., E. R. Williams, and L. V. Madden. 2012. <span>“The Use of
@@ -3342,6 +3387,17 @@ Schmidli, Sibylle Sturtz, Sebastian Weber, and Tim Friede. 2021.
 Parameter in Bayesian Random-Effects Meta-Analysis.”</span> <em>Research
 Synthesis Methods</em> 12 (January): 448–74. <a href="https://doi.org/10.1002/jrsm.1475">https://doi.org/10.1002/jrsm.1475</a>.
 </div>
+<div id="ref-Schmidli2017vrmap" class="csl-entry" role="listitem">
+Schmidli, Heinz, Beat Neuenschwander, and Tim Friede. 2017.
+<span>“Meta-Analytic-Predictive Use of Historical Variance Data for the
+Design and Analysis of Clinical Trials.”</span> <em>Comput. Stat. Data
+Anal.</em> 113 (September): 100–110. <a href="https://doi.org/10.1016/j.csda.2016.08.007">https://doi.org/10.1016/j.csda.2016.08.007</a>.
+</div>
+<div id="ref-Senn2013nma" class="csl-entry" role="listitem">
+Senn, Stephen, Francois Gavini, David Magrez, and André Scheen. 2013.
+<span>“Issues in Performing a Network Meta-Analysis.”</span> <em>Stat.
+Methods Med. Res.</em> 22 (2): 169–89.
+</div>
 <div id="ref-Simpson2014" class="csl-entry" role="listitem">
 Simpson, Daniel P., Håvard Rue, Thiago G. Martins, Andrea Riebler, and
 Sigrunn H. Sørbye. 2014. <span>“Penalising Model Component Complexity: A
@@ -3350,6 +3406,13 @@ Principled, Practical Approach to Constructing Priors.”</span>
 </div>
 <div id="ref-stanwikiPrior" class="csl-entry" role="listitem">
 Stan. 2024. <span>“Prior Choice Recommendations.”</span> 2024. <a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a>.
+</div>
+<div id="ref-Steingrimsson201718" class="csl-entry" role="listitem">
+Steingrimsson, Jon Arni, Daniel F. Hanley, and Michael Rosenblum. 2017.
+<span>“Improving Precision by Adjusting for Prognostic Baseline
+Variables in Randomized Trials with Binary Outcomes, Without Regression
+Model&nbsp;Assumptions.”</span> <em>Contemporary Clinical Trials</em> 54:
+18–24. <a href="https://doi.org/10.1016/j.cct.2016.12.026">https://doi.org/10.1016/j.cct.2016.12.026</a>.
 </div>
 <div id="ref-Turner2015" class="csl-entry" role="listitem">
 Turner, Rebecca M, Dan Jackson, Yinghui Wei, Simon G Thompson, and
@@ -3830,13 +3893,13 @@ Statistical Association</em> 117: 862–74. <a href="https://doi.org/10.1080/016
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../src/02ac_meta_analysis_strata.html" class="pagination-link" aria-label="Use of historical control data with stratification">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span>
+      <a href="../src/02k_nuisance.html" class="pagination-link" aria-label="Nuisance parameters, expected power and the &quot;significance threshold&quot;">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../src/02b_dose_finding.html" class="pagination-link" aria-label="Dose finding">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dose finding</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dose finding</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
