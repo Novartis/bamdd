@@ -14,6 +14,8 @@ result is invariant to re-orderings of individual terms of the sum -
 the log likelihood evaluation can be parallelized over multiple CPU
 cores.
 
+## Within-chain parallelization with threading {#sec-parallel-threading}
+
 `brms` supports the within-chain parallelization feature of Stan in a
 way which is fully automatic for the user. However, it does require to
 request threading support when calling the `brm` command, since then
@@ -28,70 +30,153 @@ means to slightly change the call to `brm` like:
 
 ```{r, eval=FALSE}
 fit <- brm(
-    bf(
-        AVAL ~ TRT01P + gp(AVISITN, by = TRT01P),
-        autocor = ~ cosy(time = AVISIT, gr = SUBJID)
-    ),
-    data = analysis_data2,
-    silent = 2,
-    refresh = 0,
-    seed = 45646,
-    chains = 4,
-    cores = 4,
-    backend = "cmdstanr",  # request cmdstanr as backend
-    threads = threading(4) # request 4 threads per chain
+  bf(
+    AVAL ~ TRT01P + gp(AVISITN, by = TRT01P),
+    autocor = ~ cosy(time = AVISIT, gr = SUBJID)
+  ),
+  data = analysis_data2,
+  silent = 2,
+  refresh = 0,
+  seed = 45646,
+  chains = 4,
+  cores = 4,
+  backend = "cmdstanr", # request cmdstanr as backend
+  threads = threading(4) # request 4 threads per chain
 )
 ```
 
 The above call will request to run 4 chains in parallel (`cores=4`)
-and will allocate 2 threads per chain such that in total 8 cores will
+and will allocate 4 threads per chain such that in total 16 cores will
 be used at the same time. It can be somewhat confusing to users that
-`cores` is set to 4 and we still use 8 physical cores. This is due to
+`cores` is set to 4 and we still use 16 physical cores. This is due to
 historical reasons as the meaning of `cores` refers to parallel
 *chains* running at the same time and threading was added at a later
 stage to Stan.
+
+## Running on multiple machines {#sec-parallel-remote}
 
 
 
 ::: {.content-visible when-profile="public"}
 
-Within-chain parallelization is only useful if sufficient cores have been allocated. For example,
-on a machine with 4 cores, the potential benefits are limited. In 
-such a setting, one may consider to run 2 chains and use 2 threads 
-per chain. This is a compromise given that we usually wish to run 4
-chains.
+Within-chain parallelization is only useful if sufficient cores have
+been allocated. For example, on a machine with 4 cores, the potential
+benefits are limited. In such a setting, one may consider to run 2
+chains and use 2 threads per chain. This is a compromise given that we
+usually wish to run 4 chains.
 
 If a computer cluster, or other distributed computing environment is
 available, within-chain parallelization may be advantageous, but
 users must take care to request an appropriate number of resources. 
-One must a job to the main cluster which allocates a sufficient 
-amount of CPU cores. The utility function `cmq_brm` 
-below facilites running the posterior sampling on the
-cluster. The idea is to define first the `brms` model in the current
-session, but do not perform any actual sampling in the current process
-by setting the arguemnt `chains=0`. The so defined model is given to
-the `brm_update_cluster` function which then uses `clustermq` to run
-the sampling on the registered backend of `clustermq`. The `clustermq`
-package then will sample either locally or on the cluster:
+One must submit a job to a compute cluster which allocates a sufficient 
+amount of CPU cores.
+
 :::
+
+A modern way in R to exploit parallelism is the
+[`mirai`](https://mirai.r-lib.org) framework, which can use local and
+remote ressources. While `brms` has not been written with `mirai` in
+mind, we can still adapt `brms` to use `mirai` backends through the
+use of `future` and `future.mirai` as:
+
+
+```{r, eval=FALSE}
+# loading future makes brms use it for parallelization
+library(future)
+
+# first instantiate mirai daemons; here we use all available cores on
+# the local machine
+mirai::daemons(parallelly::availableCores())
+
+# then register the mirai cluster as future backend
+plan(future.mirai::mirai_cluster)
+
+# point brms by default to use the future backend
+options(future = TRUE)
+
+source(here::here("src", "simulate_fake_data.R"))
+fake_data <- simulate_fake_data()
+
+brm(
+  y ~ 1 + x1 + x2 + (1 | g),
+  data = fake_data,
+  family = poisson(),
+  iter = 2000,
+  warmup = 1000,
+  prior = prior(normal(0, 1), class = b) +
+    prior(constant(1), class = sd, group = g),
+  backend = "cmdstanr",
+  # request 4 threads per chain
+  threads = threading(4),
+  chains = 4,
+  seed = 345345,
+  refresh = 0,
+  control = list(adapt_delta = 0.95)
+)
+
+# terminate mirai daemons (or keep them running if used later again)
+mirai::daemons(0)
+```
+
+In the above example a `mirai` cluster is used with locally started
+workers which requests 4 parallel chains with each 4 threads. To run,
+for example, on an IBM LSF managed cluster one can replace the above
+first call to `mirai::deamons` with:
+
+```{r, eval=FALSE}
+# Remote worker setup based for a LSF cluster which uses "modules" to
+# load specific R versions, common on HPCE systems. Requesting 3000 MB
+# of RAM and 4 cores per job.
+lsf_config <- mirai::cluster_config(
+  command = "bsub",
+  options = "#BSUB -J mirai
+             #BSUB -M 3000
+             #BSUB -n 4
+             #BSUB -o job.out
+             module load R/4.5.0",
+  rscript = "Rscript"
+)
+
+mirai::daemons(n = 4, url = mirai::host_url(), remote = lsf_config)
+```
+
+For more options on how to spawn remote workers, please refer to the
+`mirai` [documentation](https://mirai.r-lib.org); in particular the
+section on [remote
+daemons](https://mirai.r-lib.org/articles/mirai.html#remote-daemons).
+
+As HPCEs may not always have the latest R software installed, we
+provide here an alternative way, which is based on the well
+established R package
+[`clustermq`](https://mschubert.github.io/clustermq/). This R package
+is tailored to interact with a queing system on a cluster and below
+the utlity function `cmq_brm` is provided. This function facilites
+running the posterior sampling on the cluster via `clustermq`. The
+idea is to define first the `brms` model in the current session, but
+do not perform any actual sampling in the current process by setting
+the arguemnt `chains=0`. The so defined model is given to the
+`update_model` function which then uses `clustermq` to run the
+sampling on the registered backend of `clustermq`. The `clustermq`
+package then will sample either locally or on the cluster:
 
 ```{r, eval=FALSE}
 # Fit model as usual, just use "cmq_brm" instead of brm call, see
 # definition at the bottom
-model_poisson <- cmq_brm(y ~ 1 + x1 + x2 + (1 | g),
-                         data = fake, 
-                         family = poisson(),
-                         iter = 2000,
-                         warmup = 1000,
-                         prior = prior(normal(0,1), class = b) +
-                             prior(constant(1), class = sd, group = g),
-                         # use the cmdstanr backend
-                         backend = "cmdstanr",
-                         # request 4 threads per chain
-                         threads = threading(4),
-                         seed=345345,
-                         control=list(adapt_delta=0.95)
-                         )
+model_poisson <- cmq_brm(
+  y ~ 1 + x1 + x2 + (1 | g),
+  data = fake,
+  family = poisson(),
+  iter = 2000,
+  warmup = 1000,
+  prior = prior(normal(0, 1), class = b) +
+    prior(constant(1), class = sd, group = g),
+  # use the cmdstanr backend
+  backend = "cmdstanr",
+  # request 4 threads per chain
+  threads = threading(4),
+  seed = 345345,
+  control = list(adapt_delta = 0.95)
+)
 ```
 
 It is important to note that between-chain parallelization is always
@@ -102,7 +187,8 @@ on how to tune the number of cores for a given problem, please refer
 to the [vignette from `brms` on threading available on
 CRAN](https://cran.r-project.org/web/packages/brms/vignettes/brms_threading.html).
 
-Finally, an important remark on exact reproducibility of the results:
+## Exact reproducability
+
 In the default setting of threading exact reproducibility is **not
 maintained**! This stems from the fact that the large log likelihood
 sums are partitioned into blocks of varying size and these sums are
@@ -125,4 +211,9 @@ a grainsize of $80$ and `static` sum partitioning.
 ## Implementation of `cmq_brm`
 
 ```{r, eval=FALSE, file=here::here("src", "cmq_brm.R")}
+```
+
+# Example fake data `simulate_fake_data`
+
+```{r, eval=FALSE, file=here::here("src", "simulate_fake_data.R")}
 ```
