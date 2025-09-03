@@ -23,7 +23,7 @@ This case study covers
 
 To run the R code of this section please ensure to load these libraries first:
 
-```{r eval=TRUE,echo=TRUE,results=FALSE,message=FALSE,warning=FALSE}
+```{r eval=TRUE,echo=TRUE,results=FALSE,message=FALSE,warning=FALSE,cache=FALSE}
 library(tidyverse)
 library(brms)
 library(posterior)
@@ -49,13 +49,12 @@ control_args <- list(adapt_delta=0.95)
 options(width=120)
 ```
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source("setup.R")
+source(here("src", "setup.R"))
 ```
 
-```{r include=FALSE}
+```{r include=FALSE,cache=FALSE}
 options(mc.cores=parallelly::availableCores(logical=FALSE))
 # speedup things by lowering adapt_delta for now, which speeds up things a lot
 # do this only if caching is on (which is when we want things go fast)
@@ -188,7 +187,7 @@ simulated_data <- rmvnorm(n = N,
         AVISIT = factor(AVISIT, paste0("visit", 1:4)),
         # Assume rising treatment effect over time (half there by week 3) with an 
         # Emax dose response (ED50 = 5 mg)
-        AVAL = AVAL + effect_course(ADY/7, TRT01P),
+        AVAL = AVAL + effect_course(TRT01P, ADY/7),
         # Change from baseline = value - baseline
         CHG = AVAL - BASE,
         TRT01P=factor(TRT01P)) %>%
@@ -1636,7 +1635,8 @@ map2_dfr(list(brmfit1, brmfit2, macfit, rmacfit),
                         levels=c("Frequentist MMRM",
                                  "BMMRM", 
                                  "BMMRM (MAC)", "BMMRM (rMAC)",
-                                 "BMMRM (monotonic)", "BMMRM (non-linear)"))) %>%
+                                 "BMMRM (monotonic)", "BMMRM (non-linear)")),
+         contrast = str_remove_all(contrast, "TRT01P")) %>%
   ggplot(aes(x=contrast, y=estimate,
              ymin=lower.HPD, ymax=upper.HPD, col=Model)) +
   geom_hline(yintercept=0) +
