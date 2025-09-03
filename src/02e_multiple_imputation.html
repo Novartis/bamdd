@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.34">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -74,10 +74,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-989f635e0436309011e17b1a0ac5a5c1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b2070c71598b148a05ee0727b4df650f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -660,14 +660,14 @@ Y_i|(U_i=u_i \text{ and } T_i=t_i) \sim \text{Poisson}(\mu u_i t_i).
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 16.2 seconds.
-Chain 2 finished in 16.8 seconds.
-Chain 3 finished in 19.9 seconds.
+Chain 1 finished in 16.6 seconds.
+Chain 2 finished in 16.9 seconds.
+Chain 3 finished in 20.1 seconds.
 Chain 4 finished in 20.1 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 18.2 seconds.
-Total execution time: 73.4 seconds.</code></pre>
+Mean chain execution time: 18.4 seconds.
+Total execution time: 74.2 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictions for missing (lost-to-follow-up) post-treatment values</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output format is a matrix with each column being a patient record and each row being one imputation</span></span>
@@ -714,14 +714,14 @@ Total execution time: 73.4 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 18.9 seconds.
-Chain 2 finished in 22.9 seconds.
-Chain 3 finished in 21.8 seconds.
-Chain 4 finished in 13.9 seconds.
+Chain 1 finished in 19.0 seconds.
+Chain 2 finished in 22.7 seconds.
+Chain 3 finished in 20.9 seconds.
+Chain 4 finished in 14.0 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 19.4 seconds.
-Total execution time: 78.1 seconds.</code></pre>
+Mean chain execution time: 19.2 seconds.
+Total execution time: 77.1 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>imputations2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(brmfit2, </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata=</span>count_data <span class="sc">%&gt;%</span> </span>
@@ -759,14 +759,14 @@ Total execution time: 78.1 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 18.3 seconds.
-Chain 2 finished in 14.5 seconds.
-Chain 3 finished in 25.0 seconds.
-Chain 4 finished in 32.2 seconds.
+Chain 1 finished in 18.0 seconds.
+Chain 2 finished in 14.2 seconds.
+Chain 3 finished in 22.7 seconds.
+Chain 4 finished in 29.4 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 22.5 seconds.
-Total execution time: 90.4 seconds.</code></pre>
+Mean chain execution time: 21.1 seconds.
+Total execution time: 84.8 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>imputations3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(brmfit3, </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata=</span>count_data <span class="sc">%&gt;%</span> </span>
