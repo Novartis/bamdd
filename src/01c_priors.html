@@ -437,16 +437,17 @@ become very popular nowadays.
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 29%">
+<col style="width: 27%">
 <col style="width: 13%">
 <col style="width: 6%">
-<col style="width: 8%">
+<col style="width: 7%">
 <col style="width: 6%">
 <col style="width: 6%">
-<col style="width: 8%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 11%">
+<col style="width: 7%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 10%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -459,6 +460,7 @@ become very popular nowadays.
 <th style="text-align: left;">nlpar</th>
 <th style="text-align: left;">lb</th>
 <th style="text-align: left;">ub</th>
+<th style="text-align: left;">tag</th>
 <th style="text-align: left;">source</th>
 </tr>
 </thead>
@@ -466,6 +468,7 @@ become very popular nowadays.
 <tr class="odd">
 <td style="text-align: left;">student_t(3, 0, 2.5)</td>
 <td style="text-align: left;">Intercept</td>
+<td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
@@ -531,7 +534,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">rstudent_t</span>(num_draws, <span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>),</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">rnorm</span>(num_draws, <span class="dv">0</span>, <span class="dv">2</span>))))</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp, <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -740,11 +743,11 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
-Chain 4 finished in 0.2 seconds.
+Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.1 seconds.</code></pre>
+Total execution time: 1.4 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_meta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1509,7 +1512,7 @@ Zhang, Yan Dora, Brian P. Naughton, Howard D. Bondell, and Brian J. Reich. 2022.
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># Model setup &amp; priors {#sec-model-priors}</span></span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}</span></span>
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Show R setup"</span></span>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
@@ -1532,10 +1535,10 @@ Zhang, Yan Dora, Brian P. Naughton, Howard D. Bondell, and Brian J. Reich. 2022.
 <span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="dv">12</span>))</span>
 <span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}</span></span>
 <span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
 <span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt; include setup.R &gt;}}</span></span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span>
 <span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>Within the Bayesian regression modeling in Stan framework <span class="in">`brms`</span></span>
@@ -1687,7 +1690,7 @@ Zhang, Yan Dora, Brian P. Naughton, Howard D. Bondell, and Brian J. Reich. 2022.
 <span id="cb24-189"><a href="#cb24-189" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">rstudent_t</span>(num_draws, <span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>),</span>
 <span id="cb24-190"><a href="#cb24-190" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">rnorm</span>(num_draws, <span class="dv">0</span>, <span class="dv">2</span>))))</span>
 <span id="cb24-191"><a href="#cb24-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-192"><a href="#cb24-192" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp)</span>
+<span id="cb24-192"><a href="#cb24-192" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp, <span class="at">digits=</span><span class="dv">2</span>)</span>
 <span id="cb24-193"><a href="#cb24-193" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-194"><a href="#cb24-194" aria-hidden="true" tabindex="-1"></a>priors_logit <span class="ot">&lt;-</span> priors_cmp <span class="sc">|&gt;</span></span>
 <span id="cb24-195"><a href="#cb24-195" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>case, <span class="at">xdist=</span>prior)) <span class="sc">+</span></span>

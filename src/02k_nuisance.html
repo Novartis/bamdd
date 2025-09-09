@@ -1146,14 +1146,14 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.7 seconds.
-Chain 2 finished in 0.7 seconds.
-Chain 3 finished in 0.8 seconds.
-Chain 4 finished in 0.8 seconds.
+Chain 1 finished in 1.0 seconds.
+Chain 2 finished in 1.0 seconds.
+Chain 3 finished in 1.0 seconds.
+Chain 4 finished in 1.0 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.8 seconds.
-Total execution time: 3.8 seconds.</code></pre>
+Mean chain execution time: 1.0 seconds.
+Total execution time: 5.1 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gamma 
@@ -1167,11 +1167,11 @@ Formula: varestimate ~ 1 + (1 | studyn)
 Multilevel Hyperparameters:
 ~studyn (Number of levels: 7) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.55      0.19     0.30     1.03 1.00      772     1119
+sd(Intercept)     0.55      0.19     0.30     1.04 1.00      688      863
 
 Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     2.35      0.21     1.92     2.77 1.00      649      783
+Intercept     2.34      0.23     1.84     2.80 1.01      546      533
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1214,7 +1214,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code># A tibble: 1 × 6
   variable            q2.5   q25   q50   q75 q97.5
   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 rv_predicted_sigma  1.73  2.70  3.22  3.88  6.09</code></pre>
+1 rv_predicted_sigma  1.70  2.68  3.23  3.88  6.17</code></pre>
 </div>
 </div>
 <p>Similarly, the histogram with a log-x-scale is:</p>

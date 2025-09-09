@@ -594,7 +594,7 @@ Total execution time: 0.8 seconds.</code></pre>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brmfit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
-  Links: mu = identity; sigma = identity 
+  Links: mu = identity 
 Formula: log_hr | se(log_hr_stderr) ~ 1 
    Data: sglt2_hr (Number of observations: 7) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
@@ -633,7 +633,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 Chain 1 finished in 0.5 seconds.
 Chain 2 finished in 0.4 seconds.
 Chain 3 finished in 0.3 seconds.
-Chain 4 finished in 0.4 seconds.
+Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.4 seconds.
@@ -645,7 +645,7 @@ Total execution time: 1.8 seconds.</code></pre>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brmfit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
-  Links: mu = identity; sigma = identity 
+  Links: mu = identity 
 Formula: log_hr | se(log_hr_stderr) ~ 1 + (1 | studyno) 
    Data: sglt2_hr (Number of observations: 7) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
@@ -707,13 +707,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 0.2 seconds.
-Chain 2 finished in 0.3 seconds.
+Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
 Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.2 seconds.</code></pre>
+Total execution time: 1.1 seconds.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -727,24 +727,15 @@ Formula: cases | rate(py_to_evt_or_cens) ~ 0 + study + treatment
          total post-warmup draws = 4000
 
 Regression Coefficients:
-                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-studyCANVAS                -3.49      0.04    -3.58    -3.40 1.00     3169
-studyCANVASMR              -3.44      0.06    -3.55    -3.33 1.00     4175
-studyCREDENCE              -3.07      0.05    -3.16    -2.98 1.00     3550
-studyDECLARE–TIMI58        -3.69      0.03    -3.75    -3.64 1.00     3266
-studyEMPAMREGOUTCOME       -3.15      0.04    -3.23    -3.07 1.00     2938
-studySCORED                -2.83      0.04    -2.90    -2.75 1.00     3228
-studyVERTISCV              -3.15      0.04    -3.22    -3.08 1.00     2555
-treatmentSGLT2inhibitor    -0.13      0.03    -0.18    -0.08 1.00     1946
-                        Tail_ESS
-studyCANVAS                 2901
-studyCANVASMR               3052
-studyCREDENCE               2567
-studyDECLARE–TIMI58         3104
-studyEMPAMREGOUTCOME        2439
-studySCORED                 2881
-studyVERTISCV               3040
-treatmentSGLT2inhibitor     2765
+                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+studyCANVAS                -3.49      0.04    -3.58    -3.40 1.00     3169     2901
+studyCANVASMR              -3.44      0.06    -3.55    -3.33 1.00     4175     3052
+studyCREDENCE              -3.07      0.05    -3.16    -2.98 1.00     3550     2567
+studyDECLARE–TIMI58        -3.69      0.03    -3.75    -3.64 1.00     3266     3104
+studyEMPAMREGOUTCOME       -3.15      0.04    -3.23    -3.07 1.00     2938     2439
+studySCORED                -2.83      0.04    -2.90    -2.75 1.00     3228     2881
+studyVERTISCV              -3.15      0.04    -3.22    -3.08 1.00     2555     3040
+treatmentSGLT2inhibitor    -0.13      0.03    -0.18    -0.08 1.00     1946     2765
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -783,14 +774,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.9 seconds.
-Chain 2 finished in 0.9 seconds.
+Chain 1 finished in 0.8 seconds.
+Chain 2 finished in 0.8 seconds.
 Chain 3 finished in 1.0 seconds.
 Chain 4 finished in 0.9 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.9 seconds.
-Total execution time: 4.0 seconds.</code></pre>
+Total execution time: 3.9 seconds.</code></pre>
 </div>
 </div>
 <p>As before, we can easily obtain inference about the mean effect of the SGLT-2 inhibitors across studies or the predicted effect in a new study drawn from the same distribution of studies as the studies under analysis.</p>

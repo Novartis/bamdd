@@ -573,16 +573,16 @@ distribution as the change from baseline in the PRO score for historical studies
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display prior model across all parameters</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(hist_model, hdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                prior class       coef group resp dpar nlpar lb ub       source
-               (flat)     b                                             default
-               (flat)     b     active                             (vectorized)
-               (flat)     b age_group1                             (vectorized)
-               (flat)     b age_group3                             (vectorized)
-               (flat)     b      cBASE                             (vectorized)
-               (flat)     b  Intercept                             (vectorized)
- student_t(3, 0, 2.5)    sd                                   0         default
- student_t(3, 0, 2.5)    sd            Study                  0    (vectorized)
- student_t(3, 0, 2.5)    sd  Intercept Study                  0    (vectorized)</code></pre>
+<pre><code>                prior class       coef group resp dpar nlpar lb ub tag       source
+               (flat)     b                                                 default
+               (flat)     b     active                                 (vectorized)
+               (flat)     b age_group1                                 (vectorized)
+               (flat)     b age_group3                                 (vectorized)
+               (flat)     b      cBASE                                 (vectorized)
+               (flat)     b  Intercept                                 (vectorized)
+ student_t(3, 0, 2.5)    sd                                   0             default
+ student_t(3, 0, 2.5)    sd            Study                  0        (vectorized)
+ student_t(3, 0, 2.5)    sd  Intercept Study                  0        (vectorized)</code></pre>
 </div>
 </div>
 <p><strong>Note</strong> that we do set explicitly the option <code>center=FALSE</code> in the function call to <code>bf</code>. This avoids the otherwise automatic centering done by <code>brms</code>, which is needed here as we require full control over the parametrization of the model.</p>
@@ -614,19 +614,19 @@ distribution as the change from baseline in the PRO score for historical studies
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.6 seconds.
-Chain 2 finished in 0.6 seconds.
-Chain 3 finished in 0.8 seconds.
-Chain 4 finished in 0.6 seconds.
+Chain 1 finished in 0.5 seconds.
+Chain 2 finished in 0.9 seconds.
+Chain 3 finished in 0.6 seconds.
+Chain 4 finished in 0.7 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.7 seconds.
-Total execution time: 2.9 seconds.</code></pre>
+Total execution time: 3.2 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>map_mc_brms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
-  Links: mu = identity; sigma = identity 
+  Links: mu = identity 
 Formula: CHGm | se(CHGse) ~ 1 + age_group + cBASE + active + (1 | Study) 
    Data: hdata (Number of observations: 4) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
@@ -1298,19 +1298,19 @@ Please note that these are subject to changes in future releases.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.2 seconds.
+Chain 1 finished in 0.3 seconds.
 Chain 2 finished in 0.3 seconds.
-Chain 3 finished in 0.2 seconds.
-Chain 4 finished in 0.2 seconds.
+Chain 3 finished in 0.3 seconds.
+Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.2 seconds.
+Mean chain execution time: 0.3 seconds.
 Total execution time: 1.4 seconds.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>bfit_stage2_ipd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
-  Links: mu = identity; sigma = identity 
+  Links: mu = identity 
 Formula: CHG ~ 1 + age_group + cBASE + active 
    Data: new_dat (Number of observations: 125) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
