@@ -1,6 +1,7 @@
 ---
 author:
   - Sebastian Weber - <sebastian.weber@novartis.com>
+bibliography: references.bib
 ---
 
 # Use of historical control data {#sec-use-hist-control-data}
@@ -28,7 +29,7 @@ This case study demonstrates
 To run the R code of this section please ensure to load these
 libraries and options first:
 
-```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
 library(ggplot2)
 library(dplyr)
 library(knitr)
@@ -44,20 +45,19 @@ dir.create(here("_brms-cache"), FALSE)
 set.seed(593467)
 ```
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE,cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source("setup.R")
+source(here("src", "setup.R"))
 ```
 
 ## Background
 
 Given the relevance of the use of historical control data problem for
-drug development, a full R package `RBesT` (R Bayesian evidence
-synthesis tools) is available on
+drug development, a full R package `RBesT` ([R Bayesian evidence
+synthesis tools](https://opensource.nibr.com/RBesT/)) is available on
 [CRAN](https://cran.r-project.org/package=RBesT). Here we will
 re-implement the example of the vignette of `RBesT` for the [binary
-case](https://cran.r-project.org/web/packages/RBesT/vignettes/introduction.html)
+case](https://opensource.nibr.com/RBesT/articles/introduction.html)
 and will illustrate how `brms` can be used in a more complex setting
 as a case study. In particular, we are going to assume as a
 complication that the historical trial data has been collected in
@@ -68,14 +68,9 @@ conducting exclusively in specific regions.
 
 For details on the `RBesT` R package, please refer to
 
-- Weber et al. (2021) [doi:10.18637/jss.v100.i19](https://doi.org/10.18637/jss.v100.i19) for
-details on applying the `RBesT` package, and
-- Neuenschwander et al. (2010) [doi:10.1177/1740774509356002](https://doi.org/10.1177/1740774509356002)
-and
-- Schmidli et al. (2014) [doi:10.1111/biom.12242](https://doi.org/10.1111/biom.12242) for
-details on the MAP methodology.
-
-
+- [@Weber2021] for details on applying the `RBesT` package, and
+- [@Neuenschwander2010] and
+- [@schmidli2014robust] for details on the MAP methodology.
 
 
 
@@ -107,6 +102,8 @@ kable(AS_region)
 The total number of `r sum(AS_region$n)` patients in the `r length(AS_region$n)` trials is quite substantial.
 
 ## Model description
+
+### Meta-Analytic-Predictive Model
 
 The `RBesT` package implements the MAP approach following a standard
 generalized linear modeling framework for a random-effects
@@ -152,6 +149,9 @@ specific regions, the more general model is then:
 
 - $\nu_j|\omega \sim \N(0, \omega^2)$
 
+- $\tau \sim \HN(0, (8/10)^2)$
+- $\omega \sim \HN(0, (6/10)^2)$
+
 In our case study we make a simplifying assumption that any trial $h$
 is run entirely within a given region $j$. Therefore we have a
 nested structure (trials within regions) such that no correlation is
@@ -159,9 +159,142 @@ modeled between region and trial. This would be different if some trials
 were run across different regions and trial results would be reported by
 region.
 
+### Meta-Analytic-Predictive Priors 
+
+The model prior for the intercept, $\beta \sim \N(0, 2^2)$, matches
+the default choice in `RBesT` and reflects that response rates are not
+extreme as illustrated in the section @sec-model-priors. However, the
+key parameter in this model is the between-study heterogeneity $\tau$
+for which the choice of $\tau \sim \HN(0, 1)$ corresponds to a very
+conservative choice as explained below. In the case of the more
+general region aware model, the total variance is set to be unity as
+well. In the section @sec-model-priors a categorization of the
+heterogeneity was suggested by [@Neuenschwander2020]. These categories
+were derived with reference to an analytical consideration of an
+idealized data constellation first presented in
+[@Neuenschwander2010]. That is, we hypothesize that $\tau$ and the
+sampling standard deviation $\sigma$ is known. Furthermore, we assume
+to have an infinite number of trials available and each trial
+has an infinite sample size. In such a data constellation, we still
+only know with a limited precision something about another new study
+due to the presence of the between-trial heterogeneity $\tau$. It can
+be shown that in this case the ratio of the between-trial
+heterogeneity $\tau$ and the sampling standard deviation $\sigma$
+determines an effective sample size, the maximum sample size
+$n_\infty$, a derived MAP prior can corresponds to,
+
+$$n_\infty = \frac{\sigma^2}{\tau^2}.$$
+
+Therefore, we can - in relation to the sampling standard deviation
+$\sigma$ - translate quantiles of the prior distribution for $\tau$
+into a prior on the maximum sample size $n_\infty^{-1/2} =
+\frac{\tau}{\sigma}.$
+
+With this concept we can therefore define a prior for different
+endpoints with varying $\sigma$. This is achieved by choosing for
+$\tau$ a half-normal prior with a scale proportional to $\sigma$ as
+
+$$\tau \sim \HN(0, s^2 = (f_s \, \sigma )^2),$$
+
+which we can in turn interpret as a prior on the maximum effective
+sample size $n_\infty^{-1/2}$ and thereby controlling the strength of
+the MAP prior in relation to the trial of interest. In
+[@Neuenschwander2020] specific values for this ratio were suggested to
+correspond to certain categories:
+
+| Heterogeneity | $\tau/\sigma$          | $n_\infty$ |
+|---------------|------------------------|------------|
+| pooling/none  | $0$                    | $\infty$   |
+| small         | $1/16 = 0.0625$        | $256$      |
+| moderate      | $1/8 = 0.125$          | $64$       |
+| substantial   | $1/4 = 0.25$           | $16$       |
+| large         | $1/2 = 0.5$            | $4$        |
+| very large    | $1 = 1.0$              | $1$        |
+| stratified    | $\infty$               | $0$        |
+
+For non-normal endpoints without a sampling standard deviation
+$\sigma$, the corresponding pseudo variance can be defined in terms of
+the inverse of the Fisher information. For a Binomial endpoint with a
+logit transformed response rate this results in a pseudo variance
+depending on the assumed true response rate $1/(\theta \,
+(1-\theta))$. Setting the true response rate to $1/2$, the respective
+pseudo variance equates to $4$ (resulting in a pseudo standard
+deviation of $2$). With these definitions we can then compare
+different prior choices for $\tau$ when using as a prior with
+different scales $f_s$ by considering the interval and tail
+probabilities for $\tau$ to fall into the respective ranges of $\tau$
+as defined above:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+tau_cat <- tribble(~cat, ~threshold,
+                   "pooling", 0,
+                   "small", 0.0625,
+                   "moderate", 0.125,
+                   "substantial", 0.25,
+                   "large", 0.5,
+                   "very_large", 1,
+                   "stratified", Inf)
+
+# half-normal cdf
+phnorm <- function(x, s) {
+  ifelse(x < 0, 0, 2 * pnorm(x / s) - 1)
+}
+
+# half-normal quantile function
+qhnorm <- function(p, s) {
+  qnorm((p + 1) / 2) * s
+}
+
+tidyr::expand_grid(threshold = tau_cat$threshold, f_s = 1 / c(2, 4, 8, 16)) |>
+  mutate(cprob = phnorm(threshold, f_s)) |>
+  arrange(f_s, threshold) |>
+  reframe(
+    pinter = diff(cprob),
+    ptail = 1 - phnorm(threshold, f_s)[-1],
+    cat = threshold[-1],
+    .by = c(f_s)
+  ) |>
+  mutate(cat = factor(cat, tau_cat$threshold, tau_cat$cat)) |>
+  tidyr::pivot_longer(c(pinter, ptail)) |>
+  tidyr::pivot_wider(names_from = cat, values_from = c(value)) |>
+  arrange(name, -f_s) |>
+  mutate(
+    sigma = 2,
+    s = f_s * sigma,
+    f_s = as.character(MASS::fractions(f_s)),
+    name = factor(
+      name,
+      c("pinter", "ptail"),
+      c("Pr(τ ∈ cat)", "Pr(τ > cat)")
+    )
+  ) |>
+  relocate(f_s, sigma, s) |>
+  group_by(name) |>
+  gt::gt() |>
+  gt::tab_spanner("Heterogeneity category", all_of(tau_cat$cat[-1])) |>
+  gt::cols_label(
+    f_s = gt::md("$f_s$"),
+    sigma = gt::md("$\\sigma$"),
+    s = gt::md("$s$")
+  ) |>
+  gt::fmt_fraction(c(s), accuracy="med") |>
+  gt::fmt_percent(all_of(tau_cat$cat[-1]), decimals = 1)
+
+```
+
+The rationale to choose a given scale $f_s$ for a prior on $\tau$ can
+thus be based on the respective tail probabilities. That is, the
+choice of $f_s=1/2$ leads to a prior probability of 4.6% that the
+maximal effective sample size of the MAP prior is less than 1
+observation.
+
 ## Implementation
 
-With the `gMAP` command in `RBesT` we can obtain MCMC samples from posterior for the first model as follows:
+With the `gMAP` command in `RBesT` we can obtain MCMC samples from
+posterior for the first model as follows:
 
 ```{r}
 set.seed(34767)
@@ -318,8 +451,8 @@ same steps as before, setting up the brms model may look like:
 region_model <- bf(r | trials(n) ~ 1 + (1 | region/study), family=binomial)
 get_prior(region_model, AS_region)
 region_model_prior <- prior(normal(0, 2), class=Intercept) +
-    prior(normal(0, 0.5), class=sd, coef=Intercept, group=region) +
-    prior(normal(0, 0.25), class=sd, coef=Intercept, group=region:study)
+    prior(normal(0, 0.8), class=sd, coef=Intercept, group=region) +
+    prior(normal(0, 0.6), class=sd, coef=Intercept, group=region:study)
 region_map_mc_brms  <- brm(region_model, AS_region, prior=region_model_prior, seed=4767,
                            control=list(adapt_delta=0.99),
                            refresh=0, silent=0)

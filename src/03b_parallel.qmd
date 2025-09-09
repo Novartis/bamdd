@@ -126,14 +126,16 @@ first call to `mirai::deamons` with:
 ```{r, eval=FALSE}
 # Remote worker setup based for a LSF cluster which uses "modules" to
 # load specific R versions, common on HPCE systems. Requesting 3000 MB
-# of RAM and 4 cores per job.
+# of RAM (-M 3000) and 4 cores per job (-n 4) which all run on the
+# very same machine (-R "span[hosts=1]").
 lsf_config <- mirai::cluster_config(
   command = "bsub",
-  options = "#BSUB -J mirai
+  options = '#BSUB -J mirai
              #BSUB -M 3000
              #BSUB -n 4
+             #BSUB -R "span[hosts=1]"
              #BSUB -o job.out
-             module load R/4.5.0",
+             module load R/4.5.0',
   rscript = "Rscript"
 )
 
