@@ -9,7 +9,7 @@ bibliography: references.bib
 
 # Model setup & priors {#sec-model-priors}
 
-```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
 #| code-fold: true
 #| code-summary: "Show R setup"
 
@@ -32,10 +32,10 @@ set.seed(593467)
 theme_set(theme_bw(12))
 ```
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
 # {{< include setup.R >}}
-source("setup.R")
+source(here("src", "setup.R"))
 ```
 
 Within the Bayesian regression modeling in Stan framework `brms`
@@ -187,7 +187,7 @@ priors_cmp <- tibble(case=c("wide", "brms", "RBesT"),
                                       rstudent_t(num_draws, 3, 0, 2.5),
                                       rnorm(num_draws, 0, 2))))
 
-kable(priors_cmp)
+kable(priors_cmp, digits=2)
 
 priors_logit <- priors_cmp |>
     ggplot(aes(y=case, xdist=prior)) +

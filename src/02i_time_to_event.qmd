@@ -59,7 +59,7 @@ options(width=120)
 ```{r, include=FALSE, echo=FALSE, eval=TRUE}
 # invisible to the reader additional setup steps, which are optional
 # {{< include setup.R >}}
-source("setup.R")
+source(here("src", "setup.R"))
 ```
 
 
@@ -445,11 +445,11 @@ the Weibull distribution without a time-varying covariate for
 simplicity.
 
 ```{r message=FALSE, echo=TRUE, fig.width=10}
-p_full_fup <- pp_check(fit_hist_checkmate, status_y=hdata2$status,
-             type="km_overlay", ndraws=100) +
-    scale_y_continuous(breaks=seq(0,1,by=0.1)) +
-  xlab("Time [month]") + coord_cartesian(xlim=c(0, 35))
-p_sub_fup <- p_full_fup + coord_cartesian(xlim=c(0, 15))
+p_full_fup <- pp_check(fit_hist_checkmate, type = "km_overlay", ndraws = 100) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1)) +
+  xlab("Time [month]") +
+  coord_cartesian(xlim = c(0, 35))
+p_sub_fup <- p_full_fup + coord_cartesian(xlim = c(0, 15))
 ggpubr::ggarrange(p_full_fup, p_sub_fup, common.legend = TRUE)
 ```
 
@@ -518,41 +518,64 @@ n_hist <- 400
 # use month as time-unit
 rate_1 <- 1 / 6
 rate_cens <- 1 / 10
-beta <- c(trt=-0.2,        ## roughly 20% HR reduction
-          soc_alt=0.05,    ## alternative chemotherapy is 5% worse
-          hist1=0.02)      ## simulated historical data has a 2% worse outcome
+beta <- c(
+  trt = -0.2, ## roughly 20% HR reduction
+  soc_alt = 0.05, ## alternative chemotherapy is 5% worse
+  hist1 = 0.02
+) ## simulated historical data has a 2% worse outcome
 # covariates of simulated trial data
-covs <- data.frame(id = seq(1, 2*n_grp), trt = c(0L, 1L),
-                   soc_alt=rbinom(2*n_grp, 1L, 0.3), hist1=0L, hist2=0L)
+covs <- data.frame(
+  id = seq(1, 2 * n_grp),
+  trt = c(0L, 1L),
+  soc_alt = rbinom(2 * n_grp, 1L, 0.3),
+  hist1 = 0L,
+  hist2 = 0L
+)
 
 # covariates of historical data
-hcovs <- data.frame(id = seq(2*n_grp+1, 2*n_grp+1 +n_hist - 1),
-                    trt = c(0), soc_alt=0, hist1=1L, hist2=0L)
+hcovs <- data.frame(
+  id = seq(2 * n_grp + 1, 2 * n_grp + 1 + n_hist - 1),
+  trt = c(0),
+  soc_alt = 0,
+  hist1 = 1L,
+  hist2 = 0L
+)
 simulate_trial <- function(lambda, gamma, lambda_cens, x, betas) {
-    ## simulate censoring times, note that we do not simulate end of
-    ## trial with maxt for now. Also note the different parametrization of
-    ## simsurv which models log(shape) with a linear predictor.
-    cens <- simsurv(lambdas = lambda_cens, gammas = 1, x=x)
-    events <- simsurv(lambdas = lambda, gammas = gamma, x=x, betas=betas)
-    names(cens) <- paste0(names(cens), "_cens")
-    bind_cols(events, select(cens, -id_cens), select(x, -id)) %>%
-        rename(censtime=eventtime_cens) %>%
-    mutate(event=1L*(eventtime <= censtime),
-           y=if_else(event==1, eventtime, censtime),
-           status=NULL, status_cens=NULL) %>%
-        relocate(id, y, event) %>%
-        mutate(soc=factor(soc_alt, c(0, 1), c("ChemoA", "ChemoB")),
-               trt_ind=trt,
-               trt=factor(trt_ind, c(0,1), c("control", "active")),
-               arm=factor(paste0(c("control", "active")[trt_ind + 1], soc),
-                          levels=c("activeChemoA", "controlChemoA",
-                                   "activeChemoB", "controlChemoB")))
+  ## simulate censoring times, note that we do not simulate end of
+  ## trial with maxt for now. Also note the different parametrization of
+  ## simsurv which models log(shape) with a linear predictor.
+  cens <- simsurv(lambdas = lambda_cens, gammas = 1, x = x)
+  events <- simsurv(lambdas = lambda, gammas = gamma, x = x, betas = betas)
+  names(cens) <- paste0(names(cens), "_cens")
+  bind_cols(events, select(cens, -id_cens), select(x, -id)) %>%
+    rename(censtime = eventtime_cens) %>%
+    mutate(
+      event = 1L * (eventtime <= censtime),
+      y = if_else(event == 1, eventtime, censtime),
+      status = NULL,
+      status_cens = NULL
+    ) %>%
+    relocate(id, y, event) %>%
+    mutate(
+      soc = factor(soc_alt, c(0, 1), c("ChemoA", "ChemoB")),
+      trt_ind = trt,
+      trt = factor(trt_ind, c(0, 1), c("control", "active")),
+      arm = factor(
+        paste0(c("control", "active")[trt_ind + 1], soc),
+        levels = c(
+          "activeChemoA",
+          "controlChemoA",
+          "activeChemoB",
+          "controlChemoB"
+        )
+      )
+    )
 }
 
 # using shape=1 for simulation (corresponding to exponential survival times)
 sim <- simulate_trial(rate_1, 1, rate_cens, covs, beta)
 hdata1 <- simulate_trial(rate_1, 1, rate_cens, hcovs, beta) %>%
-  mutate(id=id+max(sim$id))
+  mutate(id = id + max(sim$id))
 ```
 
 We can check how the simulated data looks like and its sample size.
@@ -635,7 +658,7 @@ parameter mapping as matrix:
 
 ```{r tb_model1, echo = FALSE}
 tb1 = data.frame(Parameter= c("$\\gamma$", "$\\delta_{\\mbox{EffectAvg}}$",
-                                  "$\\delta_{\\mbox{effect}}$$", "$\\delta_{\\mbox{control}}$"),
+                              "$\\delta_{\\mbox{effect}}$$", "$\\delta_{\\mbox{control}}$"),
                  activeChemoA = c("1/4", "1/2", "1/2", "0"),
                  controlChemoA = c("1/4", "-1/2", "-1/2", "-1"),
                  activeChemoB = c("1/4", "1/2", "-1/2", "0"),
@@ -697,14 +720,14 @@ the full matrix $C$ is:
 
 ```{r tb_model, echo = FALSE}
 tb2 <- data.frame(TreatmentArm = c("activeChemoA", "controlChemoA",
-                                  "activeChemoB", "controlChemoB",
-                                  "controlAverage"),
+                                   "activeChemoB", "controlChemoB",
+                                   "controlAverage"),
                   intercept = "1",
-                 effectAvg = c("1/2", "-1/2", "1/2", "-1/2", "-1/2"),
-                 effect = c("1", "0", "-1", "0", "0"),
-                 control = c("-1/2", "-1/2", "1/2", "1/2", "0"))
+                  effectAvg = c("1/2", "-1/2", "1/2", "-1/2", "-1/2"),
+                  effect = c("1", "0", "-1", "0", "0"),
+                  control = c("-1/2", "-1/2", "1/2", "1/2", "0"))
 colnames(tb2) <- c("Treatment arm", "$\\gamma$", "$\\delta_{\\mbox{EffectAvg}}$",
-                         "$\\delta_{\\mbox{effect}}$", "$\\delta_{\\mbox{control}}$")
+                   "$\\delta_{\\mbox{effect}}$", "$\\delta_{\\mbox{control}}$")
 gt(tb2) %>% fmt_markdown(everything())
 ```
 
@@ -716,15 +739,15 @@ Priors for each random variable are described in the following table.
 
 ```{r prior, echo = FALSE}
 tb2 <- data.frame(Parameter = c("$\\alpha$", "$\\gamma$", "$\\delta_{\\mbox{effectAvg}}$",
-                               "$\\delta_{\\mbox{effect}}$", "$\\delta_{\\mbox{control}}$",
-                               "$\\beta_{\\mbox{hist1}}$","$\\beta_{\\mbox{hist2}}$"),
-                 Prior = c("$\\Gamma(3, 2.7)$",
-                           "$\\mbox{Normal}( \\log(\\frac{8}{\\log(2)}), \\frac{\\log(4)}{1.64})$",
-                           "$\\mbox{Normal}(0, \\frac{\\log(2)}{1.64})$",
-                           "$\\mbox{Normal}(0, \\frac{\\log(1.25)}{1.64})$",
-                           "$\\mbox{Normal}(0, \\frac{\\log(1.25)}{1.64})$",
-                           "$\\mbox{Normal}(0, \\frac{\\log(1.8)}{1.64})$",
-                           "$\\mbox{Normal}(0, \\frac{\\log(1.8)}{1.64})$"))
+                                "$\\delta_{\\mbox{effect}}$", "$\\delta_{\\mbox{control}}$",
+                                "$\\beta_{\\mbox{hist1}}$","$\\beta_{\\mbox{hist2}}$"),
+                  Prior = c("$\\Gamma(3, 2.7)$",
+                            "$\\mbox{Normal}( \\log(\\frac{8}{\\log(2)}), \\frac{\\log(4)}{1.64})$",
+                            "$\\mbox{Normal}(0, \\frac{\\log(2)}{1.64})$",
+                            "$\\mbox{Normal}(0, \\frac{\\log(1.25)}{1.64})$",
+                            "$\\mbox{Normal}(0, \\frac{\\log(1.25)}{1.64})$",
+                            "$\\mbox{Normal}(0, \\frac{\\log(1.8)}{1.64})$",
+                            "$\\mbox{Normal}(0, \\frac{\\log(1.8)}{1.64})$"))
 gt(tb2) %>% fmt_markdown(everything())
 ```
 

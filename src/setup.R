@@ -54,6 +54,7 @@ options(brms.iter = iter
        ,brms.chains = chains
        ,brms.backend="cmdstanr"
        ,cmdstanr_write_stan_file_dir=brms_cache_dir
+       ,width=120
         )
 
 # Set chapter-specific seed
