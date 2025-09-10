@@ -72,7 +72,7 @@ sum(rstan::get_elapsed_time(fit_long_mean$fit))
 
 
 ## ----eval=F-------------------------------------------------------------------
-## pp_check(fit_long_mean)
+# pp_check(fit_long_mean)
 
 
 ## ----echo=F-------------------------------------------------------------------
@@ -84,7 +84,7 @@ loo(fit_long_mean)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## conditional_effects(fit_long_mean, "AVISIT:TRT01P")
+# conditional_effects(fit_long_mean, "AVISIT:TRT01P")
 
 ## ----echo=FALSE---------------------------------------------------------------
 ce <- conditional_effects(fit_long_mean, "AVISIT:TRT01P")
@@ -109,7 +109,7 @@ summary(fit_long_lin)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## conditional_effects(fit_long_lin, "AVISITN:TRT01P")
+# conditional_effects(fit_long_lin, "AVISITN:TRT01P")
 
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -135,7 +135,7 @@ summary(fit_long_lin_vs)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## conditional_effects(fit_long_lin_vs, "AVISITN:TRT01P")
+# conditional_effects(fit_long_lin_vs, "AVISITN:TRT01P")
 
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -162,7 +162,7 @@ sum(rstan::get_elapsed_time(fit_long_mo$fit))
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## conditional_effects(fit_long_mo, "AVISITN:TRT01P")
+# conditional_effects(fit_long_mo, "AVISITN:TRT01P")
 
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -189,7 +189,7 @@ sum(rstan::get_elapsed_time(fit_long_quad$fit))
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## conditional_effects(fit_long_quad, "AVISITN:TRT01P")
+# conditional_effects(fit_long_quad, "AVISITN:TRT01P")
 
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -225,7 +225,7 @@ sum(rstan::get_elapsed_time(fit_long_quad_c$fit))
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## conditional_effects(fit_long_quad_c, "AVISITN_c:TRT01P")
+# conditional_effects(fit_long_quad_c, "AVISITN_c:TRT01P")
 
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -257,7 +257,7 @@ loo(fit_long_gp)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## conditional_effects(fit_long_gp, "AVISITN_c:TRT01P")
+# conditional_effects(fit_long_gp, "AVISITN_c:TRT01P")
 
 
 ## ----echo=FALSE---------------------------------------------------------------
@@ -292,7 +292,7 @@ posterior_summary(fit_long_gp_ar, variable = "ar") |>
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## conditional_effects(fit_long_gp_ar, "AVISITN_c:TRT01P")
+# conditional_effects(fit_long_gp_ar, "AVISITN_c:TRT01P")
 
 
 ## ----echo=FALSE---------------------------------------------------------------
