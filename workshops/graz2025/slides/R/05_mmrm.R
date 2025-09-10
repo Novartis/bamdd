@@ -85,7 +85,10 @@ apply_colnames <- function(x,y){
 # first 200 that meet them.
 set.seed(4095867)
 N <- 1000
-Nf <- 200 
+Nf <- 200
+effect_course <- function(dose, time, ed50=8, et50=3) {
+    0.9 * dose /(dose + ed50) * time^3 /(time^3 + et50^3)
+}
 simulated_data <- rmvnorm(n=N, mean=rep(0, 5), sigma = cov_matrix) |>
     # turn into tibble
     apply_colnames(c("BASE", paste0("visit", 1:4))) |>
@@ -121,7 +124,7 @@ simulated_data <- rmvnorm(n=N, mean=rep(0, 5), sigma = cov_matrix) |>
         AVISIT = factor(AVISIT, paste0("visit", 1:4)),
         # Assume rising treatment effect over time (half there by week 3) with an 
         # Emax dose response (ED50 = 5 mg)
-        AVAL = AVAL + 0.9 * (ADY/7)^3/((ADY/7)^3+3^3) * TRT01P/(TRT01P+5),
+        AVAL = AVAL + effect_course(ADY/7, TRT01P),
         # Change from baseline = value - baseline
         CHG = AVAL - BASE,
         TRT01P=factor(TRT01P)) |>
@@ -187,14 +190,14 @@ simulated_data |>
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## library(mmrm)
-## mmrm_fit <- mmrm(
-##   formula = CHG ~ TRT01P + AVISIT + BASE + AVISIT:TRT01P +
-##     AVISIT:BASE + us(AVISIT | TRT01P / USUBJID),
-##   method = "Kenward-Roger",
-##   vcov = "Kenward-Roger-Linear", # to match SAS
-##   data = mutate(simulated_data, USUBJID=factor(USUBJID))
-## )
+# library(mmrm)
+# mmrm_fit <- mmrm(
+#   formula = CHG ~ TRT01P + AVISIT + BASE + AVISIT:TRT01P +
+#     AVISIT:BASE + us(AVISIT | TRT01P / USUBJID),
+#   method = "Kenward-Roger",
+#   vcov = "Kenward-Roger-Linear", # to match SAS
+#   data = mutate(simulated_data, USUBJID=factor(USUBJID))
+# )
 
 
 ## -----------------------------------------------------------------------------
@@ -268,9 +271,9 @@ mmrm_prior1 <- prior(normal(0, 2), class=Intercept) +
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## fit_mmrm1 <- brm(
-##   formula = mmrm_model1, data = simulated_data, prior = mmrm_prior1, ...
-## )
+# fit_mmrm1 <- brm(
+#   formula = mmrm_model1, data = simulated_data, prior = mmrm_prior1, ...
+# )
 
 
 ## -----------------------------------------------------------------------------
@@ -286,7 +289,7 @@ fit_mmrm1 <- brm(
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## emm2 <- emmeans(fit_mmrm1, ~ TRT01P | AVISIT, weights="proportional")
+# emm2 <- emmeans(fit_mmrm1, ~ TRT01P | AVISIT, weights="proportional")
 
 
 ## -----------------------------------------------------------------------------
@@ -298,7 +301,7 @@ emm2
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## emm2 |> as.mcmc() |> summarize_draws()
+# emm2 |> as.mcmc() |> summarize_draws()
 
 
 ## -----------------------------------------------------------------------------
@@ -307,7 +310,7 @@ contrast(emm2, adjust="none", method="trt.vs.ctrl", ref="TRT01P0")
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## contrast(emm2, adjust="none", method="trt.vs.ctrl", ref="TRT01P0") |> as.mcmc()
+# contrast(emm2, adjust="none", method="trt.vs.ctrl", ref="TRT01P0") |> as.mcmc()
 
 
 ## -----------------------------------------------------------------------------
@@ -320,8 +323,8 @@ mmrm_model2 <- bf(
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## fit_mmrm2 <- brm(formula = mmrm_model2,
-##                  data = simulated_data |> mutate(TRT01P=ordered(TRT01P)), prior = mmrm_prior1, ...)
+# fit_mmrm2 <- brm(formula = mmrm_model2,
+#                  data = simulated_data |> mutate(TRT01P=ordered(TRT01P)), prior = mmrm_prior1, ...)
 
 
 ## -----------------------------------------------------------------------------

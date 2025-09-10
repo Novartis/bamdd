@@ -1,38 +1,38 @@
-here::i_am("exercises/bamdd_paris2025_exercises.R")
+here::i_am("exercises/bamdd_graz2025_exercises.R")
 
 
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## cmdstanr::check_cmdstan_toolchain(fix=T)
+# cmdstanr::check_cmdstan_toolchain(fix=T)
 
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## # install.packages("remotes")
-## remotes::install_github("coatless-mac/macrtools")
-## macrtools::macos_rtools_install()
+# # install.packages("remotes")
+# remotes::install_github("coatless-mac/macrtools")
+# macrtools::macos_rtools_install()
 
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## # in case packages are missing, please run:
-## install.packages(c("here", "ggplot2", "dplyr", "knitr", "brms", "posterior", "tidybayes", "RBesT", "ggrepel", "patchwork", "ggdist", "withr", "simsurv", "gt"))
+# # in case packages are missing, please run:
+# install.packages(c("here", "ggplot2", "dplyr", "knitr", "brms", "posterior", "tidybayes", "RBesT", "ggrepel", "patchwork", "ggdist", "withr", "simsurv", "gt"))
 
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## bamdd_zip <- tempfile(fileext=".zip")
-## download.file("https://github.com/Novartis/bamdd/archive/refs/heads/main.zip", bamdd_zip)
-## ## extracts web-site into the users home
-## unzip(bamdd_zip, exdir=normalizePath("~"))
-## browseURL(normalizePath(file.path("~", "bamdd-main")))
-## # to install all dependencies needed to build the web-site, please run
-## source(file.path("~", "bamdd-main", "src", "install_dependencies.R"))
+# bamdd_zip <- tempfile(fileext=".zip")
+# download.file("https://github.com/Novartis/bamdd/archive/refs/heads/main.zip", bamdd_zip)
+# ## extracts web-site into the users home
+# unzip(bamdd_zip, exdir=normalizePath("~"))
+# browseURL(normalizePath(file.path("~", "bamdd-main")))
+# # to install all dependencies needed to build the web-site, please run
+# source(file.path("~", "bamdd-main", "src", "install_dependencies.R"))
 
 
 ## ----include=FALSE------------------------------------------------------------
-here::i_am("exercises/bamdd_paris2025_exercises.qmd")
+here::i_am("exercises/bamdd_graz2025_exercises.qmd")
 
 
 ## ----warning = FALSE, message = FALSE-----------------------------------------
@@ -118,7 +118,7 @@ map_mc_brms
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## region_model_fixed <- bf(r | trials(n) ~ 1 + region + (1 | study), family=binomial)
+# region_model_fixed <- bf(r | trials(n) ~ 1 + region + (1 | study), family=binomial)
 
 
 ## -----------------------------------------------------------------------------
@@ -399,30 +399,30 @@ peanut |>
 
 ## ----peanutmodel1-------------------------------------------------------------
 #| eval: false
-## model1 <- bf( #---- YOUR CODE HERE --- # ~ E0 + Emax * dose^h/(dose^h + ED50^h),
-##               family= #---- YOUR CODE HERE --- # ,
-##               nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)),
-##               E0 ~ 1, logED50 ~ 1, logh ~ 1, Emax ~ 1,
-##               nl=TRUE)
-## 
-## priors1 <- prior(normal(-2.944, 0.38), nlpar=E0) +
-##            prior(normal(0, 1), nlpar=logh) +
-##            prior(normal(0, 6), nlpar=Emax) +
-##            prior(normal(2.7, 2.5), nlpar=logED50)
+# model1 <- bf( #---- YOUR CODE HERE --- # ~ E0 + Emax * dose^h/(dose^h + ED50^h),
+#               family= #---- YOUR CODE HERE --- # ,
+#               nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)),
+#               E0 ~ 1, logED50 ~ 1, logh ~ 1, Emax ~ 1,
+#               nl=TRUE)
+# 
+# priors1 <- prior(normal(-2.944, 0.38), nlpar=E0) +
+#            prior(normal(0, 1), nlpar=logh) +
+#            prior(normal(0, 6), nlpar=Emax) +
+#            prior(normal(2.7, 2.5), nlpar=logED50)
 
 
 ## ----fitpeanutmodel1----------------------------------------------------------
 #| eval: false
-## brmfit1 <- brm(
-##   formula = model1,
-##   prior = priors1,
-##   data = summarize(peanut, y=sum(CRIT1FL=="Y"), n=n(), .by=c(TRT01P, dose))
-## )
+# brmfit1 <- brm(
+#   formula = model1,
+#   prior = priors1,
+#   data = summarize(peanut, y=sum(CRIT1FL=="Y"), n=n(), .by=c(TRT01P, dose))
+# )
 
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## tibble(dose = seq(0, 300, 1), n=1) |> tidybayes::add_epred_rvars(brmfit1)
+# tibble(dose = seq(0, 300, 1), n=1) |> tidybayes::add_epred_rvars(brmfit1)
 
 
 ## ----sol_peanutmodel1---------------------------------------------------------

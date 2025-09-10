@@ -97,7 +97,7 @@ sim |>
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## cc_inv
+# cc_inv
 
 
 ## -----------------------------------------------------------------------------
@@ -152,13 +152,13 @@ stanvars_weibull1 <-
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## fit_weibull1 <- brm(
-##   formula = model_weibull1,
-##   data = sim,
-##   prior = weibull_prior1,
-##   stanvars = stanvars_weibull1,
-##   seed=345665
-## )
+# fit_weibull1 <- brm(
+#   formula = model_weibull1,
+#   data = sim,
+#   prior = weibull_prior1,
+#   stanvars = stanvars_weibull1,
+#   seed=345665
+# )
 
 
 ## -----------------------------------------------------------------------------
@@ -180,17 +180,17 @@ summary(fit_weibull1)
 ## -----------------------------------------------------------------------------
 #| echo: true
 #| eval: false
-## pp_check(
-##   fit_weibull1, type = "km_overlay",
-##   status_y = sim$event, ndraws = 100
-## )
+# pp_check(
+#   fit_weibull1, type = "km_overlay",
+#   ndraws = 100
+# )
 
 
 ## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-height: 4
 p_full_fup <- pp_check(
-  fit_weibull1, status_y=sim$event,
+  fit_weibull1,
   type="km_overlay", ndraws=100
 ) +
   scale_y_continuous(breaks=seq(0,1,by=0.1)) +
@@ -226,13 +226,13 @@ stanvars_weibull2 <- stanvars_weibull1 +
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## fit_weibull2 <- brm(
-##   formula = model_weibull2,
-##   data = sim_comb,
-##   prior = weibull_prior2,
-##   stanvars = stanvars_weibull2,
-##   seed=4567886
-## )
+# fit_weibull2 <- brm(
+#   formula = model_weibull2,
+#   data = sim_comb,
+#   prior = weibull_prior2,
+#   stanvars = stanvars_weibull2,
+#   seed=4567886
+# )
 
 
 ## -----------------------------------------------------------------------------

@@ -179,12 +179,12 @@ expand_grid(Dose=c(seq(0, 5, 0.1), seq(6, 100, length.out=51)), Emax=1, E0=0, da
 
 ## -----------------------------------------------------------------------------
 #| eval: FALSE
-## fit_sig <- brm(
-##   formula = form_sig,
-##   data = pathway,
-##   prior = prior_sig,
-##   control = list(adapt_delta = 0.999)
-## )
+# fit_sig <- brm(
+#   formula = form_sig,
+#   data = pathway,
+#   prior = prior_sig,
+#   control = list(adapt_delta = 0.999)
+# )
 
 
 ## -----------------------------------------------------------------------------
@@ -206,11 +206,11 @@ summary(fit_sig)
 
 ## -----------------------------------------------------------------------------
 #| eval: false
-## tibble(dose = seq(0, 560, length.out=51), log_stderr=1) |>
-##   tidybayes::add_epred_rvars(object=fit_sig) |>
-##   mutate(.delta = .epred - .epred[dose == 0]) |>
-##   ggplot(aes(x=dose, ydist=.delta)) +
-##   ggdist::stat_lineribbon()
+# tibble(dose = seq(0, 560, length.out=51), log_stderr=1) |>
+#   tidybayes::add_epred_rvars(object=fit_sig) |>
+#   mutate(.delta = .epred - .epred[dose == 0]) |>
+#   ggplot(aes(x=dose, ydist=.delta)) +
+#   ggdist::stat_lineribbon()
 
 
 ## -----------------------------------------------------------------------------
@@ -268,12 +268,12 @@ prior_mbeta <- prior(normal(0,1), nlpar="E0") +
 
 ## -----------------------------------------------------------------------------
 #| eval: FALSE
-## fit_mbeta <- brm(
-##   form_mbeta,
-##   data = pathway,
-##   prior = prior_mbeta,
-##   control = list(adapt_delta = 0.999)
-## )
+# fit_mbeta <- brm(
+#   form_mbeta,
+#   data = pathway,
+#   prior = prior_mbeta,
+#   control = list(adapt_delta = 0.999)
+# )
 
 
 ## -----------------------------------------------------------------------------
@@ -374,7 +374,6 @@ tibble(dose = seq(0, 560, length.out=51), log_stderr=1) %>%
   add_epred_rvars(object=fit_mbeta) %>%
   rename(ModBeta = .epred) %>%
   mutate(Averaged = w_dose["fit_sig"] * SigEmax +  w_dose["fit_mbeta"] * ModBeta) %>%
-##  (\(x) x %>% left_join(x %>% filter(dose==0) %>% rename(SigEmaxPbo = SigEmax, ModBetaPbo = ModBeta, AveragedPbo=Averaged) %>% dplyr::select(-dose), by="log_stderr"))() %>%
   mutate(SigEmaxPbo = SigEmax[dose == 0],
          ModBetaPbo = ModBeta[dose == 0],
          AveragedPbo = Averaged[dose == 0],

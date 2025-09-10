@@ -52,14 +52,14 @@ summary(map_mc)$theta.pred |> as_tibble() |> gt() |> gt_format()
 
 
 ## ----echo=TRUE,eval=FALSE-----------------------------------------------------
-## library(RBesT)
-## set.seed(98721487)
-## map_mc <- gMAP(cbind(r, n-r) ~ 1 | study,
-##                data=RBesT::AS,
-##                family=binomial,
-##                tau.dist="HalfNormal",
-##                tau.prior=1,
-##                beta.prior=2)
+# library(RBesT)
+# set.seed(98721487)
+# map_mc <- gMAP(cbind(r, n-r) ~ 1 | study,
+#                data=RBesT::AS,
+#                family=binomial,
+#                tau.dist="HalfNormal",
+#                tau.prior=1,
+#                beta.prior=2)
 
 
 ## -----------------------------------------------------------------------------
@@ -100,6 +100,16 @@ fit_AS <- brm(
   )
 
 
+## ----eval=FALSE---------------------------------------------------------------
+# stancode(bmap_mc)
+
+
+## NA
+
+## -----------------------------------------------------------------------------
+standata(bmap_mc)
+
+
 ## -----------------------------------------------------------------------------
 summary(bmap_mc)
 
@@ -115,7 +125,7 @@ posterior_summary(pe)
 
 
 ## -----------------------------------------------------------------------------
-pe_mix <- automixfit(pe[, 1], type = "beta")
+pe_mix <- RBesT::automixfit(pe[, 1], type = "beta")
 print(pe_mix, digits=3)
 
 
@@ -138,8 +148,8 @@ form_AS_region <- bf(r | trials(n) ~ 1 + (1 | region/study),
 get_prior(form_AS_region, AS_region)
 
 bprior_AS_region <- prior(normal(0, 2), class=b, coef=Intercept) +
-  prior(normal(0, 0.50), class=sd, coef=Intercept, group=region) +
-  prior(normal(0, 0.25), class=sd, coef=Intercept, group=region:study)
+  prior(normal(0, 0.8), class=sd, coef=Intercept, group=region) +
+  prior(normal(0, 0.6), class=sd, coef=Intercept, group=region:study)
 
 fit_AS_region <- brm(
   form_AS_region, data = AS_region, prior = bprior_AS_region, seed = 29856341,
