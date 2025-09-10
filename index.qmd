@@ -16,7 +16,7 @@ addressed via Bayesian modelling with the `brms` package.
 
 ::: {.content-visible when-profile="public"}
 ::: {.callout-tip}
-## Courses in Graz (Austria) September 14<sup>th</sup>, Paris (France), July 4<sup>th</sup> 2025, Göttingen (Germany), Dec 5/6<sup>th</sup> 2024 and at JSM (Portland, OR), Aug 5<sup>th</sup> 2024
+## Courses in Graz (Austria) September 14<sup>th</sup> 2025, Paris (France), July 4<sup>th</sup> 2025, Göttingen (Germany), Dec 5/6<sup>th</sup> 2024 and at JSM (Portland, OR), Aug 5<sup>th</sup> 2024
 
 Past course we offered recently:
 
