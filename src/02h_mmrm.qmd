@@ -56,11 +56,6 @@ source(here("src", "setup.R"))
 
 ```{r include=FALSE,cache=FALSE}
 options(mc.cores=parallelly::availableCores(logical=FALSE))
-# speedup things by lowering adapt_delta for now, which speeds up things a lot
-# do this only if caching is on (which is when we want things go fast)
-##if(use_knitr_cache) {
-    control_args <- list(adapt_delta=0.8)
-##}
 # can be used to speedup rendering of this vignette  
 use_small_N <- FALSE
 ##use_small_N <- TRUE
@@ -1165,7 +1160,7 @@ histfit <- brm(
     drop_unused_levels=FALSE,
     seed = 234525,
     control = control_args,
-    refresh = 0,
+    refresh = 0
 )
 
 ```
@@ -1253,7 +1248,7 @@ macfit <- brm(
     drop_unused_levels = FALSE, # Important, if we fit only to the historical data
     seed = 234525,
     control = control_args,
-    refresh = 0, iter=20, warmup=10
+    refresh = 0
 )
 ```
 
@@ -1715,6 +1710,22 @@ frequentist MMRM fit using the `mmrm` package)
 
 1. when you use the standard Bayesian MMRM and
 2. when using the MAC (or rMAC) approaches?
+
+### Exercise 3
+
+Rewrite the MAC approach demonstrated above in a MAP framework:
+
+1. Rather than placing a hierarchical model over multiple studies and
+  then jointly fitting a new trial with the historical data, use
+  instead a two-step approach. That is, first fit the hierarchical
+  model to the historical data and predict a new study. Approximate
+  the posterior of the predicted study with multi-variate normal
+  mixtures for the regression coefficients of the linear predictor and
+  an additional multi-variate normal mixture for the regression
+  coefficients for $\sigma$.
+2. Fit with these obtained priors the current study data.
+3. Why is the MAP approach in this case not equivalent to the MAC
+   approach shown in the case study?
 
 ## References {.unnumbered}
 
