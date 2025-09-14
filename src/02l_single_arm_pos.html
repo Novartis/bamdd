@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,14 +90,15 @@ div.csl-indent {
 <link href="../src/02k_nuisance.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b2070c71598b148a05ee0727b4df650f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-82d9e4e9cf99d8eb0e77e4f639bbcaed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -140,7 +141,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -183,7 +184,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Applied Modelling in Drug Development</a> 
@@ -420,7 +422,7 @@ window.Quarto = {
 </ul>
 <p>To run the R code of this section please ensure to load these libraries first:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RBesT)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
@@ -440,7 +442,7 @@ window.Quarto = {
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>control_args <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.99</span>, <span class="at">step_size=</span><span class="fl">0.1</span>)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># nice common ggplot2 theme</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size=</span><span class="dv">18</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size=</span><span class="dv">18</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="background" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="background"><span class="header-section-number">8.1</span> Background</h2>
@@ -463,7 +465,7 @@ window.Quarto = {
 <h2 data-number="8.2" class="anchored" data-anchor-id="data"><span class="header-section-number">8.2</span> Data</h2>
 <p>The <a href="https://doi.org/10.1002/pst.2179">Novartis PoS framework</a> provides us with a prior for the log-odds ratio of response on drug compared with a placebo given a number of project features. For a drug that is past its first approval (a so-called “life-cycle management” situation) such as NVS101, a TPP target of a odds ratio of 8.5 (given an assumed placebo responder rate of 15% this corresponds to a targeted 60% for the drug), we obtain a mixture prior for the log-odds ratio:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mixture_prior <span class="ot">&lt;-</span> RBesT<span class="sc">::</span><span class="fu">mixnorm</span>(<span class="st">"Null component"</span><span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.08289228</span>, <span class="dv">0</span>, <span class="fl">0.91992526</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mixture_prior <span class="ot">&lt;-</span> RBesT<span class="sc">::</span><span class="fu">mixnorm</span>(<span class="st">"Null component"</span><span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.08289228</span>, <span class="dv">0</span>, <span class="fl">0.91992526</span>),</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"TPP component"</span><span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.91710772</span>, <span class="fl">2.14006616</span>, <span class="fl">0.91992526</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mixture_prior[,] <span class="sc">|&gt;</span> </span>
@@ -475,7 +477,7 @@ window.Quarto = {
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">decimals=</span><span class="dv">3</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_spanner</span>(<span class="at">columns=</span><span class="fu">c</span>(<span class="st">"Null component"</span>, <span class="st">"TPP component"</span>), </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">label=</span><span class="st">"Components of the mixture prior"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">label=</span><span class="st">"Components of the mixture prior"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="lkudzuwlkr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#lkudzuwlkr table {
@@ -927,7 +929,7 @@ window.Quarto = {
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 33%">
 <col style="width: 33%">
@@ -970,9 +972,9 @@ Components of the mixture prior
 <p>Novartis associates can obtain this using the Novartis internal <code>pos</code> R package using the <code>pos::benchmark_prior()</code> function and applying the <code>pos::as_rbest_mixnorm()</code> function to the result, which converts the prior to a mixture prior object in the <code>RBesT</code> package.</p>
 <p>When we plot this mixture distribution, it looks as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mixture_prior) <span class="sc">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mixture_prior) <span class="sc">+</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log-odds ratio for response</span><span class="sc">\n</span><span class="st">on drug compared with placebo"</span>) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -983,7 +985,7 @@ Components of the mixture prior
 </div>
 <p>The hypothetical single arm trial data for NVS101 are given below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nvs101_singlearm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">trial=</span><span class="st">"NVS101 Proof of Concept"</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nvs101_singlearm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">trial=</span><span class="st">"NVS101 Proof of Concept"</span>,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">treatment=</span><span class="st">"NVS101"</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">`</span><span class="at">trial duration</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"12 weeks"</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">responders=</span><span class="dv">8</span>,</span>
@@ -993,7 +995,7 @@ Components of the mixture prior
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>nvs101_singlearm <span class="sc">|&gt;</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="st">"proportion"</span>, <span class="at">decimals=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="st">"proportion"</span>, <span class="at">decimals=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="hfqughyqwh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#hfqughyqwh table {
@@ -1445,7 +1447,7 @@ Components of the mixture prior
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="trial" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">trial</th>
@@ -1475,7 +1477,7 @@ Components of the mixture prior
 </div>
 <p>Let us assume that there has been a placebo controlled Phase 3 trial in this indication for another drug EG-999, but no other trials with the same endpoint. The data for the hypothetical other drug are given below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>eg999_ph3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">trial=</span><span class="st">"EG-999 Phase 3"</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>eg999_ph3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">trial=</span><span class="st">"EG-999 Phase 3"</span>,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                    <span class="st">`</span><span class="at">trial duration</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"52 weeks"</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">treatment=</span><span class="fu">c</span>(<span class="st">"EG-999"</span>, <span class="st">"placebo"</span>),</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">responders=</span><span class="fu">c</span>(<span class="dv">19</span>,<span class="dv">2</span>),</span>
@@ -1485,7 +1487,7 @@ Components of the mixture prior
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>eg999_ph3 <span class="sc">|&gt;</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="st">"proportion"</span>, <span class="at">decimals=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="st">"proportion"</span>, <span class="at">decimals=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="uuecfrhdxk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#uuecfrhdxk table {
@@ -1937,7 +1939,7 @@ Components of the mixture prior
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="trial" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">trial</th>
@@ -1977,13 +1979,13 @@ Components of the mixture prior
 <p>Superficially, this extra information makes the NVS101 single arm data look promising, because the responder proportion on NVS101 is much higher than on placebo and even higher than on the EG-999 active treatment group. However, this is a non-randomized across trial comparison and it is not immediately clear how to quantify the strength of evidence for the efficacy of NVS101.</p>
 <p>Since we are not really interested in EG-999, the data we will use from the EG-999 Phase 3 trial will only be the placebo group. Thus, our the data we will use are the following:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>our_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(nvs101_singlearm,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>our_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(nvs101_singlearm,</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                      eg999_ph3 <span class="sc">|&gt;</span> <span class="fu">filter</span>(treatment <span class="sc">!=</span> <span class="st">"EG-999"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">treatment=</span><span class="fu">factor</span>(treatment, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"placebo"</span>, <span class="st">"NVS101"</span>)))</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>our_data <span class="sc">|&gt;</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="st">"proportion"</span>, <span class="at">decimals=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="st">"proportion"</span>, <span class="at">decimals=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="dqdkumbsny" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#dqdkumbsny table {
@@ -2435,7 +2437,7 @@ Components of the mixture prior
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="trial" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">trial</th>
@@ -2501,11 +2503,11 @@ Components of the mixture prior
 \end{align}\]</span></p>
 <p>where <span class="math inline">\(\theta_i \sim N(0, \tau^2)\)</span> is a random trial effect. Or to express this as a brms-formula:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model_formula <span class="ot">&lt;-</span> <span class="fu">bf</span>(responders <span class="sc">|</span> <span class="fu">trials</span>(patients) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> treatment <span class="sc">+</span> long_study <span class="sc">+</span> long_study<span class="sc">:</span>treatment <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> trial),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model_formula <span class="ot">&lt;-</span> <span class="fu">bf</span>(responders <span class="sc">|</span> <span class="fu">trials</span>(patients) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> treatment <span class="sc">+</span> long_study <span class="sc">+</span> long_study<span class="sc">:</span>treatment <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> trial),</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># short notation for the rhs of this formula is</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># 1 + treatment*long_study + (1 | trial)</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">center =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Note</strong> that we use the option <code>center=FALSE</code> here in order to fully control the parametrization of the linear predictor. By default <code>brms</code> centers the design matrix and treats the intercept separately from the remaining covariates. While this is often desirable to do, this is not appropiate in this case where we want to control all details of the model and intend to set priors deliberately.</p>
 </section>
@@ -2517,14 +2519,14 @@ Components of the mixture prior
 </div>
 <p>The resulting prior distribution looks as shown in the figure below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="sc">-</span><span class="fl">1.67</span>, <span class="at">sd=</span><span class="fl">1.0</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="sc">-</span><span class="fl">1.67</span>, <span class="at">sd=</span><span class="fl">1.0</span>) <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"darkorange"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>), </span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels=</span><span class="fu">paste0</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">(="</span>, </span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">round</span>(<span class="fu">inv_logit</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>)),<span class="dv">2</span>)<span class="sc">*</span><span class="dv">100</span>,<span class="st">"%)"</span>)) <span class="sc">+</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Average placebo log-odds"</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2540,7 +2542,7 @@ Components of the mixture prior
 <p>For a hypothetical scenario with an average true reponse proportion of 15%, clinical experts expressed that it would be unlikely that a few studies would not end up having a true responder proportion of 20% and that it is possible that variability could be so high that some could reach 40%.</p>
 <p>Thus, we considered that for the narrowest plausible random effects distribution (conditional on the the middle of the distribution being 15%), there should be 2.5% probability that studies could vary to 20% or higher. Similarly, for the widest plausible distribution, we assigned 2.5% probability that studies would vary to 40% or more. Normal distributions on the logit scale that fulfill these criteria are shown in the figure below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mu=</span><span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="at">sigma=</span><span class="fu">c</span>(<span class="fl">0.18</span>, <span class="fl">0.68</span>) ) <span class="sc">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mu=</span><span class="fu">qlogis</span>(<span class="fl">0.15</span>), <span class="at">sigma=</span><span class="fu">c</span>(<span class="fl">0.18</span>, <span class="fl">0.68</span>) ) <span class="sc">%&gt;%</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res=</span><span class="fu">map2</span>(mu, sigma, \(mu,sigma) <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>,<span class="fl">0.5</span>,<span class="fl">0.001</span>), <span class="at">y=</span><span class="fu">dnorm</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>,<span class="fl">0.5</span>,<span class="fl">0.001</span>), mu, sigma)))) <span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(res) <span class="sc">%&gt;%</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grouping =</span> <span class="fu">factor</span>(<span class="fu">case_when</span>(</span>
@@ -2569,7 +2571,7 @@ Components of the mixture prior
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>) <span class="sc">+</span></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">"darkred"</span>, <span class="st">"#E69F00"</span>, <span class="st">"darkblue"</span>, <span class="st">"#56B4E9"</span>))) <span class="sc">+</span></span>
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">"darkred"</span>, <span class="st">"#E69F00"</span>, <span class="st">"darkblue"</span>, <span class="st">"#56B4E9"</span>))) <span class="sc">+</span></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Narrowest &amp; widest plausible random effects</span><span class="sc">\n</span><span class="st">distribution conditional on a mean of logit(0.15)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Narrowest &amp; widest plausible random effects</span><span class="sc">\n</span><span class="st">distribution conditional on a mean of logit(0.15)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2580,7 +2582,7 @@ Components of the mixture prior
 </div>
 <p>Now, we translate these beliefs into a prior for the between-trial SD. Given that we consider 0.18 and 0.68 as on the edge of what is plausible for the between-trial SD, we pick a log-normal distribution for the between-trial SD that has these two values approximately as its 2.5th and 97.5th percentiles. For such a normal distribution on the logit-scale centered on logit(0.15), this implies a standard deviation of <code>(logit(0.2)-logit(0.15)) / qnorm(0.975)</code> <span class="math inline">\(\approx\)</span> 0.18 to <code>(logit(0.4)-logit(0.15)) / qnorm(0.975)</code> <span class="math inline">\(\approx\)</span> 0.68. This can be described by a log-normal prior distribution on the standard deviation with location -1.06 and scale 0.35, as we can see by observing that <code>dist_lognormal(mu = -1.06, sigma = 0.35) |&gt; quantile(p=c(0.025, 0.975)) |&gt; unlist()</code> = 0.174, 0.688.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mu=</span><span class="sc">-</span><span class="fl">1.06</span>, <span class="at">sigma=</span><span class="fl">0.35</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mu=</span><span class="sc">-</span><span class="fl">1.06</span>, <span class="at">sigma=</span><span class="fl">0.35</span>) <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_lognormal</span>(<span class="at">mu=</span>mu, <span class="at">sigma=</span>sigma))) <span class="sc">+</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fl">0.18</span>, <span class="at">col=</span><span class="st">"#E69F00"</span>, <span class="at">linewidth=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fl">0.68</span>, <span class="at">col=</span><span class="st">"#56B4E9"</span>, <span class="at">linewidth=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="sc">+</span></span>
@@ -2592,7 +2594,7 @@ Components of the mixture prior
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">n=</span><span class="dv">10000</span>, <span class="at">fill=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>)) <span class="sc">+</span></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>) <span class="sc">+</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Between trial SD"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Between trial SD"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2604,7 +2606,7 @@ Components of the mixture prior
 <p>When asked how much lower the responder proportion over 52 vs.&nbsp;12 weeks would be, the clinicians judge it likely that the proportion would decline a little bit. Their rationale was that while the disease does not progress fast enough to change substantially over 9 months, a longer duration offers additional opportunities for a low red blood cell count to occur (even if by chance) that might lead to a blood transfusion.</p>
 <p>The resulting prior distribution looks as shown in the figure below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="sc">-</span><span class="fl">0.1</span>, <span class="at">sd=</span>.<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="sc">-</span><span class="fl">0.1</span>, <span class="at">sd=</span>.<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"#e7298a"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>)), </span>
@@ -2612,7 +2614,7 @@ Components of the mixture prior
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>, </span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"lower</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"higher</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">2</span>)))) <span class="sc">+</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log-odds of response over 52 compared with 12 weeks"</span>) <span class="sc">+</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2623,7 +2625,7 @@ Components of the mixture prior
 </div>
 <p>Finally, the clinicians were unsure whether a 52 week vs.&nbsp;a 12 week study would result in a higher or lower log-odds-ratio for drug vs.&nbsp;placebo. However, they expressed that the effect would be relatively small, because the drug should not be disease modifying (i.e.&nbsp;treatment effect should not grow over time) and there is no reason to speculate that the effect on red blood cell counts would somehow decline over time, either. On this basis, they expressed the following prior distribution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>.<span class="dv">1</span><span class="sc">/</span><span class="fl">1.96</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>.<span class="dv">1</span><span class="sc">/</span><span class="fl">1.96</span>) <span class="sc">|&gt;</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> <span class="fu">dist_normal</span>(<span class="at">mu =</span> mean, <span class="at">sigma =</span> sd))) <span class="sc">+</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>(<span class="at">fill=</span><span class="st">"royalblue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>)), </span>
@@ -2631,7 +2633,7 @@ Components of the mixture prior
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>, </span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"lower</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"higher</span><span class="sc">\n</span><span class="st">odds"</span>, <span class="dv">2</span>)))) <span class="sc">+</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Change in log-odds ratio of drug vs. placebo</span><span class="sc">\n</span><span class="st">when increasing trial duration from 12 to 52 weeks"</span>) <span class="sc">+</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Prior density"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2642,11 +2644,11 @@ Components of the mixture prior
 </div>
 <p>Thus, we can set out prior distributions as below. To see what particular coefficients are named, <code>get_prior(model_formula, our_data)</code> is a useful command.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>brms_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span>Intercept, <span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.67</span>, <span class="fl">1.0</span>)) <span class="sc">+</span> <span class="co"># prior average placebo effect </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>brms_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span>Intercept, <span class="fu">normal</span>(<span class="sc">-</span><span class="fl">1.67</span>, <span class="fl">1.0</span>)) <span class="sc">+</span> <span class="co"># prior average placebo effect </span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>trial, <span class="fu">lognormal</span>( <span class="sc">-</span><span class="fl">1.06</span>, <span class="fl">0.35</span>)) <span class="sc">+</span> <span class="co"># prior on the between-study SD in  placebo log-odds</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span>long_study, <span class="fu">normal</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>)) <span class="sc">+</span> <span class="co"># prior for effect of long-study (26 vs. 12 weeks) on responder rate</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="at">class=</span>b, <span class="at">coef=</span><span class="st">"treatmentNVS101:long_study"</span>, <span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.1</span><span class="sc">/</span><span class="fl">1.96</span>)) <span class="sc">+</span> <span class="co"># Prior on the log-odds-ratio for drug vs. placebo when switching from shor to long study</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">mixnorm</span>(map_w, map_m, map_s), <span class="at">class=</span>b, <span class="at">coef=</span>treatmentNVS101) <span class="co">#  Syntax for specifying mixture prior</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">mixnorm</span>(map_w, map_m, map_s), <span class="at">class=</span>b, <span class="at">coef=</span>treatmentNVS101) <span class="co">#  Syntax for specifying mixture prior</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="alert alert-info">
 <p><strong>NOTE</strong>: Thanks to the new functionality in the <code>RBesT</code> package, we were able to just write <code>prior(mixture_prior, class=b, coef=treatmentNVS10)</code> to specify a mixture prior. Alternatively, we could have written <code>prior(mixnorm(map_w, map_m, map_s), class=b, coef=treatmentNovDrug)</code>. <code>map_w</code>, <code>map_m</code> and <code>map_s</code> would specify the weights, means and standard deviations of the mixture components, respectively. If we did not have this <code>RBesT</code> functionality available, we would have to manually write down the log-probability-density-function of the mixture, which involves weighted sums on the probability scale e.g.&nbsp;using the <code>log_sum_exp</code> function. For further details on the <code>mixstanvars</code> feature, please refer to its <a href="https://opensource.nibr.com/RBesT/reference/mixstanvar.html">online manual</a>.</p>
@@ -2655,7 +2657,7 @@ Components of the mixture prior
 <section id="model-fitting-and-predictions" class="level3" data-number="8.3.4">
 <h3 data-number="8.3.4" class="anchored" data-anchor-id="model-fitting-and-predictions"><span class="header-section-number">8.3.4</span> Model fitting and predictions</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> model_formula,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>brmfit1 <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> model_formula,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> our_data,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>               <span class="co"># By doing 11,000 samples per chain (default 4 chains) incl. 1000</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>               <span class="co"># warmup samples, we'll get 4 * 10,000= 40,000 samples, which is</span></span>
@@ -2671,11 +2673,11 @@ Components of the mixture prior
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">seed =</span> <span class="dv">5674574</span>,</span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">silent =</span> <span class="dv">2</span>, </span>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">refresh =</span> <span class="dv">0</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>               )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>               )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can now generate predictions for a new Phase 3 trial for NVS101 compared with placebo of 52 week duration. While the predictions for each arm of the new trial are by default for the true log-odds of response, we can derive all desired quantities from this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we are using the inv_logit function on rvars for which we need to</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we are using the inv_logit function on rvars for which we need to</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the funnction to handle rvar arguments</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>rvar_inv_logit <span class="ot">&lt;-</span> <span class="fu">rfun</span>(inv_logit)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2694,7 +2696,7 @@ Components of the mixture prior
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># One can have tibbles contain columns of rvars, which one can</span></span>
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># recognize by the reported mean and standard deviation of the</span></span>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># sample they represent:</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>ph3_predictions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>ph3_predictions</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   trial     treatment long_study patients      logodds   proportion
@@ -2709,14 +2711,14 @@ Components of the mixture prior
 <h2 data-number="8.4" class="anchored" data-anchor-id="results"><span class="header-section-number">8.4</span> Results</h2>
 <p>Here is a plot of the predicted Phase 3 placebo and NVS101 responder proportion.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">tibble</span>(<span class="at">proportion_NVS101  =</span> proportion[<span class="dv">2</span>],</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">proportion_placebo =</span> proportion[<span class="dv">1</span>])) <span class="sc">|&gt;</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">unnest_rvars</span>() <span class="sc">|&gt;</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>proportion_placebo, <span class="at">y=</span>proportion_NVS101)) <span class="sc">+</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_continuous</span>() <span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2727,11 +2729,11 @@ Components of the mixture prior
 </div>
 <p>Additionally, we can look at various measures of a treatment effect:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ph3_predictions <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ph3_predictions <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist=</span>proportion)) <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_slabinterval</span>() <span class="sc">+</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>treatment, <span class="at">labeller=</span>label_both, <span class="at">scales=</span><span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Proportion"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Proportion"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2739,7 +2741,7 @@ Components of the mixture prior
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(ph3_predictions,</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">tibble</span>(<span class="at">measure=</span><span class="fu">c</span>(<span class="st">"logodds"</span>, <span class="st">"lograte"</span>, <span class="st">"proportion_diff"</span>),</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">posterior=</span><span class="fu">c</span>(<span class="fu">diff</span>(logodds),</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">diff</span>(<span class="fu">log</span>(proportion)),</span>
@@ -2750,7 +2752,7 @@ Components of the mixture prior
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_slabinterval</span>() <span class="sc">+</span></span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span>ref), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"darkred"</span>) <span class="sc">+</span></span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>measure, <span class="at">scales=</span><span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2762,7 +2764,7 @@ Components of the mixture prior
 <p>Let’s say the target product profile (TPP) for the drug demands a risk difference of &gt;= 45%. We can simulate Phase III outcomes to find the probability of meeting this TPP and having a significant study, which the Novartis internal PoS app would do for us.</p>
 <p>Note that the relativley compact code below does indeed perform a full trial simulation for possible outcomes for every draw of the posterior. The use of <code>rvars</code> hides essentially that we are handling entire posteriors here. However, note that we have to wrap the call to the <code>fisher.test</code> funcntion into <code>rdo</code> such that the expression is automatically evaluated for each draw of the posterior.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pos_simulations <span class="ot">&lt;-</span> new_ph3_trial <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pos_simulations <span class="ot">&lt;-</span> new_ph3_trial <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    tidybayes<span class="sc">::</span><span class="fu">add_predicted_rvars</span>(brmfit1,</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>,</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>,</span>
@@ -2783,7 +2785,7 @@ Components of the mixture prior
 <span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"Achieving"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">everything</span>(), <span class="at">names_to=</span><span class="st">"Outcome"</span>, <span class="at">values_to =</span> <span class="st">"Probability"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_number</span>(<span class="at">decimals=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_number</span>(<span class="at">decimals=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="xujkhtfixz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#xujkhtfixz table {
@@ -3235,7 +3237,7 @@ Components of the mixture prior
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="Outcome" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Outcome</th>
@@ -3505,13 +3507,14 @@ Statistical Association</em> 117: 862–74. <a href="https://doi.org/10.1080/016
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -3916,7 +3919,7 @@ Statistical Association</em> 117: 862–74. <a href="https://doi.org/10.1080/016
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb21" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">  - Björn Holzhauer - &lt;bjoern.holzhauer@novartis.com&gt;</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - Sebastian Weber - &lt;sebastian.weber@novartis.com&gt;</span></span>
@@ -4582,7 +4585,7 @@ Statistical Association</em> 117: 862–74. <a href="https://doi.org/10.1080/016
 <span id="cb21-692"><a href="#cb21-692" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-693"><a href="#cb21-693" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
 <span id="cb21-694"><a href="#cb21-694" aria-hidden="true" tabindex="-1"></a>:::</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

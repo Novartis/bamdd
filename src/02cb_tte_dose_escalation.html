@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../src/02c_dose_escalation.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b2070c71598b148a05ee0727b4df650f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-82d9e4e9cf99d8eb0e77e4f639bbcaed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -128,7 +129,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -171,7 +172,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Applied Modelling in Drug Development</a> 
@@ -435,7 +437,7 @@ window.Quarto = {
 <h2 data-number="11.2" class="anchored" data-anchor-id="required-libraries"><span class="header-section-number">11.2</span> Required libraries</h2>
 <p>To run the R code of this section please ensure to load these libraries and options first:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
@@ -463,29 +465,29 @@ window.Quarto = {
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">use_text_wrapping =</span> F, </span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">use_compact_mode =</span> T</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="example-trial" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="example-trial"><span class="header-section-number">11.3</span> Example trial</h2>
 <p>In the following, we will assume a simple setting of a first-in-human (FIH) study of a new Oncology treatment. Here, we consider the dose-DLT relationship over a time horizon of 3 treatment cycles, a cycle length of 4 weeks, and daily (QD) dosing of a drug A at a pre-defined dose set with reference dose <span class="math inline">\(\tilde{d} = 50\)</span> (at the reference dose we anticipate the MTD <em>a priori</em>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cycle_lengths <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">weeks</span>(<span class="dv">4</span>), <span class="dv">3</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cycle_lengths <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">weeks</span>(<span class="dv">4</span>), <span class="dv">3</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dref_A <span class="ot">&lt;-</span> <span class="dv">50</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>doses <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">2.5</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>cycle_seq <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(cycle_lengths)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dose_seq  <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(doses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dose_seq  <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(doses)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will use the logarithm of the normalized dose (with respect to a reference dose <span class="math inline">\(\tilde{d}\)</span> ), <span class="math inline">\(\log\left(\tilde{d}_{j}\right) =
 \log\left(d_{j} / \tilde{d}\right)\)</span>, where <span class="math inline">\(j\)</span> is the cycle index. We define a helper function to add this column as <code>std_A</code>, and whether the log-dose is finite as <code>finite_A</code>, which will become relevant in the case of drug combinations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>add_std_dose_col <span class="ot">&lt;-</span> <span class="cf">function</span>(dose_info, <span class="at">drug =</span> <span class="st">"A"</span>, dref) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>add_std_dose_col <span class="ot">&lt;-</span> <span class="cf">function</span>(dose_info, <span class="at">drug =</span> <span class="st">"A"</span>, dref) {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dose_info <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"std_{drug}"</span>    <span class="sc">:</span><span class="er">=</span> <span class="fu">log</span>(<span class="fu">get</span>(<span class="fu">paste0</span>(<span class="st">"dose_"</span>, drug)) <span class="sc">/</span> dref), </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"finite_{drug}"</span> <span class="sc">:</span><span class="er">=</span> <span class="dv">1</span>L <span class="sc">*</span> (<span class="fu">get</span>(<span class="fu">paste0</span>(<span class="st">"dose_"</span>, drug)) <span class="sc">!=</span> <span class="dv">0</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="data" class="level2" data-number="11.4">
@@ -499,7 +501,7 @@ window.Quarto = {
 </ul>
 <p>As an example, we create 3-cycle data in long format reflecting the data used in the BLRM dose escalation case study:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a single patient</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a single patient</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>example_ipd <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cycle_index =</span> cycle_seq,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dose_A =</span> <span class="dv">1</span>,</span>
@@ -517,7 +519,7 @@ window.Quarto = {
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  example_ipd <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">dose_A =</span> <span class="dv">25</span>, <span class="at">num_toxicities =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">add_std_dose_col</span>(<span class="at">drug =</span> <span class="st">"A"</span>, <span class="at">dref =</span> dref_A)</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ipd <span class="sc">|&gt;</span> <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ipd <span class="sc">|&gt;</span> <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="mjruticued" class=".gt_table" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#mjruticued table {
@@ -975,7 +977,7 @@ window.Quarto = {
 </div>
 <p>We define dosing schedules that we want to compute DLT probabilities for. Here, we choose schedules that are constant over all three cycles:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dosing information per cycle</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dosing information per cycle</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dose_info_long <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">schedule_id =</span> dose_seq, <span class="at">cycle =</span> cycle_seq) <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dose_A =</span> doses[schedule_id])</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -983,14 +985,14 @@ window.Quarto = {
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cycle_info <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">cycle =</span> cycle_seq, </span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">follow_up =</span> <span class="fu">as.numeric</span>(cycle_lengths, <span class="st">"days"</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We also generate a reference dosing data set which is formatted like an analysis data set, but is only setup to evaluate the final model on the predefined set of doses. These will be needed to compute the conditional (or cumulative) DLT probabilities in (up to) cycles 1, 2 and 3:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dose_ref_data <span class="ot">&lt;-</span> dose_info_long <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dose_ref_data <span class="ot">&lt;-</span> dose_info_long <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(cycle_info, <span class="at">by=</span><span class="st">"cycle"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">num_toxicities=</span><span class="dv">0</span>L) <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_std_dose_col</span>(<span class="at">drug =</span> <span class="st">"A"</span>, <span class="at">dref =</span> dref_A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_std_dose_col</span>(<span class="at">drug =</span> <span class="st">"A"</span>, <span class="at">dref =</span> dref_A)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="model-description" class="level2" data-number="11.5">
@@ -1072,16 +1074,16 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <h2 data-number="11.6" class="anchored" data-anchor-id="implementation"><span class="header-section-number">11.6</span> Implementation</h2>
 <p>For the case of a single agent trial we can cast the problem into a Poisson regression framework as detailed above and define the <code>brms</code> model formula as follows. We use here a non-linear model formla syntax to enforce a positive slope:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tte_model <span class="ot">&lt;-</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tte_model <span class="ot">&lt;-</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bf</span>(num_toxicities <span class="sc">|</span> <span class="fu">rate</span>(follow_up) <span class="sc">~</span> interA <span class="sc">+</span> <span class="fu">exp</span>(slopeA) <span class="sc">*</span> std_A,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       interA <span class="sc">~</span> <span class="dv">1</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       slopeA <span class="sc">~</span> <span class="dv">1</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">nl=</span><span class="cn">TRUE</span>, <span class="at">family=</span><span class="fu">poisson</span>()</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><code>brms</code> helps us to get the list of model parameters requiring prior specifications:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(tte_model, <span class="at">data =</span> ipd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(tte_model, <span class="at">data =</span> ipd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  prior class      coef group resp dpar  nlpar lb ub tag       source
  (flat)     b                           interA                default
@@ -1092,34 +1094,34 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 </div>
 <p>We can for instance define a prior with 20% DLT probability after the first treatment cycle at the reference dose. For more details on the <span class="math inline">\(\beta\)</span> parameter prior, see the bite-size guidance on <a href="https://go/BLRM">go/BLRM</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -4.83 approx cloglog(0.2) - log(7*4) for drug A</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -4.83 approx cloglog(0.2) - log(7*4) for drug A</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tte_prior <span class="ot">&lt;-</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">4.83</span>, <span class="dv">1</span>), <span class="at">nlpar=</span>interA, <span class="at">class=</span>b, <span class="at">coef=</span>Intercept) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fu">log</span>(<span class="dv">4</span>)<span class="sc">/</span><span class="fl">1.96</span>), <span class="at">nlpar=</span>slopeA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fu">log</span>(<span class="dv">4</span>)<span class="sc">/</span><span class="fl">1.96</span>), <span class="at">nlpar=</span>slopeA)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We then create the Stan model code</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tte_stanmodel <span class="ot">&lt;-</span> tte_model <span class="sc">|&gt;</span> <span class="fu">make_stancode</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tte_stanmodel <span class="ot">&lt;-</span> tte_model <span class="sc">|&gt;</span> <span class="fu">make_stancode</span>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ipd, <span class="at">prior =</span> tte_prior</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>and data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tte_standata <span class="ot">&lt;-</span> tte_model <span class="sc">|&gt;</span> <span class="fu">make_standata</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tte_standata <span class="ot">&lt;-</span> tte_model <span class="sc">|&gt;</span> <span class="fu">make_standata</span>(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ipd, <span class="at">prior =</span> tte_prior</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>After inspecting the generated code and data for correctness, we compile the model without sampling it (<code>chains = 0</code>) yet:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tte_brms_model <span class="ot">&lt;-</span> tte_model <span class="sc">|&gt;</span> <span class="fu">brm</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tte_brms_model <span class="ot">&lt;-</span> tte_model <span class="sc">|&gt;</span> <span class="fu">brm</span>(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ipd, <span class="at">prior =</span> tte_prior, <span class="at">chains =</span> <span class="dv">0</span>, <span class="at">silent =</span> <span class="dv">2</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="computing-conditional-and-cumulative-dlt-probabilities-for-a-given-dosing-schedule" class="level3" data-number="11.6.1">
 <h3 data-number="11.6.1" class="anchored" data-anchor-id="computing-conditional-and-cumulative-dlt-probabilities-for-a-given-dosing-schedule"><span class="header-section-number">11.6.1</span> Computing conditional and cumulative DLT probabilities for a given dosing schedule</h3>
 <p>We define a function to compute the conditional and cumulative DLT probabilities over a given schedule, respectively. This function needs to take the hazards for each piecewise-constant interval and compute the respective DLT probability. We write the function in the same logic as the <code>add_*_rvars</code> functions from <code>tidybayes</code> such that we can easily complement analysis data sets with the probabilities of interest:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>add_risk_rvars <span class="ot">&lt;-</span> <span class="cf">function</span>(newdata, model, time, .by) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>add_risk_rvars <span class="ot">&lt;-</span> <span class="cf">function</span>(newdata, model, time, .by) {</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="do">## P(T =&lt; t) = 1 - P(T &gt; t) = inv_cloglog(log(H(t)))</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="do">## &lt;=&gt; P(T =&lt; t) = 1 - P(T &gt; t) = inv_clog(H(t))</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## inv_cloglog(cll) = 1 - exp(-exp(cll))</span></span>
@@ -1140,7 +1142,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">cprob=</span><span class="fu">inv_clog</span>(H[<span class="fu">cur_group_rows</span>()]),</span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">.by=</span>{{.by}})</span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    riskdata[orig_order,]</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="dose-escalation-decisions" class="level3" data-number="11.6.2">
@@ -1155,7 +1157,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <p>For the set of MCMC draws, we can compute median, mean, sd, 25% and 75% quantiles, the interval probability as well as the EWOC criteria using the <code>summarize_draws</code> function from the <code>posterior</code> package. Especially for the EWOC metric, we also would like to know if there are any pre-specified doses where the Monte Carlo Error could flip the decision whether a dose is considered safe enough (or not).</p>
 <p>We test for this using a Z-test (one-sample location test) for the 75% quantile and its distance from the critical threshold <span class="math inline">\(\pi_{over}\)</span> using the Monte-Carlo Standard Error (MCSE) for the 75% quantile (<code>mcse_q75</code>). We define the EWOC metric to be sufficiently accurate if the probability of flipping the decision due insufficient accuracy (and hence large MCSE) is smaller than 2.5% certainty on whatever side of the decision threshold. In turn we are at least 97.5% certain that the decision is robust wrt to fluctuations implied by MCMC sampling variability. Here we assume that the statistic is normally distributed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>summarize_probs <span class="ot">&lt;-</span> <span class="cf">function</span>(draws) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>summarize_probs <span class="ot">&lt;-</span> <span class="cf">function</span>(draws) {</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_draws</span>(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    draws,</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    median, mean, sd, </span>
@@ -1168,23 +1170,23 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> (q75 <span class="sc">-</span> .<span class="dv">33</span>) <span class="sc">/</span> mcse_q75,</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">ewoc_accurate =</span>  <span class="fu">abs</span>(stat) <span class="sc">&gt;=</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>)</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To inspect the prior, we first sample the model ignoring the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tte_model_prioronly <span class="ot">&lt;-</span> <span class="fu">update</span>(tte_brms_model, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">sample_prior =</span> <span class="st">"only"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tte_model_prioronly <span class="ot">&lt;-</span> <span class="fu">update</span>(tte_brms_model, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">sample_prior =</span> <span class="st">"only"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can compute the conditional and cumulative DLT probabilities implied by the prior,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>prior_risk <span class="ot">&lt;-</span> dose_ref_data <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_risk_rvars</span>(tte_model_prioronly, cycle, schedule_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>prior_risk <span class="ot">&lt;-</span> dose_ref_data <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_risk_rvars</span>(tte_model_prioronly, cycle, schedule_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>and display them as a table, i.e., the conditional DLT probabilities</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prior_risk <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prior_risk <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">summarize_probs</span>(cprob)) <span class="sc">|&gt;</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>num_toxicities, <span class="sc">-</span>std_A, <span class="sc">-</span>prob, <span class="sc">-</span>cprob) <span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="jouhkehivi" class=".gt_table" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#jouhkehivi table {
@@ -1642,10 +1644,10 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 </div>
 <p>as well the cumulative probabilities</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>prior_risk <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>prior_risk <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">summarize_probs</span>(prob)) <span class="sc">|&gt;</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>num_toxicities, <span class="sc">-</span>std_A, <span class="sc">-</span>prob, <span class="sc">-</span>cprob) <span class="sc">|&gt;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="nhlcfgskel" class=".gt_table" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#nhlcfgskel table {
@@ -2110,7 +2112,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>add_plot_cols <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>add_plot_cols <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">EWOC =</span> <span class="fu">factor</span>(ewoc_ok, <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="fu">c</span>(<span class="st">"OK"</span>, <span class="st">"Not OK"</span>)), </span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dose_A =</span> <span class="fu">factor</span>(dose_A),</span>
@@ -2154,7 +2156,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span>
 <span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_cycle1_dist</span>(tte_model_prioronly, dose_ref_data_dense, <span class="fu">c</span>(doses, <span class="dv">2</span><span class="sc">*</span>dref_A))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_cycle1_dist</span>(tte_model_prioronly, dose_ref_data_dense, <span class="fu">c</span>(doses, <span class="dv">2</span><span class="sc">*</span>dref_A))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Found infinite values in the data, which may cause issues for Stan.</code></pre>
@@ -2171,7 +2173,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tte_prior_wide <span class="ot">&lt;-</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tte_prior_wide <span class="ot">&lt;-</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">4.83</span>, <span class="dv">1</span>), <span class="at">nlpar=</span>interA, <span class="at">class=</span>b, <span class="at">coef=</span>Intercept) <span class="sc">+</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">3</span>), <span class="at">nlpar=</span>slopeA)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2179,7 +2181,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ipd, <span class="at">prior =</span> tte_prior_wide, <span class="at">silent =</span> <span class="dv">2</span>, <span class="at">sample_prior =</span> <span class="st">"only"</span></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_cycle1_dist</span>(tte_brms_model_wide_prioronly, dose_ref_data_dense, <span class="fu">c</span>(doses, <span class="dv">2</span><span class="sc">*</span>dref_A))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_cycle1_dist</span>(tte_brms_model_wide_prioronly, dose_ref_data_dense, <span class="fu">c</span>(doses, <span class="dv">2</span><span class="sc">*</span>dref_A))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -2194,7 +2196,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <section id="conditional-dlt-probability-in-each-of-the-3-cycles" class="level4" data-number="11.6.3.2">
 <h4 data-number="11.6.3.2" class="anchored" data-anchor-id="conditional-dlt-probability-in-each-of-the-3-cycles"><span class="header-section-number">11.6.3.2</span> Conditional DLT probability in each of the 3 cycles</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plot_cprob <span class="ot">&lt;-</span> <span class="cf">function</span>(model, schedules) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plot_cprob <span class="ot">&lt;-</span> <span class="cf">function</span>(model, schedules) {</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  schedules <span class="sc">|&gt;</span> </span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_risk_rvars</span>(model, cycle, schedule_id) <span class="sc">|&gt;</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">summarize_probs</span>(cprob)) <span class="sc">|&gt;</span></span>
@@ -2213,7 +2215,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"P(DLT in cycle | survival to cycle start)"</span>)</span>
 <span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_cprob</span>(tte_model_prioronly, dose_ref_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_cprob</span>(tte_model_prioronly, dose_ref_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2226,7 +2228,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <section id="cumulative-dlt-probability-over-3-cycles" class="level4" data-number="11.6.3.3">
 <h4 data-number="11.6.3.3" class="anchored" data-anchor-id="cumulative-dlt-probability-over-3-cycles"><span class="header-section-number">11.6.3.3</span> Cumulative DLT probability over 3 cycles</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plot_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(model, schedules) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plot_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(model, schedules) {</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  schedules <span class="sc">|&gt;</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_risk_rvars</span>(model, cycle, schedule_id) <span class="sc">|&gt;</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">summarize_probs</span>(prob)) <span class="sc">|&gt;</span></span>
@@ -2245,7 +2247,7 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"P(DLT up to cycle)"</span>)</span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_prob</span>(tte_model_prioronly, dose_ref_data) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_prob</span>(tte_model_prioronly, dose_ref_data) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2261,13 +2263,13 @@ f(t)\)</span>. However, as <span class="math inline">\(\Delta t\)</span> is know
 <h2 data-number="11.7" class="anchored" data-anchor-id="examining-the-model-posterior"><span class="header-section-number">11.7</span> Examining the model posterior</h2>
 <p>We now sample the model including the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tte_model_posterior <span class="ot">&lt;-</span> <span class="fu">update</span>(tte_brms_model, <span class="at">chains =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tte_model_posterior <span class="ot">&lt;-</span> <span class="fu">update</span>(tte_brms_model, <span class="at">chains =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="inference-for-model-parameters" class="level3" data-number="11.7.1">
 <h3 data-number="11.7.1" class="anchored" data-anchor-id="inference-for-model-parameters"><span class="header-section-number">11.7.1</span> Inference for model parameters</h3>
 <p>It is simple to get summary statistics and graphical displays of the posterior distributions for the model parameters:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_summary</span>(tte_model_posterior)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_summary</span>(tte_model_posterior)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     Estimate Est.Error        Q2.5     Q97.5
 b_interA_Intercept -4.2141036 0.8817048  -5.8656920 -2.438936
@@ -2275,7 +2277,7 @@ b_slopeA_Intercept  0.3359283 0.4634905  -0.6674834  1.147130
 lprior             -2.3972805 1.0369622  -5.3616400 -1.507926
 lp__               -7.6912674 1.0165879 -10.4014250 -6.677724</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>brms<span class="sc">::</span><span class="fu">mcmc_plot</span>(tte_model_posterior, <span class="at">type =</span> <span class="st">"dens"</span>, <span class="at">facet_args =</span> <span class="fu">list</span>(<span class="at">ncol =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>brms<span class="sc">::</span><span class="fu">mcmc_plot</span>(tte_model_posterior, <span class="at">type =</span> <span class="st">"dens"</span>, <span class="at">facet_args =</span> <span class="fu">list</span>(<span class="at">ncol =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2289,7 +2291,7 @@ lp__               -7.6912674 1.0165879 -10.4014250 -6.677724</code></pre>
 <h3 data-number="11.7.2" class="anchored" data-anchor-id="inference-for-conditional-and-cumulative-dlt-probabilities"><span class="header-section-number">11.7.2</span> Inference for conditional and cumulative DLT probabilities</h3>
 <p>The conditional and cumulative DLT probabilities are now higher, as expected from the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_cprob</span>(tte_model_posterior, dose_ref_data) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_cprob</span>(tte_model_posterior, dose_ref_data) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2299,7 +2301,7 @@ lp__               -7.6912674 1.0165879 -10.4014250 -6.677724</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_prob</span>(tte_model_posterior, dose_ref_data) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_prob</span>(tte_model_posterior, dose_ref_data) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2325,7 +2327,7 @@ lp__               -7.6912674 1.0165879 -10.4014250 -6.677724</code></pre>
 \end{cases}
 \]</span> First, we add a second component to the model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Stan function to make combo2 non-linear link come to life. To avoid</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Stan function to make combo2 non-linear link come to life. To avoid</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="do">## issues with negative infinity (log(0)) whenever one of the drugs is</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="do">## not present, we have to pass in this information.</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 3. if drug_A is present (finiteA: indicator 1 = present, 0 = absent)</span></span>
@@ -2377,18 +2379,18 @@ lp__               -7.6912674 1.0165879 -10.4014250 -6.677724</code></pre>
 <span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a>    <span class="do">## cast result into draws x observation matrix</span></span>
 <span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">matrix</span>(log_h, D, N)</span>
-<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that the <code>brms</code> model corresponding to the combination model described above is quite different from the single-drug case due to the need for a custom non-linear link function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>combo2_tte_model  <span class="ot">&lt;-</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>combo2_tte_model  <span class="ot">&lt;-</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bf</span>(num_toxicities <span class="sc">|</span> <span class="fu">rate</span>(follow_up) <span class="sc">~</span> <span class="fu">combo2_tte_log_inv_link</span>(muA, muB, finite_A, finite_B),</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">nlf</span>(muA <span class="sc">~</span> interA <span class="sc">+</span> <span class="fu">exp</span>(slopeA) <span class="sc">*</span> std_A),</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>       slopeA <span class="sc">~</span> <span class="dv">1</span>,</span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>       interA <span class="sc">~</span> <span class="dv">1</span>,</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>       muB <span class="sc">~</span> <span class="dv">1</span>,</span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">nl=</span><span class="cn">TRUE</span>, <span class="at">loop=</span><span class="cn">TRUE</span>, <span class="at">family=</span>poisson</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In addition, we need the indicators finite_A and finite_B now, in order to numerically deal with cases where one or both of the drugs has zero 0 dose.</p>
 <p>Now for the exercise:</p>
@@ -2396,15 +2398,15 @@ lp__               -7.6912674 1.0165879 -10.4014250 -6.677724</code></pre>
 <li>Update the <code>ipd</code> data to include the SoC as drug B (hint: use drug name “B” and a reference dose of 1 for SoC present).</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>combo2_ipd <span class="ot">&lt;-</span> ipd <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>combo2_ipd <span class="ot">&lt;-</span> ipd <span class="sc">|&gt;</span> </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dose_B =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_std_dose_col</span>(<span class="at">drug =</span> <span class="st">"B"</span>, <span class="at">dref =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_std_dose_col</span>(<span class="at">drug =</span> <span class="st">"B"</span>, <span class="at">dref =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="2" type="1">
 <li>Define a prior for the SoC treatment that corresponds to a DLT probability of 5% in the first cycle with a standard deviation of 1.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(combo2_tte_model, <span class="at">data =</span> combo2_ipd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(combo2_tte_model, <span class="at">data =</span> combo2_ipd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  prior class      coef group resp dpar  nlpar lb ub tag       source
  (flat)     b                           interA                default
@@ -2416,38 +2418,38 @@ lp__               -7.6912674 1.0165879 -10.4014250 -6.677724</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -6.3 approx cloglog(0.05) - log(7*4) for the SoC</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -6.3 approx cloglog(0.05) - log(7*4) for the SoC</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>combo2_tte_prior <span class="ot">&lt;-</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">4.83</span>, <span class="dv">1</span>), <span class="at">nlpar=</span>interA, <span class="at">class=</span>b, <span class="at">coef=</span>Intercept) <span class="sc">+</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fu">log</span>(<span class="dv">4</span>)<span class="sc">/</span><span class="fl">1.96</span>), <span class="at">nlpar=</span>slopeA) <span class="sc">+</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">6.3</span>, <span class="dv">1</span>), <span class="at">nlpar=</span>muB, <span class="at">coef=</span>Intercept)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="sc">-</span><span class="fl">6.3</span>, <span class="dv">1</span>), <span class="at">nlpar=</span>muB, <span class="at">coef=</span>Intercept)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="3" type="1">
 <li>Which dose of the investigational drug would still be sufficiently safe according to the standard EWOC criterion when administered on top of the SoC treatment?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>combo2_tte_brms_model <span class="ot">&lt;-</span> combo2_tte_model <span class="sc">|&gt;</span> <span class="fu">brm</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>combo2_tte_brms_model <span class="ot">&lt;-</span> combo2_tte_model <span class="sc">|&gt;</span> <span class="fu">brm</span>(</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> combo2_ipd, <span class="at">stanvars =</span> combo2_tte_stanvar, </span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> combo2_tte_prior, <span class="at">silent =</span> <span class="dv">2</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>make[2]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>combo2_dose_ref_data <span class="ot">&lt;-</span> dose_ref_data <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>combo2_dose_ref_data <span class="ot">&lt;-</span> dose_ref_data <span class="sc">|&gt;</span> </span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dose_B =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_std_dose_col</span>(<span class="at">drug =</span> <span class="st">"B"</span>, <span class="at">dref =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_std_dose_col</span>(<span class="at">drug =</span> <span class="st">"B"</span>, <span class="at">dref =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>combo2_risk <span class="ot">&lt;-</span> combo2_dose_ref_data <span class="sc">|&gt;</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_risk_rvars</span>(combo2_tte_brms_model, cycle, schedule_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>combo2_risk <span class="ot">&lt;-</span> combo2_dose_ref_data <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_risk_rvars</span>(combo2_tte_brms_model, cycle, schedule_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>combo2_risk <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>combo2_risk <span class="sc">|&gt;</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">summarize_probs</span>(cprob)) <span class="sc">|&gt;</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>num_toxicities, <span class="sc">-</span>std_A, <span class="sc">-</span>prob, <span class="sc">-</span>cprob) <span class="sc">|&gt;</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="jzacwqbrco" class=".gt_table" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#jzacwqbrco table {
@@ -2904,11 +2906,11 @@ lp__               -7.6912674 1.0165879 -10.4014250 -6.677724</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>combo2_risk <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>combo2_risk <span class="sc">|&gt;</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">summarize_probs</span>(prob)) <span class="sc">|&gt;</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(cycle <span class="sc">==</span> <span class="dv">3</span>, ewoc_ok) <span class="sc">|&gt;</span> </span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>num_toxicities, <span class="sc">-</span>std_A, <span class="sc">-</span>std_B, <span class="sc">-</span>prob, <span class="sc">-</span>cprob, <span class="sc">-</span>finite_A, <span class="sc">-</span>finite_B) <span class="sc">|&gt;</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span> <span class="fu">gt_format</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="rkavktpjit" class=".gt_table" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#rkavktpjit table {
@@ -3503,13 +3505,14 @@ events} \,.
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -3914,7 +3917,7 @@ events} \,.
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb43" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">  - Lukas Widmer - &lt;lukas_andreas.widmer@novartis.com&gt;</span></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - Sebastian Weber - &lt;sebastian.weber@novartis.com&gt;</span></span>
@@ -5009,7 +5012,7 @@ events} \,.
 <span id="cb43-1157"><a href="#cb43-1157" aria-hidden="true" tabindex="-1"></a> events} + \underbrace{\sum_i \log\left(S(C_i)\right)\left(1 - \delta_i\right)}_\textrm{Survival</span>
 <span id="cb43-1158"><a href="#cb43-1158" aria-hidden="true" tabindex="-1"></a> events} \,.</span>
 <span id="cb43-1159"><a href="#cb43-1159" aria-hidden="true" tabindex="-1"></a>$$</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

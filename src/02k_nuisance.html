@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,14 +91,15 @@ div.csl-indent {
 <link href="../src/02ac_meta_analysis_strata.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b2070c71598b148a05ee0727b4df650f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-82d9e4e9cf99d8eb0e77e4f639bbcaed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -155,7 +156,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -198,7 +199,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Applied Modelling in Drug Development</a> 
@@ -429,7 +431,7 @@ window.Quarto = {
 <!-- https://raw.githubusercontent.com/Novartis/bamdd/main/src/_macros.qmd -->
 <p>To run the R code of this section please ensure to load these libraries and options first:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
@@ -440,7 +442,7 @@ window.Quarto = {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"brms-cache"</span>))</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"brms-cache"</span>), <span class="cn">FALSE</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will also use one dataset provided in the <code>multinma</code> R package.</p>
 <section id="introduction" class="level2" data-number="7.1">
@@ -461,7 +463,7 @@ window.Quarto = {
 <h2 data-number="7.3" class="anchored" data-anchor-id="data-parkinsons-disease-example"><span class="header-section-number">7.3</span> Data: Parkinson’s disease example</h2>
 <p>The data we will use is from the supplementary material of <span class="citation" data-cites="Dias2013evsnth">Dias et al. (<a href="02l_single_arm_pos.html#ref-Dias2013evsnth" role="doc-biblioref">2013</a>)</span> and is provided as part of the <code>multinma</code> R package. The data contains mean off-time reduction data from 7 trials in patients with Parkinson’s disease. Off time refers to the number of hours per day (thus, must be between 0 and 24) when patients experience symptoms. In this data, treatment 1 refers to placebo and treatments 2 to 5 are active drugs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>parkinsons <span class="ot">&lt;-</span> multinma<span class="sc">::</span>parkinsons <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>parkinsons <span class="ot">&lt;-</span> multinma<span class="sc">::</span>parkinsons <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sd =</span> se<span class="sc">*</span><span class="fu">sqrt</span>(n),</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">varestimate =</span> sd<span class="sc">^</span><span class="dv">2</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">studyn =</span> <span class="fu">factor</span>(studyn),</span>
@@ -470,7 +472,7 @@ window.Quarto = {
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>parkinsons <span class="sc">|&gt;</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_footnote</span>(<span class="st">"Treatment 1 refers to placebo and treatments 2 to 5 are active drugs."</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"sd"</span>, <span class="st">"varestimate"</span>), <span class="at">decimals =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"sd"</span>, <span class="st">"varestimate"</span>), <span class="at">decimals =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="qlqkvyzsfx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#qlqkvyzsfx table {
@@ -922,7 +924,7 @@ window.Quarto = {
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="studyn" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">studyn</th>
@@ -1120,7 +1122,7 @@ window.Quarto = {
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="brms-model-code"><span class="header-section-number">7.4.1</span> brms model code</h3>
 <p>We can implement the model described in the preceding section using the code below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_var <span class="ot">&lt;-</span> <span class="fu">bf</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_var <span class="ot">&lt;-</span> <span class="fu">bf</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  varestimate <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> studyn),</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  shape <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> <span class="fu">offset</span>((n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">2</span>),</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">brmsfamily</span>(<span class="at">family =</span> <span class="st">"Gamma"</span>, <span class="at">link =</span> <span class="st">"log"</span>, <span class="at">link_shape =</span> <span class="st">"identity"</span>)</span>
@@ -1136,7 +1138,7 @@ window.Quarto = {
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>,</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">3568587</span>,</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.9</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>make[2]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.</code></pre>
 </div>
@@ -1146,14 +1148,14 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.8 seconds.
+Chain 1 finished in 0.6 seconds.
 Chain 2 finished in 0.8 seconds.
 Chain 3 finished in 0.8 seconds.
-Chain 4 finished in 1.1 seconds.
+Chain 4 finished in 0.8 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.9 seconds.
-Total execution time: 4.3 seconds.</code></pre>
+Mean chain execution time: 0.7 seconds.
+Total execution time: 4.2 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gamma 
@@ -1190,7 +1192,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h3 data-number="7.4.3" class="anchored" data-anchor-id="predicting-the-variance-for-a-new-study"><span class="header-section-number">7.4.3</span> Predicting the variance for a new study</h3>
 <p>When we predict the variance in a new study for sample size purposes, we of course do not want to predict the estimated variance we might observe for a given sample size, which we would obtain using <code>predict</code>. Instead, we want to predict the true variance in a new study without within-study sampling variability. We can do so using the <code>posterior_epred</code> function, but need to supply it a value for <code>nu</code> in the new data (as we would otherwise get an error message, even though <span class="math inline">\nu</span> is not actually used for the predictions). Note also that we need to make sure to use a study identifier not used in the training data of our model, if we wish to predict for a new study.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take sqrt to get the SD and note that we select the first column of</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take sqrt to get the SD and note that we select the first column of</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the returned matrix of draws which we convert to an rvar object</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (defined in the posterior package)</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>rv_predicted_sigma <span class="ot">&lt;-</span> <span class="fu">rvar</span>(<span class="fu">sqrt</span>(<span class="fu">posterior_epred</span>(</span>
@@ -1198,7 +1200,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">study =</span> <span class="dv">6</span>L),</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">allow_new_levels =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_new_levels =</span> <span class="st">"gaussian"</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)[, <span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)[, <span class="dv">1</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -1206,10 +1208,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2 data-number="7.5" class="anchored" data-anchor-id="results"><span class="header-section-number">7.5</span> Results</h2>
 <p>Here are the percentiles of the predictive distribution of the standard deviation in a new study:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  rv_predicted_sigma,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> <span class="fu">quantile2</span>(.x, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span>))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
   variable            q2.5   q25   q50   q75 q97.5
@@ -1219,7 +1221,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>Similarly, the histogram with a log-x-scale is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">predsd =</span> rv_predicted_sigma) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">predsd =</span> rv_predicted_sigma) <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">xdist =</span> predsd)) <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  ggdist<span class="sc">::</span><span class="fu">stat_histinterval</span>() <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(</span>
@@ -1228,7 +1230,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Predicted SD for a new study"</span>) <span class="sc">+</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1239,7 +1241,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>Let’s say we are looking at taking into account uncertainty about the standard deviation in the following sample size calculation, where we originally just assumed a fixed standard deviation of <span class="math inline">3</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get power of trial for given delta and sigma</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get power of trial for given delta and sigma</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>trial_power <span class="ot">&lt;-</span> <span class="cf">function</span>(delta, sigma) {</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">power.t.test</span>(</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="dv">758</span>,</span>
@@ -1253,24 +1255,24 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>power</span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>(standard_power <span class="ot">&lt;-</span> <span class="fu">trial_power</span>(<span class="at">delta=</span><span class="fl">0.5</span>, <span class="at">sigma=</span><span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>(standard_power <span class="ot">&lt;-</span> <span class="fu">trial_power</span>(<span class="at">delta=</span><span class="fl">0.5</span>, <span class="at">sigma=</span><span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9001893</code></pre>
 </div>
 </div>
 <p>Taking the uncertainty around the standard deviation into account, we get an expected power below closer to 80% instead of the original 90%.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># enable trial_power function to have sigma be an rvar argument</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># enable trial_power function to have sigma be an rvar argument</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>rv_trial_power <span class="ot">&lt;-</span> <span class="fu">rfun</span>(trial_power, <span class="st">"sigma"</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rv_trial_power</span>(<span class="fl">0.5</span>, rv_predicted_sigma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rv_trial_power</span>(<span class="fl">0.5</span>, rv_predicted_sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>rvar&lt;4000&gt;[1] mean ± sd:
 [1] 0.81 ± 0.18 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># an alternative is to call rdo, which does detect any rvar variable</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># an alternative is to call rdo, which does detect any rvar variable</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and loops the expression accordingly</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rdo</span>(<span class="fu">trial_power</span>(<span class="fl">0.5</span>, rv_predicted_sigma))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rdo</span>(<span class="fu">trial_power</span>(<span class="fl">0.5</span>, rv_predicted_sigma))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>rvar&lt;4000&gt;[1] mean ± sd:
 [1] 0.81 ± 0.18 </code></pre>
@@ -1280,7 +1282,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for different delta values obtain power with and without uncertainty</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for different delta values obtain power with and without uncertainty</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in sigma</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>power_cases <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">delta =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.75</span>, <span class="fl">0.01</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
@@ -1324,7 +1326,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.05</span>),</span>
 <span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_y =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.085</span>)</span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1336,7 +1338,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>Even if we assume a fixed true treatment difference of 0.5, for the significance threshold we still need to also take into account the sampling distribution of the observed treatment difference and observed sample variance. These happen to be independent in the normal distribution case, but not generally for other distributions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>simulated_outcomes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">predsd =</span> rv_predicted_sigma, <span class="at">n =</span> <span class="dv">758</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>simulated_outcomes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">predsd =</span> rv_predicted_sigma, <span class="at">n =</span> <span class="dv">758</span>) <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">predvar =</span> predsd<span class="sc">^</span><span class="dv">2</span>,</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">npergroup =</span> n <span class="sc">/</span> <span class="dv">2</span>,</span>
@@ -1371,7 +1373,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
 <span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
 <span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>significant, <span class="at">labeller =</span> label_both, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1379,7 +1381,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>simulated_outcomes <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>simulated_outcomes <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">significant =</span> <span class="dv">1</span>L <span class="sc">*</span> (pvalue <span class="sc">&lt;=</span> <span class="fl">0.025</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> observed_difference, <span class="at">y =</span> significant)) <span class="sc">+</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"darkred"</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
@@ -1392,7 +1394,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Observed difference"</span>) <span class="sc">+</span></span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Probability of p-value &lt;= 0.05"</span>) <span class="sc">+</span></span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.75</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ s(x, bs = "cs")'</code></pre>
 </div>
@@ -1416,7 +1418,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Senn2013 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Senn2013 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="st">"Study n Treatment Comment mean_final SD_final</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="st">De_Fronzo_(1995) 213 metformin Change -1.700 1.459</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="st">De_Fronzo_(1995) 209 placebo Change 0.200 1.446</span></span>
@@ -1472,7 +1474,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a><span class="st">Moulin_(2006) 161 benfluorex Change -0.820 1.028</span></span>
 <span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a><span class="st">Moulin_(2006) 156 placebo Change 0.190 1.374"</span>,</span>
 <span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a><span class="at">delim=</span><span class="st">" "</span>, <span class="at">col_types=</span><span class="st">"ciccdd"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Study =</span> <span class="fu">str_replace_all</span>(Study, <span class="st">"_"</span>, <span class="st">" "</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Study =</span> <span class="fu">str_replace_all</span>(Study, <span class="st">"_"</span>, <span class="st">" "</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>How does the required sample size change for an expected power of 90% vs.&nbsp;a standard power of 90% to achieve a statistically significant difference to placebo in a 1:1 randomized RCT assuming the true difference between groups is 0.7 and that the SD is 1.1, if we switch to expected power taking into account the uncertainty about the standard deviation?</p>
@@ -1551,13 +1553,14 @@ Senn, Stephen, Francois Gavini, David Magrez, and André Scheen. 2013. <span>“
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1962,7 +1965,7 @@ Senn, Stephen, Francois Gavini, David Magrez, and André Scheen. 2013. <span>“
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">  - Björn Holzhauer - &lt;bjoern.holzhauer@novartis.com&gt;</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - Sebastian Weber - &lt;sebastian.weber@novartis.com&gt;</span></span>
@@ -2480,7 +2483,7 @@ Senn, Stephen, Francois Gavini, David Magrez, and André Scheen. 2013. <span>“
 <span id="cb23-536"><a href="#cb23-536" aria-hidden="true" tabindex="-1"></a>difference between groups is 0.7 and that the SD is 1.1, if we switch</span>
 <span id="cb23-537"><a href="#cb23-537" aria-hidden="true" tabindex="-1"></a>to expected power taking into account the uncertainty about the</span>
 <span id="cb23-538"><a href="#cb23-538" aria-hidden="true" tabindex="-1"></a>standard deviation?</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

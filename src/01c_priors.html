@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,14 +90,15 @@ div.csl-indent {
 <link href="../src/01b_basic_workflow.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b2070c71598b148a05ee0727b4df650f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-82d9e4e9cf99d8eb0e77e4f639bbcaed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -140,7 +141,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -183,7 +184,8 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="../index.html" class="sidebar-logo-link">
-      <img src="../bamdd_logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="../bamdd_logo.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Applied Modelling in Drug Development</a> 
@@ -392,7 +394,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Show R setup</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
@@ -408,7 +410,7 @@ window.Quarto = {
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>) </span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Within the Bayesian regression modeling in Stan framework <code>brms</code> priors are required to perform inference. This introductory material is intended to provide some pragmatic considerations on how to setup priors and point readers to material to follow-up on. The case studies themselves provide details on setting up priors for the respective problem. By default these priors have been chosen to have minimal impact on the posterior whenever appropriate and also ensure stable numerical inference. As a consequence, the results from the case studies will resemble respective Frequentist model results in most cases. Nonetheless, priors are defined explicitly for all models, since these are an integral part of any Bayesian analysis. This can be easily seen by considering Bayes rule to obtain the posterior:</p>
@@ -426,14 +428,14 @@ become very popular nowadays.
 <p>To just get started with <code>brms</code> one may choose to not specify priors when calling <code>brm</code>. Doing so will let <code>brms</code> provide in most cases reasonable default priors. These default priors are intended to avoid any influence on the calculated posterior. Hence, the results are fully data driven and will be very close to the respective Frequentist maximum likelihood inference result. However, the default prior is not guaranteed to stay stable between releases and can thus change whenever the <code>brms</code> version changes.</p>
 <p>Given that any Bayesian analysis requires a prior, we recommend to always explicitly define these - even if these just repeat the default prior from <code>brms</code>, which one can easily obtain. Here we use as example binomially distributed data (responder in a control arm) and we use the simplest possible model, which will pool the information across the different studies (in practice one would allow for between-trial heterogeneity):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span>binomial)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span>binomial)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## with brms &gt;= 2.21.0 we can  directly write... </span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## default_prior(model, data=RBesT::AS)</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">## a workaround is to create an empty brms model and obtain the</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">## defined prior like</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_summary</span>(<span class="fu">brm</span>(model, <span class="at">data=</span>RBesT<span class="sc">::</span>AS, <span class="at">empty=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_summary</span>(<span class="fu">brm</span>(model, <span class="at">data=</span>RBesT<span class="sc">::</span>AS, <span class="at">empty=</span><span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -485,10 +487,10 @@ become very popular nowadays.
 <p>Note that we have defined first the model via the <code>bf</code> call. This defines the linear predictor and the likelihood using the <code>family</code> argument of <code>bf</code>. We recommend to always explicitly do this step first as it defines the likelihood and the model parametrization in one step. Choosing these is a critical first step in defining the model and, most importantly, the chosen priors can only be understood in the context of the model (likelihood and parametrization) <span class="citation" data-cites="Gelman2017">(see <a href="02l_single_arm_pos.html#ref-Gelman2017" role="doc-biblioref">Gelman, Simpson, and Betancourt 2017</a>)</span>.</p>
 <p>Rather than running the model with no explicit prior definition we encourage users to explicitly define the priors used for the analysis - even if these are simply the default priors:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_def <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span>binomial)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_def <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span>binomial)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">student_t</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>), <span class="at">class=</span>Intercept)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(model_def, <span class="at">data=</span>RBesT<span class="sc">::</span>AS, <span class="at">prior=</span>model_prior, <span class="at">seed=</span><span class="dv">467657</span>, <span class="at">refresh=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(model_def, <span class="at">data=</span>RBesT<span class="sc">::</span>AS, <span class="at">prior=</span>model_prior, <span class="at">seed=</span><span class="dv">467657</span>, <span class="at">refresh=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
@@ -499,9 +501,9 @@ Chain 4 finished in 0.0 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.0 seconds.
-Total execution time: 0.7 seconds.</code></pre>
+Total execution time: 0.8 seconds.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Estimate Est.Error      Q2.5     Q97.5
 Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
@@ -509,15 +511,15 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 </div>
 <p>The provided default prior is indeed not informative, as can be seen by comparing the posterior estimate to the respective Frequentist fit from <code>glm</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit_freq <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(r, n<span class="sc">-</span>r) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>RBesT<span class="sc">::</span>AS, <span class="at">family=</span>binomial)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit_freq <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(r, n<span class="sc">-</span>r) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>RBesT<span class="sc">::</span>AS, <span class="at">family=</span>binomial)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">## intercept estimate</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit_freq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit_freq)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
    -1.11165 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## standard error estimate</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(fit_freq)[<span class="dv">1</span>,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## standard error estimate</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(fit_freq)[<span class="dv">1</span>,<span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1022971</code></pre>
 </div>
@@ -527,14 +529,14 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>num_draws <span class="ot">&lt;-</span> <span class="fl">1E4</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>num_draws <span class="ot">&lt;-</span> <span class="fl">1E4</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>priors_cmp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">case=</span><span class="fu">c</span>(<span class="st">"wide"</span>, <span class="st">"brms"</span>, <span class="st">"RBesT"</span>),</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">density=</span><span class="fu">c</span>(<span class="st">"N(0,10^2)"</span>, <span class="st">"S(3, 0, 2.5^2)"</span>, <span class="st">"N(0, 2^2)"</span>),</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">prior=</span><span class="fu">rvar</span>(<span class="fu">cbind</span>(<span class="fu">rnorm</span>(num_draws, <span class="dv">0</span>, <span class="dv">10</span>),</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">rstudent_t</span>(num_draws, <span class="dv">3</span>, <span class="dv">0</span>, <span class="fl">2.5</span>),</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">rnorm</span>(num_draws, <span class="dv">0</span>, <span class="dv">2</span>))))</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp, <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp, <span class="at">digits=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -566,7 +568,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>priors_logit <span class="ot">&lt;-</span> priors_cmp <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>priors_logit <span class="ot">&lt;-</span> priors_cmp <span class="sc">|&gt;</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>case, <span class="at">xdist=</span>prior)) <span class="sc">+</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_slab</span>() <span class="sc">+</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Intercept</span><span class="sc">\n</span><span class="st">linear predictor"</span>) <span class="sc">+</span></span>
@@ -582,7 +584,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Prior response scale"</span>) <span class="sc">+</span></span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">bayesplot_grid</span>(priors_logit, priors_response, <span class="at">grid_args=</span><span class="fu">list</span>(<span class="at">nrow=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">bayesplot_grid</span>(priors_logit, priors_response, <span class="at">grid_args=</span><span class="fu">list</span>(<span class="at">nrow=</span><span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -596,7 +598,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>response_category <span class="ot">&lt;-</span> <span class="cf">function</span>(r) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>response_category <span class="ot">&lt;-</span> <span class="cf">function</span>(r) {</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fct_rev</span>(<span class="fu">cut</span>(<span class="fu">pmin</span>(r, <span class="dv">1</span><span class="sc">-</span>r), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"extreme"</span>, <span class="st">"very_small"</span>, <span class="st">"small"</span>, <span class="st">"moderate"</span>)))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -607,7 +609,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Prior interval probabilities"</span>, <span class="at">fill=</span><span class="st">"Category"</span>) <span class="sc">+</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">by=</span><span class="fl">0.2</span>)) <span class="sc">+</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -618,7 +620,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(priors_cmp,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(priors_cmp,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">prior_response=</span><span class="fu">rfun</span>(inv_logit)(prior),</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">summarise_draws</span>(prior_response,</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">extreme=</span><span class="sc">~</span><span class="dv">100</span><span class="sc">*</span><span class="fu">E</span>(.x <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">|</span> .x <span class="sc">&gt;</span> <span class="fl">0.99</span>),</span>
@@ -627,7 +629,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">moderate=</span><span class="sc">~</span><span class="dv">100</span><span class="sc">*</span><span class="fu">E</span>( (<span class="fl">0.1</span> <span class="sc">&lt;=</span> .x <span class="sc">&amp;</span> .x <span class="sc">&lt;</span> <span class="fl">0.9</span>) )</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                       )) <span class="sc">|&gt;</span></span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(case, density, extreme, very_small, small, moderate) <span class="sc">|&gt;</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption=</span><span class="st">"Interval probabilities per prior given in percent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption=</span><span class="st">"Interval probabilities per prior given in percent"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -674,7 +676,7 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <p>It is apparent that the seemingly non-informative prior “wide” is in fact an informative prior implying that the expected response rates are extreme. This is the consequence of transforming to the logit scale.</p>
 <p>In practice one would most certainly not fit the intercept only model, which pools the information. The <code>RBesT::AS</code> data set is in fact the standard example for the use of historical control data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(RBesT<span class="sc">::</span>AS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(RBesT<span class="sc">::</span>AS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -731,25 +733,25 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 </div>
 <p>To use this data as historical control data one uses instead of the intercept only model a random intercept model, which casts this into a meta-analtyic model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model_meta_def <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> study), <span class="at">family=</span>binomial)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model_meta_def <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> study), <span class="at">family=</span>binomial)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>model_meta_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class=</span>Intercept) <span class="sc">+</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>fit_meta <span class="ot">&lt;-</span> <span class="fu">brm</span>(model_meta_def, <span class="at">data=</span>RBesT<span class="sc">::</span>AS, <span class="at">prior=</span>model_meta_prior,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">seed=</span><span class="dv">982345</span>, <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">seed=</span><span class="dv">982345</span>, <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
-Chain 4 finished in 0.3 seconds.
+Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
 Total execution time: 1.4 seconds.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_meta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_meta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: binomial 
   Links: mu = logit 
@@ -830,14 +832,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>priors_cmp_tau <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">case=</span><span class="fu">c</span>(<span class="st">"less_conservative"</span>, <span class="st">"conservative"</span>, <span class="st">"very_conservative"</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>priors_cmp_tau <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">case=</span><span class="fu">c</span>(<span class="st">"less_conservative"</span>, <span class="st">"conservative"</span>, <span class="st">"very_conservative"</span>),</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">density=</span><span class="fu">c</span>(<span class="st">"HN(0, (1/4)^2)"</span>, <span class="st">"HN(0, (1/2)^2)"</span>, <span class="st">"HN(0, 1^2)"</span>),</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">prior=</span><span class="fu">rvar</span>(<span class="fu">cbind</span>(<span class="fu">abs</span>(<span class="fu">rnorm</span>(num_draws, <span class="dv">0</span>, <span class="fl">0.25</span>)),</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">abs</span>(<span class="fu">rnorm</span>(num_draws, <span class="dv">0</span>, <span class="fl">0.5</span>)),</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">abs</span>(<span class="fu">rnorm</span>(num_draws, <span class="dv">0</span>, <span class="dv">1</span>))))</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                         )</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp_tau)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(priors_cmp_tau)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -869,7 +871,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>priors_hetero <span class="ot">&lt;-</span> priors_cmp_tau <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>priors_hetero <span class="ot">&lt;-</span> priors_cmp_tau <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>case, <span class="at">xdist=</span>prior)) <span class="sc">+</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_slab</span>() <span class="sc">+</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Between-study heterogeneity"</span>) <span class="sc">+</span></span>
@@ -889,7 +891,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Log-odds ratio</span><span class="sc">\n</span><span class="st">of random pair"</span>) <span class="sc">+</span></span>
 <span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>))</span>
 <span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">bayesplot_grid</span>(priors_hetero, priors_lor, <span class="at">grid_args=</span><span class="fu">list</span>(<span class="at">nrow=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="fu">bayesplot_grid</span>(priors_hetero, priors_lor, <span class="at">grid_args=</span><span class="fu">list</span>(<span class="at">nrow=</span><span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -902,7 +904,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tau_category <span class="ot">&lt;-</span> <span class="cf">function</span>(tau) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tau_category <span class="ot">&lt;-</span> <span class="cf">function</span>(tau) {</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fct_rev</span>(<span class="fu">cut</span>(tau, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.125</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="cn">Inf</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"small"</span>, <span class="st">"moderate"</span>, <span class="st">"substantial"</span>, <span class="st">"large"</span>, <span class="st">"very_large"</span>)))</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -913,7 +915,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Prior interval probabilities"</span>, <span class="at">fill=</span><span class="st">"Category"</span>) <span class="sc">+</span></span>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="do">##scale_y_continuous(breaks=seq(0,1,by=0.2)) +</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -924,7 +926,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(priors_cmp_tau,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(priors_cmp_tau,</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">summarise_draws</span>(prior,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">small=</span><span class="sc">~</span><span class="dv">100</span><span class="sc">*</span><span class="fu">E</span>(.x <span class="sc">&lt;</span> <span class="fl">0.125</span>),</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">moderate=</span><span class="sc">~</span><span class="dv">100</span><span class="sc">*</span><span class="fu">E</span>( <span class="fl">0.125</span> <span class="sc">&lt;=</span> .x <span class="sc">&amp;</span> .x <span class="sc">&lt;</span> <span class="fl">0.25</span> ),</span>
@@ -933,7 +935,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">very_large=</span><span class="sc">~</span><span class="dv">100</span><span class="sc">*</span><span class="fu">E</span>( .x <span class="sc">&gt;=</span> <span class="dv">1</span> )</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                       )) <span class="sc">|&gt;</span></span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(case, density, small, moderate, substantial, large, very_large) <span class="sc">|&gt;</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption=</span><span class="st">"Interval probabilities per prior given in percent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">1</span>, <span class="at">caption=</span><span class="st">"Interval probabilities per prior given in percent"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1090,13 +1092,14 @@ Zhang, Yan Dora, Brian P. Naughton, Howard D. Bondell, and Brian J. Reich. 2022.
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1501,7 +1504,7 @@ Zhang, Yan Dora, Brian P. Naughton, Howard D. Bondell, and Brian J. Reich. 2022.
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb24" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">  - Sebastian Weber - &lt;sebastian.weber@novartis.com&gt;</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> references.bib</span></span>
@@ -1945,7 +1948,7 @@ Zhang, Yan Dora, Brian P. Naughton, Howard D. Bondell, and Brian J. Reich. 2022.
 <span id="cb24-446"><a href="#cb24-446" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-447"><a href="#cb24-447" aria-hidden="true" tabindex="-1"></a>{{&lt; video videos/brms3-hq-alt-2-priors.mp4 &gt;}}</span>
 <span id="cb24-448"><a href="#cb24-448" aria-hidden="true" tabindex="-1"></a>:::</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
