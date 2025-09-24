@@ -1,35 +1,61 @@
 ---
 author:
   - Björn Holzhauer - <bjoern.holzhauer@novartis.com>
+  - Sebastian Weber - <sebastian.weber@novartis.com>
+bibliography: references.bib
 ---
 
 # Dose finding {#sec-dose-finding}
 
-## Background
+This case study features specifically
 
-## What role does dose response modeling play in drug development?
+- Modeling non-linear summary dose-response data
+- Performing Bayesian model averaging
+- Comparing prior and posterior distributions
+- How priors can be composed in a modular manner
+
+To run the R code of this section please ensure to load these
+libraries and options first:
+
+```{r show_packages, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
+library(tidyverse)
+library(brms)
+library(posterior)
+library(tidybayes)
+library(ggrepel)
+library(patchwork)
+library(here)
+library(dplyr)
+library(ggdist)
+# instruct brms to use cmdstanr as backend and cache all Stan binaries
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+# create cache directory if not yet available
+dir.create(here("_brms-cache"), FALSE)
+set.seed(8979476)
+```
+
+## Background: What role does dose response modeling play in drug development?
 
 In clinical drug development, one key question is what dose of a drug
-should be used to treat a disease.  Ideally, we would want a dose that
+should be used to treat a disease. Ideally, we would want a dose that
 achieves (nearly) optimal efficacy, while at the same time minimizing
-side effects to optimize the benefit-risk balance.  In many
+side effects to optimize the benefit-risk balance. In many
 therapeutic areas the relationship between dose and efficacy is
 characterized in Phase IIb clinical trials that randomize patients to
 received either one of several doses of a drug or a matching placebo.
 
 In such studies, it would be inefficient to try a lot of doses and
-just look at the performance of each dose in isolation.  Instead, we
+just look at the performance of each dose in isolation. Instead, we
 know that biologically there should be some smooth function that
-describes the relationship between dose and efficacy.  We can exploit
+describes the relationship between dose and efficacy. We can exploit
 this knowledge to make the analysis of such studies more efficient.
 There are a number of methods for analyzing such trials that exploit
 that the true expected difference to placebo will follow some smooth
-function of the dose.  However, we typically do not know what smooth
+function of the dose. However, we typically do not know what smooth
 function best approximates the true underlying dose response function.
 Obvious candidate functions include monotone functions that eventually
 plateau, and functions that initially achieve a maximum and then
 decline.
-
 
 
 
@@ -55,29 +81,15 @@ modeling approaches do not require access to individual patient data -
 which in this case is not publically available -, but can be conducted
 given estimates and standard error for each dose.
 
-```{r show_packages, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
-library(tidyverse)
-library(brms)
-library(tidybayes)
-library(ggrepel)
-library(patchwork)
-library(here)
-library(dplyr)
-library(ggdist)
-# instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
-# create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
-set.seed(8979476)
-```
-
 ```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
 source(here("src", "setup.R"))
 ```
 
 ```{r get_annualized_rates}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 # This is the PATHWAY DRF data by group
 pathway <- tibble(dose = c(0, 70, 210, 280*2),
                   group = c("placebo", "tezepelumab 70 mg q4w",
@@ -86,7 +98,7 @@ pathway <- tibble(dose = c(0, 70, 210, 280*2),
                   stderr = c(0.10304, 0.17689, 0.22217, 0.19108))
 
 # Simple plot of the data
-pathway %>%
+pathway |>
   ggplot(aes(x=dose, y=est, label=str_wrap(group, 12), col=group,
              ymin=est-stderr*qnorm(0.975), ymax=est+stderr*qnorm(0.975))) +
   geom_errorbar(width=10) +
@@ -100,20 +112,23 @@ pathway %>%
 Or to show this as rate ratios compared with the placebo group:
 
 ```{r get_pathway_deltas}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 # This is the PATHWAY DRF log-rate-ratios vs. placebo
-pathway_deltas = tibble(dose= c(0, 70, 210, 280*2),
-                        group = c("reference level",
-                                  "tezepelumab 70 mg q4w vs. placebo",
-                                  "tezepelumab 210 mg q4w vs. placebo", 
-                                  "tezepelumab 280 mg q2w vs. placebo"),
-                        logRR= c(0,log(c(1-0.61, 1-0.71, 1-0.66))),
-                        .lower90 = log(c(NA_real_, 1-0.75, 1-0.82, 1-0.79)), # Paper reports 90% CIs
-                        .upper90 = log(c(NA_real_, 1-0.39, 1-0.53, 1-0.47)),
-                        stderr = (.upper90-.lower90)/2/qnorm(0.95),
-                        .lower = logRR-stderr*qnorm(0.975), # Get 95% CIs
-                        .upper = logRR+stderr*qnorm(0.975))
+pathway_deltas <- tibble(dose= c(0, 70, 210, 280*2),
+                         group = c("reference level",
+                                   "tezepelumab 70 mg q4w vs. placebo",
+                                   "tezepelumab 210 mg q4w vs. placebo", 
+                                   "tezepelumab 280 mg q2w vs. placebo"),
+                         logRR= c(0,log(c(1-0.61, 1-0.71, 1-0.66))),
+                         .lower90 = log(c(NA_real_, 1-0.75, 1-0.82, 1-0.79)), # Paper reports 90% CIs
+                         .upper90 = log(c(NA_real_, 1-0.39, 1-0.53, 1-0.47)),
+                         stderr = (.upper90-.lower90)/2/qnorm(0.95),
+                         .lower = logRR-stderr*qnorm(0.975), # Get 95% CIs
+                         .upper = logRR+stderr*qnorm(0.975))
 # Plot log-rate ratios
-pathway_deltas %>%
+pathway_deltas |>
   ggplot(aes(x=dose, y=logRR, 
              label=str_wrap(group, 12), col=group,
              ymin=.lower, ymax=.upper)) +
@@ -131,17 +146,15 @@ pathway_deltas %>%
 ## Model description
 
 To conduct dose response analyses under model uncertainty a number of
-approaches such as the [Multiple Comparison Procedures and Modeling
-(MCP-Mod)](https://doi.org/10.1002/sim.3802), the [generalized MCP-Mod
-approach](https://doi.org/10.1002/sim.6052) and Gaussian process based
-approaches are popular.  Within the generalized MCP-Mod framework
-[model averaging is an attractive
-approach](https://doi.org/10.1002/pst.1671) for dealing with model
-uncertainty that has [performed well in simulation
-studies](https://doi.org/10.1002/sim.6991).  Here, we take a Bayesian
-approach to model averaging in the MCP-Mod framework, which [Gould
-(2018)](https://doi.org/10.1002/bimj.201700211) called BMA-Mod (BMA
-stands for Bayesian model averaging).
+approaches such as the Multiple Comparison Procedures and Modeling
+(MCP-Mod) [@bretz2010practical], the generalized MCP-Mod approach
+[@pinheiro2014gmcpmod] and Gaussian process based approaches are
+popular.  Within the generalized MCP-Mod framework model averaging is
+an attractive approach [@bornkamp2015drfviewpoint] for dealing with
+model uncertainty that has performed well in simulation studies
+[@schorning2016selectavg]. Here, we take a Bayesian approach to model
+averaging in the MCP-Mod framework, which is called BMA-Mod (BMA
+stands for Bayesian model averaging) [@gould2019bmamod].
 
 While more complex mechanistic pharmacokinetic/pharmacodynamic (PK/PD)
 models are often important, here, we discuss directly modelling the
@@ -190,15 +203,30 @@ makes sense.
 
 ```{r sigemax_plots, echo=FALSE}
 # Plot some example sigEmax curves
-expand_grid(Dose=seq(0, 100, 0.1), Emax=1, E0=0, ED50=c(5,25), h=c(1/3, 1, 3)) %>%
-  mutate(`Dose response` = E0 + Emax * Dose^h/(Dose^h + ED50^h),
-         text = paste0("ED50=", ED50, "/h=",round(h,2))) %>%
-  ggplot(aes(x=Dose, y=`Dose response`, col=text, label=text)) +
+sig_curves <- expand_grid(
+  Dose = seq(0, 100, 0.1),
+  Emax = 1,
+  E0 = 0,
+  ED50 = c(5, 25),
+  h = c(1 / 3, 1, 3)
+) |>
+  mutate(
+    `Dose response` = E0 + Emax * Dose^h / (Dose^h + ED50^h),
+    text = paste0("ED50=", ED50, "/h=", round(h, 2))
+  )
+ggplot(
+  sig_curves,
+  aes(x = Dose, y = `Dose response`, color = text, label = text)
+) +
   geom_line() +
-  scale_y_continuous(labels=scales::percent(seq(0,1,0.25))) +
-  geom_text_repel(data=. %>% filter( Dose==50), max.iter = 100, #max.time = 10, 
-                  nudge_x=c(35, 30,-16, 30, 10, 5), segment.color = NA,
-                  nudge_y=c(0,-0.02,-0.05, -0.02, -0.03,-0.1))
+  scale_y_continuous(labels = scales::percent(seq(0, 1, 0.25))) +
+  geom_text_repel(
+    data = filter(sig_curves, Dose == 50),
+    max.iter = 100,
+    nudge_x = c(35, 30, -16, 30, 10, 5),
+    segment.color = NA,
+    nudge_y = c(0, -0.02, -0.05, -0.02, -0.03, -0.1)
+  )
 ```
 
 
@@ -226,9 +254,9 @@ describing a non-monotone dose response.
 
 The exponential model
 $$f(\text{dose}; \text{parameters}) = b_1 + b_2 (\exp(b_3 \times \text{dose})-1)$$
-with $b_3<0$ was also discussed by [Gould](https://doi.org/10.1002/bimj.201700211).
+with $b_3<0$ was also discussed by [@gould2019bmamod].
 
-[Gould](https://doi.org/10.1002/bimj.201700211) also considered linear and quadratic functions of dose or log-dose. I.e.
+[@gould2019bmamod] also considered linear and quadratic functions of dose or log-dose. I.e.
 $$f(\text{dose}; \text{parameters}) = \text{E}_0 + \beta \times \text{dose},$$
 $$f(\text{dose}; \text{parameters}) = \text{E}_0 + \beta \times \log (\text{dose}),$$
 $$f(\text{dose}; \text{parameters}) = \text{E}_0 + \beta_1 \times \text{dose} + \beta_2 \times \text{dose}^2$$
@@ -250,11 +278,10 @@ models).  So, - given enough data - it effectively results in model
 selection, but as long as we only have limited information multiple
 models will contribute to our inference.
 
-[Gould](https://doi.org/10.1002/bimj.201700211) proposes to use a
-weighted combination of the predictions for each dose level from each
-of the candidate models and suggests to base the posterior model
-weigths on [predictive likelihood
-weights](https://doi.org/10.1016/j.ijforecast.2009.08.001).
+[@gould2019bmamod] proposes to use a weighted combination of the
+predictions for each dose level from each of the candidate models and
+suggests to base the posterior model weigths on predictive likelihood
+weights [@ando2010predlikeli].
 
 
 ## Implementation and results
@@ -265,37 +292,42 @@ sigmoid-Emax model and look at the things `brms` let us do easily with
 a single fitted model.  We will not repeat that level of exploration
 for other models, but you may wish to do so in practice.
 
-### Fitting dose response models with `brms`: sigmoid-Emax model
+### Sigmoid-Emax model with `brms`
 
 We use the capabilities of `brms` for fitting non-linear models. For
 example, a sigmoid-Emax model can be fitted as follows:
 
 ```{r fit_sigemax, results='hide', message=FALSE, warning=FALSE}
 # Fitting a sigmoid Emax model
-brmfit1 <-  brm( bf( est | se(stderr) ~ E0 + Emax * dose^h/(dose^h + ED50^h),
+model_sigmoid <- bf(est | se(stderr) ~ E0 + sEmax * dose^h/(dose^h + ED50^h),
                     nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)),
-                    E0 ~ 1, logED50 ~ 1, logh ~ 1, Emax ~ 1, 
-                    nl=TRUE, family=gaussian()),
-                data=pathway,
-                prior = c(prior(normal(0,1), nlpar="E0"),
-                          prior(normal(0,1), nlpar="logh"),
-                          prior(normal(0,1), nlpar="Emax"),
-                          prior(normal(4,2), nlpar="logED50")),
-                control=list(adapt_delta=0.999),
-                seed=3624,
-                refresh=0)
+                    E0 ~ 1, logED50 ~ 1, logh ~ 1, sEmax ~ 1, 
+                    nl=TRUE, family=gaussian())
+
+prior_sigmoid <-
+  prior(normal(0, 1), nlpar=E0) +
+  prior(normal(0, 1), nlpar=logh) +
+  prior(normal(0, 1), nlpar=sEmax) +
+  prior(normal(4, 2), nlpar=logED50)
+
+fit_sigmoid <- brm(model_sigmoid,
+                   data=pathway,
+                   prior = prior_sigmoid,
+                   control=list(adapt_delta=0.9),
+                   seed=3624,
+                   refresh=0)
 ```
 
 Note that with individual patient data, we would not write `est | se(stderr) ~`,
 but would instead use `outcome ~ ` and  `bf() + negbinomial()` 
 (and similarly, e.g. `+ gaussian()` for continuous data). With the settings above,
 you might still experience a divergent transition or two and you may wish to increase
-`adapt_delta` to `0.9999` or `0.99999`, or alternatively try to come up with a way 
+`adapt_delta` to `0.95` or `0.99`, or alternatively try to come up with a way 
 to reparameterize the model.
 
 ```{r summarize_fit1}
 # Summarize model fit
-summary(brmfit1)
+summary(fit_sigmoid)
 ```
 
 So what does the model fit look like? We have two options for looking at this. 
@@ -303,7 +335,7 @@ The easiest and fastest uses the `conditional_effects` function from
 `brms`.
 
 ```{r }
-plot(conditional_effects(brmfit1, "dose"), 
+plot(conditional_effects(fit_sigmoid, "dose"), 
      points = TRUE)
 ```
 
@@ -315,63 +347,120 @@ with a little bit more code:
 ```{r predict_sigemax, results='hide',cache=FALSE}
 #| code-fold: true
 #| code-summary: "Show the code"
-# We are going to predict the annualized rate for all doses from 0,1,2,...600.
-# We are setting stderr=0 to avoid predicting with sampling variability.
-dr_curve_data <- tibble(dose=seq(0L, 600L), stderr=0)
+plot_dose_response <- function(model, newdata) {
+  # We are going to predict the annualized rate for all doses from 0,1,2,...600.
+  # We are setting stderr=0 to avoid predicting with sampling variability.
+  if(missing(newdata)) {
+    newdata <- tibble(dose = seq(0L, 600L, length.out = 101), stderr = 0)
+  }
+  
+  pred_newdata <- newdata |>
+    tidybayes::add_predicted_rvars(model) |>
+    mutate(logRR = .prediction - .prediction[dose == 0]) |>
+    select(-.prediction)
 
-dr_curve_pred <- dr_curve_data |>
-  tidybayes::add_predicted_rvars(brmfit1) |>
-  mutate(logRR=.prediction - .prediction[dose==0]) |>
-  select(-.prediction)
+  pred_newdata |>
+    ggplot(aes(x = dose, ydist = logRR)) +
+    geom_hline(yintercept = 0) +
+    stat_lineribbon(.width = c(0.5, 0.95)) +
+    geom_point(
+      data = pathway_deltas,
+      aes(x = dose, y = logRR),
+      inherit.aes = FALSE
+    ) +
+    geom_errorbar(
+      data = pathway_deltas,
+      aes(x = dose, y = logRR, ymin = .lower, ymax = .upper),
+      width = 10,
+      inherit.aes = FALSE
+    ) +
+    scale_y_continuous(
+      breaks = log(c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)),
+      labels = paste(100 * (1 - c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), "%")
+    ) +
+    ylab("Relative rate reduction") +
+    xlab("Total tezepelumab dose [mg/month]")
+}
 
-p1 <- dr_curve_pred |>
-  ggplot(aes(x=dose, ydist=logRR)) +
-  geom_hline(yintercept=0)  +
-  stat_lineribbon(.width=c(0.5, 0.95)) +
-  scale_fill_brewer(palette="Reds") +
-  geom_point(data=pathway_deltas, aes(x=dose, y=logRR), inherit.aes=FALSE) +
-  geom_errorbar(data=pathway_deltas, aes(x=dose, y=logRR, ymin=.lower, ymax=.upper), width=10, inherit.aes=FALSE) +
-  geom_text(data=tibble(dose=300, logRR=log(0.6), .lower=NA_real_, .upper=NA_real_),
-            aes(label="SigMod Emax model fit", y=logRR), col="darkred", size=4) +
-  scale_y_continuous(breaks=log(c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), 
-                     labels=paste(100*(1-c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), "%")) +
-  ylab("Relative rate reduction") +
-  xlab("Total tezepelumab dose [mg/month]")
+dr_sigmoid <- plot_dose_response(fit_sigmoid) +
+  scale_fill_brewer(palette = "Reds") +
+  annotate("text", x = 300, y = log(0.6), label = "SigMod Emax model fit", color = "darkred")
 
-plot(p1)
+plot(dr_sigmoid)
 ```
 
 We can also plot the dose response curve for each MCMC sample:
 
 ```{r plot_each_curve}
- dr_curve_pred |>
-   unnest_rvars() |>
-   ggplot(aes(x=dose, y=logRR, group=factor(.draw))) +
-   geom_hline(yintercept=0)  +
-   geom_line(col="darkred", alpha=0.075, size=0.25) +
-   geom_point(data=pathway_deltas %>% mutate(.draw=NA_integer_)) +
-   geom_errorbar(data=pathway_deltas %>% mutate(.draw=NA_integer_), 
-                 aes(ymin=.lower, ymax=.upper), width=10) +
-   scale_y_continuous(breaks=log(c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), 
-                      labels=paste(100*(1-c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), "%")) +
-   ylab("Relative rate reduction") +
-   xlab("Total tezepelumab dose [mg/month]")
+ dr_sigmoid$data |>
+  unnest_rvars() |>
+  sample_draws(500) |>
+  ggplot(aes(x = dose, y = logRR, group = factor(.draw))) +
+  geom_hline(yintercept = 0) +
+  geom_line(col = "darkred", alpha = 0.25, size = 0.25) +
+  geom_point(data = pathway_deltas |> mutate(.draw = NA_integer_)) +
+  geom_errorbar(
+    data = pathway_deltas |> mutate(.draw = NA_integer_),
+    aes(ymin = .lower, ymax = .upper),
+    width = 10
+  ) +
+  scale_y_continuous(
+    breaks = log(c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)),
+    labels = paste(100 * (1 - c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), "%")
+  ) +
+  ylab("Relative rate reduction") +
+  xlab("Total tezepelumab dose [mg/month]")
+
 ```
 
-Note, that this also makes it really easy to determine a distribution
-for the lowest dose that achieves a 50% relative rate reduction:
+By rearranging the sigmoid-Emax model equation, we can directly
+compute the implied posterior for the dose leading to a 50% relative
+rate reduction (provided that Emax is sufficiently large). For the
+calculation we use from the R package posterior its `rvars`
+functionality, which simplifies these calulations.
 
-```{r plot_dose_with_50rrr, results='hide'}
-dr_curve_pred  |>
-  unnest_rvars() |>
-  filter(logRR<log(0.5) | (logRR>=log(0.5) & dose==600)) |>
-  group_by(.draw) |>
-  summarize(dose = min(dose)) |>
-  ggplot(aes(x=dose)) +
-  stat_halfeye() +
-  coord_cartesian(xlim=c(0,200)) +
+```{r plot_dose_with_50rrr, results='hide', message=FALSE, warning=FALSE}
+#| code-fold: true
+#| code-summary: "Show the code"
+# extract posterior as rvars collection of draws
+post_sigmoid_rvs <- as_draws_rvars(fit_sigmoid)
+
+# target effect we look for
+logRR_target <- log(0.5)
+
+# determine draws for which Emax is sufficiently large for the effect
+# we are looking for
+large_Emax_rv <- with(post_sigmoid_rvs, b_sEmax_Intercept < logRR_target)
+
+# distribution of doses having the target effect (if possible),
+# (Emax/logRR_target - 1)^(-1/h) * ED50
+# in log space this is
+# -1/h * log(Emax/logRR_target - 1) + log(ED50)
+log_dose_min_rv <- with(
+  post_sigmoid_rvs,
+  rvar_ifelse(
+    large_Emax_rv,
+    -1 *
+      exp(-1 * b_logh_Intercept) *
+      log(b_sEmax_Intercept / logRR_target - 1) +
+      b_logED50_Intercept,
+    Inf
+  )
+)
+
+# restrict the posterior draws to cases whenever we can actually reach
+# the desired effect
+log_dose_min_rv <- subset_draws(
+  log_dose_min_rv,
+  draw = which(draws_of(large_Emax_rv))
+)
+
+tibble(dose_min = exp(log_dose_min_rv)) |>
+  ggplot(aes(y = 1, dist = dose_min)) +
+  ggdist::stat_halfeye() +
+  scale_x_log10(limits = c(0.1, 200)) +
   xlab("Tezepelumab dose [mg/month]") +
-  ylab("")
+  ylab(NULL)
 ```
 
 As the plot below shows the data resulted in a substantially different
@@ -386,43 +475,55 @@ distribution is more or less the prior distribution for the `logED50`
 parameter.
 
 ```{r paramident}
-brmfit1 %>%
-  spread_draws(b_logED50_Intercept, b_logh_Intercept, b_Emax_Intercept) %>%
-  pivot_longer(cols=c("b_logED50_Intercept", "b_logh_Intercept", "b_Emax_Intercept")) %>%
-  ggplot(aes(x=value)) +
-  theme_bw(base_size=16) +
-  geom_density() +
-  geom_line(data=tibble(name=c(rep("b_logED50_Intercept",151),
-                               rep("b_logh_Intercept",71),
-                               rep("b_Emax_Intercept",61)),
-                        xval = c(seq(-5,10,0.1),
-                                 seq(-3,4,0.1),
-                                 seq(-3,3,0.1)),
-                        density=
-                          case_when(str_detect(name,"ED50") ~ dnorm(xval,mean=4,sd=2),
-                                    str_detect(name,"logh") ~  dnorm(xval,mean=0,sd=1),
-                                    TRUE ~ dnorm(xval,mean=0,sd=1))),
-            aes(x=xval, y=density), col="red") +
-  geom_text(data=tibble(name="b_Emax_Intercept", density=0.6, xval=1),
-            aes(x=xval, y=density, label="prior"), col="red", size=8) +
-  geom_text(data=tibble(name="b_Emax_Intercept", density=1, xval=0.5),
-            aes(x=xval, y=density, label="posterior"), col="black", size=8) +
-  facet_wrap(~name, scales = "free")
+#| code-fold: true
+#| code-summary: "Show the code"
 
+compare_prior_posterior <- function(param, fit) {
+  prior <- fit$prior |>
+    parse_dist(prior) |>
+    rename(.variable = nlpar) |>
+    filter(.variable == param, source == "user")
+
+  model_param <- paste("b", param, "Intercept", sep = "_")
+
+  post <- tibble(post = as_draws_rvars(fit)[[model_param]])
+  ggplot(post, aes(y = 1, xdist = post)) +
+    stat_slabinterval() +
+    stat_slab(
+      data = prior,
+      aes(xdist = .dist_obj),
+      fill = NA,
+      colour = "darkblue"
+    ) +
+    scale_thickness_shared() +
+    ylab(NULL) +
+    xlab(param) +
+    theme(
+      axis.ticks.y = element_blank(),   # removes y-axis ticks
+      axis.text.y  = element_blank(),   # removes y-axis text
+      axis.title.y = element_blank()    # removes y-axis title
+    )
+}
+
+cmp_sigmoid <- lapply(prior_sigmoid$nlpar, compare_prior_posterior, fit_sigmoid)
+
+# turns the list of plots into a call of plot1 + plot2 + ... which
+# merges the different plots into a single one
+Reduce("+", cmp_sigmoid)
 ```
 
 
-### Fitting dose response models with `brms`: modified beta model
+### Modified beta model with `brms`
 
-We now fit the modified beta model that can capture non-monotone dose response relationships.
+We now fit the modified beta model that can capture non-monotone dose
+response relationships.
 
 ```{r fit_modbeta, results='hide', message = FALSE}
 # Try a modified beta model
-brmfit2 <- brm(
-  bf(
+model_beta <- bf(
     est | se(stderr) ~
       E0 +
-        Emax *
+        bEmax *
           (delta1 + delta2)^(delta1 + delta2) /
           (delta1^delta1 * delta2^delta2) *
           (dose / 850)^delta1 *
@@ -430,19 +531,21 @@ brmfit2 <- brm(
     E0 ~ 1,
     delta1 ~ 1,
     delta2 ~ 1,
-    Emax ~ 1,
+    bEmax ~ 1,
     nl = TRUE,
     family = gaussian()
-  ),
+  )
+
+prior_beta <-
+  prior(normal(0, 1), nlpar = E0) +
+  prior(normal(0, 1), nlpar = bEmax) + 
+  prior(lognormal(0, 1), nlpar = delta1, lb = 0) +
+  prior(lognormal(0, 1), nlpar = delta2, lb = 0)
+
+fit_beta <- brm(model_beta,
   data = pathway,
-  prior = c(
-    prior(normal(0, 1), nlpar = "E0"),
-    prior(normal(0, 1), nlpar = "Emax"),
-    prior(lognormal(0, 1), nlpar = "delta1", lb = 0),
-    prior(lognormal(0, 1), nlpar = "delta2", lb = 0)
-  ),
-  control = list(adapt_delta = 0.999),
-  save_pars = save_pars(all = TRUE),
+  prior = prior_beta,
+  control = list(adapt_delta = 0.9),
   seed = 7304,
   refresh = 0
 )
@@ -452,37 +555,36 @@ brmfit2 <- brm(
 Let us summarize the model fit:
 
 ```{r summarize_modbetafit}
-summary(brmfit2)
+summary(fit_beta)
 ```
 
 So what does the model fit look like? We could, again, just use 
-`plot(conditional_effects(brmfit2, "dose"), points = TRUE)` or 
+`plot(conditional_effects(fit_beta, "dose"), points = TRUE)` or 
 get a slightly more tailored plot.
 
 ```{r predict_modbeta, cache=FALSE}
 #| code-fold: true
 #| code-summary: "Show the code"
-# Now we get the predictions and turn this into a dataset with one row per dose per MCMC sample
-dr_curve_pred2 <- dr_curve_data |>
-  tidybayes::add_predicted_rvars(brmfit2) |>
-  mutate(logRR = .prediction - .prediction[dose==0]) |>
-  select(-.prediction)
+dr_beta <- plot_dose_response(fit_beta) +
+  scale_fill_brewer(palette = "Blues") +
+  annotate(
+    "text",
+    x = 300,
+    y = log(0.6),
+    label = "modified-beta model fit",
+    color = "darkblue"
+  )
 
-p2 <- dr_curve_pred2 |>
-  ggplot(aes(x=dose, ydist=logRR)) +
-  geom_hline(yintercept=0)  +
-  stat_lineribbon(.width=c(0.5, 0.95)) +
-  scale_fill_brewer(palette="Blues") +
-  geom_point(data=pathway_deltas, aes(x=dose, y=logRR), inherit.aes=FALSE) +
-  geom_errorbar(data=pathway_deltas, aes(x=dose, y=logRR, ymin=.lower, ymax=.upper), width=10, inherit.aes=FALSE) +
-  geom_text(data=tibble(dose=300, logRR=log(0.6), .lower=NA_real_, .upper=NA_real_),
-            aes(label="modified-beta model fit", y=logRR), col="darkblue", size=4) +
-  scale_y_continuous(breaks=log(c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), 
-                     labels=paste(100*(1-c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), "%")) +
-  ylab("Relative rate reduction") +
-  xlab("Total tezepelumab dose [mg/month]")
+plot(dr_beta)
+```
 
-plot(p2)
+Let's also consider how informative the data is wrt to each
+parameter's prior:
+
+```{r}
+cmp_beta <- lapply(prior_beta$nlpar, compare_prior_posterior, fit_beta)
+
+Reduce("+", cmp_beta)
 ```
 
 ### Perform Bayesian model averaging
@@ -490,7 +592,7 @@ plot(p2)
 Now we have two fitted model. We can see both of them together below:
 
 ```{r show_both_plots, fig.width = 10}
-p1 + p2
+dr_sigmoid + dr_beta
 ```
 
 In practice, we do not really know, whether one of these is the true
@@ -502,59 +604,62 @@ better approximation.  At a glance both seem to fit the data somewhat
 decently, so it seems unlikely that we can completely rule one of the
 two models out. That is where Bayesian model averaging comes in.
 
-First, we need to compare how well each model fits. 
-As it turns out, when you just have 4 data points 
-(due to us using summary data), it is problematic
-to just use the "standard" `brms::loo` function to
-perform approximate leave-one-out cross-validation (LOO-CV)
-based on the posterior likelihood as implemented
-in the `loo` package, as can be seen by running
+First, we need to compare how well each model fits.  As it turns out,
+when you just have 4 data points (due to us using summary data), it is
+problematic to just use the "standard" `brms::loo` function to perform
+approximate leave-one-out cross-validation (LOO-CV) based on the
+posterior likelihood as implemented in the `loo` package, as can be
+seen by running
 
 ```{r loo_1}
-loo(brmfit1)
+loo(fit_sigmoid)
 ```
 
 and
 
 ```{r loo_2}
-loo(brmfit2)
+loo(fit_beta)
 ```
 
-Instead, we actually fit each model leaving each 
-dose group out. We could probably do something
-more sophisticated by simulating consistent individual
-patient data (and then performing approximate LOO-CV)
-or parametric sampling from the normal distribution 
-around the point estimates.
+Instead, we actually fit each model leaving each dose group out. We
+could probably do something more sophisticated by simulating
+consistent individual patient data (and then performing approximate
+LOO-CV) or parametric sampling from the normal distribution around the
+point estimates.
 
 ```{r loo_exact_code, eval=FALSE, message = FALSE}
-loo_exact_brmfit1 <- kfold(brmfit1, folds = "loo")
-loo_exact_brmfit2 <- kfold(brmfit2, folds = "loo")
+loo_exact_fit_sigmoid <- kfold(fit_sigmoid, folds = "loo")
+loo_exact_fit_beta <- kfold(fit_beta, folds = "loo")
 ```
 
 ```{r loo_exact, eval=TRUE, include=FALSE}
-loo_exact_brmfit1 <- kfold(brmfit1, folds = "loo")
-loo_exact_brmfit2 <- kfold(brmfit2, folds = "loo")
+loo_exact_fit_sigmoid <- kfold(fit_sigmoid, folds = "loo")
+loo_exact_fit_beta <- kfold(fit_beta, folds = "loo")
 ```
 
 Now, we can compare the models via
 
 ```{r loo_compare}
-loo_compare(loo_exact_brmfit1, loo_exact_brmfit2)
+loo_compare(loo_exact_fit_sigmoid, loo_exact_fit_beta)
 ```
 
 #### Approach 1 (manual without `brms`)
+
 Let us say that we a-priori assign a 75% probability to the SigEmax
 model and 25% to the modified beta model.
 
 ```{r get_post_wgts}
 # follows: 
-# Gould, A. L. (2019). BMA‐Mod: A Bayesian model averaging strategy for determining dose‐response relationships in the presence of model uncertainty. Biometrical Journal, 61(5), 1141-1159.
+# Gould, A. L. (2019). BMA‐Mod: A Bayesian model averaging strategy
+# for determining dose‐response relationships in the presence of model
+# uncertainty. Biometrical Journal, 61(5), 1141-1159.
 # https://dx.doi.org/10.1002/bimj.201700211
-prior_weights <- c(0.75,0.25)
-posterior_weigths <- c(prior_weights[1]*exp(loo_exact_brmfit1$estimates["elpd_kfold", "Estimate"]), 
-                      prior_weights[2]*exp(loo_exact_brmfit2$estimates["elpd_kfold", "Estimate"]))
-(posterior_weigths <- posterior_weigths/sum(posterior_weigths))
+prior_weights <- c(0.75, 0.25)
+posterior_weigths <- c(
+  prior_weights[1] * exp(loo_exact_fit_sigmoid$estimates["elpd_kfold", "Estimate"]),
+  prior_weights[2] * exp(loo_exact_fit_beta$estimates["elpd_kfold", "Estimate"])
+)
+(posterior_weigths <- posterior_weigths / sum(posterior_weigths))
 ```
 
 As we can see, using leaving-one-dose-group out cross-validation,
@@ -571,60 +676,60 @@ we get the dose response curve below.
 ```{r bma_curves, fig.width=10, fig.height=10, cache=FALSE}
 #| code-fold: true
 #| code-summary: "Show the code"
-bma_curve <- dr_curve_pred |>
-  inner_join(dr_curve_pred2, by=c("dose")) |>
-  mutate(logRR = posterior_weigths[1]*logRR.x + posterior_weigths[2]*logRR.y) |>
+bma_curve <- dr_sigmoid$data |>
+  inner_join(dr_beta$data, by = "dose") |>
+  mutate(
+    logRR = posterior_weigths[1] * logRR.x + posterior_weigths[2] * logRR.y
+  ) |>
   dplyr::select(-logRR.x, -logRR.y)
 
+dr_bma <- plot_dose_response(fit_sigmoid) %+%
+  bma_curve +
+  scale_fill_brewer(palette = "Greens") +
+  annotate(
+    "text",
+    x = 300,
+    y = log(0.6),
+    label = "Bayesian model averaging",
+    color = "darkgreen"
+  )
 
-p3 <- bma_curve|>
-  ggplot(aes(x=dose, ydist=logRR)) +
-  geom_hline(yintercept=0)  +
-  stat_lineribbon(.width=c(0.5, 0.95)) +
-  scale_fill_brewer(palette="Greens") +
-  geom_point(data=pathway_deltas, aes(x=dose, y=logRR), inherit.aes=FALSE) +
-  geom_errorbar(data=pathway_deltas, aes(x=dose, y=logRR, ymin=.lower, ymax=.upper), width=10, inherit.aes=FALSE) +
-  geom_text(data=tibble(dose=300, logRR=log(0.6), .lower=NA_real_, .upper=NA_real_),
-            aes(label="Bayesian model averaging", y=logRR), col="darkgreen", size=4) +
-  scale_y_continuous(breaks=log(c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), 
-                     labels=paste(100*(1-c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), "%")) +
-  ylab("Relative rate reduction") +
-  xlab("Total tezepelumab dose [mg/month]")
-
-plot( ( (p1 + theme(axis.title.x=element_blank()) + ggtitle("Sigmoid Emax model")) | 
-          (p2 + theme(axis.title.y=element_blank(),
-                      axis.title.x=element_blank()) + 
-             ggtitle("Modified beta model"))) / 
-        (p3 + ggtitle("Bayesian model averaging") | plot_spacer()) )
-
+plot(
+  ((dr_sigmoid +
+    theme(axis.title.x = element_blank()) +
+    labs(subtitle = "Sigmoid Emax model")) |
+    (dr_beta +
+      theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
+      labs(subtitle = "Modified beta model"))) /
+    (dr_bma + labs(subtitle = "Bayesian model averaging") | plot_spacer())
+)
 ```
 
-#### Approach 2: Using brms functions
+#### Approach 2: Using `brms` functions
 
-Before, we needed to do a lot of manual work to get model-averaged predictions, but the below using `brms::pp_average` would be a lot simpler, if we could rely on the approximate LOO-CV.
+Before, we needed to do a lot of manual work to get model-averaged
+predictions, but the below using `brms::pp_average` would be a lot
+simpler, if we could rely on the approximate LOO-CV.
 
 ##### Approach 2a: Not appropriate here
 
 ```{r brms_bma, eval=FALSE}
-bma_brms_curve <- dr_curve_data %>%
-  dplyr::select(-stderr) %>%
-  bind_cols(as_tibble(
-    t(pp_average(brmfit1, brmfit2, newdata=dr_curve_data, 
-                 weights="loo", # Not a good option in this case.
-                 summary=F)),
-    .name_repair=vctrs::vec_as_names(repair="unique", quiet =T))) %>%
-  pivot_longer(cols=starts_with("V"), names_to=".sample", values_to="pred") %>%
-  mutate(.sample = as.integer(str_extract(.sample, "[0-9]+")))
-
-# Forming differences to placebo by merging with the placebo (dose=0) predictions for each sample
-bma_brms_curve <- bma_brms_curve %>%
-  left_join(bma_brms_curve  %>% 
-              filter(dose==0) %>% 
-              dplyr::select(-dose) %>% 
-              rename(placebo=pred), 
-            by=".sample") %>%
-  mutate(logRR = pred - placebo) %>% # Calculate log rate ratio (difference on log scale vs. placebo)
-  dplyr::select(dose, .sample, logRR)
+dr_curve_data <- tibble(dose = seq(0L, 600L, length.out = 101), stderr = 0)
+bma_brms_curve <- dr_curve_data |>
+  mutate(
+    epred_bma = rvar(pp_average(
+      fit_sigmoid,
+      fit_beta,
+      method = "posterior_epred",
+      newdata = dr_curve_data,
+      # Not a good option in this case
+      weights = "loo",
+      summary = FALSE
+    )),
+    # Forming differences to placebo by merging with the placebo
+    # (dose=0) predictions for each sample
+    logRR = epred_bma - epred_bma[dose == 0]
+  )
 ```
 ##### Approach 2b: Using leave-one-dose-out CV
 
@@ -633,122 +738,150 @@ we first replace the internally calculated approximate LOO-CV
 results with our own
 
 ```{r}
-brmfit1$criteria$loo <- loo_exact_brmfit1
-brmfit2$criteria$loo <- loo_exact_brmfit2
-(w_dose <- model_weights(brmfit1, brmfit2, weights = "loo"))
+fit_sigmoid$criteria$loo <- loo_exact_fit_sigmoid
+fit_beta$criteria$loo <- loo_exact_fit_beta
+(w_dose <- model_weights(fit_sigmoid, fit_beta, weights = "loo"))
 ```
 
 We can then do the following:
 
-```{r}
-bmapreds1 <- posterior_epred(brmfit1, newdata = dr_curve_data)
-bmapreds2 <- posterior_epred(brmfit2, newdata = dr_curve_data)
-pe_avg <- bmapreds1 * w_dose[1] + bmapreds2 * w_dose[2]
-rownames(pe_avg) <- 1:nrow(pe_avg)
+```{r eval=FALSE}
+bma_curve_pred <- dr_curve_data |>
+  tidybayes::add_epred_rvars(fit_sigmoid, value=".epred1") |>
+  tidybayes::add_epred_rvars(fit_beta, value=".epred2") |>
+  mutate(epred_bma = .epred1 * w_dose[1] + .epred2 * w_dose[2],
+         logRR = epred_bma - epred_bma[dose == 0])
 
-# log-rate predictions for each dose
-pe_avg = pe_avg %>% 
-  t() %>% 
-  as_tibble() %>%
-  bind_cols(dr_curve_data %>% dplyr::select(dose)) %>%
-  pivot_longer(cols=-dose, names_to = ".sample", values_to="pred") 
+dr_bma2 <- plot_dose_response(fit_sigmoid) %+% bma_curve_pred +
+  scale_fill_brewer(palette = "Greens") +
+  annotate("text", x = 300, y = log(0.6), label = "BMA (LOO weights)", color = "darkgreen")
 
-# form difference to placebo (log-rate-ratio) and plot
- pbma2 <- pe_avg %>%
-  left_join(y=pe_avg %>% filter(dose==0) %>% dplyr::select(-dose), 
-            by=".sample") %>%
-  mutate(logRR=pred.x-pred.y) %>%
-  dplyr::select(-.sample, -pred.x, -pred.y) %>%
-  group_by(dose) %>%
-  median_qi(.width = c(0.5, 0.95)) %>%
-  ungroup() %>%
-  ggplot(aes(x=dose, y=logRR, ymin=.lower, ymax=.upper)) +
-  geom_hline(yintercept=0)  +
-  geom_ribbon(data=.%>% filter(.width==0.95), fill="green", alpha=0.5) +
-  geom_ribbon(data=.%>% filter(.width==0.5), fill="darkgreen", alpha=0.5) +
-  geom_line(data=.%>% filter(.width==0.5), col="darkgreen") +
-  geom_point(data=pathway_deltas) +
-  geom_errorbar(data=pathway_deltas, width=10) +
-  geom_text(data=tibble(dose=300, logRR=log(0.6), .lower=NA_real_, .upper=NA_real_),
-            aes(label="BMA (LOO weights)"), col="darkgreen", size=4) +
-  scale_y_continuous(breaks=log(c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), 
-                     labels=paste(100*(1-c(0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 1)), "%")) +
-  ylab("Relative rate reduction") +
-  xlab("Total tezepelumab dose [mg/month]")
-
-plot(pbma2)
+plot(dr_bma2)
 ```
 
 #### Why did we do this form of Bayesian model averaging?
 
-Why are we doing it like this? Can we not just fit a single model like this (as an example where we average a sigmoid-Emax and a modified beta model)?
+Why are we doing it like this? Can we not just fit a single model like
+this (as an example where we average a sigmoid-Emax and a modified
+beta model)?
+
 $$
 \begin{aligned}
-f(\text{dose}; \text{parameters}) = & \text{E}_0 + w \times \text{E}_{\text{max }1} \times \frac{\text{dose}^h}{\text{dose}^h + \text{ED}_{50}^h} \\
-  & + (1-w) \times \text{E}_{\text{max }2} \times \frac{(\delta_1 + \delta_2)^{\delta_1 + \delta_2}}{\delta_1^{\delta_1} + \delta_2^{\delta_2}} \times (\frac{\text{dose}}{S})^{\delta_1} \times (1-\frac{\text{dose}}{S})^{\delta_2}
+f(\text{dose}; \text{parameters}) = & \text{E}_0 + w \times \text{E}_{\text{maxSigmoid}} \times \frac{\text{dose}^h}{\text{dose}^h + \text{ED}_{50}^h} \\
+  & + (1-w) \times \text{E}_{\text{maxBeta}} \times \frac{(\delta_1 + \delta_2)^{\delta_1 + \delta_2}}{\delta_1^{\delta_1} + \delta_2^{\delta_2}} \times (\frac{\text{dose}}{S})^{\delta_1} \times (1-\frac{\text{dose}}{S})^{\delta_2}
 \end{aligned}
 $$
-`brms` certainly lets us specify such a model (see below).
-But, part of the reason why we do not use it, is that the model parameters are really badly identified: 
-you can still obtain a similarly good fit at each observed dose level by making one of the two models fit better for one dose (and worse for another dose), 
-if the other model in turn is made to fit worse for that dose (and better for the other dose).
 
-If you run the code below, you will see how much the sampler struggles
-to fit this model, if we try to fit it. That is the case, even if we
-make things easier and fix the model weights to 50:50.
+`brms` certainly lets us specify such a model (see
+below). Nonethelessm such a model is harder to fit as we fit jointly
+both models simultaneousy. Fitting each model separatley is from a
+numerical perspective more stable and robust in comparison to fitting
+each model individually. Still, note that in the above formulation the
+$\text{E}_0$ parameter is shared between the models such that the
+above model differs from a fit of each model individually.
 
-```{r fit_problem_model, eval=FALSE}
-# The model below does not work so well
-brmfit3 <- brm(
-  bf(
-    est | se(stderr) ~
-      E0 +
-        0.5 * Emax * dose^h / (dose^h + ED50^h) +
-        0.5 *
-          Emax2 *
-          (delta1 + delta2)^(delta1 + delta2) /
-          (delta1^delta1 * delta2^delta2) *
-          (dose / 850)^delta1 *
-          (1 - dose / 850)^delta2,
-    E0 ~ 1,
-    ED50 ~ 1,
-    h ~ 1,
-    Emax ~ 1,
-    #modelwgt ~ 1,
-    delta1 ~ 1,
-    delta2 ~ 1,
-    Emax2 ~ 1,
-    nl = T
-  ),
-  data = pathway,
-  prior = c(
-    prior(normal(0, 1), nlpar = "E0"),
-    prior(lognormal(0, 1), nlpar = "h"),
-    prior(normal(0, 1), nlpar = "Emax"),
-    prior(lognormal(4, 2), nlpar = "ED50"),
-    prior(normal(0, 1), nlpar = "Emax2"),
-    prior(lognormal(0, 1), nlpar = "delta1", lb = 0),
-    prior(lognormal(0, 1), nlpar = "delta2", lb = 0)
-  ),
-  control = list(adapt_delta = 0.999)
+An important step in the model below is to align the parameter domain
+with the priors. That is, we continue using the apprioate transformed
+parameters which are positive and we restrict the weighting parameter
+to the domain 0 to 1 (we could also fit this parameter on the logit
+scale). It is important to pass these parameter range limits to Stan
+using the lower bound (`lb`) and upper bound (`ub`) information to
+Stan via the respective arguments of the `prior` function call
+declaring the parameter prior:
+
+```{r fit_mod_avg}
+model_avg <- bf(
+  est | se(stderr) ~
+    E0 +
+      mwgtSigmoid * sEmax * dose^h / (dose^h + ED50^h) +
+      (1-mwgtSigmoid) *
+        bEmax *
+        (delta1 + delta2)^(delta1 + delta2) /
+        (delta1^delta1 * delta2^delta2) *
+        (dose / 850)^delta1 *
+        (1 - dose / 850)^delta2,
+  nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)),
+  E0 ~ 1,
+  sEmax ~ 1,
+  logED50 ~ 1,
+  logh ~ 1,
+  bEmax ~ 1,
+  delta1 ~ 1,
+  delta2 ~ 1,
+  mwgtSigmoid ~ 1,
+  nl = TRUE
 )
+
+prior_avg <-
+  prior_sigmoid +
+  # note that we have to drop the E0 prior from the modified beta
+  # prior, which can be easily done as prior specifications from brms
+  # are essentially data frames.
+  filter(prior_beta, nlpar != "E0") +
+  prior(beta(1, 1), nlpar = mwgtSigmoid, lb=0, ub=1)
+
+fit_mod_avg <- brm(
+  model_avg,
+  data = pathway,
+  prior = prior_avg,
+  refresh = 0,
+  seed = 456456,
+  control = list(adapt_delta = 0.9)
+)
+
 ```
 
-If you run this code, it produces a lot of severe warnings (which you
-should not ignore) about divergent transitions after warmup and a very
-high largest R-hat. Additionally, "Bulk Effective Samples Size" and
-"Tail Effective Samples Size (ESS)" are too low, and a lot of
-transitions after warmup that exceeded the maximum treedepth.
+Considering the summary of the model:
+
+```{r}
+summary(fit_mod_avg)
+```
+
+Now, let's compare all four different models graphically:
+
+```{r bma_curves_complete, fig.width=10, fig.height=10, cache=FALSE}
+
+dr_mod_avg <- plot_dose_response(fit_mod_avg) +
+  scale_fill_brewer(palette = "Reds") +
+  annotate(
+    "text",
+    x = 300,
+    y = log(0.6),
+    label = "Average model",
+    color = "darkred"
+  )
+
+plot(
+  ((dr_sigmoid +
+    theme(axis.title.x = element_blank()) +
+    labs(subtitle = "Sigmoid Emax model")) |
+    (dr_beta +
+      theme(axis.title.y = element_blank(), axis.title.x = element_blank()) +
+      labs(subtitle = "Modified beta model"))) /
+    (dr_bma +
+      labs(subtitle = "Bayesian model averaging") |
+      dr_mod_avg +
+        theme(axis.title.y = element_blank()) +
+        labs(subtitle = "Average model"))
+)
+
+```
+
 
 ### Going beyond the default MCP-Mod models
 
-So far, a lot of what we did could also be done in a frequentist manner using the MCP-Mod approach. 
-However, with `brms` it is easy to make our models more complex when necessary. 
-For example, we assumed that a 280 mg q2w dose is equivalent to a 560 mg q4w dose. 
-This is of course only the case in terms of the total amount of drug injected over the trial period. 
-However, the two dose regimens differ in terms of their blood concentrations over time as shown in the plot below.
+So far, a lot of what we did could also be done in a frequentist
+manner using the MCP-Mod approach.  However, with `brms` it is easy to
+make our models more complex when necessary.  For example, we assumed
+that a 280 mg q2w dose is equivalent to a 560 mg q4w dose.  This is of
+course only the case in terms of the total amount of drug injected
+over the trial period.  However, the two dose regimens differ in terms
+of their blood concentrations over time as shown in the plot below.
 
 ```{r simplepk}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 sim_1st_order_pk <- function(
   injected = c(1, rep(0, 28 * 5)),
   dose = 1,
@@ -759,107 +892,108 @@ sim_1st_order_pk <- function(
   concentration = rep(0, length(injected))
   for (i in 1:length(injected)) {
     if (i > 1) {
-      concentration[i] = concentration[i - 1] -
+      concentration[i] <- concentration[i - 1] -
         k * concentration[i - 1] +
         dose * injected[i] / V
     } else {
-      concentration[i] = dose * injected[i] / V
+      concentration[i] <- dose * injected[i] / V
     }
   }
   return(concentration)
 }
 
-plot_data <- tibble(
-  regimen = "q4wk",
-  dose = 280,
-  concentration = sim_1st_order_pk(
-    rep(c(1, rep(0, 28 * 24 - 1)), 12),
-    dose = 280
+# fmt: skip
+plot_data <- tribble(~regimen, ~dose, ~schedule,
+        "q4wk", 280, rep(c(1, rep(0, 28 * 24 - 1)), 12),
+        "q2w", 280, rep(c(1, rep(0, 14 * 24 - 1)), 24),
+        "q4wk", 560, rep(c(1, rep(0, 28 * 24 - 1)), 12)
+        ) |>
+  rowwise() |>
+  mutate(concentration = list(sim_1st_order_pk(schedule, dose = dose))) |>
+  ungroup() |>
+  unnest_longer(concentration) |>
+  mutate(
+    hour = 1:n(),
+    dose_regimen = paste0(dose, " mg ", regimen),
+    .by = c(regimen, dose)
   )
-) %>%
-  mutate(hour = 1:n()) %>%
-  bind_rows(
-    tibble(
-      regimen = "q2wk",
-      dose = 280,
-      concentration = sim_1st_order_pk(
-        rep(c(1, rep(0, 14 * 24 - 1)), 24),
-        dose = 280
-      )
-    ) %>%
-      mutate(hour = 1:n())
-  ) %>%
-  bind_rows(bind_rows(
-    tibble(
-      regimen = "q4wk",
-      dose = 560,
-      concentration = sim_1st_order_pk(
-        rep(c(1, rep(0, 28 * 24 - 1)), 12),
-        dose = 560
-      )
-    ) %>%
-      mutate(hour = 1:n())
-  )) %>%
-  mutate(dose_regimen = paste0(dose, " mg ", regimen))
 
-plot_data %>%
+plot_data |>
   ggplot(aes(x = hour, y = concentration, col = dose_regimen)) +
   geom_line() +
   coord_cartesian(ylim = c(0, 120)) +
   scale_x_continuous(breaks = seq(0, 12) * 28 * 24, labels = seq(0, 12)) +
-  geom_text(
-    data = . %>%
-      filter(
-        (hour == 8025 & str_detect(dose_regimen, "280 mg q2")) |
-          (hour == 500 & str_detect(dose_regimen, "560 mg q4")) |
-          (hour == 5000 & str_detect(dose_regimen, "280 mg q4"))
-      ),
-    aes(label = dose_regimen),
-    nudge_y = c(-20, 25, 60),
-    angle = c(0, -75, 0)
+  annotate(
+    "text",
+    x = c(500, 5000, 8025),
+    y = c(90, 20, 90),
+    label = c("560 mg q4wk", "280 mg q4wk", "280 mg q2wk"),
+    angle = c(0, 0, -75)
   ) +
   xlab("Time in trial (months)") +
   ylab("Drug concentration [mg/L]")
 
 ```
 
-These differences in pharmacokinetic profiles likely lead to at least somewhat different efficacy outcomes.
-For example, if efficacy is more driven by the peak concentration achieved in each dosing interval, 
-280 mg q2w might be less effective than a 560 mg q4w regiment would have been. 
-On the other hand, if efficacy is more determined by the minimum concentration maintained throughout time, 
-then 280 mg q2w could be more effective than 560 mg q4w.
-If the main determinant of efficacy is the average drug concentration over time, and peaks and troughs do not matter 
-(at least within the concentrations seen), then the two dosing regimens might be exactly identical.
+These differences in pharmacokinetic profiles likely lead to at least
+somewhat different efficacy outcomes.  For example, if efficacy is
+more driven by the peak concentration achieved in each dosing
+interval, 280 mg q2w might be less effective than a 560 mg q4w
+regiment would have been.  On the other hand, if efficacy is more
+determined by the minimum concentration maintained throughout time,
+then 280 mg q2w could be more effective than 560 mg q4w.  If the main
+determinant of efficacy is the average drug concentration over time,
+and peaks and troughs do not matter (at least within the
+concentrations seen), then the two dosing regimens might be exactly
+identical.
 
-So, we could update our previous sigmoid Emax model and add an extra term that describes how the 280 mg q2w dose might relate to q4w doses.
-Note that assuming a monotone concentration response, a 280 mg q2w regimen cannot be worse than a 280 mg q4w regimen - this is also illustrated 
-by the plot showing that the concentrations of 280 mg q2w are (unsurprisingly) always above those of 280 mg q4w. 
-This gives us a lower bound for the efficacy of 280 mg q2w. 
-Similarly, its peak concentrations stay below 2.5 times the peak concentrations of 280 mg q2w, 
-which gives us an upper bound. We will specify a log-normal prior with mean 0 
-and SD 0.67 for a regimen factor that indicates what q4w dose a q2w dose is equivalent to.
+So, we could update our previous sigmoid Emax model and add an extra
+term that describes how the 280 mg q2w dose might relate to q4w doses.
+Note that assuming a monotone concentration response, a 280 mg q2w
+regimen cannot be worse than a 280 mg q4w regimen - this is also
+illustrated by the plot showing that the concentrations of 280 mg q2w
+are (unsurprisingly) always above those of 280 mg q4w.  This gives us
+a lower bound for the efficacy of 280 mg q2w. Similarly, its peak
+concentrations stay below 2.5 times the peak concentrations of 280 mg
+q2w, which gives us an upper bound. We will specify a log-normal prior
+with mean 0 and SD 0.67 for a regimen factor that indicates what q4w
+dose a q2w dose is equivalent to.
 
 
 ```{r adding_regimen_factor, results='hide', message = FALSE}
-brmfit3 <- brm( bf( est | se(stderr) ~ E0 + Emax * (dose*dosefactor)^h / ((dose*dosefactor)^h + ED50^h),
-                   nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)), nlf(dosefactor ~ exp((dose==560)*regimen)),
-                   E0 ~ 1, logED50 ~ 1, logh ~ 1, Emax ~ 1, regimen ~ 1, 
-                   nl=T, family=gaussian()),
-               data=pathway,
-               prior = c(prior(normal(0,1), nlpar="E0"),
-                         prior(normal(0,1), nlpar="logh"),
-                         prior(normal(0,1), nlpar="Emax"),
-                         prior(normal(4,2), nlpar="logED50"),
-                         prior(normal(0,0.67), nlpar="regimen")),
-               control=list(adapt_delta=0.999),
-               seed=2023,
-               save_pars = save_pars(all = TRUE))
+model_sigmoid_alt <- bf(
+  est | se(stderr) ~
+    E0 + sEmax * (dose * dosefactor)^h / ((dose * dosefactor)^h + ED50^h),
+  nlf(h ~ exp(logh)),
+  nlf(ED50 ~ exp(logED50)),
+  nlf(dosefactor ~ exp((dose == 560) * regimen)),
+  E0 ~ 1,
+  logED50 ~ 1,
+  logh ~ 1,
+  sEmax ~ 1,
+  regimen ~ 1,
+  nl = TRUE,
+  family = gaussian()
+)
+
+prior_sigmoid_alt <-
+  prior_sigmoid +
+  prior(normal(0, 0.67), nlpar = regimen)
+
+fit_sigmoid_alt <- brm(
+  model_sigmoid_alt,
+  data = pathway,
+  prior = prior_sigmoid_alt,
+  control = list(adapt_delta = 0.9),
+  seed = 5768768,
+  refresh = 0
+)
 ```
 
 Let's summarize the model results:
 
 ```{r summarize_arf_results}
-summary(brmfit3)
+summary(fit_sigmoid_alt)
 ```
 
 As we can see, we can fit such a model, but the marginal posterior for
@@ -871,24 +1005,34 @@ it via this type of model.
 
 ## Conclusion
 
-As we could see `brms` makes it surprisingly easy to fit non-linear dose response models and to perform model averaging.
-Taking a Bayesian approach to dose response modeling is attractive for a number of reasons:
-* using prior information e.g. on expected placebo outcomes, the maximum plausible treatment effect and typical dose response patterns,
-* (weakly-)informative priors avoid issues with maximum likelihood estimation such as infinitely steep sigmoid Emax models (common when the lowest tested dose has the best point estimate),
-* the convenience of obtaining predictions about things that are transformations of the model parameters (e.g. the dose with at least a certain effect), and
-* the straightforward way, in which we can extend the basic models to account for the specifics of our dose finding study.
+As we could see `brms` makes it surprisingly easy to fit non-linear
+dose response models and to perform model averaging.  Taking a
+Bayesian approach to dose response modeling is attractive for a number
+of reasons:
+* using prior information e.g. on expected placebo outcomes, the
+  maximum plausible treatment effect and typical dose response
+  patterns,
+* (weakly-)informative priors avoid issues with maximum likelihood
+  estimation such as infinitely steep sigmoid Emax models (common when
+  the lowest tested dose has the best point estimate),
+* the convenience of obtaining predictions about things that are
+  transformations of the model parameters (e.g. the dose with at least
+  a certain effect), and
+* the straightforward way, in which we can extend the basic models to
+  account for the specifics of our dose finding study.
 
 ## Excercises
 
 ### Exercise 1: Peanut allergy
 
-In a hypothetical phase 2b trial children and adolescents with peanut allergy 
-were randomly assigned to placebo or 5 doses (5 to 300 mg) of a new drug.  
-After 26 weeks the patients underwent a double-blind placebo-controlled
-food challenge and the primary endpoint was the proportion of patients that
-could ingest 600 mg or more of peanut protein without experiencing dose-limiting
-symptoms. The plots below show an overview of the data. Note that no placebo
-patients were considered "responders" per the primary endpoint definition.
+In a hypothetical phase 2b trial children and adolescents with peanut
+allergy were randomly assigned to placebo or 5 doses (5 to 300 mg) of
+a new drug.  After 26 weeks the patients underwent a double-blind
+placebo-controlled food challenge and the primary endpoint was the
+proportion of patients that could ingest 600 mg or more of peanut
+protein without experiencing dose-limiting symptoms. The plots below
+show an overview of the data. Note that no placebo patients were
+considered "responders" per the primary endpoint definition.
 
 ```{r peanutdata}
 #| code-fold: true
@@ -1021,22 +1165,44 @@ peanut <- tibble(
     1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L),
     levels = c("N", "Y"), class = "factor" ) )
 
-peanut %>%
-  ggplot(aes(x=factor(AVAL), fill=TRT01P)) +
-  geom_bar( position=position_dodge(preserve = "single")) +
-  scale_fill_manual(values=c("royalblue", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d")) +
+peanut |>
+  ggplot(aes(x = factor(AVAL), fill = TRT01P)) +
+  geom_bar(position = position_dodge(preserve = "single")) +
+  scale_fill_manual(
+    values = c(
+      "royalblue",
+      "#fb6a4a",
+      "#ef3b2c",
+      "#cb181d",
+      "#a50f15",
+      "#67000d"
+    )
+  ) +
   xlab("Peanut protein tolerated without dose-limiting symptoms (mg)") +
   ylab("Patients") +
-  theme(legend.position="right")
+  theme(legend.position = "right")
 
-peanut %>%
-  group_by(TRT01P) %>%
-  summarize(proportion = sum(CRIT1FL=="Y") / n()) %>%
-  ggplot(aes(x=TRT01P, y=proportion, fill=TRT01P)) +
-  geom_bar(stat="identity", position=position_dodge()) +
-  geom_text(aes(label=scales::percent(proportion)), size=7, vjust=c(0, rep(1.5, 5))) +
-  scale_fill_manual(values=c("royalblue", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d")) +
-  scale_y_continuous(breaks=seq(0, 0.7, 0.1), labels=scales::percent) +
+peanut |>
+  group_by(TRT01P) |>
+  summarize(proportion = sum(CRIT1FL == "Y") / n()) |>
+  ggplot(aes(x = TRT01P, y = proportion, fill = TRT01P)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_text(
+    aes(label = scales::percent(proportion)),
+    size = 7,
+    vjust = c(0, rep(1.5, 5))
+  ) +
+  scale_fill_manual(
+    values = c(
+      "royalblue",
+      "#fb6a4a",
+      "#ef3b2c",
+      "#cb181d",
+      "#a50f15",
+      "#67000d"
+    )
+  ) +
+  scale_y_continuous(breaks = seq(0, 0.7, 0.1), labels = scales::percent) +
   xlab("Tolerating >=600 mg of peanut protein without dose-limiting symptoms") +
   ylab("Percentage of patients")
 ```
@@ -1056,22 +1222,32 @@ shallower curve. The dose with half the effect (ED50) might be near 15 mg, but
 have considerable uncertainty around that.
 
 ```{r peanutmodel1, eval = FALSE}
-brmfit1 <- brm(
-  bf( y | trials(n) ~ E0 + Emax * dose^h/(dose^h + ED50^h),
-      nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)),
-      E0 ~ 1, logED50 ~ 1, logh ~ 1, Emax ~ 1, 
-      nl=TRUE, 
-      family=binomial(link="logit")),
-  prior = c(prior(normal(-2.944, 0.38), nlpar="E0"), 
-            prior(normal(0, 1), nlpar="logh"), 
-            prior(normal(0, 6), nlpar="Emax"), 
-            prior(normal(2.7, 2.5), nlpar="logED50")), 
-  data = peanut %>% group_by(TRT01P, dose) %>% summarize(y=sum(CRIT1FL=="Y"), n=n(), .groups="drop")
+fit_sigmoid <- brm(
+  bf(
+    y | trials(n) ~ E0 + Emax * dose^h / (dose^h + ED50^h),
+    nlf(h ~ exp(logh)),
+    nlf(ED50 ~ exp(logED50)),
+    E0 ~ 1,
+    logED50 ~ 1,
+    logh ~ 1,
+    Emax ~ 1,
+    nl = TRUE,
+    family = binomial(link = logit)
+  ),
+  prior = 
+    prior(normal(-2.944, 0.38), nlpar = E0) +
+    prior(normal(0, 1), nlpar = logh) +
+    prior(normal(0, 6), nlpar = Emax) +
+    prior(normal(2.7, 2.5), nlpar = logED50),
+  data = peanut |>
+    group_by(TRT01P, dose) |>
+    summarize(y = sum(CRIT1FL == "Y"), n = n(), .groups = "drop")
 )
+
 ```
 
 Now use 
-`tibble(dose = seq(0, 300, 1), n=1) %>% tidybayes::add_epred_rvars(object=brmfit1, newdata=.)` 
+`tibble(dose = seq(0, 300, 1), n=1) |> tidybayes::add_epred_rvars(object=fit_sigmoid)` 
 to obtain predicted proportions for every dose from 0 to 300 mg.
 Then, plot the curve of predicted proportions for each of these doses using 
 `ggplot2` and `ggdist` (using `ydist=.epred` in the aesthetics and the 
@@ -1134,7 +1310,7 @@ mice <- tibble(
             rep(1L, 15),
             rep(1L, 8),0L, 1L,0L,0L, 1L,0L,0L, rep(1L,5),0L, 0L,rep(1L,5),
             rep(1L,5), 0L,1L,rep(0L,9),rep(1L,4),0L, rep(1L,6),
-            rep(1L,5), rep(0L,12),1L, 0L,0L, rep(1L,7))) %>%
+            rep(1L,5), rep(0L,12),1L, 0L,0L, rep(1L,7))) |>
   mutate(Survived = 1L-Died)
 ```
 
@@ -1142,19 +1318,19 @@ Displayed in a fashion similar to the original article, the data look
 as in the figure below.
 
 ```{r plot_mice_data, echo=FALSE}
-mice %>%
+mice |>
   mutate(`Source of immune serum` = factor(`Source of immune serum`,
                                            levels=c("rabbit", "horse"),
                                            labels=c("Immune serum\nfrom rabbits",
                                                     "Immune serum\nfrom horses")),
          Survived = factor(Survived, 
                            levels=0L:1L, 
-                           labels=c("Died", "Survived"))) %>%
+                           labels=c("Died", "Survived"))) |>
   group_by(`Source of immune serum`, `Amount of serum (cc.)`, 
-                      `Amount of culture (cc.)`) %>%
-  arrange(desc(Survived)) %>%
-  mutate(mouse_number = 1:n()) %>%
-  ungroup() %>%
+                      `Amount of culture (cc.)`) |>
+  arrange(desc(Survived)) |>
+  mutate(mouse_number = 1:n()) |>
+  ungroup() |>
   ggplot(aes(x=mouse_number, y=`Amount of serum (cc.)`, 
              col=Survived)) +
   geom_point(size=5) +
@@ -1175,38 +1351,61 @@ An alternative display showing the proportion of mice that survived
 versus the amount of serum given as displayed in the figure below.
 
 ```{r echo=FALSE}
-mice %>% 
-  group_by(`Source of immune serum`, `Amount of serum (cc.)`, 
-           `Amount of culture (cc.)`) %>%
-  summarize(`Proportion of mice that survived` = mean(Survived), .groups="drop") %>%
-  ggplot(aes(x=`Amount of serum (cc.)`, y=`Proportion of mice that survived`, 
-             col=factor(`Amount of culture (cc.)`),
-             label=paste0("Amount of\nculture\n(cc.) =",
-                          `Amount of culture (cc.)`))) +
-  theme(panel.grid.major.y = element_blank(),
-        panel.grid.minor.y = element_blank()) +
-  geom_hline(yintercept=c(0,0.25,0.5,0.75,1), col="grey") +
+mice_sum <- mice |>
+  group_by(
+    `Source of immune serum`,
+    `Amount of serum (cc.)`,
+    `Amount of culture (cc.)`
+  ) |>
+  summarize(
+    `Proportion of mice that survived` = mean(Survived),
+    .groups = "drop"
+  )
+
+mice_sum |>
+  ggplot(aes(
+    x = `Amount of serum (cc.)`,
+    y = `Proportion of mice that survived`,
+    col = factor(`Amount of culture (cc.)`),
+    label = paste0("Amount of\nculture\n(cc.) =", `Amount of culture (cc.)`)
+  )) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank()
+  ) +
+  geom_hline(yintercept = c(0, 0.25, 0.5, 0.75, 1), col = "grey") +
   geom_line() +
-  scale_color_manual(values=c("#fdbb84", "#fc8d59", "#e34a33", "#b30000")) +
-  scale_x_log10(breaks=c(0.4*0.5^c(0L:8L)),
-                labels=c(0.4*0.5^c(0L:8L)),
-                guide=guide_axis(angle = 45),
-                expand=c(0.1,0.1)) +
-  scale_y_continuous(expand=c(0.15, 0.15), breaks=c(0,0.25,0.5,0.75,1)) +
+  scale_color_manual(values = c("#fdbb84", "#fc8d59", "#e34a33", "#b30000")) +
+  scale_x_log10(
+    breaks = c(0.4 * 0.5^c(0L:8L)),
+    labels = c(0.4 * 0.5^c(0L:8L)),
+    guide = guide_axis(angle = 45),
+    expand = c(0.1, 0.1)
+  ) +
+  scale_y_continuous(
+    expand = c(0.15, 0.15),
+    breaks = c(0, 0.25, 0.5, 0.75, 1)
+  ) +
   facet_wrap(~`Source of immune serum`) +
-  ggrepel::geom_text_repel(data=.%>% 
-                             filter(`Source of immune serum`=="rabbit" &
-                                    ((`Amount of serum (cc.)`==0.003125 & 
-                                      `Amount of culture (cc.)`==0.05) |
-                                      (`Amount of serum (cc.)`==0.00625 & 
-                                      `Amount of culture (cc.)`==0.1) |
-                                      (`Amount of serum (cc.)`==0.1 & 
-                                      `Amount of culture (cc.)`==0.2) |
-                                      (`Amount of serum (cc.)`==0.1 & 
-                                      `Amount of culture (cc.)`==0.4))),
-                           size=4, lineheight = .7, 
-                           nudge_y = c(0.05, 0, 0, -0.1),
-                           nudge_x=c(0, -0.05, 0.1,-0.03))
+  ggrepel::geom_text_repel(
+    data = filter(
+      mice_sum,
+      `Source of immune serum` == "rabbit" &
+        ((`Amount of serum (cc.)` == 0.003125 &
+          `Amount of culture (cc.)` == 0.05) |
+          (`Amount of serum (cc.)` == 0.00625 &
+            `Amount of culture (cc.)` == 0.1) |
+          (`Amount of serum (cc.)` == 0.1 &
+            `Amount of culture (cc.)` == 0.2) |
+          (`Amount of serum (cc.)` == 0.1 &
+            `Amount of culture (cc.)` == 0.4))
+    ),
+    size = 4,
+    lineheight = .7,
+    nudge_y = c(0.05, 0, 0, -0.1),
+    nudge_x = c(0, -0.05, 0.1, -0.03)
+  )
+
 ```
 
 Excercises in increasing order of complexity:
