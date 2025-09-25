@@ -29,11 +29,6 @@ This case study features:
 - collapsability and transportability of effect measures, as
   well as population average and individual treatment effects
 
-```{r includestuff, include=FALSE, cache=FALSE}
-here::i_am("src/02m_proportion_difference.qmd")
-source(here::here("src", "setup.R"))
-```
-
 To run the R code of this section please ensure to load these libraries first:
   
 ```{r basesetup,eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
@@ -42,12 +37,12 @@ library(brms)
 library(posterior)
 library(tidybayes)
 library(gt)
-library(here)
+here::i_am("src/02m_proportion_difference.qmd")
 
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
+dir.create(here::here("_brms-cache"), FALSE)
 set.seed(678571)
 
 # default controls args passed to Stan
@@ -55,6 +50,10 @@ control_args <- list(adapt_delta=0.99, step_size=0.1)
 
 # nice common ggplot2 theme
 theme_set(theme_bw(base_size=18))
+```
+
+```{r includestuff, include=FALSE, cache=FALSE}
+source(here::here("src", "setup.R"))
 ```
 
 ```{r brmscachestuff, include=FALSE, cache=FALSE}
@@ -65,9 +64,9 @@ control_args <- list(adapt_delta=0.8)
 
 # move caching directory to a cpu specific directory (for those using
 # Docker)
-options(cmdstanr_write_stan_file_dir=here("_brms-cache", Sys.info()["machine"]))
+options(cmdstanr_write_stan_file_dir=here::here("_brms-cache", Sys.info()["machine"]))
 # create cache directory if not yet available
-dir.create(here("_brms-cache", Sys.info()["machine"]), FALSE)
+dir.create(here::here("_brms-cache", Sys.info()["machine"]), FALSE)
 
 ```
 

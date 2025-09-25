@@ -23,19 +23,18 @@ library(bayesplot)
 library(tidybayes)
 library(forcats)
 library(RBesT)
-library(here)
+here::i_am("src/01c_priors.qmd")
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE) 
+dir.create(here::here("_brms-cache"), FALSE) 
 set.seed(593467)
 theme_set(theme_bw(12))
 ```
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source(here("src", "setup.R"))
+source(here::here("src", "setup.R"))
 ```
 
 Within the Bayesian regression modeling in Stan framework `brms`

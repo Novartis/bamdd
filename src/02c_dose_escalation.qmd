@@ -62,18 +62,17 @@ library(knitr)
 library(BOIN)
 library(ggplot2)
 library(purrr)
-library(here)
+here::i_am("src/02c_dose_escalation.qmd")
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
+dir.create(here::here("_brms-cache"), FALSE)
 set.seed(8794567)
 ```
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source("setup.R")
+source(here::here("src", "setup.R"))
 ```
 
 Such a model is straightforward to implement in `brms`. Below, we use a nonlinear formula specification, in order to allow the prior for the intercept to be specified on the log scale. 

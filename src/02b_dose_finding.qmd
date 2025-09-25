@@ -24,13 +24,13 @@ library(posterior)
 library(tidybayes)
 library(ggrepel)
 library(patchwork)
-library(here)
+here::i_am("src/02b_dose_finding.qmd")
 library(dplyr)
 library(ggdist)
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
+dir.create(here::here("_brms-cache"), FALSE)
 set.seed(8979476)
 ```
 
@@ -83,7 +83,7 @@ given estimates and standard error for each dose.
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
-source(here("src", "setup.R"))
+source(here::here("src", "setup.R"))
 ```
 
 ```{r get_annualized_rates}

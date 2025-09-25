@@ -21,14 +21,14 @@ libraries and options first:
 library(tidyverse)
 library(brms)
 library(posterior)
-library(here)
+here::i_am("src/02j_network_meta_analysis.qmd")
 library(knitr)
 library(gt)
 library(netmeta) # for graphing the network & other NMA utils
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
+dir.create(here::here("_brms-cache"), FALSE)
 set.seed(5675798)
 # allow for wider printouts without line-breaking
 options(width=120)
@@ -38,8 +38,7 @@ control_args <- list(adapt_delta=0.95)
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source("setup.R")
+source(here::here("src", "setup.R"))
 ```
 
 

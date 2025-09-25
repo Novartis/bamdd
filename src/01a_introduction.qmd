@@ -6,7 +6,7 @@ author:
 # Introduction {#sec-introduction}
 
 ```{r, include = FALSE}
-source(here::here("src/setup.R"))
+source(here::here("src", "setup.R"))
 ```
 
 Applied modeling can facilitate interpretation of clinical data and is

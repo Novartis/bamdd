@@ -14,18 +14,17 @@ library(ggrepel)
 library(brms)
 library(posterior)
 library(meta)
-library(here)
+here::i_am("src/02ab_meta_analysis_trtdiff.qmd")
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
+dir.create(here::here("_brms-cache"), FALSE)
 set.seed(979356)
 ```
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source("setup.R")
+source(here::here("src", "setup.R"))
 ```
 
 ## Background

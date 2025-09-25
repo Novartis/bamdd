@@ -34,19 +34,18 @@ library(readr)
 library(purrr)
 library(ggplot2)
 library(patchwork)
-library(here)
+here::i_am("src/02g_longitudinal.qmd")
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
+dir.create(here::here("_brms-cache"), FALSE)
 set.seed(8904568)
 control_args <- list(adapt_delta = 0.95)
 ```
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source("setup.R")
+source(here::here("src", "setup.R"))
 ```
 
 ```{r get_data, echo = TRUE}
@@ -634,7 +633,7 @@ gp_loo + lm_loo
 
 
 ```{r ex1_data, echo = TRUE, eval = FALSE}
-adpasi <- readr::read_csv(here("data", "longitudinal.csv"), show_col_types = FALSE) %>%
+adpasi <- readr::read_csv(here::here("data", "longitudinal.csv"), show_col_types = FALSE) %>%
   dplyr::filter(TRT01P %in% c("PBO", "TRT")) %>%
   mutate(AVISIT = factor(AVISIT, paste("Week", c(1, 2 * (1:6)))),
          TRT01P = factor(TRT01P, c("PBO", "TRT")))
