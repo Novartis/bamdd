@@ -6,6 +6,7 @@ author:
 # Introduction {#sec-introduction}
 
 ```{r, include = FALSE}
+here::i_am("src/01a_introduction.qmd")
 source(here::here("src", "setup.R"))
 ```
 
