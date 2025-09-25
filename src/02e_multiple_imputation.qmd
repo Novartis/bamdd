@@ -77,7 +77,7 @@ options(brms.normalize=FALSE)
 
 ```{r, include=FALSE, echo=FALSE, eval=TRUE}
 # invisible to the reader additional setup steps, which are optional
-source(here("src", "setup.R"))
+source(here::here("src", "setup.R"))
 ```
 
 Let us consider some simulated data for a trial in chronic obstructive

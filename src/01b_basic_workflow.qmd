@@ -301,7 +301,7 @@ parameter one may use:
 
 ```{r}
 prior_meta_random_alt <- prior_meta_fixed +
-    prior(normal(0,0.5), class="sd", coef="Intercept", group="study")
+    prior(normal(0,0.5), class=sd, coef=Intercept, group=study)
     
 fit_meta_random_alt  <- update(fit_meta_random, prior=prior_meta_random_alt,
                                control=list(adapt_delta=0.95),
@@ -317,7 +317,7 @@ step is avoided, e.g. when looking at data subsets:
 
 ```{r}
 prior_meta_random_alt <- prior_meta_fixed +
-    prior(normal(0,0.5), class="sd", coef="Intercept", group="study")
+    prior(normal(0,0.5), class=sd, coef=Intercept, group=study)
     
 fit_meta_random_alt2  <- update(fit_meta_random, newdata=slice_head(arm_data, n=4),
                                 control=list(adapt_delta=0.95),
