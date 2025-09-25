@@ -99,7 +99,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-82d9e4e9cf99d8eb0e77e4f639bbcaed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -364,7 +364,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
   </div>
 </li>
       </ul>
@@ -436,12 +436,12 @@ window.Quarto = {
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"src/02k_nuisance.qmd"</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"brms-cache"</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"brms-cache"</span>))</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will also use one dataset provided in the <code>multinma</code> R package.</p>
@@ -1104,8 +1104,8 @@ window.Quarto = {
 <td class="gt_row gt_right" headers="sd">2.99</td>
 <td class="gt_row gt_right" headers="varestimate">8.94</td>
 </tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
+</tbody><tfoot>
+<tr class="gt_footnotes odd">
 <td colspan="9" class="gt_footnote">Treatment 1 refers to placebo and treatments 2 to 5 are active drugs.</td>
 </tr>
 </tfoot>
@@ -1148,14 +1148,14 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.8 seconds.
-Chain 2 finished in 0.8 seconds.
-Chain 3 finished in 0.8 seconds.
-Chain 4 finished in 0.5 seconds.
+Chain 1 finished in 1.1 seconds.
+Chain 2 finished in 0.9 seconds.
+Chain 3 finished in 0.9 seconds.
+Chain 4 finished in 1.0 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.7 seconds.
-Total execution time: 4.4 seconds.</code></pre>
+Mean chain execution time: 1.0 seconds.
+Total execution time: 4.8 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gamma 
@@ -2000,12 +2000,12 @@ Senn, Stephen, Francois Gavini, David Magrez, and André Scheen. 2013. <span>“
 <span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
 <span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
 <span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"src/02k_nuisance.qmd"</span>)</span>
 <span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"brms-cache"</span>))</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"brms-cache"</span>))</span>
 <span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
-<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span>
 <span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a></span>
@@ -2013,7 +2013,7 @@ Senn, Stephen, Francois Gavini, David Magrez, and André Scheen. 2013. <span>“
 <span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}</span></span>
 <span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader further R session setup</span></span>
-<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span>
 <span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>

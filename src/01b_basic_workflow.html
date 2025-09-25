@@ -78,7 +78,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-82d9e4e9cf99d8eb0e77e4f639bbcaed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -329,7 +329,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
   </div>
 </li>
       </ul>
@@ -467,14 +467,14 @@ window.Quarto = {
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># other utilities</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># used for the "kable" command</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)  <span class="co"># useful to specify path's relative to project</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"src/01b_basic_workflow.qmd"</span>)  <span class="co"># useful to specify path's relative to project</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># set the R random seed of the session for reproducibility</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5886935</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -483,17 +483,16 @@ window.Quarto = {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt; include setup.R &gt;}}</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>As <code>brms</code> models are translated to Stan model files, which must be compiled as a C++ program before the model is run, it is useful to cache this compilation step such that repeated model evaluation avoids the compilation (speeding up model reruns with different data or model reruns after restarting R). Thus, the <code>brms.backend</code> option <code>cmdstanr</code> is configured as a default. Doing so allows to cache the binary Stan executables in the directory configured with the option <code>cmdstanr_write_stan_file_dir</code>.</p>
 <p>In case the model fitted is taking a long time for one chain (more than a minute at least), then it is advisable to turn on parallelization of the multiple chains by default by adding to the preamble:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use 4 cores for parallel sampling by default - only recommended if</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># model takes &gt; 1 minute to run for each chain otherwise the</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># parallelization introduces substantial overhead</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># parallelization introduces substantial overhead.</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>It is discouraged to run chains always in parallel, since the parallelization itself consumes some ressources and is only beneficial if the model runtime is at least at the order of minutes. In case the model runtime becomes excessivley long, then each chain can itself be run with multiple cores as discussed in the section <a href="../src/03b_parallel.html">Parallel computation</a>.</p>
+<p>It is discouraged to run chains always in parallel, since the parallelization itself consumes some ressources and is only beneficial if the model runtime is at least at the order of minutes. This is in particular the case if a simulation study is run which itslef is repeated many times such that the computational resources are already exhausted by the number of replications the simulation study is run. In this case the use of any parallelization of the <code>brms</code> model is not advisable. However, when one develops a model and model runtimes become excessivley long, then each chain can itself be run with multiple cores as discussed in the section <a href="../src/03b_parallel.html">Parallel computation</a>.</p>
 </section>
 <section id="model-formula" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="model-formula"><span class="header-section-number">2.3</span> Model formula</h2>
@@ -569,7 +568,7 @@ window.Quarto = {
 </div>
 <p>Note that <code>brms</code> requires the model formula <strong>and</strong> the data to which the model is being fitted to. This is due to fact that only model and data together define all parameters fully. For example, the model formula could contain a categorical variable and then only knowing all categories as defined by the data allows to define the full model with all parameters. For the fixed effect model only a single parameter, the intercept only term is defined. To now define a prior for the intercept, we may use the <code>prior</code> command as:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>prior_meta_fixed <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">class=</span><span class="st">"Intercept"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>prior_meta_fixed <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">class=</span>Intercept)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The prior for the random effects model is slightly more complicated as it involves a heterogeniety parameter <span class="math inline">\(\tau\)</span> (standard deviation of the study random effect):</p>
 <div class="cell">
@@ -664,12 +663,12 @@ window.Quarto = {
 <p>Given that the random effects model is a generalization of the fixed effect model, it is natural to write the prior in a way which expands the fixed effect case as:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>prior_meta_random <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">class=</span><span class="st">"sd"</span>, <span class="at">coef=</span><span class="st">"Intercept"</span>, <span class="at">group=</span><span class="st">"study"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The logic to defined priors on specifc parameters is to use the different parameter identifiers as provided by the <code>get_prior</code> command. In this context <code>class</code>, <code>coef</code> and <code>group</code> is used for parameter class, parameter coefficient and grouping, respectivley. The identifiers <code>resp</code>, <code>dlpar</code> and <code>nlpar</code> are used in the context of multiple responses, multiple distribution parameters oe non-linear parameters, respectivley. It is preferable to be specific as above in the definition of priors while it is admissable to be less specific like:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>prior_meta_random <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">class=</span><span class="st">"sd"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class=</span>sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This statement assign to <em>all</em> random effect standard deviations of the model the same prior, which can be convenient in some situations.</p>
 </section>
@@ -735,7 +734,7 @@ Total execution time: 1.0 seconds.</code></pre>
 <p>In the course of an exploratory analysis one often wishes to modify a given model slightly to study, for example, the sensitivity to different assumptions. For this purpose the <code>update</code> mechanism is a convenient way to simply change certain arguments specified previously. To change the prior on the study level random effect parameter one may use:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>prior_meta_random_alt <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="at">class=</span><span class="st">"sd"</span>, <span class="at">coef=</span><span class="st">"Intercept"</span>, <span class="at">group=</span><span class="st">"study"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>fit_meta_random_alt  <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_meta_random, <span class="at">prior=</span>prior_meta_random_alt,</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
@@ -754,19 +753,19 @@ Total execution time: 1.0 seconds.</code></pre>
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 0.2 seconds.
-Chain 2 finished in 0.3 seconds.
-Chain 3 finished in 0.3 seconds.
+Chain 2 finished in 0.2 seconds.
+Chain 3 finished in 0.2 seconds.
 Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.3 seconds.</code></pre>
+Total execution time: 1.1 seconds.</code></pre>
 </div>
 </div>
 <p>As changing the prior results in this case in a need to recompile the model, the benefits of using <code>update</code> are not large in this case. However, whenever a model recompilation is not needed, then using <code>update</code> significantly speeds up the workflow as the compilation step is avoided, e.g.&nbsp;when looking at data subsets:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>prior_meta_random_alt <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="at">class=</span><span class="st">"sd"</span>, <span class="at">coef=</span><span class="st">"Intercept"</span>, <span class="at">group=</span><span class="st">"study"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>fit_meta_random_alt2  <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_meta_random, <span class="at">newdata=</span><span class="fu">slice_head</span>(arm_data, <span class="at">n=</span><span class="dv">4</span>),</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
@@ -781,7 +780,7 @@ Total execution time: 1.3 seconds.</code></pre>
 Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.3 seconds.
-Chain 4 finished in 0.2 seconds.
+Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
@@ -1612,14 +1611,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb43-75"><a href="#cb43-75" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb43-76"><a href="#cb43-76" aria-hidden="true" tabindex="-1"></a><span class="co"># other utilities</span></span>
 <span id="cb43-77"><a href="#cb43-77" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># used for the "kable" command</span></span>
-<span id="cb43-78"><a href="#cb43-78" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)  <span class="co"># useful to specify path's relative to project</span></span>
+<span id="cb43-78"><a href="#cb43-78" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"src/01b_basic_workflow.qmd"</span>)  <span class="co"># useful to specify path's relative to project</span></span>
 <span id="cb43-79"><a href="#cb43-79" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
 <span id="cb43-80"><a href="#cb43-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-81"><a href="#cb43-81" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb43-82"><a href="#cb43-82" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb43-82"><a href="#cb43-82" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
 <span id="cb43-83"><a href="#cb43-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-84"><a href="#cb43-84" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
-<span id="cb43-85"><a href="#cb43-85" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb43-85"><a href="#cb43-85" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb43-86"><a href="#cb43-86" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-87"><a href="#cb43-87" aria-hidden="true" tabindex="-1"></a><span class="co"># set the R random seed of the session for reproducibility</span></span>
 <span id="cb43-88"><a href="#cb43-88" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5886935</span>)</span>
@@ -1630,436 +1629,440 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb43-93"><a href="#cb43-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
 <span id="cb43-94"><a href="#cb43-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
 <span id="cb43-95"><a href="#cb43-95" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb43-96"><a href="#cb43-96" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt; include setup.R &gt;}}</span></span>
-<span id="cb43-97"><a href="#cb43-97" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
-<span id="cb43-98"><a href="#cb43-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-99"><a href="#cb43-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-100"><a href="#cb43-100" aria-hidden="true" tabindex="-1"></a>As <span class="in">`brms`</span> models are translated to Stan model files, which must be</span>
-<span id="cb43-101"><a href="#cb43-101" aria-hidden="true" tabindex="-1"></a>compiled as a C++ program before the model is run, it is useful to</span>
-<span id="cb43-102"><a href="#cb43-102" aria-hidden="true" tabindex="-1"></a>cache this compilation step such that repeated model evaluation avoids</span>
-<span id="cb43-103"><a href="#cb43-103" aria-hidden="true" tabindex="-1"></a>the compilation (speeding up model reruns with different data or model</span>
-<span id="cb43-104"><a href="#cb43-104" aria-hidden="true" tabindex="-1"></a>reruns after restarting R). Thus, the <span class="in">`brms.backend`</span> option</span>
-<span id="cb43-105"><a href="#cb43-105" aria-hidden="true" tabindex="-1"></a><span class="in">`cmdstanr`</span> is configured as a default. Doing so allows to cache the</span>
-<span id="cb43-106"><a href="#cb43-106" aria-hidden="true" tabindex="-1"></a>binary Stan executables in the directory configured with the option</span>
-<span id="cb43-107"><a href="#cb43-107" aria-hidden="true" tabindex="-1"></a><span class="in">`cmdstanr_write_stan_file_dir`</span>.</span>
-<span id="cb43-108"><a href="#cb43-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-109"><a href="#cb43-109" aria-hidden="true" tabindex="-1"></a>In case the model fitted is taking a long time for one chain (more</span>
-<span id="cb43-110"><a href="#cb43-110" aria-hidden="true" tabindex="-1"></a>than a minute at least), then it is advisable to turn on</span>
-<span id="cb43-111"><a href="#cb43-111" aria-hidden="true" tabindex="-1"></a>parallelization of the multiple chains by default by adding to the</span>
-<span id="cb43-112"><a href="#cb43-112" aria-hidden="true" tabindex="-1"></a>preamble:</span>
-<span id="cb43-113"><a href="#cb43-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-114"><a href="#cb43-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=TRUE, eval=FALSE}</span></span>
-<span id="cb43-115"><a href="#cb43-115" aria-hidden="true" tabindex="-1"></a><span class="co"># use 4 cores for parallel sampling by default - only recommended if</span></span>
-<span id="cb43-116"><a href="#cb43-116" aria-hidden="true" tabindex="-1"></a><span class="co"># model takes &gt; 1 minute to run for each chain otherwise the</span></span>
-<span id="cb43-117"><a href="#cb43-117" aria-hidden="true" tabindex="-1"></a><span class="co"># parallelization introduces substantial overhead</span></span>
-<span id="cb43-118"><a href="#cb43-118" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> <span class="dv">4</span>)</span>
-<span id="cb43-119"><a href="#cb43-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-120"><a href="#cb43-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-121"><a href="#cb43-121" aria-hidden="true" tabindex="-1"></a>It is discouraged to run chains always in parallel, since the</span>
-<span id="cb43-122"><a href="#cb43-122" aria-hidden="true" tabindex="-1"></a>parallelization itself consumes some ressources and is only beneficial</span>
-<span id="cb43-123"><a href="#cb43-123" aria-hidden="true" tabindex="-1"></a>if the model runtime is at least at the order of minutes. In case the</span>
-<span id="cb43-124"><a href="#cb43-124" aria-hidden="true" tabindex="-1"></a>model runtime becomes excessivley long, then each chain can itself be</span>
-<span id="cb43-125"><a href="#cb43-125" aria-hidden="true" tabindex="-1"></a>run with multiple cores as discussed in the section [Parallel</span>
-<span id="cb43-126"><a href="#cb43-126" aria-hidden="true" tabindex="-1"></a>computation](03b_parallel.qmd). </span>
-<span id="cb43-127"><a href="#cb43-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-128"><a href="#cb43-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model formula</span></span>
-<span id="cb43-129"><a href="#cb43-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-130"><a href="#cb43-130" aria-hidden="true" tabindex="-1"></a>With <span class="in">`brms`</span> statistical models are specified via a model formula and</span>
-<span id="cb43-131"><a href="#cb43-131" aria-hidden="true" tabindex="-1"></a>specification of a response <span class="in">`family`</span>. The family encodes the</span>
-<span id="cb43-132"><a href="#cb43-132" aria-hidden="true" tabindex="-1"></a>likelihood and link functions used for the distribution parameters. A</span>
-<span id="cb43-133"><a href="#cb43-133" aria-hidden="true" tabindex="-1"></a>distribution parameter is, for example, the response rate of a</span>
-<span id="cb43-134"><a href="#cb43-134" aria-hidden="true" tabindex="-1"></a>binomial outcome, the counting rate for a negative binomial endpoint</span>
-<span id="cb43-135"><a href="#cb43-135" aria-hidden="true" tabindex="-1"></a>or the overdispersion of a negative binomial.</span>
-<span id="cb43-136"><a href="#cb43-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-137"><a href="#cb43-137" aria-hidden="true" tabindex="-1"></a>In general formulaes can be recognized by a <span class="in">`~`</span> sign. Anything on the</span>
-<span id="cb43-138"><a href="#cb43-138" aria-hidden="true" tabindex="-1"></a>left-hand side of the <span class="in">`~`</span> describes the response (outcome) while terms</span>
-<span id="cb43-139"><a href="#cb43-139" aria-hidden="true" tabindex="-1"></a>on the right-hand side setup the design matrix, random effects or even</span>
-<span id="cb43-140"><a href="#cb43-140" aria-hidden="true" tabindex="-1"></a>a non-linear model formula. The left-hand side and the right-hand side</span>
-<span id="cb43-141"><a href="#cb43-141" aria-hidden="true" tabindex="-1"></a>can contain special terms which encode additional information and the</span>
-<span id="cb43-142"><a href="#cb43-142" aria-hidden="true" tabindex="-1"></a>chosen example makes use of this feature. It's good practice to store</span>
-<span id="cb43-143"><a href="#cb43-143" aria-hidden="true" tabindex="-1"></a>the <span class="in">`brms`</span> model formula in a separate R variable like:</span>
-<span id="cb43-144"><a href="#cb43-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-147"><a href="#cb43-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-148"><a href="#cb43-148" aria-hidden="true" tabindex="-1"></a>model_meta_random <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> study), <span class="at">family=</span>binomial)</span>
-<span id="cb43-149"><a href="#cb43-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-150"><a href="#cb43-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-151"><a href="#cb43-151" aria-hidden="true" tabindex="-1"></a>The left-hand side of the formula <span class="in">` r | trials(n)`</span> encodes the main</span>
-<span id="cb43-152"><a href="#cb43-152" aria-hidden="true" tabindex="-1"></a>outcome response variable <span class="in">` r`</span> (number of responders) and it passes</span>
-<span id="cb43-153"><a href="#cb43-153" aria-hidden="true" tabindex="-1"></a>along additional information needed for the binomial response here,</span>
-<span id="cb43-154"><a href="#cb43-154" aria-hidden="true" tabindex="-1"></a>the number of respondents using <span class="in">`trials(n)`</span>. Using the same notation,</span>
-<span id="cb43-155"><a href="#cb43-155" aria-hidden="true" tabindex="-1"></a>the case-study "[Meta-analysis to estimate treatment</span>
-<span id="cb43-156"><a href="#cb43-156" aria-hidden="true" tabindex="-1"></a>effects](02ab_meta_analysis_trtdiff.html)" shows how</span>
-<span id="cb43-157"><a href="#cb43-157" aria-hidden="true" tabindex="-1"></a>the exposure time can be varyied for count outcomes. The right-hand</span>
-<span id="cb43-158"><a href="#cb43-158" aria-hidden="true" tabindex="-1"></a>side of the formula specifies a linear predictor <span class="in">`1`</span>. This defines the</span>
-<span id="cb43-159"><a href="#cb43-159" aria-hidden="true" tabindex="-1"></a>fixed effect design matrix, which is the intercept only term in this</span>
-<span id="cb43-160"><a href="#cb43-160" aria-hidden="true" tabindex="-1"></a>example, but covariates could be included here. In addition, the term</span>
-<span id="cb43-161"><a href="#cb43-161" aria-hidden="true" tabindex="-1"></a><span class="in">`(1 | study)`</span> defines a random effect with a by <span class="in">`study`</span> varying</span>
-<span id="cb43-162"><a href="#cb43-162" aria-hidden="true" tabindex="-1"></a>intercept. Finally, the <span class="in">`family`</span> argument specifies the statistical</span>
-<span id="cb43-163"><a href="#cb43-163" aria-hidden="true" tabindex="-1"></a>family being used. The link function is by default a <span class="in">`logit`</span> link for</span>
-<span id="cb43-164"><a href="#cb43-164" aria-hidden="true" tabindex="-1"></a>the <span class="in">`binomial`</span> family. Note that <span class="in">`brms`</span> supports a large set of</span>
-<span id="cb43-165"><a href="#cb43-165" aria-hidden="true" tabindex="-1"></a>families, please refer to</span>
-<span id="cb43-166"><a href="#cb43-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-167"><a href="#cb43-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r,eval=FALSE}</span></span>
-<span id="cb43-168"><a href="#cb43-168" aria-hidden="true" tabindex="-1"></a>?brmsfamily</span>
-<span id="cb43-169"><a href="#cb43-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-96"><a href="#cb43-96" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span>
+<span id="cb43-97"><a href="#cb43-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-98"><a href="#cb43-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-99"><a href="#cb43-99" aria-hidden="true" tabindex="-1"></a>As <span class="in">`brms`</span> models are translated to Stan model files, which must be</span>
+<span id="cb43-100"><a href="#cb43-100" aria-hidden="true" tabindex="-1"></a>compiled as a C++ program before the model is run, it is useful to</span>
+<span id="cb43-101"><a href="#cb43-101" aria-hidden="true" tabindex="-1"></a>cache this compilation step such that repeated model evaluation avoids</span>
+<span id="cb43-102"><a href="#cb43-102" aria-hidden="true" tabindex="-1"></a>the compilation (speeding up model reruns with different data or model</span>
+<span id="cb43-103"><a href="#cb43-103" aria-hidden="true" tabindex="-1"></a>reruns after restarting R). Thus, the <span class="in">`brms.backend`</span> option</span>
+<span id="cb43-104"><a href="#cb43-104" aria-hidden="true" tabindex="-1"></a><span class="in">`cmdstanr`</span> is configured as a default. Doing so allows to cache the</span>
+<span id="cb43-105"><a href="#cb43-105" aria-hidden="true" tabindex="-1"></a>binary Stan executables in the directory configured with the option</span>
+<span id="cb43-106"><a href="#cb43-106" aria-hidden="true" tabindex="-1"></a><span class="in">`cmdstanr_write_stan_file_dir`</span>.</span>
+<span id="cb43-107"><a href="#cb43-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-108"><a href="#cb43-108" aria-hidden="true" tabindex="-1"></a>In case the model fitted is taking a long time for one chain (more</span>
+<span id="cb43-109"><a href="#cb43-109" aria-hidden="true" tabindex="-1"></a>than a minute at least), then it is advisable to turn on</span>
+<span id="cb43-110"><a href="#cb43-110" aria-hidden="true" tabindex="-1"></a>parallelization of the multiple chains by default by adding to the</span>
+<span id="cb43-111"><a href="#cb43-111" aria-hidden="true" tabindex="-1"></a>preamble:</span>
+<span id="cb43-112"><a href="#cb43-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-113"><a href="#cb43-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=TRUE, eval=FALSE}</span></span>
+<span id="cb43-114"><a href="#cb43-114" aria-hidden="true" tabindex="-1"></a><span class="co"># use 4 cores for parallel sampling by default - only recommended if</span></span>
+<span id="cb43-115"><a href="#cb43-115" aria-hidden="true" tabindex="-1"></a><span class="co"># model takes &gt; 1 minute to run for each chain otherwise the</span></span>
+<span id="cb43-116"><a href="#cb43-116" aria-hidden="true" tabindex="-1"></a><span class="co"># parallelization introduces substantial overhead.</span></span>
+<span id="cb43-117"><a href="#cb43-117" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> <span class="dv">4</span>)</span>
+<span id="cb43-118"><a href="#cb43-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-119"><a href="#cb43-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-120"><a href="#cb43-120" aria-hidden="true" tabindex="-1"></a>It is discouraged to run chains always in parallel, since the</span>
+<span id="cb43-121"><a href="#cb43-121" aria-hidden="true" tabindex="-1"></a>parallelization itself consumes some ressources and is only beneficial</span>
+<span id="cb43-122"><a href="#cb43-122" aria-hidden="true" tabindex="-1"></a>if the model runtime is at least at the order of minutes. This is in</span>
+<span id="cb43-123"><a href="#cb43-123" aria-hidden="true" tabindex="-1"></a>particular the case if a simulation study is run which itslef is</span>
+<span id="cb43-124"><a href="#cb43-124" aria-hidden="true" tabindex="-1"></a>repeated many times such that the computational resources are already</span>
+<span id="cb43-125"><a href="#cb43-125" aria-hidden="true" tabindex="-1"></a>exhausted by the number of replications the simulation study is</span>
+<span id="cb43-126"><a href="#cb43-126" aria-hidden="true" tabindex="-1"></a>run. In this case the use of any parallelization of the <span class="in">`brms`</span> model</span>
+<span id="cb43-127"><a href="#cb43-127" aria-hidden="true" tabindex="-1"></a>is not advisable. However, when one develops a model and model</span>
+<span id="cb43-128"><a href="#cb43-128" aria-hidden="true" tabindex="-1"></a>runtimes become excessivley long, then each chain can itself be run</span>
+<span id="cb43-129"><a href="#cb43-129" aria-hidden="true" tabindex="-1"></a>with multiple cores as discussed in the section [Parallel</span>
+<span id="cb43-130"><a href="#cb43-130" aria-hidden="true" tabindex="-1"></a>computation](03b_parallel.qmd).</span>
+<span id="cb43-131"><a href="#cb43-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-132"><a href="#cb43-132" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model formula</span></span>
+<span id="cb43-133"><a href="#cb43-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-134"><a href="#cb43-134" aria-hidden="true" tabindex="-1"></a>With <span class="in">`brms`</span> statistical models are specified via a model formula and</span>
+<span id="cb43-135"><a href="#cb43-135" aria-hidden="true" tabindex="-1"></a>specification of a response <span class="in">`family`</span>. The family encodes the</span>
+<span id="cb43-136"><a href="#cb43-136" aria-hidden="true" tabindex="-1"></a>likelihood and link functions used for the distribution parameters. A</span>
+<span id="cb43-137"><a href="#cb43-137" aria-hidden="true" tabindex="-1"></a>distribution parameter is, for example, the response rate of a</span>
+<span id="cb43-138"><a href="#cb43-138" aria-hidden="true" tabindex="-1"></a>binomial outcome, the counting rate for a negative binomial endpoint</span>
+<span id="cb43-139"><a href="#cb43-139" aria-hidden="true" tabindex="-1"></a>or the overdispersion of a negative binomial.</span>
+<span id="cb43-140"><a href="#cb43-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-141"><a href="#cb43-141" aria-hidden="true" tabindex="-1"></a>In general formulaes can be recognized by a <span class="in">`~`</span> sign. Anything on the</span>
+<span id="cb43-142"><a href="#cb43-142" aria-hidden="true" tabindex="-1"></a>left-hand side of the <span class="in">`~`</span> describes the response (outcome) while terms</span>
+<span id="cb43-143"><a href="#cb43-143" aria-hidden="true" tabindex="-1"></a>on the right-hand side setup the design matrix, random effects or even</span>
+<span id="cb43-144"><a href="#cb43-144" aria-hidden="true" tabindex="-1"></a>a non-linear model formula. The left-hand side and the right-hand side</span>
+<span id="cb43-145"><a href="#cb43-145" aria-hidden="true" tabindex="-1"></a>can contain special terms which encode additional information and the</span>
+<span id="cb43-146"><a href="#cb43-146" aria-hidden="true" tabindex="-1"></a>chosen example makes use of this feature. It's good practice to store</span>
+<span id="cb43-147"><a href="#cb43-147" aria-hidden="true" tabindex="-1"></a>the <span class="in">`brms`</span> model formula in a separate R variable like:</span>
+<span id="cb43-148"><a href="#cb43-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-151"><a href="#cb43-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-152"><a href="#cb43-152" aria-hidden="true" tabindex="-1"></a>model_meta_random <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> study), <span class="at">family=</span>binomial)</span>
+<span id="cb43-153"><a href="#cb43-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-154"><a href="#cb43-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-155"><a href="#cb43-155" aria-hidden="true" tabindex="-1"></a>The left-hand side of the formula <span class="in">` r | trials(n)`</span> encodes the main</span>
+<span id="cb43-156"><a href="#cb43-156" aria-hidden="true" tabindex="-1"></a>outcome response variable <span class="in">` r`</span> (number of responders) and it passes</span>
+<span id="cb43-157"><a href="#cb43-157" aria-hidden="true" tabindex="-1"></a>along additional information needed for the binomial response here,</span>
+<span id="cb43-158"><a href="#cb43-158" aria-hidden="true" tabindex="-1"></a>the number of respondents using <span class="in">`trials(n)`</span>. Using the same notation,</span>
+<span id="cb43-159"><a href="#cb43-159" aria-hidden="true" tabindex="-1"></a>the case-study "[Meta-analysis to estimate treatment</span>
+<span id="cb43-160"><a href="#cb43-160" aria-hidden="true" tabindex="-1"></a>effects](02ab_meta_analysis_trtdiff.html)" shows how</span>
+<span id="cb43-161"><a href="#cb43-161" aria-hidden="true" tabindex="-1"></a>the exposure time can be varyied for count outcomes. The right-hand</span>
+<span id="cb43-162"><a href="#cb43-162" aria-hidden="true" tabindex="-1"></a>side of the formula specifies a linear predictor <span class="in">`1`</span>. This defines the</span>
+<span id="cb43-163"><a href="#cb43-163" aria-hidden="true" tabindex="-1"></a>fixed effect design matrix, which is the intercept only term in this</span>
+<span id="cb43-164"><a href="#cb43-164" aria-hidden="true" tabindex="-1"></a>example, but covariates could be included here. In addition, the term</span>
+<span id="cb43-165"><a href="#cb43-165" aria-hidden="true" tabindex="-1"></a><span class="in">`(1 | study)`</span> defines a random effect with a by <span class="in">`study`</span> varying</span>
+<span id="cb43-166"><a href="#cb43-166" aria-hidden="true" tabindex="-1"></a>intercept. Finally, the <span class="in">`family`</span> argument specifies the statistical</span>
+<span id="cb43-167"><a href="#cb43-167" aria-hidden="true" tabindex="-1"></a>family being used. The link function is by default a <span class="in">`logit`</span> link for</span>
+<span id="cb43-168"><a href="#cb43-168" aria-hidden="true" tabindex="-1"></a>the <span class="in">`binomial`</span> family. Note that <span class="in">`brms`</span> supports a large set of</span>
+<span id="cb43-169"><a href="#cb43-169" aria-hidden="true" tabindex="-1"></a>families, please refer to</span>
 <span id="cb43-170"><a href="#cb43-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-171"><a href="#cb43-171" aria-hidden="true" tabindex="-1"></a>for an overview on the available families in <span class="in">`brms`</span>. In case your</span>
-<span id="cb43-172"><a href="#cb43-172" aria-hidden="true" tabindex="-1"></a>specific family neededed is not available, users even have the option</span>
-<span id="cb43-173"><a href="#cb43-173" aria-hidden="true" tabindex="-1"></a>to define their own family. This is a somewhat advanced use of <span class="in">`brms`</span>,</span>
-<span id="cb43-174"><a href="#cb43-174" aria-hidden="true" tabindex="-1"></a>but as <span class="in">`brms`</span> is designed to accomodate many different families this</span>
-<span id="cb43-175"><a href="#cb43-175" aria-hidden="true" tabindex="-1"></a>is in fact not too difficult and a full vignette is [available</span>
-<span id="cb43-176"><a href="#cb43-176" aria-hidden="true" tabindex="-1"></a>online](https://paul-buerkner.github.io/brms/articles/brms_customfamilies.html).</span>
-<span id="cb43-177"><a href="#cb43-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-178"><a href="#cb43-178" aria-hidden="true" tabindex="-1"></a>An alternative model in this context could be a fixed effect only</span>
-<span id="cb43-179"><a href="#cb43-179" aria-hidden="true" tabindex="-1"></a>model:</span>
-<span id="cb43-180"><a href="#cb43-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-183"><a href="#cb43-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-184"><a href="#cb43-184" aria-hidden="true" tabindex="-1"></a>model_meta_fixed <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span>binomial)</span>
-<span id="cb43-185"><a href="#cb43-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-186"><a href="#cb43-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-187"><a href="#cb43-187" aria-hidden="true" tabindex="-1"></a>Note that for some models one may even need to specify multiple model</span>
-<span id="cb43-188"><a href="#cb43-188" aria-hidden="true" tabindex="-1"></a>formulas. This can be the case whenever multiple distribution</span>
-<span id="cb43-189"><a href="#cb43-189" aria-hidden="true" tabindex="-1"></a>parameters must be specified (a negative binomial needs a mean rate</span>
-<span id="cb43-190"><a href="#cb43-190" aria-hidden="true" tabindex="-1"></a>model and a model for the dispersion parameter) or whenever a</span>
-<span id="cb43-191"><a href="#cb43-191" aria-hidden="true" tabindex="-1"></a>non-linear model is used, see the case study on dose finding in</span>
-<span id="cb43-192"><a href="#cb43-192" aria-hidden="true" tabindex="-1"></a>section \@ref(dose-finding).</span>
-<span id="cb43-193"><a href="#cb43-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-194"><a href="#cb43-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prior specification</span></span>
-<span id="cb43-195"><a href="#cb43-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-196"><a href="#cb43-196" aria-hidden="true" tabindex="-1"></a>The specification of priors is not strictly required for generalized</span>
-<span id="cb43-197"><a href="#cb43-197" aria-hidden="true" tabindex="-1"></a>linear models in <span class="in">`brms`</span>. In this case very wide defaults priors are</span>
-<span id="cb43-198"><a href="#cb43-198" aria-hidden="true" tabindex="-1"></a>setup for the user. However, these only work well whenever a lot of</span>
-<span id="cb43-199"><a href="#cb43-199" aria-hidden="true" tabindex="-1"></a>data is available and it is furthermore a much better practice to be</span>
-<span id="cb43-200"><a href="#cb43-200" aria-hidden="true" tabindex="-1"></a>specific about the priors being used in a given analysis.</span>
-<span id="cb43-201"><a href="#cb43-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-202"><a href="#cb43-202" aria-hidden="true" tabindex="-1"></a>In order to support the user in specifying priors, the <span class="in">`brms`</span> package</span>
-<span id="cb43-203"><a href="#cb43-203" aria-hidden="true" tabindex="-1"></a>provides the <span class="in">`get_prior`</span> function. We start with the simple fixed</span>
-<span id="cb43-204"><a href="#cb43-204" aria-hidden="true" tabindex="-1"></a>effect model:</span>
+<span id="cb43-171"><a href="#cb43-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r,eval=FALSE}</span></span>
+<span id="cb43-172"><a href="#cb43-172" aria-hidden="true" tabindex="-1"></a>?brmsfamily</span>
+<span id="cb43-173"><a href="#cb43-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-174"><a href="#cb43-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-175"><a href="#cb43-175" aria-hidden="true" tabindex="-1"></a>for an overview on the available families in <span class="in">`brms`</span>. In case your</span>
+<span id="cb43-176"><a href="#cb43-176" aria-hidden="true" tabindex="-1"></a>specific family neededed is not available, users even have the option</span>
+<span id="cb43-177"><a href="#cb43-177" aria-hidden="true" tabindex="-1"></a>to define their own family. This is a somewhat advanced use of <span class="in">`brms`</span>,</span>
+<span id="cb43-178"><a href="#cb43-178" aria-hidden="true" tabindex="-1"></a>but as <span class="in">`brms`</span> is designed to accomodate many different families this</span>
+<span id="cb43-179"><a href="#cb43-179" aria-hidden="true" tabindex="-1"></a>is in fact not too difficult and a full vignette is [available</span>
+<span id="cb43-180"><a href="#cb43-180" aria-hidden="true" tabindex="-1"></a>online](https://paul-buerkner.github.io/brms/articles/brms_customfamilies.html).</span>
+<span id="cb43-181"><a href="#cb43-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-182"><a href="#cb43-182" aria-hidden="true" tabindex="-1"></a>An alternative model in this context could be a fixed effect only</span>
+<span id="cb43-183"><a href="#cb43-183" aria-hidden="true" tabindex="-1"></a>model:</span>
+<span id="cb43-184"><a href="#cb43-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-187"><a href="#cb43-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-188"><a href="#cb43-188" aria-hidden="true" tabindex="-1"></a>model_meta_fixed <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span>binomial)</span>
+<span id="cb43-189"><a href="#cb43-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-190"><a href="#cb43-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-191"><a href="#cb43-191" aria-hidden="true" tabindex="-1"></a>Note that for some models one may even need to specify multiple model</span>
+<span id="cb43-192"><a href="#cb43-192" aria-hidden="true" tabindex="-1"></a>formulas. This can be the case whenever multiple distribution</span>
+<span id="cb43-193"><a href="#cb43-193" aria-hidden="true" tabindex="-1"></a>parameters must be specified (a negative binomial needs a mean rate</span>
+<span id="cb43-194"><a href="#cb43-194" aria-hidden="true" tabindex="-1"></a>model and a model for the dispersion parameter) or whenever a</span>
+<span id="cb43-195"><a href="#cb43-195" aria-hidden="true" tabindex="-1"></a>non-linear model is used, see the case study on dose finding in</span>
+<span id="cb43-196"><a href="#cb43-196" aria-hidden="true" tabindex="-1"></a>section \@ref(dose-finding).</span>
+<span id="cb43-197"><a href="#cb43-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-198"><a href="#cb43-198" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prior specification</span></span>
+<span id="cb43-199"><a href="#cb43-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-200"><a href="#cb43-200" aria-hidden="true" tabindex="-1"></a>The specification of priors is not strictly required for generalized</span>
+<span id="cb43-201"><a href="#cb43-201" aria-hidden="true" tabindex="-1"></a>linear models in <span class="in">`brms`</span>. In this case very wide defaults priors are</span>
+<span id="cb43-202"><a href="#cb43-202" aria-hidden="true" tabindex="-1"></a>setup for the user. However, these only work well whenever a lot of</span>
+<span id="cb43-203"><a href="#cb43-203" aria-hidden="true" tabindex="-1"></a>data is available and it is furthermore a much better practice to be</span>
+<span id="cb43-204"><a href="#cb43-204" aria-hidden="true" tabindex="-1"></a>specific about the priors being used in a given analysis.</span>
 <span id="cb43-205"><a href="#cb43-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-208"><a href="#cb43-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-209"><a href="#cb43-209" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">get_prior</span>(model_meta_fixed, arm_data))</span>
-<span id="cb43-210"><a href="#cb43-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-211"><a href="#cb43-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-212"><a href="#cb43-212" aria-hidden="true" tabindex="-1"></a>Note that <span class="in">`brms`</span> requires the model formula **and** the data to which</span>
-<span id="cb43-213"><a href="#cb43-213" aria-hidden="true" tabindex="-1"></a>the model is being fitted to. This is due to fact that only model and</span>
-<span id="cb43-214"><a href="#cb43-214" aria-hidden="true" tabindex="-1"></a>data together define all parameters fully. For example, the model</span>
-<span id="cb43-215"><a href="#cb43-215" aria-hidden="true" tabindex="-1"></a>formula could contain a categorical variable and then only knowing all</span>
-<span id="cb43-216"><a href="#cb43-216" aria-hidden="true" tabindex="-1"></a>categories as defined by the data allows to define the full model with</span>
-<span id="cb43-217"><a href="#cb43-217" aria-hidden="true" tabindex="-1"></a>all parameters. For the fixed effect model only a single parameter,</span>
-<span id="cb43-218"><a href="#cb43-218" aria-hidden="true" tabindex="-1"></a>the intercept only term is defined. To now define a prior for the</span>
-<span id="cb43-219"><a href="#cb43-219" aria-hidden="true" tabindex="-1"></a>intercept, we may use the <span class="in">`prior`</span> command as:</span>
-<span id="cb43-220"><a href="#cb43-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-223"><a href="#cb43-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-224"><a href="#cb43-224" aria-hidden="true" tabindex="-1"></a>prior_meta_fixed <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">class=</span><span class="st">"Intercept"</span>)</span>
-<span id="cb43-225"><a href="#cb43-225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-226"><a href="#cb43-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-227"><a href="#cb43-227" aria-hidden="true" tabindex="-1"></a>The prior for the random effects model is slightly more complicated as</span>
-<span id="cb43-228"><a href="#cb43-228" aria-hidden="true" tabindex="-1"></a>it involves a heterogeniety parameter $\tau$ (standard deviation of</span>
-<span id="cb43-229"><a href="#cb43-229" aria-hidden="true" tabindex="-1"></a>the study random effect):</span>
+<span id="cb43-206"><a href="#cb43-206" aria-hidden="true" tabindex="-1"></a>In order to support the user in specifying priors, the <span class="in">`brms`</span> package</span>
+<span id="cb43-207"><a href="#cb43-207" aria-hidden="true" tabindex="-1"></a>provides the <span class="in">`get_prior`</span> function. We start with the simple fixed</span>
+<span id="cb43-208"><a href="#cb43-208" aria-hidden="true" tabindex="-1"></a>effect model:</span>
+<span id="cb43-209"><a href="#cb43-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-212"><a href="#cb43-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-213"><a href="#cb43-213" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">get_prior</span>(model_meta_fixed, arm_data))</span>
+<span id="cb43-214"><a href="#cb43-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-215"><a href="#cb43-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-216"><a href="#cb43-216" aria-hidden="true" tabindex="-1"></a>Note that <span class="in">`brms`</span> requires the model formula **and** the data to which</span>
+<span id="cb43-217"><a href="#cb43-217" aria-hidden="true" tabindex="-1"></a>the model is being fitted to. This is due to fact that only model and</span>
+<span id="cb43-218"><a href="#cb43-218" aria-hidden="true" tabindex="-1"></a>data together define all parameters fully. For example, the model</span>
+<span id="cb43-219"><a href="#cb43-219" aria-hidden="true" tabindex="-1"></a>formula could contain a categorical variable and then only knowing all</span>
+<span id="cb43-220"><a href="#cb43-220" aria-hidden="true" tabindex="-1"></a>categories as defined by the data allows to define the full model with</span>
+<span id="cb43-221"><a href="#cb43-221" aria-hidden="true" tabindex="-1"></a>all parameters. For the fixed effect model only a single parameter,</span>
+<span id="cb43-222"><a href="#cb43-222" aria-hidden="true" tabindex="-1"></a>the intercept only term is defined. To now define a prior for the</span>
+<span id="cb43-223"><a href="#cb43-223" aria-hidden="true" tabindex="-1"></a>intercept, we may use the <span class="in">`prior`</span> command as:</span>
+<span id="cb43-224"><a href="#cb43-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-227"><a href="#cb43-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-228"><a href="#cb43-228" aria-hidden="true" tabindex="-1"></a>prior_meta_fixed <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="at">class=</span>Intercept)</span>
+<span id="cb43-229"><a href="#cb43-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb43-230"><a href="#cb43-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-231"><a href="#cb43-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-234"><a href="#cb43-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-235"><a href="#cb43-235" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">get_prior</span>(model_meta_random, arm_data))</span>
-<span id="cb43-236"><a href="#cb43-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-237"><a href="#cb43-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-238"><a href="#cb43-238" aria-hidden="true" tabindex="-1"></a>Given that the random effects model is a generalization of the fixed</span>
-<span id="cb43-239"><a href="#cb43-239" aria-hidden="true" tabindex="-1"></a>effect model, it is natural to write the prior in a way which expands</span>
-<span id="cb43-240"><a href="#cb43-240" aria-hidden="true" tabindex="-1"></a>the fixed effect case as:</span>
+<span id="cb43-231"><a href="#cb43-231" aria-hidden="true" tabindex="-1"></a>The prior for the random effects model is slightly more complicated as</span>
+<span id="cb43-232"><a href="#cb43-232" aria-hidden="true" tabindex="-1"></a>it involves a heterogeniety parameter $\tau$ (standard deviation of</span>
+<span id="cb43-233"><a href="#cb43-233" aria-hidden="true" tabindex="-1"></a>the study random effect):</span>
+<span id="cb43-234"><a href="#cb43-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-235"><a href="#cb43-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-238"><a href="#cb43-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-239"><a href="#cb43-239" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">get_prior</span>(model_meta_random, arm_data))</span>
+<span id="cb43-240"><a href="#cb43-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb43-241"><a href="#cb43-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-242"><a href="#cb43-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-245"><a href="#cb43-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-246"><a href="#cb43-246" aria-hidden="true" tabindex="-1"></a>prior_meta_random <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
-<span id="cb43-247"><a href="#cb43-247" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">class=</span><span class="st">"sd"</span>, <span class="at">coef=</span><span class="st">"Intercept"</span>, <span class="at">group=</span><span class="st">"study"</span>)</span>
-<span id="cb43-248"><a href="#cb43-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-249"><a href="#cb43-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-250"><a href="#cb43-250" aria-hidden="true" tabindex="-1"></a>The logic to defined priors on specifc parameters is to use the</span>
-<span id="cb43-251"><a href="#cb43-251" aria-hidden="true" tabindex="-1"></a>different parameter identifiers as provided by the <span class="in">`get_prior`</span></span>
-<span id="cb43-252"><a href="#cb43-252" aria-hidden="true" tabindex="-1"></a>command. In this context <span class="in">`class`</span>, <span class="in">`coef`</span> and <span class="in">`group`</span> is used for</span>
-<span id="cb43-253"><a href="#cb43-253" aria-hidden="true" tabindex="-1"></a>parameter class, parameter coefficient and grouping, respectivley. The</span>
-<span id="cb43-254"><a href="#cb43-254" aria-hidden="true" tabindex="-1"></a>identifiers <span class="in">`resp`</span>, <span class="in">`dlpar`</span> and <span class="in">`nlpar`</span> are used in the context of</span>
-<span id="cb43-255"><a href="#cb43-255" aria-hidden="true" tabindex="-1"></a>multiple responses, multiple distribution parameters oe non-linear</span>
-<span id="cb43-256"><a href="#cb43-256" aria-hidden="true" tabindex="-1"></a>parameters, respectivley. It is preferable to be specific as</span>
-<span id="cb43-257"><a href="#cb43-257" aria-hidden="true" tabindex="-1"></a>above in the definition of priors while it is admissable to be less</span>
-<span id="cb43-258"><a href="#cb43-258" aria-hidden="true" tabindex="-1"></a>specific like:</span>
-<span id="cb43-259"><a href="#cb43-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-260"><a href="#cb43-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-261"><a href="#cb43-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
-<span id="cb43-262"><a href="#cb43-262" aria-hidden="true" tabindex="-1"></a>prior_meta_random <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
-<span id="cb43-263"><a href="#cb43-263" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">class=</span><span class="st">"sd"</span>)</span>
-<span id="cb43-264"><a href="#cb43-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-265"><a href="#cb43-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-266"><a href="#cb43-266" aria-hidden="true" tabindex="-1"></a>This statement assign to *all* random effect standard deviations of</span>
-<span id="cb43-267"><a href="#cb43-267" aria-hidden="true" tabindex="-1"></a>the model the same prior, which can be convenient in some situations.</span>
-<span id="cb43-268"><a href="#cb43-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-242"><a href="#cb43-242" aria-hidden="true" tabindex="-1"></a>Given that the random effects model is a generalization of the fixed</span>
+<span id="cb43-243"><a href="#cb43-243" aria-hidden="true" tabindex="-1"></a>effect model, it is natural to write the prior in a way which expands</span>
+<span id="cb43-244"><a href="#cb43-244" aria-hidden="true" tabindex="-1"></a>the fixed effect case as:</span>
+<span id="cb43-245"><a href="#cb43-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-246"><a href="#cb43-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-249"><a href="#cb43-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-250"><a href="#cb43-250" aria-hidden="true" tabindex="-1"></a>prior_meta_random <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
+<span id="cb43-251"><a href="#cb43-251" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span>
+<span id="cb43-252"><a href="#cb43-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-253"><a href="#cb43-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-254"><a href="#cb43-254" aria-hidden="true" tabindex="-1"></a>The logic to defined priors on specifc parameters is to use the</span>
+<span id="cb43-255"><a href="#cb43-255" aria-hidden="true" tabindex="-1"></a>different parameter identifiers as provided by the <span class="in">`get_prior`</span></span>
+<span id="cb43-256"><a href="#cb43-256" aria-hidden="true" tabindex="-1"></a>command. In this context <span class="in">`class`</span>, <span class="in">`coef`</span> and <span class="in">`group`</span> is used for</span>
+<span id="cb43-257"><a href="#cb43-257" aria-hidden="true" tabindex="-1"></a>parameter class, parameter coefficient and grouping, respectivley. The</span>
+<span id="cb43-258"><a href="#cb43-258" aria-hidden="true" tabindex="-1"></a>identifiers <span class="in">`resp`</span>, <span class="in">`dlpar`</span> and <span class="in">`nlpar`</span> are used in the context of</span>
+<span id="cb43-259"><a href="#cb43-259" aria-hidden="true" tabindex="-1"></a>multiple responses, multiple distribution parameters oe non-linear</span>
+<span id="cb43-260"><a href="#cb43-260" aria-hidden="true" tabindex="-1"></a>parameters, respectivley. It is preferable to be specific as</span>
+<span id="cb43-261"><a href="#cb43-261" aria-hidden="true" tabindex="-1"></a>above in the definition of priors while it is admissable to be less</span>
+<span id="cb43-262"><a href="#cb43-262" aria-hidden="true" tabindex="-1"></a>specific like:</span>
+<span id="cb43-263"><a href="#cb43-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-264"><a href="#cb43-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-265"><a href="#cb43-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
+<span id="cb43-266"><a href="#cb43-266" aria-hidden="true" tabindex="-1"></a>prior_meta_random <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
+<span id="cb43-267"><a href="#cb43-267" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class=</span>sd)</span>
+<span id="cb43-268"><a href="#cb43-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb43-269"><a href="#cb43-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-270"><a href="#cb43-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting the model</span></span>
-<span id="cb43-271"><a href="#cb43-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-272"><a href="#cb43-272" aria-hidden="true" tabindex="-1"></a>Having defined the model formula, the family and the priors we can now</span>
-<span id="cb43-273"><a href="#cb43-273" aria-hidden="true" tabindex="-1"></a>fit the models with the <span class="in">`brm`</span> command.</span>
-<span id="cb43-274"><a href="#cb43-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-277"><a href="#cb43-277" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-278"><a href="#cb43-278" aria-hidden="true" tabindex="-1"></a>fit_meta_fixed  <span class="ot">&lt;-</span> <span class="fu">brm</span>(model_meta_fixed, <span class="at">data=</span>arm_data, <span class="at">prior=</span>prior_meta_fixed,</span>
-<span id="cb43-279"><a href="#cb43-279" aria-hidden="true" tabindex="-1"></a>                       <span class="do">## setup Stan sampler to be more conservative, but more robust</span></span>
-<span id="cb43-280"><a href="#cb43-280" aria-hidden="true" tabindex="-1"></a>                       <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
-<span id="cb43-281"><a href="#cb43-281" aria-hidden="true" tabindex="-1"></a>                       <span class="do">## these options silence Stan</span></span>
-<span id="cb43-282"><a href="#cb43-282" aria-hidden="true" tabindex="-1"></a>                       <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
-<span id="cb43-283"><a href="#cb43-283" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seed=</span><span class="dv">4658758</span>)</span>
-<span id="cb43-284"><a href="#cb43-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-285"><a href="#cb43-285" aria-hidden="true" tabindex="-1"></a>fit_meta_random  <span class="ot">&lt;-</span> <span class="fu">brm</span>(model_meta_random, <span class="at">data=</span>arm_data, <span class="at">prior=</span>prior_meta_random,</span>
-<span id="cb43-286"><a href="#cb43-286" aria-hidden="true" tabindex="-1"></a>                        <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
-<span id="cb43-287"><a href="#cb43-287" aria-hidden="true" tabindex="-1"></a>                        <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
-<span id="cb43-288"><a href="#cb43-288" aria-hidden="true" tabindex="-1"></a>                        <span class="at">seed=</span><span class="dv">5868467</span>)</span>
-<span id="cb43-289"><a href="#cb43-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-290"><a href="#cb43-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-291"><a href="#cb43-291" aria-hidden="true" tabindex="-1"></a>When calling <span class="in">`brm`</span> a Stan model file will be created, compiled and run</span>
-<span id="cb43-292"><a href="#cb43-292" aria-hidden="true" tabindex="-1"></a>with the data provided. The arguments used are:</span>
-<span id="cb43-293"><a href="#cb43-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-294"><a href="#cb43-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`formula`</span> is the first argument here. It specifies the model. Since</span>
-<span id="cb43-295"><a href="#cb43-295" aria-hidden="true" tabindex="-1"></a>  we have in this case provided <span class="in">`family`</span> as part of the formula, we do</span>
-<span id="cb43-296"><a href="#cb43-296" aria-hidden="true" tabindex="-1"></a>  not need to specify it as argument to <span class="in">`brm`</span>, which is also possible</span>
-<span id="cb43-297"><a href="#cb43-297" aria-hidden="true" tabindex="-1"></a>  to do.</span>
-<span id="cb43-298"><a href="#cb43-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`data`</span> the data used to fit.</span>
-<span id="cb43-299"><a href="#cb43-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`prior`</span> definition of the priors for all model parameters</span>
-<span id="cb43-300"><a href="#cb43-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`control`</span> defines additional control arguments to the Stan</span>
-<span id="cb43-301"><a href="#cb43-301" aria-hidden="true" tabindex="-1"></a>  sampler. A higher than standard <span class="in">`adapt_delta`</span> (defaults to <span class="in">`0.8`</span>)</span>
-<span id="cb43-302"><a href="#cb43-302" aria-hidden="true" tabindex="-1"></a>  causes the sampler to run less aggressively which makes the sampler</span>
-<span id="cb43-303"><a href="#cb43-303" aria-hidden="true" tabindex="-1"></a>  more robust, but somewhat slower.</span>
-<span id="cb43-304"><a href="#cb43-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`refresh &amp; silent`</span> are used here to suppress Stan sampling output.</span>
-<span id="cb43-305"><a href="#cb43-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`seed`</span> sets the seed use for the fit.</span>
-<span id="cb43-306"><a href="#cb43-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-307"><a href="#cb43-307" aria-hidden="true" tabindex="-1"></a>In the course of an exploratory analysis one often wishes to modify a</span>
-<span id="cb43-308"><a href="#cb43-308" aria-hidden="true" tabindex="-1"></a>given model slightly to study, for example, the sensitivity to</span>
-<span id="cb43-309"><a href="#cb43-309" aria-hidden="true" tabindex="-1"></a>different assumptions. For this purpose the <span class="in">`update`</span> mechanism is a</span>
-<span id="cb43-310"><a href="#cb43-310" aria-hidden="true" tabindex="-1"></a>convenient way to simply change certain arguments specified</span>
-<span id="cb43-311"><a href="#cb43-311" aria-hidden="true" tabindex="-1"></a>previously. To change the prior on the study level random effect</span>
-<span id="cb43-312"><a href="#cb43-312" aria-hidden="true" tabindex="-1"></a>parameter one may use:</span>
-<span id="cb43-313"><a href="#cb43-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-316"><a href="#cb43-316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-317"><a href="#cb43-317" aria-hidden="true" tabindex="-1"></a>prior_meta_random_alt <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
-<span id="cb43-318"><a href="#cb43-318" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="at">class=</span><span class="st">"sd"</span>, <span class="at">coef=</span><span class="st">"Intercept"</span>, <span class="at">group=</span><span class="st">"study"</span>)</span>
-<span id="cb43-319"><a href="#cb43-319" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb43-320"><a href="#cb43-320" aria-hidden="true" tabindex="-1"></a>fit_meta_random_alt  <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_meta_random, <span class="at">prior=</span>prior_meta_random_alt,</span>
-<span id="cb43-321"><a href="#cb43-321" aria-hidden="true" tabindex="-1"></a>                               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
-<span id="cb43-322"><a href="#cb43-322" aria-hidden="true" tabindex="-1"></a>                               <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
-<span id="cb43-323"><a href="#cb43-323" aria-hidden="true" tabindex="-1"></a>                               <span class="at">seed=</span><span class="dv">6845736</span>)</span>
-<span id="cb43-324"><a href="#cb43-324" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-325"><a href="#cb43-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-326"><a href="#cb43-326" aria-hidden="true" tabindex="-1"></a>As changing the prior results in this case in a need to recompile the</span>
-<span id="cb43-327"><a href="#cb43-327" aria-hidden="true" tabindex="-1"></a>model, the benefits of using <span class="in">`update`</span> are not large in this</span>
-<span id="cb43-328"><a href="#cb43-328" aria-hidden="true" tabindex="-1"></a>case. However, whenever a model recompilation is not needed, then</span>
-<span id="cb43-329"><a href="#cb43-329" aria-hidden="true" tabindex="-1"></a>using <span class="in">`update`</span> significantly speeds up the workflow as the compilation</span>
-<span id="cb43-330"><a href="#cb43-330" aria-hidden="true" tabindex="-1"></a>step is avoided, e.g. when looking at data subsets:</span>
-<span id="cb43-331"><a href="#cb43-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-334"><a href="#cb43-334" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-335"><a href="#cb43-335" aria-hidden="true" tabindex="-1"></a>prior_meta_random_alt <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
-<span id="cb43-336"><a href="#cb43-336" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="at">class=</span><span class="st">"sd"</span>, <span class="at">coef=</span><span class="st">"Intercept"</span>, <span class="at">group=</span><span class="st">"study"</span>)</span>
-<span id="cb43-337"><a href="#cb43-337" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb43-338"><a href="#cb43-338" aria-hidden="true" tabindex="-1"></a>fit_meta_random_alt2  <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_meta_random, <span class="at">newdata=</span><span class="fu">slice_head</span>(arm_data, <span class="at">n=</span><span class="dv">4</span>),</span>
-<span id="cb43-339"><a href="#cb43-339" aria-hidden="true" tabindex="-1"></a>                                <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
-<span id="cb43-340"><a href="#cb43-340" aria-hidden="true" tabindex="-1"></a>                                <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
-<span id="cb43-341"><a href="#cb43-341" aria-hidden="true" tabindex="-1"></a>                                <span class="at">seed=</span><span class="dv">5868467</span>)</span>
-<span id="cb43-342"><a href="#cb43-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-343"><a href="#cb43-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-344"><a href="#cb43-344" aria-hidden="true" tabindex="-1"></a>Now the fit starts instantly leading to a faster and more convenient</span>
-<span id="cb43-345"><a href="#cb43-345" aria-hidden="true" tabindex="-1"></a>modeling workflow.</span>
-<span id="cb43-346"><a href="#cb43-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-347"><a href="#cb43-347" aria-hidden="true" tabindex="-1"></a>When working with <span class="in">`brms`</span> you will encounter warnings now and then</span>
-<span id="cb43-348"><a href="#cb43-348" aria-hidden="true" tabindex="-1"></a>which originate from Stan itself. While <span class="in">`brms`</span> attempts to add</span>
-<span id="cb43-349"><a href="#cb43-349" aria-hidden="true" tabindex="-1"></a>explanations to these warnings as to what they mean and how to avoid</span>
-<span id="cb43-350"><a href="#cb43-350" aria-hidden="true" tabindex="-1"></a>them, the Stan community has provided an [online</span>
-<span id="cb43-351"><a href="#cb43-351" aria-hidden="true" tabindex="-1"></a>help-page](https://mc-stan.org/misc/warnings.html) on possible</span>
-<span id="cb43-352"><a href="#cb43-352" aria-hidden="true" tabindex="-1"></a>warnings occuring during a Stan fit.</span>
-<span id="cb43-353"><a href="#cb43-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-354"><a href="#cb43-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-355"><a href="#cb43-355" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summary</span></span>
-<span id="cb43-356"><a href="#cb43-356" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-357"><a href="#cb43-357" aria-hidden="true" tabindex="-1"></a>Once models are fit, we obtain - by default - a posterior sample of</span>
-<span id="cb43-358"><a href="#cb43-358" aria-hidden="true" tabindex="-1"></a>the model. Given that priors are used in such an analysis it can be</span>
-<span id="cb43-359"><a href="#cb43-359" aria-hidden="true" tabindex="-1"></a>convenient to first consider the priors which were used to create a</span>
-<span id="cb43-360"><a href="#cb43-360" aria-hidden="true" tabindex="-1"></a>given fitting object like:</span>
-<span id="cb43-361"><a href="#cb43-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-364"><a href="#cb43-364" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-365"><a href="#cb43-365" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">prior_summary</span>(fit_meta_random))</span>
-<span id="cb43-366"><a href="#cb43-366" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-367"><a href="#cb43-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-368"><a href="#cb43-368" aria-hidden="true" tabindex="-1"></a>An even more explicit way to analyze the prior of a model is to</span>
-<span id="cb43-369"><a href="#cb43-369" aria-hidden="true" tabindex="-1"></a>*sample* it directly:</span>
-<span id="cb43-370"><a href="#cb43-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-373"><a href="#cb43-373" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-374"><a href="#cb43-374" aria-hidden="true" tabindex="-1"></a>prior_meta_random  <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_meta_random, <span class="at">sample_prior=</span><span class="st">"only"</span>,</span>
-<span id="cb43-375"><a href="#cb43-375" aria-hidden="true" tabindex="-1"></a>                             <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
-<span id="cb43-376"><a href="#cb43-376" aria-hidden="true" tabindex="-1"></a>                             <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
-<span id="cb43-377"><a href="#cb43-377" aria-hidden="true" tabindex="-1"></a>                             <span class="at">seed=</span><span class="dv">5868467</span>)</span>
-<span id="cb43-378"><a href="#cb43-378" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-379"><a href="#cb43-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-380"><a href="#cb43-380" aria-hidden="true" tabindex="-1"></a>This will sample the model in the usual way, but simply leave out the</span>
-<span id="cb43-381"><a href="#cb43-381" aria-hidden="true" tabindex="-1"></a>terms implied by the data likelihood. The resulting model sample can</span>
-<span id="cb43-382"><a href="#cb43-382" aria-hidden="true" tabindex="-1"></a>be analyzed in exactly the same way as the model posterior</span>
-<span id="cb43-383"><a href="#cb43-383" aria-hidden="true" tabindex="-1"></a>itself. This technique is called prior (predictive) checks.</span>
-<span id="cb43-384"><a href="#cb43-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-385"><a href="#cb43-385" aria-hidden="true" tabindex="-1"></a>Returning to the model posterior, the obvious first thing to do is to</span>
-<span id="cb43-386"><a href="#cb43-386" aria-hidden="true" tabindex="-1"></a>simply print the results:</span>
-<span id="cb43-387"><a href="#cb43-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-390"><a href="#cb43-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-391"><a href="#cb43-391" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_meta_random)</span>
-<span id="cb43-392"><a href="#cb43-392" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-393"><a href="#cb43-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-394"><a href="#cb43-394" aria-hidden="true" tabindex="-1"></a>We see that we fitted the default 4 chains and ran each chain for 1000</span>
-<span id="cb43-395"><a href="#cb43-395" aria-hidden="true" tabindex="-1"></a>warmup iterations and 2000 total iterations such that we are left with</span>
-<span id="cb43-396"><a href="#cb43-396" aria-hidden="true" tabindex="-1"></a>4k iterations overall. <span class="in">`brms`</span> reports by default as estimate the mean</span>
-<span id="cb43-397"><a href="#cb43-397" aria-hidden="true" tabindex="-1"></a>of the posterior with it's standard error and the 95% credible</span>
-<span id="cb43-398"><a href="#cb43-398" aria-hidden="true" tabindex="-1"></a>interval. The <span class="in">`Rhat`</span> column is a convergence diagnostic which should</span>
-<span id="cb43-399"><a href="#cb43-399" aria-hidden="true" tabindex="-1"></a>be close to <span class="in">`1.0`</span>. Values above <span class="in">`1.1`</span> indicate non-convergence of the</span>
-<span id="cb43-400"><a href="#cb43-400" aria-hidden="true" tabindex="-1"></a>Markov Chain for the particular parameter. The additional two columns</span>
-<span id="cb43-401"><a href="#cb43-401" aria-hidden="true" tabindex="-1"></a>on bulk and tail ESS indicate statistical information on central</span>
-<span id="cb43-402"><a href="#cb43-402" aria-hidden="true" tabindex="-1"></a>moments and tail properties of the target quantitiy. The ESS is the</span>
-<span id="cb43-403"><a href="#cb43-403" aria-hidden="true" tabindex="-1"></a>effective sample size of the MC estimator, which assumes that the</span>
-<span id="cb43-404"><a href="#cb43-404" aria-hidden="true" tabindex="-1"></a>estimation error of the mean scales with $1/\sqrt{ESS}$. An ESS of</span>
-<span id="cb43-405"><a href="#cb43-405" aria-hidden="true" tabindex="-1"></a>~200 is usually sufficient for a precise estimate of the mean. It is</span>
-<span id="cb43-406"><a href="#cb43-406" aria-hidden="true" tabindex="-1"></a>important to note that the Stan HMC sampler often requires fewer</span>
-<span id="cb43-407"><a href="#cb43-407" aria-hidden="true" tabindex="-1"></a>iterations (for which more time is spent) as compared to BUGS or JAGS</span>
-<span id="cb43-408"><a href="#cb43-408" aria-hidden="true" tabindex="-1"></a>in order to reach a comparable ESS. For more details on the ESS,</span>
-<span id="cb43-409"><a href="#cb43-409" aria-hidden="true" tabindex="-1"></a>please refer to the [Stan reference manual on</span>
-<span id="cb43-410"><a href="#cb43-410" aria-hidden="true" tabindex="-1"></a>ESS](https://mc-stan.org/docs/2_29/reference-manual/effective-sample-size.html).</span>
-<span id="cb43-411"><a href="#cb43-411" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-412"><a href="#cb43-412" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> supports the common R functions to extract model results:</span>
-<span id="cb43-413"><a href="#cb43-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-414"><a href="#cb43-414" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`fitted`</span> to get the posterior estimates of expected values of for</span>
-<span id="cb43-415"><a href="#cb43-415" aria-hidden="true" tabindex="-1"></a>  each data row (no sampling uncertainty)</span>
-<span id="cb43-416"><a href="#cb43-416" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`predict`</span> to get the posterior predictive estimates of the response for each</span>
-<span id="cb43-417"><a href="#cb43-417" aria-hidden="true" tabindex="-1"></a>  data row (includes sampling uncertainty)</span>
-<span id="cb43-418"><a href="#cb43-418" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`coef`</span>/<span class="in">`ranef`</span> to get the random effect estimates including/excluding the linear</span>
-<span id="cb43-419"><a href="#cb43-419" aria-hidden="true" tabindex="-1"></a>  predictor part</span>
-<span id="cb43-420"><a href="#cb43-420" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>many more, please refer to the reference manual of <span class="in">`brms`</span></span>
-<span id="cb43-421"><a href="#cb43-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-422"><a href="#cb43-422" aria-hidden="true" tabindex="-1"></a>Of note is the argument <span class="in">`summary`</span>, which is used in a number of these</span>
-<span id="cb43-423"><a href="#cb43-423" aria-hidden="true" tabindex="-1"></a>functions. The default is set to <span class="in">`TRUE`</span> such that the output are</span>
-<span id="cb43-424"><a href="#cb43-424" aria-hidden="true" tabindex="-1"></a>summaries of the posterior sample in the form of means, credible</span>
-<span id="cb43-425"><a href="#cb43-425" aria-hidden="true" tabindex="-1"></a>intervals, etc. When setting the argument <span class="in">`summary=FALSE`</span> then the</span>
-<span id="cb43-426"><a href="#cb43-426" aria-hidden="true" tabindex="-1"></a>posterior sample is returned in the format of a matrix. Each row of</span>
-<span id="cb43-427"><a href="#cb43-427" aria-hidden="true" tabindex="-1"></a>the matrix is one iteration while the columns of the matrix run with</span>
-<span id="cb43-428"><a href="#cb43-428" aria-hidden="true" tabindex="-1"></a>the rows of the input data-set.</span>
-<span id="cb43-429"><a href="#cb43-429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-430"><a href="#cb43-430" aria-hidden="true" tabindex="-1"></a>For example, we can compare the estimated mean response fo the two</span>
-<span id="cb43-431"><a href="#cb43-431" aria-hidden="true" tabindex="-1"></a>different models as:</span>
-<span id="cb43-432"><a href="#cb43-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-435"><a href="#cb43-435" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-436"><a href="#cb43-436" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(fit_meta_random)</span>
-<span id="cb43-437"><a href="#cb43-437" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(fit_meta_fixed)</span>
-<span id="cb43-438"><a href="#cb43-438" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-439"><a href="#cb43-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-440"><a href="#cb43-440" aria-hidden="true" tabindex="-1"></a>As expected, the standard errors for the fixed effect analysis are</span>
-<span id="cb43-441"><a href="#cb43-441" aria-hidden="true" tabindex="-1"></a>considerably smaller.</span>
-<span id="cb43-442"><a href="#cb43-442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-443"><a href="#cb43-443" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model analysis</span></span>
-<span id="cb43-444"><a href="#cb43-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-445"><a href="#cb43-445" aria-hidden="true" tabindex="-1"></a>How to analyze a given model obviously depends very much on details of</span>
-<span id="cb43-446"><a href="#cb43-446" aria-hidden="true" tabindex="-1"></a>the problem at hand. Often we wish to evaluate how well the model</span>
-<span id="cb43-447"><a href="#cb43-447" aria-hidden="true" tabindex="-1"></a>describes the problem data used to fit the model. Thus, the ability of</span>
-<span id="cb43-448"><a href="#cb43-448" aria-hidden="true" tabindex="-1"></a>the model to describe certain summaries of the data set accuratley is</span>
-<span id="cb43-449"><a href="#cb43-449" aria-hidden="true" tabindex="-1"></a>one way to critize the model. Such an approach requires to compare</span>
-<span id="cb43-450"><a href="#cb43-450" aria-hidden="true" tabindex="-1"></a>predictions of the data by the model $y_{rep}$ to the actual data</span>
-<span id="cb43-451"><a href="#cb43-451" aria-hidden="true" tabindex="-1"></a>$y$. This procedure is referred to as posterior predictive checks. A</span>
-<span id="cb43-452"><a href="#cb43-452" aria-hidden="true" tabindex="-1"></a>key feautre of the approach is to account for sampling uncertainty</span>
-<span id="cb43-453"><a href="#cb43-453" aria-hidden="true" tabindex="-1"></a>implied by the endpoint and sample size.</span>
-<span id="cb43-454"><a href="#cb43-454" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-455"><a href="#cb43-455" aria-hidden="true" tabindex="-1"></a>For a meta-analysis we may wish to check how well the summary</span>
-<span id="cb43-456"><a href="#cb43-456" aria-hidden="true" tabindex="-1"></a>statistics of the historical data is predicted by the model. The</span>
-<span id="cb43-457"><a href="#cb43-457" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> package integrates with the <span class="in">`bayesplot`</span> package for the purpose</span>
-<span id="cb43-458"><a href="#cb43-458" aria-hidden="true" tabindex="-1"></a>of posterior predictive checks, which could look in this case like:</span>
-<span id="cb43-459"><a href="#cb43-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-462"><a href="#cb43-462" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-463"><a href="#cb43-463" aria-hidden="true" tabindex="-1"></a><span class="co"># create intervals plot and label plot accordingly</span></span>
-<span id="cb43-464"><a href="#cb43-464" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_meta_random, <span class="at">type=</span><span class="st">"intervals"</span>, <span class="at">ndraws=</span><span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb43-465"><a href="#cb43-465" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="st">"Study"</span>, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(arm_data), <span class="at">labels=</span>arm_data<span class="sc">$</span>study) <span class="sc">+</span></span>
-<span id="cb43-466"><a href="#cb43-466" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
-<span id="cb43-467"><a href="#cb43-467" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>)) <span class="sc">+</span></span>
-<span id="cb43-468"><a href="#cb43-468" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
-<span id="cb43-469"><a href="#cb43-469" aria-hidden="true" tabindex="-1"></a>          <span class="do">## suppress vertical grid lines for better readability of intervals</span></span>
-<span id="cb43-470"><a href="#cb43-470" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb43-471"><a href="#cb43-471" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check"</span>, <span class="st">"Random effects model"</span>)</span>
-<span id="cb43-472"><a href="#cb43-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-473"><a href="#cb43-473" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_meta_fixed, <span class="at">type=</span><span class="st">"intervals"</span>, <span class="at">ndraws=</span><span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb43-474"><a href="#cb43-474" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="st">"Study"</span>, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(arm_data), <span class="at">labels=</span>arm_data<span class="sc">$</span>study) <span class="sc">+</span></span>
-<span id="cb43-475"><a href="#cb43-475" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
-<span id="cb43-476"><a href="#cb43-476" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>)) <span class="sc">+</span></span>
-<span id="cb43-477"><a href="#cb43-477" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
-<span id="cb43-478"><a href="#cb43-478" aria-hidden="true" tabindex="-1"></a>          <span class="do">## suppress vertical grid lines for better readability of intervals</span></span>
-<span id="cb43-479"><a href="#cb43-479" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb43-480"><a href="#cb43-480" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check"</span>, <span class="st">"Fixed effects model"</span>)</span>
-<span id="cb43-481"><a href="#cb43-481" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-482"><a href="#cb43-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-483"><a href="#cb43-483" aria-hidden="true" tabindex="-1"></a>Shown is a central 50% credible interval with a thick line, a thinner</span>
-<span id="cb43-484"><a href="#cb43-484" aria-hidden="true" tabindex="-1"></a>line shows the 90% credible interval, the open dot marks the median</span>
-<span id="cb43-485"><a href="#cb43-485" aria-hidden="true" tabindex="-1"></a>prediction and the filled dark dot marks the observed value of the</span>
-<span id="cb43-486"><a href="#cb43-486" aria-hidden="true" tabindex="-1"></a>data. We see is that in particular study 7 is predicted</span>
-<span id="cb43-487"><a href="#cb43-487" aria-hidden="true" tabindex="-1"></a>unsatisfactory by the fixed effect model. An additional interesting</span>
-<span id="cb43-488"><a href="#cb43-488" aria-hidden="true" tabindex="-1"></a>predictice check in this case is in view of a possibile use as</span>
-<span id="cb43-489"><a href="#cb43-489" aria-hidden="true" tabindex="-1"></a>historical control information part of a new study. While the above</span>
-<span id="cb43-490"><a href="#cb43-490" aria-hidden="true" tabindex="-1"></a>predictive check of the random effects was conditional on the fitted</span>
-<span id="cb43-491"><a href="#cb43-491" aria-hidden="true" tabindex="-1"></a>data, we can instead use the random effects model and predict each</span>
-<span id="cb43-492"><a href="#cb43-492" aria-hidden="true" tabindex="-1"></a>study as if it were a new study:</span>
-<span id="cb43-493"><a href="#cb43-493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-496"><a href="#cb43-496" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-497"><a href="#cb43-497" aria-hidden="true" tabindex="-1"></a><span class="co"># create intervals plot and label plot accordingly</span></span>
-<span id="cb43-498"><a href="#cb43-498" aria-hidden="true" tabindex="-1"></a>pp_arm_data_new <span class="ot">&lt;-</span> <span class="fu">posterior_predict</span>(fit_meta_random,</span>
-<span id="cb43-499"><a href="#cb43-499" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">newdata=</span><span class="fu">mutate</span>(arm_data, <span class="at">study=</span><span class="fu">paste0</span>(<span class="st">"new_"</span>, study)),</span>
-<span id="cb43-500"><a href="#cb43-500" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>,</span>
-<span id="cb43-501"><a href="#cb43-501" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>)</span>
-<span id="cb43-502"><a href="#cb43-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-503"><a href="#cb43-503" aria-hidden="true" tabindex="-1"></a><span class="co"># use bayesplot::ppc_intervals directly here</span></span>
-<span id="cb43-504"><a href="#cb43-504" aria-hidden="true" tabindex="-1"></a><span class="fu">ppc_intervals</span>(<span class="at">y=</span>arm_data<span class="sc">$</span>r, <span class="at">yrep=</span>pp_arm_data_new) <span class="sc">+</span></span>
-<span id="cb43-505"><a href="#cb43-505" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="st">"Study"</span>, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(arm_data), <span class="at">labels=</span>arm_data<span class="sc">$</span>study) <span class="sc">+</span></span>
-<span id="cb43-506"><a href="#cb43-506" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
-<span id="cb43-507"><a href="#cb43-507" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>)) <span class="sc">+</span></span>
-<span id="cb43-508"><a href="#cb43-508" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
-<span id="cb43-509"><a href="#cb43-509" aria-hidden="true" tabindex="-1"></a>          <span class="do">## suppress vertical grid lines for better readability of intervals</span></span>
-<span id="cb43-510"><a href="#cb43-510" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb43-511"><a href="#cb43-511" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check - new studies"</span>, <span class="st">"Random effects model"</span>)</span>
-<span id="cb43-512"><a href="#cb43-512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-513"><a href="#cb43-513" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-514"><a href="#cb43-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-515"><a href="#cb43-515" aria-hidden="true" tabindex="-1"></a>Now the credible intervals are wider as these contain additional</span>
-<span id="cb43-516"><a href="#cb43-516" aria-hidden="true" tabindex="-1"></a>variability. As for study 7 the random effect is not anymore</span>
-<span id="cb43-517"><a href="#cb43-517" aria-hidden="true" tabindex="-1"></a>conditioned on the data of the study, we see again that the model</span>
-<span id="cb43-518"><a href="#cb43-518" aria-hidden="true" tabindex="-1"></a>struggles to account for the study nicely. However, with the additional</span>
-<span id="cb43-519"><a href="#cb43-519" aria-hidden="true" tabindex="-1"></a>heterogeniety the result of study 7 is at least plausible given that</span>
-<span id="cb43-520"><a href="#cb43-520" aria-hidden="true" tabindex="-1"></a>it is contained in the 90% credible interval.</span>
-<span id="cb43-521"><a href="#cb43-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-522"><a href="#cb43-522" aria-hidden="true" tabindex="-1"></a>In the above discussion we have ensured the comparability of the plots</span>
-<span id="cb43-523"><a href="#cb43-523" aria-hidden="true" tabindex="-1"></a>via matching the axis limits. A more straightforward is a side by side</span>
-<span id="cb43-524"><a href="#cb43-524" aria-hidden="true" tabindex="-1"></a>comparison of the models, which can be achieved like:</span>
+<span id="cb43-270"><a href="#cb43-270" aria-hidden="true" tabindex="-1"></a>This statement assign to *all* random effect standard deviations of</span>
+<span id="cb43-271"><a href="#cb43-271" aria-hidden="true" tabindex="-1"></a>the model the same prior, which can be convenient in some situations.</span>
+<span id="cb43-272"><a href="#cb43-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-273"><a href="#cb43-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-274"><a href="#cb43-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting the model</span></span>
+<span id="cb43-275"><a href="#cb43-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-276"><a href="#cb43-276" aria-hidden="true" tabindex="-1"></a>Having defined the model formula, the family and the priors we can now</span>
+<span id="cb43-277"><a href="#cb43-277" aria-hidden="true" tabindex="-1"></a>fit the models with the <span class="in">`brm`</span> command.</span>
+<span id="cb43-278"><a href="#cb43-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-281"><a href="#cb43-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-282"><a href="#cb43-282" aria-hidden="true" tabindex="-1"></a>fit_meta_fixed  <span class="ot">&lt;-</span> <span class="fu">brm</span>(model_meta_fixed, <span class="at">data=</span>arm_data, <span class="at">prior=</span>prior_meta_fixed,</span>
+<span id="cb43-283"><a href="#cb43-283" aria-hidden="true" tabindex="-1"></a>                       <span class="do">## setup Stan sampler to be more conservative, but more robust</span></span>
+<span id="cb43-284"><a href="#cb43-284" aria-hidden="true" tabindex="-1"></a>                       <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
+<span id="cb43-285"><a href="#cb43-285" aria-hidden="true" tabindex="-1"></a>                       <span class="do">## these options silence Stan</span></span>
+<span id="cb43-286"><a href="#cb43-286" aria-hidden="true" tabindex="-1"></a>                       <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
+<span id="cb43-287"><a href="#cb43-287" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seed=</span><span class="dv">4658758</span>)</span>
+<span id="cb43-288"><a href="#cb43-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-289"><a href="#cb43-289" aria-hidden="true" tabindex="-1"></a>fit_meta_random  <span class="ot">&lt;-</span> <span class="fu">brm</span>(model_meta_random, <span class="at">data=</span>arm_data, <span class="at">prior=</span>prior_meta_random,</span>
+<span id="cb43-290"><a href="#cb43-290" aria-hidden="true" tabindex="-1"></a>                        <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
+<span id="cb43-291"><a href="#cb43-291" aria-hidden="true" tabindex="-1"></a>                        <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
+<span id="cb43-292"><a href="#cb43-292" aria-hidden="true" tabindex="-1"></a>                        <span class="at">seed=</span><span class="dv">5868467</span>)</span>
+<span id="cb43-293"><a href="#cb43-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-294"><a href="#cb43-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-295"><a href="#cb43-295" aria-hidden="true" tabindex="-1"></a>When calling <span class="in">`brm`</span> a Stan model file will be created, compiled and run</span>
+<span id="cb43-296"><a href="#cb43-296" aria-hidden="true" tabindex="-1"></a>with the data provided. The arguments used are:</span>
+<span id="cb43-297"><a href="#cb43-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-298"><a href="#cb43-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`formula`</span> is the first argument here. It specifies the model. Since</span>
+<span id="cb43-299"><a href="#cb43-299" aria-hidden="true" tabindex="-1"></a>  we have in this case provided <span class="in">`family`</span> as part of the formula, we do</span>
+<span id="cb43-300"><a href="#cb43-300" aria-hidden="true" tabindex="-1"></a>  not need to specify it as argument to <span class="in">`brm`</span>, which is also possible</span>
+<span id="cb43-301"><a href="#cb43-301" aria-hidden="true" tabindex="-1"></a>  to do.</span>
+<span id="cb43-302"><a href="#cb43-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`data`</span> the data used to fit.</span>
+<span id="cb43-303"><a href="#cb43-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`prior`</span> definition of the priors for all model parameters</span>
+<span id="cb43-304"><a href="#cb43-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`control`</span> defines additional control arguments to the Stan</span>
+<span id="cb43-305"><a href="#cb43-305" aria-hidden="true" tabindex="-1"></a>  sampler. A higher than standard <span class="in">`adapt_delta`</span> (defaults to <span class="in">`0.8`</span>)</span>
+<span id="cb43-306"><a href="#cb43-306" aria-hidden="true" tabindex="-1"></a>  causes the sampler to run less aggressively which makes the sampler</span>
+<span id="cb43-307"><a href="#cb43-307" aria-hidden="true" tabindex="-1"></a>  more robust, but somewhat slower.</span>
+<span id="cb43-308"><a href="#cb43-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`refresh &amp; silent`</span> are used here to suppress Stan sampling output.</span>
+<span id="cb43-309"><a href="#cb43-309" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`seed`</span> sets the seed use for the fit.</span>
+<span id="cb43-310"><a href="#cb43-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-311"><a href="#cb43-311" aria-hidden="true" tabindex="-1"></a>In the course of an exploratory analysis one often wishes to modify a</span>
+<span id="cb43-312"><a href="#cb43-312" aria-hidden="true" tabindex="-1"></a>given model slightly to study, for example, the sensitivity to</span>
+<span id="cb43-313"><a href="#cb43-313" aria-hidden="true" tabindex="-1"></a>different assumptions. For this purpose the <span class="in">`update`</span> mechanism is a</span>
+<span id="cb43-314"><a href="#cb43-314" aria-hidden="true" tabindex="-1"></a>convenient way to simply change certain arguments specified</span>
+<span id="cb43-315"><a href="#cb43-315" aria-hidden="true" tabindex="-1"></a>previously. To change the prior on the study level random effect</span>
+<span id="cb43-316"><a href="#cb43-316" aria-hidden="true" tabindex="-1"></a>parameter one may use:</span>
+<span id="cb43-317"><a href="#cb43-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-320"><a href="#cb43-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-321"><a href="#cb43-321" aria-hidden="true" tabindex="-1"></a>prior_meta_random_alt <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
+<span id="cb43-322"><a href="#cb43-322" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span>
+<span id="cb43-323"><a href="#cb43-323" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb43-324"><a href="#cb43-324" aria-hidden="true" tabindex="-1"></a>fit_meta_random_alt  <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_meta_random, <span class="at">prior=</span>prior_meta_random_alt,</span>
+<span id="cb43-325"><a href="#cb43-325" aria-hidden="true" tabindex="-1"></a>                               <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
+<span id="cb43-326"><a href="#cb43-326" aria-hidden="true" tabindex="-1"></a>                               <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
+<span id="cb43-327"><a href="#cb43-327" aria-hidden="true" tabindex="-1"></a>                               <span class="at">seed=</span><span class="dv">6845736</span>)</span>
+<span id="cb43-328"><a href="#cb43-328" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-329"><a href="#cb43-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-330"><a href="#cb43-330" aria-hidden="true" tabindex="-1"></a>As changing the prior results in this case in a need to recompile the</span>
+<span id="cb43-331"><a href="#cb43-331" aria-hidden="true" tabindex="-1"></a>model, the benefits of using <span class="in">`update`</span> are not large in this</span>
+<span id="cb43-332"><a href="#cb43-332" aria-hidden="true" tabindex="-1"></a>case. However, whenever a model recompilation is not needed, then</span>
+<span id="cb43-333"><a href="#cb43-333" aria-hidden="true" tabindex="-1"></a>using <span class="in">`update`</span> significantly speeds up the workflow as the compilation</span>
+<span id="cb43-334"><a href="#cb43-334" aria-hidden="true" tabindex="-1"></a>step is avoided, e.g. when looking at data subsets:</span>
+<span id="cb43-335"><a href="#cb43-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-338"><a href="#cb43-338" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-339"><a href="#cb43-339" aria-hidden="true" tabindex="-1"></a>prior_meta_random_alt <span class="ot">&lt;-</span> prior_meta_fixed <span class="sc">+</span></span>
+<span id="cb43-340"><a href="#cb43-340" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>,<span class="fl">0.5</span>), <span class="at">class=</span>sd, <span class="at">coef=</span>Intercept, <span class="at">group=</span>study)</span>
+<span id="cb43-341"><a href="#cb43-341" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb43-342"><a href="#cb43-342" aria-hidden="true" tabindex="-1"></a>fit_meta_random_alt2  <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_meta_random, <span class="at">newdata=</span><span class="fu">slice_head</span>(arm_data, <span class="at">n=</span><span class="dv">4</span>),</span>
+<span id="cb43-343"><a href="#cb43-343" aria-hidden="true" tabindex="-1"></a>                                <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
+<span id="cb43-344"><a href="#cb43-344" aria-hidden="true" tabindex="-1"></a>                                <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
+<span id="cb43-345"><a href="#cb43-345" aria-hidden="true" tabindex="-1"></a>                                <span class="at">seed=</span><span class="dv">5868467</span>)</span>
+<span id="cb43-346"><a href="#cb43-346" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-347"><a href="#cb43-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-348"><a href="#cb43-348" aria-hidden="true" tabindex="-1"></a>Now the fit starts instantly leading to a faster and more convenient</span>
+<span id="cb43-349"><a href="#cb43-349" aria-hidden="true" tabindex="-1"></a>modeling workflow.</span>
+<span id="cb43-350"><a href="#cb43-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-351"><a href="#cb43-351" aria-hidden="true" tabindex="-1"></a>When working with <span class="in">`brms`</span> you will encounter warnings now and then</span>
+<span id="cb43-352"><a href="#cb43-352" aria-hidden="true" tabindex="-1"></a>which originate from Stan itself. While <span class="in">`brms`</span> attempts to add</span>
+<span id="cb43-353"><a href="#cb43-353" aria-hidden="true" tabindex="-1"></a>explanations to these warnings as to what they mean and how to avoid</span>
+<span id="cb43-354"><a href="#cb43-354" aria-hidden="true" tabindex="-1"></a>them, the Stan community has provided an [online</span>
+<span id="cb43-355"><a href="#cb43-355" aria-hidden="true" tabindex="-1"></a>help-page](https://mc-stan.org/misc/warnings.html) on possible</span>
+<span id="cb43-356"><a href="#cb43-356" aria-hidden="true" tabindex="-1"></a>warnings occuring during a Stan fit.</span>
+<span id="cb43-357"><a href="#cb43-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-358"><a href="#cb43-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-359"><a href="#cb43-359" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summary</span></span>
+<span id="cb43-360"><a href="#cb43-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-361"><a href="#cb43-361" aria-hidden="true" tabindex="-1"></a>Once models are fit, we obtain - by default - a posterior sample of</span>
+<span id="cb43-362"><a href="#cb43-362" aria-hidden="true" tabindex="-1"></a>the model. Given that priors are used in such an analysis it can be</span>
+<span id="cb43-363"><a href="#cb43-363" aria-hidden="true" tabindex="-1"></a>convenient to first consider the priors which were used to create a</span>
+<span id="cb43-364"><a href="#cb43-364" aria-hidden="true" tabindex="-1"></a>given fitting object like:</span>
+<span id="cb43-365"><a href="#cb43-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-368"><a href="#cb43-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-369"><a href="#cb43-369" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">prior_summary</span>(fit_meta_random))</span>
+<span id="cb43-370"><a href="#cb43-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-371"><a href="#cb43-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-372"><a href="#cb43-372" aria-hidden="true" tabindex="-1"></a>An even more explicit way to analyze the prior of a model is to</span>
+<span id="cb43-373"><a href="#cb43-373" aria-hidden="true" tabindex="-1"></a>*sample* it directly:</span>
+<span id="cb43-374"><a href="#cb43-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-377"><a href="#cb43-377" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-378"><a href="#cb43-378" aria-hidden="true" tabindex="-1"></a>prior_meta_random  <span class="ot">&lt;-</span> <span class="fu">update</span>(fit_meta_random, <span class="at">sample_prior=</span><span class="st">"only"</span>,</span>
+<span id="cb43-379"><a href="#cb43-379" aria-hidden="true" tabindex="-1"></a>                             <span class="at">control=</span><span class="fu">list</span>(<span class="at">adapt_delta=</span><span class="fl">0.95</span>),</span>
+<span id="cb43-380"><a href="#cb43-380" aria-hidden="true" tabindex="-1"></a>                             <span class="at">refresh=</span><span class="dv">0</span>, <span class="at">silent=</span><span class="cn">TRUE</span>,</span>
+<span id="cb43-381"><a href="#cb43-381" aria-hidden="true" tabindex="-1"></a>                             <span class="at">seed=</span><span class="dv">5868467</span>)</span>
+<span id="cb43-382"><a href="#cb43-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-383"><a href="#cb43-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-384"><a href="#cb43-384" aria-hidden="true" tabindex="-1"></a>This will sample the model in the usual way, but simply leave out the</span>
+<span id="cb43-385"><a href="#cb43-385" aria-hidden="true" tabindex="-1"></a>terms implied by the data likelihood. The resulting model sample can</span>
+<span id="cb43-386"><a href="#cb43-386" aria-hidden="true" tabindex="-1"></a>be analyzed in exactly the same way as the model posterior</span>
+<span id="cb43-387"><a href="#cb43-387" aria-hidden="true" tabindex="-1"></a>itself. This technique is called prior (predictive) checks.</span>
+<span id="cb43-388"><a href="#cb43-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-389"><a href="#cb43-389" aria-hidden="true" tabindex="-1"></a>Returning to the model posterior, the obvious first thing to do is to</span>
+<span id="cb43-390"><a href="#cb43-390" aria-hidden="true" tabindex="-1"></a>simply print the results:</span>
+<span id="cb43-391"><a href="#cb43-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-394"><a href="#cb43-394" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-395"><a href="#cb43-395" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_meta_random)</span>
+<span id="cb43-396"><a href="#cb43-396" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-397"><a href="#cb43-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-398"><a href="#cb43-398" aria-hidden="true" tabindex="-1"></a>We see that we fitted the default 4 chains and ran each chain for 1000</span>
+<span id="cb43-399"><a href="#cb43-399" aria-hidden="true" tabindex="-1"></a>warmup iterations and 2000 total iterations such that we are left with</span>
+<span id="cb43-400"><a href="#cb43-400" aria-hidden="true" tabindex="-1"></a>4k iterations overall. <span class="in">`brms`</span> reports by default as estimate the mean</span>
+<span id="cb43-401"><a href="#cb43-401" aria-hidden="true" tabindex="-1"></a>of the posterior with it's standard error and the 95% credible</span>
+<span id="cb43-402"><a href="#cb43-402" aria-hidden="true" tabindex="-1"></a>interval. The <span class="in">`Rhat`</span> column is a convergence diagnostic which should</span>
+<span id="cb43-403"><a href="#cb43-403" aria-hidden="true" tabindex="-1"></a>be close to <span class="in">`1.0`</span>. Values above <span class="in">`1.1`</span> indicate non-convergence of the</span>
+<span id="cb43-404"><a href="#cb43-404" aria-hidden="true" tabindex="-1"></a>Markov Chain for the particular parameter. The additional two columns</span>
+<span id="cb43-405"><a href="#cb43-405" aria-hidden="true" tabindex="-1"></a>on bulk and tail ESS indicate statistical information on central</span>
+<span id="cb43-406"><a href="#cb43-406" aria-hidden="true" tabindex="-1"></a>moments and tail properties of the target quantitiy. The ESS is the</span>
+<span id="cb43-407"><a href="#cb43-407" aria-hidden="true" tabindex="-1"></a>effective sample size of the MC estimator, which assumes that the</span>
+<span id="cb43-408"><a href="#cb43-408" aria-hidden="true" tabindex="-1"></a>estimation error of the mean scales with $1/\sqrt{ESS}$. An ESS of</span>
+<span id="cb43-409"><a href="#cb43-409" aria-hidden="true" tabindex="-1"></a>~200 is usually sufficient for a precise estimate of the mean. It is</span>
+<span id="cb43-410"><a href="#cb43-410" aria-hidden="true" tabindex="-1"></a>important to note that the Stan HMC sampler often requires fewer</span>
+<span id="cb43-411"><a href="#cb43-411" aria-hidden="true" tabindex="-1"></a>iterations (for which more time is spent) as compared to BUGS or JAGS</span>
+<span id="cb43-412"><a href="#cb43-412" aria-hidden="true" tabindex="-1"></a>in order to reach a comparable ESS. For more details on the ESS,</span>
+<span id="cb43-413"><a href="#cb43-413" aria-hidden="true" tabindex="-1"></a>please refer to the [Stan reference manual on</span>
+<span id="cb43-414"><a href="#cb43-414" aria-hidden="true" tabindex="-1"></a>ESS](https://mc-stan.org/docs/2_29/reference-manual/effective-sample-size.html).</span>
+<span id="cb43-415"><a href="#cb43-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-416"><a href="#cb43-416" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> supports the common R functions to extract model results:</span>
+<span id="cb43-417"><a href="#cb43-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-418"><a href="#cb43-418" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`fitted`</span> to get the posterior estimates of expected values of for</span>
+<span id="cb43-419"><a href="#cb43-419" aria-hidden="true" tabindex="-1"></a>  each data row (no sampling uncertainty)</span>
+<span id="cb43-420"><a href="#cb43-420" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`predict`</span> to get the posterior predictive estimates of the response for each</span>
+<span id="cb43-421"><a href="#cb43-421" aria-hidden="true" tabindex="-1"></a>  data row (includes sampling uncertainty)</span>
+<span id="cb43-422"><a href="#cb43-422" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`coef`</span>/<span class="in">`ranef`</span> to get the random effect estimates including/excluding the linear</span>
+<span id="cb43-423"><a href="#cb43-423" aria-hidden="true" tabindex="-1"></a>  predictor part</span>
+<span id="cb43-424"><a href="#cb43-424" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>many more, please refer to the reference manual of <span class="in">`brms`</span></span>
+<span id="cb43-425"><a href="#cb43-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-426"><a href="#cb43-426" aria-hidden="true" tabindex="-1"></a>Of note is the argument <span class="in">`summary`</span>, which is used in a number of these</span>
+<span id="cb43-427"><a href="#cb43-427" aria-hidden="true" tabindex="-1"></a>functions. The default is set to <span class="in">`TRUE`</span> such that the output are</span>
+<span id="cb43-428"><a href="#cb43-428" aria-hidden="true" tabindex="-1"></a>summaries of the posterior sample in the form of means, credible</span>
+<span id="cb43-429"><a href="#cb43-429" aria-hidden="true" tabindex="-1"></a>intervals, etc. When setting the argument <span class="in">`summary=FALSE`</span> then the</span>
+<span id="cb43-430"><a href="#cb43-430" aria-hidden="true" tabindex="-1"></a>posterior sample is returned in the format of a matrix. Each row of</span>
+<span id="cb43-431"><a href="#cb43-431" aria-hidden="true" tabindex="-1"></a>the matrix is one iteration while the columns of the matrix run with</span>
+<span id="cb43-432"><a href="#cb43-432" aria-hidden="true" tabindex="-1"></a>the rows of the input data-set.</span>
+<span id="cb43-433"><a href="#cb43-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-434"><a href="#cb43-434" aria-hidden="true" tabindex="-1"></a>For example, we can compare the estimated mean response fo the two</span>
+<span id="cb43-435"><a href="#cb43-435" aria-hidden="true" tabindex="-1"></a>different models as:</span>
+<span id="cb43-436"><a href="#cb43-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-439"><a href="#cb43-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-440"><a href="#cb43-440" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(fit_meta_random)</span>
+<span id="cb43-441"><a href="#cb43-441" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(fit_meta_fixed)</span>
+<span id="cb43-442"><a href="#cb43-442" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-443"><a href="#cb43-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-444"><a href="#cb43-444" aria-hidden="true" tabindex="-1"></a>As expected, the standard errors for the fixed effect analysis are</span>
+<span id="cb43-445"><a href="#cb43-445" aria-hidden="true" tabindex="-1"></a>considerably smaller.</span>
+<span id="cb43-446"><a href="#cb43-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-447"><a href="#cb43-447" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model analysis</span></span>
+<span id="cb43-448"><a href="#cb43-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-449"><a href="#cb43-449" aria-hidden="true" tabindex="-1"></a>How to analyze a given model obviously depends very much on details of</span>
+<span id="cb43-450"><a href="#cb43-450" aria-hidden="true" tabindex="-1"></a>the problem at hand. Often we wish to evaluate how well the model</span>
+<span id="cb43-451"><a href="#cb43-451" aria-hidden="true" tabindex="-1"></a>describes the problem data used to fit the model. Thus, the ability of</span>
+<span id="cb43-452"><a href="#cb43-452" aria-hidden="true" tabindex="-1"></a>the model to describe certain summaries of the data set accuratley is</span>
+<span id="cb43-453"><a href="#cb43-453" aria-hidden="true" tabindex="-1"></a>one way to critize the model. Such an approach requires to compare</span>
+<span id="cb43-454"><a href="#cb43-454" aria-hidden="true" tabindex="-1"></a>predictions of the data by the model $y_{rep}$ to the actual data</span>
+<span id="cb43-455"><a href="#cb43-455" aria-hidden="true" tabindex="-1"></a>$y$. This procedure is referred to as posterior predictive checks. A</span>
+<span id="cb43-456"><a href="#cb43-456" aria-hidden="true" tabindex="-1"></a>key feautre of the approach is to account for sampling uncertainty</span>
+<span id="cb43-457"><a href="#cb43-457" aria-hidden="true" tabindex="-1"></a>implied by the endpoint and sample size.</span>
+<span id="cb43-458"><a href="#cb43-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-459"><a href="#cb43-459" aria-hidden="true" tabindex="-1"></a>For a meta-analysis we may wish to check how well the summary</span>
+<span id="cb43-460"><a href="#cb43-460" aria-hidden="true" tabindex="-1"></a>statistics of the historical data is predicted by the model. The</span>
+<span id="cb43-461"><a href="#cb43-461" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> package integrates with the <span class="in">`bayesplot`</span> package for the purpose</span>
+<span id="cb43-462"><a href="#cb43-462" aria-hidden="true" tabindex="-1"></a>of posterior predictive checks, which could look in this case like:</span>
+<span id="cb43-463"><a href="#cb43-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-466"><a href="#cb43-466" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-467"><a href="#cb43-467" aria-hidden="true" tabindex="-1"></a><span class="co"># create intervals plot and label plot accordingly</span></span>
+<span id="cb43-468"><a href="#cb43-468" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_meta_random, <span class="at">type=</span><span class="st">"intervals"</span>, <span class="at">ndraws=</span><span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb43-469"><a href="#cb43-469" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="st">"Study"</span>, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(arm_data), <span class="at">labels=</span>arm_data<span class="sc">$</span>study) <span class="sc">+</span></span>
+<span id="cb43-470"><a href="#cb43-470" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
+<span id="cb43-471"><a href="#cb43-471" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>)) <span class="sc">+</span></span>
+<span id="cb43-472"><a href="#cb43-472" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
+<span id="cb43-473"><a href="#cb43-473" aria-hidden="true" tabindex="-1"></a>          <span class="do">## suppress vertical grid lines for better readability of intervals</span></span>
+<span id="cb43-474"><a href="#cb43-474" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb43-475"><a href="#cb43-475" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check"</span>, <span class="st">"Random effects model"</span>)</span>
+<span id="cb43-476"><a href="#cb43-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-477"><a href="#cb43-477" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(fit_meta_fixed, <span class="at">type=</span><span class="st">"intervals"</span>, <span class="at">ndraws=</span><span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb43-478"><a href="#cb43-478" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="st">"Study"</span>, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(arm_data), <span class="at">labels=</span>arm_data<span class="sc">$</span>study) <span class="sc">+</span></span>
+<span id="cb43-479"><a href="#cb43-479" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
+<span id="cb43-480"><a href="#cb43-480" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>)) <span class="sc">+</span></span>
+<span id="cb43-481"><a href="#cb43-481" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
+<span id="cb43-482"><a href="#cb43-482" aria-hidden="true" tabindex="-1"></a>          <span class="do">## suppress vertical grid lines for better readability of intervals</span></span>
+<span id="cb43-483"><a href="#cb43-483" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb43-484"><a href="#cb43-484" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check"</span>, <span class="st">"Fixed effects model"</span>)</span>
+<span id="cb43-485"><a href="#cb43-485" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-486"><a href="#cb43-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-487"><a href="#cb43-487" aria-hidden="true" tabindex="-1"></a>Shown is a central 50% credible interval with a thick line, a thinner</span>
+<span id="cb43-488"><a href="#cb43-488" aria-hidden="true" tabindex="-1"></a>line shows the 90% credible interval, the open dot marks the median</span>
+<span id="cb43-489"><a href="#cb43-489" aria-hidden="true" tabindex="-1"></a>prediction and the filled dark dot marks the observed value of the</span>
+<span id="cb43-490"><a href="#cb43-490" aria-hidden="true" tabindex="-1"></a>data. We see is that in particular study 7 is predicted</span>
+<span id="cb43-491"><a href="#cb43-491" aria-hidden="true" tabindex="-1"></a>unsatisfactory by the fixed effect model. An additional interesting</span>
+<span id="cb43-492"><a href="#cb43-492" aria-hidden="true" tabindex="-1"></a>predictice check in this case is in view of a possibile use as</span>
+<span id="cb43-493"><a href="#cb43-493" aria-hidden="true" tabindex="-1"></a>historical control information part of a new study. While the above</span>
+<span id="cb43-494"><a href="#cb43-494" aria-hidden="true" tabindex="-1"></a>predictive check of the random effects was conditional on the fitted</span>
+<span id="cb43-495"><a href="#cb43-495" aria-hidden="true" tabindex="-1"></a>data, we can instead use the random effects model and predict each</span>
+<span id="cb43-496"><a href="#cb43-496" aria-hidden="true" tabindex="-1"></a>study as if it were a new study:</span>
+<span id="cb43-497"><a href="#cb43-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-500"><a href="#cb43-500" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-501"><a href="#cb43-501" aria-hidden="true" tabindex="-1"></a><span class="co"># create intervals plot and label plot accordingly</span></span>
+<span id="cb43-502"><a href="#cb43-502" aria-hidden="true" tabindex="-1"></a>pp_arm_data_new <span class="ot">&lt;-</span> <span class="fu">posterior_predict</span>(fit_meta_random,</span>
+<span id="cb43-503"><a href="#cb43-503" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">newdata=</span><span class="fu">mutate</span>(arm_data, <span class="at">study=</span><span class="fu">paste0</span>(<span class="st">"new_"</span>, study)),</span>
+<span id="cb43-504"><a href="#cb43-504" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">allow_new_levels=</span><span class="cn">TRUE</span>,</span>
+<span id="cb43-505"><a href="#cb43-505" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">sample_new_levels=</span><span class="st">"gaussian"</span>)</span>
+<span id="cb43-506"><a href="#cb43-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-507"><a href="#cb43-507" aria-hidden="true" tabindex="-1"></a><span class="co"># use bayesplot::ppc_intervals directly here</span></span>
+<span id="cb43-508"><a href="#cb43-508" aria-hidden="true" tabindex="-1"></a><span class="fu">ppc_intervals</span>(<span class="at">y=</span>arm_data<span class="sc">$</span>r, <span class="at">yrep=</span>pp_arm_data_new) <span class="sc">+</span></span>
+<span id="cb43-509"><a href="#cb43-509" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="st">"Study"</span>, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(arm_data), <span class="at">labels=</span>arm_data<span class="sc">$</span>study) <span class="sc">+</span></span>
+<span id="cb43-510"><a href="#cb43-510" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
+<span id="cb43-511"><a href="#cb43-511" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>)) <span class="sc">+</span></span>
+<span id="cb43-512"><a href="#cb43-512" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
+<span id="cb43-513"><a href="#cb43-513" aria-hidden="true" tabindex="-1"></a>          <span class="do">## suppress vertical grid lines for better readability of intervals</span></span>
+<span id="cb43-514"><a href="#cb43-514" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb43-515"><a href="#cb43-515" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check - new studies"</span>, <span class="st">"Random effects model"</span>)</span>
+<span id="cb43-516"><a href="#cb43-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-517"><a href="#cb43-517" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-518"><a href="#cb43-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-519"><a href="#cb43-519" aria-hidden="true" tabindex="-1"></a>Now the credible intervals are wider as these contain additional</span>
+<span id="cb43-520"><a href="#cb43-520" aria-hidden="true" tabindex="-1"></a>variability. As for study 7 the random effect is not anymore</span>
+<span id="cb43-521"><a href="#cb43-521" aria-hidden="true" tabindex="-1"></a>conditioned on the data of the study, we see again that the model</span>
+<span id="cb43-522"><a href="#cb43-522" aria-hidden="true" tabindex="-1"></a>struggles to account for the study nicely. However, with the additional</span>
+<span id="cb43-523"><a href="#cb43-523" aria-hidden="true" tabindex="-1"></a>heterogeniety the result of study 7 is at least plausible given that</span>
+<span id="cb43-524"><a href="#cb43-524" aria-hidden="true" tabindex="-1"></a>it is contained in the 90% credible interval.</span>
 <span id="cb43-525"><a href="#cb43-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-526"><a href="#cb43-526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-529"><a href="#cb43-529" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb43-530"><a href="#cb43-530" aria-hidden="true" tabindex="-1"></a><span class="co"># use bayesplot::ppc_intervals_data directly here</span></span>
-<span id="cb43-531"><a href="#cb43-531" aria-hidden="true" tabindex="-1"></a>model_cmp <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="at">random_new=</span><span class="fu">ppc_intervals_data</span>(<span class="at">y=</span>arm_data<span class="sc">$</span>r, <span class="at">yrep=</span>pp_arm_data_new),</span>
-<span id="cb43-532"><a href="#cb43-532" aria-hidden="true" tabindex="-1"></a>                       <span class="at">random=</span><span class="fu">ppc_intervals_data</span>(<span class="at">y=</span>arm_data<span class="sc">$</span>r, <span class="at">yrep=</span><span class="fu">posterior_predict</span>(fit_meta_random)),</span>
-<span id="cb43-533"><a href="#cb43-533" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fixed=</span><span class="fu">ppc_intervals_data</span>(<span class="at">y=</span>arm_data<span class="sc">$</span>r, <span class="at">yrep=</span><span class="fu">posterior_predict</span>(fit_meta_fixed)),</span>
-<span id="cb43-534"><a href="#cb43-534" aria-hidden="true" tabindex="-1"></a>                       <span class="at">.id=</span><span class="st">"Model"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb43-535"><a href="#cb43-535" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add in labels into the data-set</span></span>
-<span id="cb43-536"><a href="#cb43-536" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(<span class="fu">select</span>(<span class="fu">mutate</span>(arm_data, <span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>), x, study), <span class="at">by=</span><span class="st">"x"</span>)</span>
-<span id="cb43-537"><a href="#cb43-537" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-538"><a href="#cb43-538" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(model_cmp, <span class="fu">aes</span>(study, m, <span class="at">colour=</span>Model)) <span class="sc">+</span></span>
-<span id="cb43-539"><a href="#cb43-539" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>ll, <span class="at">ymax=</span>hh), <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.4</span>)) <span class="sc">+</span></span>
-<span id="cb43-540"><a href="#cb43-540" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>y_obs), <span class="at">colour=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb43-541"><a href="#cb43-541" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
-<span id="cb43-542"><a href="#cb43-542" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Study"</span>) <span class="sc">+</span></span>
-<span id="cb43-543"><a href="#cb43-543" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb43-544"><a href="#cb43-544" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
-<span id="cb43-545"><a href="#cb43-545" aria-hidden="true" tabindex="-1"></a>          <span class="co"># suppress vertical grid lines for better readability of intervals</span></span>
-<span id="cb43-546"><a href="#cb43-546" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb43-547"><a href="#cb43-547" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check"</span>, <span class="st">"All models"</span>)</span>
-<span id="cb43-548"><a href="#cb43-548" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb43-549"><a href="#cb43-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-550"><a href="#cb43-550" aria-hidden="true" tabindex="-1"></a>A more formal way to compare these models is to consider their ability</span>
-<span id="cb43-551"><a href="#cb43-551" aria-hidden="true" tabindex="-1"></a>to predict new data. In absence of new data we may instead turn to</span>
-<span id="cb43-552"><a href="#cb43-552" aria-hidden="true" tabindex="-1"></a>scores which evaluate the ability of the model to predict data which</span>
-<span id="cb43-553"><a href="#cb43-553" aria-hidden="true" tabindex="-1"></a>has been left out when fitting the model. The leave-one-out scores can</span>
-<span id="cb43-554"><a href="#cb43-554" aria-hidden="true" tabindex="-1"></a>be calculated using fast approximations (see <span class="in">`loo`</span> command) whenever</span>
-<span id="cb43-555"><a href="#cb43-555" aria-hidden="true" tabindex="-1"></a>the data-set is large enough. We refer the reader to the case study on</span>
-<span id="cb43-556"><a href="#cb43-556" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Dose finding</span><span class="co">](02b_dose_finding.html)</span> where these model comparisons are</span>
-<span id="cb43-557"><a href="#cb43-557" aria-hidden="true" tabindex="-1"></a>discussed in greater detail.</span>
+<span id="cb43-526"><a href="#cb43-526" aria-hidden="true" tabindex="-1"></a>In the above discussion we have ensured the comparability of the plots</span>
+<span id="cb43-527"><a href="#cb43-527" aria-hidden="true" tabindex="-1"></a>via matching the axis limits. A more straightforward is a side by side</span>
+<span id="cb43-528"><a href="#cb43-528" aria-hidden="true" tabindex="-1"></a>comparison of the models, which can be achieved like:</span>
+<span id="cb43-529"><a href="#cb43-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-530"><a href="#cb43-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-533"><a href="#cb43-533" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb43-534"><a href="#cb43-534" aria-hidden="true" tabindex="-1"></a><span class="co"># use bayesplot::ppc_intervals_data directly here</span></span>
+<span id="cb43-535"><a href="#cb43-535" aria-hidden="true" tabindex="-1"></a>model_cmp <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="at">random_new=</span><span class="fu">ppc_intervals_data</span>(<span class="at">y=</span>arm_data<span class="sc">$</span>r, <span class="at">yrep=</span>pp_arm_data_new),</span>
+<span id="cb43-536"><a href="#cb43-536" aria-hidden="true" tabindex="-1"></a>                       <span class="at">random=</span><span class="fu">ppc_intervals_data</span>(<span class="at">y=</span>arm_data<span class="sc">$</span>r, <span class="at">yrep=</span><span class="fu">posterior_predict</span>(fit_meta_random)),</span>
+<span id="cb43-537"><a href="#cb43-537" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fixed=</span><span class="fu">ppc_intervals_data</span>(<span class="at">y=</span>arm_data<span class="sc">$</span>r, <span class="at">yrep=</span><span class="fu">posterior_predict</span>(fit_meta_fixed)),</span>
+<span id="cb43-538"><a href="#cb43-538" aria-hidden="true" tabindex="-1"></a>                       <span class="at">.id=</span><span class="st">"Model"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-539"><a href="#cb43-539" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add in labels into the data-set</span></span>
+<span id="cb43-540"><a href="#cb43-540" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(<span class="fu">select</span>(<span class="fu">mutate</span>(arm_data, <span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>), x, study), <span class="at">by=</span><span class="st">"x"</span>)</span>
+<span id="cb43-541"><a href="#cb43-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-542"><a href="#cb43-542" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(model_cmp, <span class="fu">aes</span>(study, m, <span class="at">colour=</span>Model)) <span class="sc">+</span></span>
+<span id="cb43-543"><a href="#cb43-543" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>ll, <span class="at">ymax=</span>hh), <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="at">width=</span><span class="fl">0.4</span>)) <span class="sc">+</span></span>
+<span id="cb43-544"><a href="#cb43-544" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>y_obs), <span class="at">colour=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb43-545"><a href="#cb43-545" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Number of Responders"</span>) <span class="sc">+</span></span>
+<span id="cb43-546"><a href="#cb43-546" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Study"</span>) <span class="sc">+</span></span>
+<span id="cb43-547"><a href="#cb43-547" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb43-548"><a href="#cb43-548" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>,</span>
+<span id="cb43-549"><a href="#cb43-549" aria-hidden="true" tabindex="-1"></a>          <span class="co"># suppress vertical grid lines for better readability of intervals</span></span>
+<span id="cb43-550"><a href="#cb43-550" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb43-551"><a href="#cb43-551" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Posterior predictive check"</span>, <span class="st">"All models"</span>)</span>
+<span id="cb43-552"><a href="#cb43-552" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-553"><a href="#cb43-553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-554"><a href="#cb43-554" aria-hidden="true" tabindex="-1"></a>A more formal way to compare these models is to consider their ability</span>
+<span id="cb43-555"><a href="#cb43-555" aria-hidden="true" tabindex="-1"></a>to predict new data. In absence of new data we may instead turn to</span>
+<span id="cb43-556"><a href="#cb43-556" aria-hidden="true" tabindex="-1"></a>scores which evaluate the ability of the model to predict data which</span>
+<span id="cb43-557"><a href="#cb43-557" aria-hidden="true" tabindex="-1"></a>has been left out when fitting the model. The leave-one-out scores can</span>
+<span id="cb43-558"><a href="#cb43-558" aria-hidden="true" tabindex="-1"></a>be calculated using fast approximations (see <span class="in">`loo`</span> command) whenever</span>
+<span id="cb43-559"><a href="#cb43-559" aria-hidden="true" tabindex="-1"></a>the data-set is large enough. We refer the reader to the case study on</span>
+<span id="cb43-560"><a href="#cb43-560" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Dose finding</span><span class="co">](02b_dose_finding.html)</span> where these model comparisons are</span>
+<span id="cb43-561"><a href="#cb43-561" aria-hidden="true" tabindex="-1"></a>discussed in greater detail.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -98,7 +98,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-82d9e4e9cf99d8eb0e77e4f639bbcaed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -349,7 +349,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
   </div>
 </li>
       </ul>
@@ -423,11 +423,11 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RBesT)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"src/02a_meta_analysis.qmd"</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="background" class="level2" data-number="4.1">
@@ -1354,7 +1354,7 @@ Total execution time: 1.2 seconds.</code></pre>
 Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
-Chain 4 finished in 0.2 seconds.
+Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
@@ -1452,7 +1452,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 1 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/Rtmp09a57w/model-23d8a14ac99.stan', line 54, column 4 to column 50)</code></pre>
+<pre><code>Chain 1 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpQfGAEf/model-264e756c13cd.stan', line 54, column 4 to column 50)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1464,14 +1464,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>Chain 1 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Chain 1 finished in 1.0 seconds.
-Chain 2 finished in 0.8 seconds.</code></pre>
+<pre><code>Chain 1 finished in 0.9 seconds.
+Chain 2 finished in 0.7 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/Rtmp09a57w/model-23d8a14ac99.stan', line 54, column 4 to column 50)</code></pre>
+<pre><code>Chain 3 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpQfGAEf/model-264e756c13cd.stan', line 54, column 4 to column 50)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1488,7 +1488,7 @@ Chain 4 finished in 0.8 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.8 seconds.
-Total execution time: 3.7 seconds.</code></pre>
+Total execution time: 3.6 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>post_region_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">newdata=</span>AS_region_new,</span>
@@ -2265,17 +2265,17 @@ Weber, Sebastian, Yue Li, John W Seaman III, Tomoyuki Kakizume, and Heinz Schmid
 <span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(posterior)</span>
 <span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
 <span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RBesT)</span>
-<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"src/02a_meta_analysis.qmd"</span>)</span>
 <span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
 <span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
-<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span>
 <span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE,cache=FALSE}</span></span>
 <span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span>
+<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span>
 <span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Background</span></span>

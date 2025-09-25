@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-82d9e4e9cf99d8eb0e77e4f639bbcaed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -330,7 +330,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
   </div>
 </li>
       </ul>
@@ -469,11 +469,11 @@ window.Quarto = {
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BOIN)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"src/02c_dose_escalation.qmd"</span>)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8794567</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Such a model is straightforward to implement in <code>brms</code>. Below, we use a nonlinear formula specification, in order to allow the prior for the intercept to be specified on the log scale.</p>
@@ -517,14 +517,14 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.1 seconds.
+Chain 1 finished in 0.0 seconds.
 Chain 2 finished in 0.1 seconds.
 Chain 3 finished in 0.1 seconds.
 Chain 4 finished in 0.1 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.1 seconds.
-Total execution time: 0.8 seconds.</code></pre>
+Total execution time: 0.7 seconds.</code></pre>
 </div>
 </div>
 </section>
@@ -1525,431 +1525,430 @@ lp__                 -6.4115472 1.0711427 -9.3632190 -5.383388</code></pre>
 <span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BOIN)</span>
 <span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"src/02c_dose_escalation.qmd"</span>)</span>
 <span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a><span class="co"># instruct brms to use cmdstanr as backend and cache all Stan binaries</span></span>
-<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">brms.backend=</span><span class="st">"cmdstanr"</span>, <span class="at">cmdstanr_write_stan_file_dir=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>))</span>
 <span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a><span class="co"># create cache directory if not yet available</span></span>
-<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"_brms-cache"</span>), <span class="cn">FALSE</span>)</span>
 <span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">8794567</span>)</span>
 <span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
 <span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
-<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt; include setup.R &gt;}}</span></span>
-<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup.R"</span>)</span>
-<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a>Such a model is straightforward to implement in <span class="in">`brms`</span>. Below, we use a nonlinear formula specification, in order to allow the prior for the intercept to be specified on the log scale. </span>
-<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE}</span></span>
-<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference dose</span></span>
-<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a>dref <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize the covariate as in the model description</span></span>
-<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>dlt_data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dlt_data, <span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> dref))</span>
-<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Model formula in brms</span></span>
-<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>blrm_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(num_toxicities <span class="sc">|</span> <span class="fu">trials</span>(num_patients) <span class="sc">~</span> logalpha <span class="sc">+</span> <span class="fu">exp</span>(logbeta) <span class="sc">*</span> std_dose, <span class="at">nl =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lf</span>(logalpha <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lf</span>(logbeta <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the list of model parameters requiring prior specifications</span></span>
-<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(blrm_model, <span class="at">data =</span> dlt_data, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the prior as described in the previous section</span></span>
-<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a>blrm_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="fu">logit</span>(<span class="fl">0.33</span>), <span class="dv">2</span>), <span class="at">nlpar =</span> <span class="st">"logalpha"</span>) <span class="sc">+</span></span>
-<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.7</span>), <span class="at">nlpar =</span> <span class="st">"logbeta"</span>)</span>
-<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and fit the model using brms</span></span>
-<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a>blrm_fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(blrm_model,</span>
-<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> dlt_data,</span>
-<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a>                <span class="at">prior =</span> blrm_prior,</span>
-<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a>                <span class="at">refresh =</span> <span class="dv">0</span>, <span class="at">silent =</span> <span class="dv">0</span>)</span>
-<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
-<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inference for model parameters</span></span>
-<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a>It is simple to get summary statistics and graphical displays of the posterior distributions for the model parameters.</span>
-<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics for log(alpha) and log(beta)</span></span>
-<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_summary</span>(blrm_fit)</span>
-<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.height = 5, fig.width = 5 * 1.62}</span></span>
-<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior density estimates for log(alpha) and log(beta)</span></span>
-<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a>brms<span class="sc">::</span><span class="fu">mcmc_plot</span>(blrm_fit, <span class="at">type =</span> <span class="st">"dens"</span>, <span class="at">facet_args =</span> <span class="fu">list</span>(<span class="at">ncol =</span> <span class="dv">1</span>))</span>
-<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a>However, these parameters are not themselves the primary target of inference for decision making. Rather the dose-DLT curve $\pi(d)$ itself is estimated, in order to guide decision making about future dose levels.</span>
-<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inference for DLT rates</span></span>
-<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a>Estimation of $\pi(d)$ is similarly straightforward. For posterior summary statistics of $\pi(d_i)$ at the observed dose levels $i=1,\ldots,K$, one can use the <span class="in">`poserior::summarize_draws`</span> function as follows:</span>
-<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior draws for pi(d)</span></span>
-<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a>dlt_data <span class="sc">%&gt;%</span></span>
-<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
-<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a>    posterior<span class="sc">::</span><span class="fu">summarize_draws</span>(</span>
-<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>      <span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">transform =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"quantile2"</span>)</span>
-<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
-<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a>Next we illustrate estimation of $\pi(d)$ on a fine grid of dose levels, in order to visualize the posterior for the continuous curve.</span>
-<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.height = 4, fig.width = 4 * 1.62}</span></span>
-<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a>dose_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, dref, <span class="at">length.out =</span> <span class="dv">500</span>)</span>
-<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior draws for pi(d)</span></span>
-<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a>dlt_rate_draws <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(blrm_fit,</span>
-<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">dose =</span> dose_grid,</span>
-<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> dref),</span>
-<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">num_patients =</span> <span class="dv">1</span>),</span>
-<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization using bayesplot</span></span>
-<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a>bayesplot<span class="sc">::</span><span class="fu">ppc_ribbon</span>(<span class="at">y =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">500</span>), <span class="at">yrep =</span> dlt_rate_draws, <span class="at">x =</span> dose_grid) <span class="sc">+</span></span>
-<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>, <span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Dose"</span>, <span class="at">y =</span> <span class="st">"P(DLT)"</span>)</span>
-<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predictive inference for future cohorts</span></span>
-<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a>Another key quantity for understanding risk of toxicity for patients is the *predictive distribution* for DLTs in a future, unobserved cohort:</span>
-<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a>$$ \Pr(\tilde Y = y \, | \, y_{obs}) = \int \Pr(\tilde Y = y \, | \, \theta) \, d\pi(\theta|y_{obs}). $$</span>
-<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a>One can easily obtain such information from <span class="in">`brms`</span>. Suppose we wished to know the predictive distribution for the DLT count in new cohorts of size 4 at a set of candidate dose levels, $d=10, 25, 50$.</span>
-<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>candidate_doses <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a>  <span class="at">dose =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>),</span>
-<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a>  <span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> dref),</span>
-<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_patients =</span> <span class="dv">4</span></span>
-<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a>predictive_draws <span class="ot">&lt;-</span> <span class="fu">posterior_predict</span>(blrm_fit, <span class="at">newdata =</span> candidate_doses)</span>
-<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a>count_freq <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>){</span>
-<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">factor</span>(x, breaks)</span>
-<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(</span>
-<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prop.table</span>(<span class="fu">table</span>(x)),</span>
-<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"P("</span>, breaks, <span class="st">" DLTs)"</span>)</span>
-<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">bind_cols</span>(</span>
-<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a>  candidate_doses,</span>
-<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_draws</span>(predictive_draws, count_freq) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
-<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a>Such a model is straightforward to implement in <span class="in">`brms`</span>. Below, we use a nonlinear formula specification, in order to allow the prior for the intercept to be specified on the log scale. </span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE}</span></span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference dose</span></span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a>dref <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize the covariate as in the model description</span></span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a>dlt_data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dlt_data, <span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> dref))</span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Model formula in brms</span></span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>blrm_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(num_toxicities <span class="sc">|</span> <span class="fu">trials</span>(num_patients) <span class="sc">~</span> logalpha <span class="sc">+</span> <span class="fu">exp</span>(logbeta) <span class="sc">*</span> std_dose, <span class="at">nl =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lf</span>(logalpha <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lf</span>(logbeta <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the list of model parameters requiring prior specifications</span></span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a><span class="fu">get_prior</span>(blrm_model, <span class="at">data =</span> dlt_data, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the prior as described in the previous section</span></span>
+<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a>blrm_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="fu">logit</span>(<span class="fl">0.33</span>), <span class="dv">2</span>), <span class="at">nlpar =</span> <span class="st">"logalpha"</span>) <span class="sc">+</span></span>
+<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.7</span>), <span class="at">nlpar =</span> <span class="st">"logbeta"</span>)</span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and fit the model using brms</span></span>
+<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a>blrm_fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(blrm_model,</span>
+<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> dlt_data,</span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a>                <span class="at">prior =</span> blrm_prior,</span>
+<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a>                <span class="at">refresh =</span> <span class="dv">0</span>, <span class="at">silent =</span> <span class="dv">0</span>)</span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inference for model parameters</span></span>
+<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a>It is simple to get summary statistics and graphical displays of the posterior distributions for the model parameters.</span>
+<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics for log(alpha) and log(beta)</span></span>
+<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior_summary</span>(blrm_fit)</span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.height = 5, fig.width = 5 * 1.62}</span></span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior density estimates for log(alpha) and log(beta)</span></span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a>brms<span class="sc">::</span><span class="fu">mcmc_plot</span>(blrm_fit, <span class="at">type =</span> <span class="st">"dens"</span>, <span class="at">facet_args =</span> <span class="fu">list</span>(<span class="at">ncol =</span> <span class="dv">1</span>))</span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a>However, these parameters are not themselves the primary target of inference for decision making. Rather the dose-DLT curve $\pi(d)$ itself is estimated, in order to guide decision making about future dose levels.</span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a><span class="fu">### Inference for DLT rates</span></span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a>Estimation of $\pi(d)$ is similarly straightforward. For posterior summary statistics of $\pi(d_i)$ at the observed dose levels $i=1,\ldots,K$, one can use the <span class="in">`poserior::summarize_draws`</span> function as follows:</span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior draws for pi(d)</span></span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a>dlt_data <span class="sc">%&gt;%</span></span>
+<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a>    posterior<span class="sc">::</span><span class="fu">summarize_draws</span>(</span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a>      <span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">transform =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"quantile2"</span>)</span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>Next we illustrate estimation of $\pi(d)$ on a fine grid of dose levels, in order to visualize the posterior for the continuous curve.</span>
+<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.height = 4, fig.width = 4 * 1.62}</span></span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a>dose_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, dref, <span class="at">length.out =</span> <span class="dv">500</span>)</span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a><span class="co"># Posterior draws for pi(d)</span></span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a>dlt_rate_draws <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(blrm_fit,</span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">dose =</span> dose_grid,</span>
+<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> dref),</span>
+<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">num_patients =</span> <span class="dv">1</span>),</span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization using bayesplot</span></span>
+<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a>bayesplot<span class="sc">::</span><span class="fu">ppc_ribbon</span>(<span class="at">y =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">500</span>), <span class="at">yrep =</span> dlt_rate_draws, <span class="at">x =</span> dose_grid) <span class="sc">+</span></span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>, <span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Dose"</span>, <span class="at">y =</span> <span class="st">"P(DLT)"</span>)</span>
+<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predictive inference for future cohorts</span></span>
+<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a>Another key quantity for understanding risk of toxicity for patients is the *predictive distribution* for DLTs in a future, unobserved cohort:</span>
+<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a>$$ \Pr(\tilde Y = y \, | \, y_{obs}) = \int \Pr(\tilde Y = y \, | \, \theta) \, d\pi(\theta|y_{obs}). $$</span>
+<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a>One can easily obtain such information from <span class="in">`brms`</span>. Suppose we wished to know the predictive distribution for the DLT count in new cohorts of size 4 at a set of candidate dose levels, $d=10, 25, 50$.</span>
+<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>candidate_doses <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>  <span class="at">dose =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>),</span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a>  <span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> dref),</span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_patients =</span> <span class="dv">4</span></span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a>predictive_draws <span class="ot">&lt;-</span> <span class="fu">posterior_predict</span>(blrm_fit, <span class="at">newdata =</span> candidate_doses)</span>
+<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a>count_freq <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>){</span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">factor</span>(x, breaks)</span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(</span>
+<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prop.table</span>(<span class="fu">table</span>(x)),</span>
+<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"P("</span>, breaks, <span class="st">" DLTs)"</span>)</span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">bind_cols</span>(</span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a>  candidate_doses,</span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_draws</span>(predictive_draws, count_freq) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable)</span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dose escalation decisions</span></span>
-<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a>One common framework for guiding dosing decisions using a model-based dose escalation framework is known as Escalation With Overdose Control (EWOC). Decisions are based on an MTD threshold above which constitutes excessive toxicity $\pi_{over}$ (typically $\pi_{over}$), and a so-called feasibility bound $c$:</span>
-<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>$$ \text{EWOC satisfied at }d \iff \Pr( \pi(d) &gt; \pi_{over}) \leq c $$</span>
-<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a>Furthermore, we often define another cutoff $\pi_{targ}$, and summarize the posterior probabilities for three intervals,</span>
-<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is an underdose}) = \Pr( \pi(d) &lt; \pi_{targ} ) $$</span>
-<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is in the target range}) = \Pr( \pi_{targ} \leq \pi(d) &lt; \pi_{over} ) $$</span>
-<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is an overdose}) = \Pr( \pi(d) &gt; \pi_{over} ),$$</span>
-<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a>and evaluate EWOC by checking if the last quantity exceeds $c$.</span>
-<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a>For the set of candidate doses, the EWOC criteria can be evaluated as follows:</span>
-<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a>pi_target <span class="ot">&lt;-</span> <span class="fl">0.16</span> <span class="co"># motivated by 3+3 design (~ 1/6)</span></span>
-<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a>pi_over <span class="ot">&lt;-</span> <span class="fl">0.33</span> <span class="co"># motivated by 3+3 design (~ 1/3)</span></span>
-<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>raw_draws <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">newdata =</span> candidate_doses, <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> posterior<span class="sc">::</span><span class="fu">as_draws_matrix</span>(raw_draws)</span>
-<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>interval_probs <span class="ot">&lt;-</span> posterior<span class="sc">::</span><span class="fu">summarize_draws</span>(</span>
-<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>  draws,</span>
-<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x){</span>
-<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a>      <span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(x, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, pi_target, pi_over, <span class="dv">1</span>))))</span>
-<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(</span>
-<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(candidate_doses, dose),</span>
-<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">mutate</span>(interval_probs, <span class="at">ewoc_ok =</span> <span class="st">`</span><span class="at">(0.33,1]</span><span class="st">`</span> <span class="sc">&lt;=</span> c), <span class="sc">-</span>variable)</span>
-<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dose escalation decisions</span></span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>One common framework for guiding dosing decisions using a model-based dose escalation framework is known as Escalation With Overdose Control (EWOC). Decisions are based on an MTD threshold above which constitutes excessive toxicity $\pi_{over}$ (typically $\pi_{over}$), and a so-called feasibility bound $c$:</span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a>$$ \text{EWOC satisfied at }d \iff \Pr( \pi(d) &gt; \pi_{over}) \leq c $$</span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a>Furthermore, we often define another cutoff $\pi_{targ}$, and summarize the posterior probabilities for three intervals,</span>
+<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is an underdose}) = \Pr( \pi(d) &lt; \pi_{targ} ) $$</span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is in the target range}) = \Pr( \pi_{targ} \leq \pi(d) &lt; \pi_{over} ) $$</span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>$$ \Pr(d\text{ is an overdose}) = \Pr( \pi(d) &gt; \pi_{over} ),$$</span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a>and evaluate EWOC by checking if the last quantity exceeds $c$.</span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a>For the set of candidate doses, the EWOC criteria can be evaluated as follows:</span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a>pi_target <span class="ot">&lt;-</span> <span class="fl">0.16</span> <span class="co"># motivated by 3+3 design (~ 1/6)</span></span>
+<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a>pi_over <span class="ot">&lt;-</span> <span class="fl">0.33</span> <span class="co"># motivated by 3+3 design (~ 1/3)</span></span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a>raw_draws <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">newdata =</span> candidate_doses, <span class="at">transform =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> posterior<span class="sc">::</span><span class="fu">as_draws_matrix</span>(raw_draws)</span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>interval_probs <span class="ot">&lt;-</span> posterior<span class="sc">::</span><span class="fu">summarize_draws</span>(</span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>  draws,</span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x){</span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>      <span class="fu">prop.table</span>(<span class="fu">table</span>(<span class="fu">cut</span>(x, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, pi_target, pi_over, <span class="dv">1</span>))))</span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(candidate_doses, dose),</span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">mutate</span>(interval_probs, <span class="at">ewoc_ok =</span> <span class="st">`</span><span class="at">(0.33,1]</span><span class="st">`</span> <span class="sc">&lt;=</span> c), <span class="sc">-</span>variable)</span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
-<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> is easily capable of handling this simple logistic regression model, and producing all the posterior summaries necessary for guiding a dose escalation trial with it. There are, of course, *many* extensions and complications to this basic methodology that we encounter frequently. The <span class="co">[</span><span class="ot">OncoBayes2</span><span class="co">](https://cran.r-project.org/package=OncoBayes2)</span> package is specifically tailored to this class of regression models, and covers all the typical use-cases. However, the approach described above for <span class="in">`brms`</span> can be extended as well, for example to handle dose escalation for drug combinations, rather than single agents. See <span class="co">[</span><span class="ot">Advanced Topics section on combination dose escalation</span><span class="co">][Combination dose escalation]</span>.</span>
-<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise</span></span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion</span></span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> is easily capable of handling this simple logistic regression model, and producing all the posterior summaries necessary for guiding a dose escalation trial with it. There are, of course, *many* extensions and complications to this basic methodology that we encounter frequently. The <span class="co">[</span><span class="ot">OncoBayes2</span><span class="co">](https://cran.r-project.org/package=OncoBayes2)</span> package is specifically tailored to this class of regression models, and covers all the typical use-cases. However, the approach described above for <span class="in">`brms`</span> can be extended as well, for example to handle dose escalation for drug combinations, rather than single agents. See <span class="co">[</span><span class="ot">Advanced Topics section on combination dose escalation</span><span class="co">][Combination dose escalation]</span>.</span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise</span></span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a>An alternative to designs based on the BLRM is the so-called Bayesian Optimal INterval (BOIN) design <span class="co">[</span><span class="ot">(see Yan et al, 2020)</span><span class="co">](https://doi.org/10.18637/jss.v094.i13)</span>. In this exercise we will explore how the estimation of the MTD differs between the BOIN approach vs the BLRM vs a flexible monotone-regression approach that can be easily implemented in <span class="in">`brms`</span>.</span>
-<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a>Suppose are planning a trial with the following provisional doses. </span>
-<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a>provisional_doses <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>dose_id, <span class="sc">~</span>dose, <span class="sc">~</span>prob_dlt,</span>
-<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a>         <span class="dv">1</span>,     <span class="dv">1</span>,      <span class="fl">0.05</span>,</span>
-<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a>         <span class="dv">2</span>,     <span class="dv">2</span>,       <span class="fl">0.1</span>,</span>
-<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a>         <span class="dv">3</span>,     <span class="dv">4</span>,       <span class="fl">0.2</span>,</span>
-<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a>         <span class="dv">4</span>,     <span class="dv">8</span>,       <span class="fl">0.3</span>,</span>
-<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a>         <span class="dv">5</span>,    <span class="dv">16</span>,       <span class="fl">0.5</span></span>
-<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a>To generate data for comparing the MTD estimation methods, we begin by simulating a trial acording to true DLT rates <span class="in">`prob_DLT`</span> above, and according to BOIN decision rules for escalation and de-escalation. We starting with dose = 2, and enroll cohorts of size 4 until either 12 cohorts have been enrolled, or more than 12 patients have been enrolled at any one dose. Below is some code that simulates such a trial.</span>
-<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BOIN)</span>
-<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to simulate a BOIN trial</span></span>
-<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a>simulate_BOIN <span class="ot">&lt;-</span> <span class="cf">function</span>(starting_dose_id,</span>
-<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a>                          provisional_doses,</span>
-<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a>                          cohort_size,</span>
-<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a>                          num_cohorts,</span>
-<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a>                          num_patients_stop,</span>
-<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a>                          <span class="at">target_dlt_rate =</span> <span class="fl">0.25</span>,</span>
-<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a>                          <span class="at">low_dlt_rate =</span> <span class="fl">0.6</span> <span class="sc">*</span> target_dlt_rate,</span>
-<span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a>                          <span class="at">high_dlt_rate =</span> <span class="fl">1.4</span> <span class="sc">*</span> target_dlt_rate){</span>
-<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a>  BOIN_decisions <span class="ot">&lt;-</span> BOIN<span class="sc">::</span><span class="fu">get.boundary</span>(</span>
-<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> target_dlt_rate,</span>
-<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncohort =</span> num_cohorts,</span>
-<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a>    <span class="at">cohortsize =</span> cohort_size,</span>
-<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a>    <span class="at">n.earlystop =</span> num_patients_stop,</span>
-<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a>    <span class="at">p.saf =</span> low_dlt_rate,</span>
-<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a>    <span class="at">p.tox =</span> high_dlt_rate</span>
-<span id="cb22-289"><a href="#cb22-289" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-291"><a href="#cb22-291" aria-hidden="true" tabindex="-1"></a>  current_dose_id <span class="ot">&lt;-</span> starting_dose_id</span>
-<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-293"><a href="#cb22-293" aria-hidden="true" tabindex="-1"></a>  dlt_data <span class="ot">&lt;-</span> provisional_doses <span class="sc">%&gt;%</span></span>
-<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb22-295"><a href="#cb22-295" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_patients =</span> <span class="dv">0</span>,</span>
-<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_toxicities =</span> <span class="dv">0</span>,</span>
-<span id="cb22-297"><a href="#cb22-297" aria-hidden="true" tabindex="-1"></a>      <span class="at">eliminated =</span> <span class="cn">FALSE</span></span>
-<span id="cb22-298"><a href="#cb22-298" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-299"><a href="#cb22-299" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-300"><a href="#cb22-300" aria-hidden="true" tabindex="-1"></a>  cohort_history <span class="ot">&lt;-</span> dlt_data[<span class="dv">0</span>,]</span>
-<span id="cb22-301"><a href="#cb22-301" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-302"><a href="#cb22-302" aria-hidden="true" tabindex="-1"></a>  cohort_time <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb22-303"><a href="#cb22-303" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(cohort_time <span class="sc">&lt;=</span> num_cohorts){</span>
-<span id="cb22-304"><a href="#cb22-304" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-305"><a href="#cb22-305" aria-hidden="true" tabindex="-1"></a>    current_dose_data <span class="ot">&lt;-</span> dlt_data[current_dose_id,]</span>
-<span id="cb22-306"><a href="#cb22-306" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-307"><a href="#cb22-307" aria-hidden="true" tabindex="-1"></a>    true_dlt_rate <span class="ot">&lt;-</span> dlt_data<span class="sc">$</span>prob_dlt[current_dose_id]</span>
-<span id="cb22-308"><a href="#cb22-308" aria-hidden="true" tabindex="-1"></a>    num_toxicities <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, cohort_size, true_dlt_rate)</span>
-<span id="cb22-309"><a href="#cb22-309" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-310"><a href="#cb22-310" aria-hidden="true" tabindex="-1"></a>    current_dose_data<span class="sc">$</span>num_patients <span class="ot">&lt;-</span> current_dose_data<span class="sc">$</span>num_patients <span class="sc">+</span> cohort_size</span>
-<span id="cb22-311"><a href="#cb22-311" aria-hidden="true" tabindex="-1"></a>    current_dose_data<span class="sc">$</span>num_toxicities <span class="ot">&lt;-</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">+</span> num_toxicities</span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>An alternative to designs based on the BLRM is the so-called Bayesian Optimal INterval (BOIN) design <span class="co">[</span><span class="ot">(see Yan et al, 2020)</span><span class="co">](https://doi.org/10.18637/jss.v094.i13)</span>. In this exercise we will explore how the estimation of the MTD differs between the BOIN approach vs the BLRM vs a flexible monotone-regression approach that can be easily implemented in <span class="in">`brms`</span>.</span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a>Suppose are planning a trial with the following provisional doses. </span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a>provisional_doses <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>dose_id, <span class="sc">~</span>dose, <span class="sc">~</span>prob_dlt,</span>
+<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a>         <span class="dv">1</span>,     <span class="dv">1</span>,      <span class="fl">0.05</span>,</span>
+<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a>         <span class="dv">2</span>,     <span class="dv">2</span>,       <span class="fl">0.1</span>,</span>
+<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a>         <span class="dv">3</span>,     <span class="dv">4</span>,       <span class="fl">0.2</span>,</span>
+<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a>         <span class="dv">4</span>,     <span class="dv">8</span>,       <span class="fl">0.3</span>,</span>
+<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a>         <span class="dv">5</span>,    <span class="dv">16</span>,       <span class="fl">0.5</span></span>
+<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a>To generate data for comparing the MTD estimation methods, we begin by simulating a trial acording to true DLT rates <span class="in">`prob_DLT`</span> above, and according to BOIN decision rules for escalation and de-escalation. We starting with dose = 2, and enroll cohorts of size 4 until either 12 cohorts have been enrolled, or more than 12 patients have been enrolled at any one dose. Below is some code that simulates such a trial.</span>
+<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BOIN)</span>
+<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to simulate a BOIN trial</span></span>
+<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a>simulate_BOIN <span class="ot">&lt;-</span> <span class="cf">function</span>(starting_dose_id,</span>
+<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a>                          provisional_doses,</span>
+<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a>                          cohort_size,</span>
+<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a>                          num_cohorts,</span>
+<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a>                          num_patients_stop,</span>
+<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a>                          <span class="at">target_dlt_rate =</span> <span class="fl">0.25</span>,</span>
+<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a>                          <span class="at">low_dlt_rate =</span> <span class="fl">0.6</span> <span class="sc">*</span> target_dlt_rate,</span>
+<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a>                          <span class="at">high_dlt_rate =</span> <span class="fl">1.4</span> <span class="sc">*</span> target_dlt_rate){</span>
+<span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a>  BOIN_decisions <span class="ot">&lt;-</span> BOIN<span class="sc">::</span><span class="fu">get.boundary</span>(</span>
+<span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> target_dlt_rate,</span>
+<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncohort =</span> num_cohorts,</span>
+<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a>    <span class="at">cohortsize =</span> cohort_size,</span>
+<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a>    <span class="at">n.earlystop =</span> num_patients_stop,</span>
+<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a>    <span class="at">p.saf =</span> low_dlt_rate,</span>
+<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a>    <span class="at">p.tox =</span> high_dlt_rate</span>
+<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-289"><a href="#cb22-289" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a>  current_dose_id <span class="ot">&lt;-</span> starting_dose_id</span>
+<span id="cb22-291"><a href="#cb22-291" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a>  dlt_data <span class="ot">&lt;-</span> provisional_doses <span class="sc">%&gt;%</span></span>
+<span id="cb22-293"><a href="#cb22-293" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_patients =</span> <span class="dv">0</span>,</span>
+<span id="cb22-295"><a href="#cb22-295" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_toxicities =</span> <span class="dv">0</span>,</span>
+<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a>      <span class="at">eliminated =</span> <span class="cn">FALSE</span></span>
+<span id="cb22-297"><a href="#cb22-297" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-298"><a href="#cb22-298" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-299"><a href="#cb22-299" aria-hidden="true" tabindex="-1"></a>  cohort_history <span class="ot">&lt;-</span> dlt_data[<span class="dv">0</span>,]</span>
+<span id="cb22-300"><a href="#cb22-300" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-301"><a href="#cb22-301" aria-hidden="true" tabindex="-1"></a>  cohort_time <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb22-302"><a href="#cb22-302" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(cohort_time <span class="sc">&lt;=</span> num_cohorts){</span>
+<span id="cb22-303"><a href="#cb22-303" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-304"><a href="#cb22-304" aria-hidden="true" tabindex="-1"></a>    current_dose_data <span class="ot">&lt;-</span> dlt_data[current_dose_id,]</span>
+<span id="cb22-305"><a href="#cb22-305" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-306"><a href="#cb22-306" aria-hidden="true" tabindex="-1"></a>    true_dlt_rate <span class="ot">&lt;-</span> dlt_data<span class="sc">$</span>prob_dlt[current_dose_id]</span>
+<span id="cb22-307"><a href="#cb22-307" aria-hidden="true" tabindex="-1"></a>    num_toxicities <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, cohort_size, true_dlt_rate)</span>
+<span id="cb22-308"><a href="#cb22-308" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-309"><a href="#cb22-309" aria-hidden="true" tabindex="-1"></a>    current_dose_data<span class="sc">$</span>num_patients <span class="ot">&lt;-</span> current_dose_data<span class="sc">$</span>num_patients <span class="sc">+</span> cohort_size</span>
+<span id="cb22-310"><a href="#cb22-310" aria-hidden="true" tabindex="-1"></a>    current_dose_data<span class="sc">$</span>num_toxicities <span class="ot">&lt;-</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">+</span> num_toxicities</span>
+<span id="cb22-311"><a href="#cb22-311" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb22-312"><a href="#cb22-312" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-313"><a href="#cb22-313" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-314"><a href="#cb22-314" aria-hidden="true" tabindex="-1"></a>    new_data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(current_dose_data,</span>
-<span id="cb22-315"><a href="#cb22-315" aria-hidden="true" tabindex="-1"></a>                       <span class="at">num_patients =</span> cohort_size,</span>
-<span id="cb22-316"><a href="#cb22-316" aria-hidden="true" tabindex="-1"></a>                       <span class="at">num_toxicities =</span> <span class="sc">!!</span> num_toxicities)</span>
-<span id="cb22-317"><a href="#cb22-317" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-318"><a href="#cb22-318" aria-hidden="true" tabindex="-1"></a>    cohort_history <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb22-319"><a href="#cb22-319" aria-hidden="true" tabindex="-1"></a>      cohort_history,</span>
-<span id="cb22-320"><a href="#cb22-320" aria-hidden="true" tabindex="-1"></a>      new_data</span>
-<span id="cb22-321"><a href="#cb22-321" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-322"><a href="#cb22-322" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-323"><a href="#cb22-323" aria-hidden="true" tabindex="-1"></a>    dlt_data[current_dose_id, ] <span class="ot">&lt;-</span> current_dose_data</span>
-<span id="cb22-324"><a href="#cb22-324" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-325"><a href="#cb22-325" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(current_dose_data<span class="sc">$</span>num_patients <span class="sc">&gt;=</span> num_patients_stop) <span class="cf">break</span></span>
-<span id="cb22-326"><a href="#cb22-326" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-327"><a href="#cb22-327" aria-hidden="true" tabindex="-1"></a>    boundaries <span class="ot">&lt;-</span> <span class="fu">setNames</span>(</span>
-<span id="cb22-328"><a href="#cb22-328" aria-hidden="true" tabindex="-1"></a>      BOIN_decisions<span class="sc">$</span>full_boundary_tab[<span class="sc">-</span><span class="dv">1</span>, current_dose_data<span class="sc">$</span>num_patients],</span>
-<span id="cb22-329"><a href="#cb22-329" aria-hidden="true" tabindex="-1"></a>      <span class="cn">NULL</span></span>
-<span id="cb22-330"><a href="#cb22-330" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-331"><a href="#cb22-331" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-332"><a href="#cb22-332" aria-hidden="true" tabindex="-1"></a>    comparison <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb22-333"><a href="#cb22-333" aria-hidden="true" tabindex="-1"></a>      <span class="at">escalate =</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&lt;=</span> boundaries[<span class="dv">1</span>],</span>
-<span id="cb22-334"><a href="#cb22-334" aria-hidden="true" tabindex="-1"></a>      <span class="at">stay =</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&gt;</span> boundaries[<span class="dv">1</span>] <span class="sc">&amp;</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&lt;</span> boundaries[<span class="dv">2</span>],</span>
-<span id="cb22-335"><a href="#cb22-335" aria-hidden="true" tabindex="-1"></a>      <span class="at">de_escalate =</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&gt;=</span> boundaries[<span class="dv">2</span>],</span>
-<span id="cb22-336"><a href="#cb22-336" aria-hidden="true" tabindex="-1"></a>      <span class="at">eliminate =</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&gt;=</span> boundaries[<span class="dv">3</span>]</span>
-<span id="cb22-337"><a href="#cb22-337" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-338"><a href="#cb22-338" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-339"><a href="#cb22-339" aria-hidden="true" tabindex="-1"></a>    decision <span class="ot">&lt;-</span> <span class="fu">names</span>(comparison[<span class="fu">max</span>(<span class="fu">which</span>(comparison))])</span>
-<span id="cb22-340"><a href="#cb22-340" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-341"><a href="#cb22-341" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(decision <span class="sc">==</span> <span class="st">"stay"</span>){</span>
-<span id="cb22-342"><a href="#cb22-342" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> current_dose_id</span>
-<span id="cb22-343"><a href="#cb22-343" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span>(decision <span class="sc">==</span> <span class="st">"escalate"</span>){</span>
-<span id="cb22-344"><a href="#cb22-344" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> current_dose_id <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb22-345"><a href="#cb22-345" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span>{</span>
-<span id="cb22-346"><a href="#cb22-346" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> current_dose_id <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb22-347"><a href="#cb22-347" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb22-348"><a href="#cb22-348" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-349"><a href="#cb22-349" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(decision <span class="sc">==</span> <span class="st">"eliminate"</span>) dlt_data<span class="sc">$</span>eliminated[current_dose_id] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb22-350"><a href="#cb22-350" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-351"><a href="#cb22-351" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(next_dose_id <span class="sc">&gt;</span> <span class="fu">nrow</span>(dlt_data)){</span>
-<span id="cb22-352"><a href="#cb22-352" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dlt_data)</span>
-<span id="cb22-353"><a href="#cb22-353" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb22-354"><a href="#cb22-354" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-355"><a href="#cb22-355" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(dlt_data<span class="sc">$</span>eliminated[next_dose_id]){</span>
-<span id="cb22-356"><a href="#cb22-356" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> next_dose_id <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb22-357"><a href="#cb22-357" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb22-358"><a href="#cb22-358" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-359"><a href="#cb22-359" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(next_dose_id <span class="sc">&lt;</span> <span class="dv">1</span>) <span class="cf">break</span></span>
-<span id="cb22-360"><a href="#cb22-360" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-361"><a href="#cb22-361" aria-hidden="true" tabindex="-1"></a>    current_dose_id <span class="ot">&lt;-</span> next_dose_id</span>
-<span id="cb22-362"><a href="#cb22-362" aria-hidden="true" tabindex="-1"></a>    cohort_time <span class="ot">&lt;-</span> cohort_time <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb22-363"><a href="#cb22-363" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-364"><a href="#cb22-364" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb22-365"><a href="#cb22-365" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-366"><a href="#cb22-366" aria-hidden="true" tabindex="-1"></a>  mtd <span class="ot">&lt;-</span> BOIN<span class="sc">::</span><span class="fu">select.mtd</span>(</span>
-<span id="cb22-367"><a href="#cb22-367" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> target_dlt_rate,</span>
-<span id="cb22-368"><a href="#cb22-368" aria-hidden="true" tabindex="-1"></a>    <span class="at">npts =</span> dlt_data<span class="sc">$</span>num_patients,</span>
-<span id="cb22-369"><a href="#cb22-369" aria-hidden="true" tabindex="-1"></a>    <span class="at">ntox =</span> dlt_data<span class="sc">$</span>num_toxicities,</span>
-<span id="cb22-370"><a href="#cb22-370" aria-hidden="true" tabindex="-1"></a>    <span class="at">p.tox =</span> high_dlt_rate</span>
-<span id="cb22-371"><a href="#cb22-371" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb22-372"><a href="#cb22-372" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-373"><a href="#cb22-373" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(</span>
-<span id="cb22-374"><a href="#cb22-374" aria-hidden="true" tabindex="-1"></a>    brms<span class="sc">:::</span><span class="fu">nlist</span>(</span>
-<span id="cb22-375"><a href="#cb22-375" aria-hidden="true" tabindex="-1"></a>      dlt_data,</span>
-<span id="cb22-376"><a href="#cb22-376" aria-hidden="true" tabindex="-1"></a>      cohort_history,</span>
-<span id="cb22-377"><a href="#cb22-377" aria-hidden="true" tabindex="-1"></a>      mtd</span>
-<span id="cb22-378"><a href="#cb22-378" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-379"><a href="#cb22-379" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb22-380"><a href="#cb22-380" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-313"><a href="#cb22-313" aria-hidden="true" tabindex="-1"></a>    new_data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(current_dose_data,</span>
+<span id="cb22-314"><a href="#cb22-314" aria-hidden="true" tabindex="-1"></a>                       <span class="at">num_patients =</span> cohort_size,</span>
+<span id="cb22-315"><a href="#cb22-315" aria-hidden="true" tabindex="-1"></a>                       <span class="at">num_toxicities =</span> <span class="sc">!!</span> num_toxicities)</span>
+<span id="cb22-316"><a href="#cb22-316" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-317"><a href="#cb22-317" aria-hidden="true" tabindex="-1"></a>    cohort_history <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb22-318"><a href="#cb22-318" aria-hidden="true" tabindex="-1"></a>      cohort_history,</span>
+<span id="cb22-319"><a href="#cb22-319" aria-hidden="true" tabindex="-1"></a>      new_data</span>
+<span id="cb22-320"><a href="#cb22-320" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-321"><a href="#cb22-321" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-322"><a href="#cb22-322" aria-hidden="true" tabindex="-1"></a>    dlt_data[current_dose_id, ] <span class="ot">&lt;-</span> current_dose_data</span>
+<span id="cb22-323"><a href="#cb22-323" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-324"><a href="#cb22-324" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(current_dose_data<span class="sc">$</span>num_patients <span class="sc">&gt;=</span> num_patients_stop) <span class="cf">break</span></span>
+<span id="cb22-325"><a href="#cb22-325" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-326"><a href="#cb22-326" aria-hidden="true" tabindex="-1"></a>    boundaries <span class="ot">&lt;-</span> <span class="fu">setNames</span>(</span>
+<span id="cb22-327"><a href="#cb22-327" aria-hidden="true" tabindex="-1"></a>      BOIN_decisions<span class="sc">$</span>full_boundary_tab[<span class="sc">-</span><span class="dv">1</span>, current_dose_data<span class="sc">$</span>num_patients],</span>
+<span id="cb22-328"><a href="#cb22-328" aria-hidden="true" tabindex="-1"></a>      <span class="cn">NULL</span></span>
+<span id="cb22-329"><a href="#cb22-329" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-330"><a href="#cb22-330" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-331"><a href="#cb22-331" aria-hidden="true" tabindex="-1"></a>    comparison <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb22-332"><a href="#cb22-332" aria-hidden="true" tabindex="-1"></a>      <span class="at">escalate =</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&lt;=</span> boundaries[<span class="dv">1</span>],</span>
+<span id="cb22-333"><a href="#cb22-333" aria-hidden="true" tabindex="-1"></a>      <span class="at">stay =</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&gt;</span> boundaries[<span class="dv">1</span>] <span class="sc">&amp;</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&lt;</span> boundaries[<span class="dv">2</span>],</span>
+<span id="cb22-334"><a href="#cb22-334" aria-hidden="true" tabindex="-1"></a>      <span class="at">de_escalate =</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&gt;=</span> boundaries[<span class="dv">2</span>],</span>
+<span id="cb22-335"><a href="#cb22-335" aria-hidden="true" tabindex="-1"></a>      <span class="at">eliminate =</span> current_dose_data<span class="sc">$</span>num_toxicities <span class="sc">&gt;=</span> boundaries[<span class="dv">3</span>]</span>
+<span id="cb22-336"><a href="#cb22-336" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-337"><a href="#cb22-337" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-338"><a href="#cb22-338" aria-hidden="true" tabindex="-1"></a>    decision <span class="ot">&lt;-</span> <span class="fu">names</span>(comparison[<span class="fu">max</span>(<span class="fu">which</span>(comparison))])</span>
+<span id="cb22-339"><a href="#cb22-339" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-340"><a href="#cb22-340" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(decision <span class="sc">==</span> <span class="st">"stay"</span>){</span>
+<span id="cb22-341"><a href="#cb22-341" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> current_dose_id</span>
+<span id="cb22-342"><a href="#cb22-342" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span>(decision <span class="sc">==</span> <span class="st">"escalate"</span>){</span>
+<span id="cb22-343"><a href="#cb22-343" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> current_dose_id <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb22-344"><a href="#cb22-344" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span>{</span>
+<span id="cb22-345"><a href="#cb22-345" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> current_dose_id <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb22-346"><a href="#cb22-346" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb22-347"><a href="#cb22-347" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-348"><a href="#cb22-348" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(decision <span class="sc">==</span> <span class="st">"eliminate"</span>) dlt_data<span class="sc">$</span>eliminated[current_dose_id] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb22-349"><a href="#cb22-349" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-350"><a href="#cb22-350" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(next_dose_id <span class="sc">&gt;</span> <span class="fu">nrow</span>(dlt_data)){</span>
+<span id="cb22-351"><a href="#cb22-351" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dlt_data)</span>
+<span id="cb22-352"><a href="#cb22-352" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb22-353"><a href="#cb22-353" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-354"><a href="#cb22-354" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(dlt_data<span class="sc">$</span>eliminated[next_dose_id]){</span>
+<span id="cb22-355"><a href="#cb22-355" aria-hidden="true" tabindex="-1"></a>      next_dose_id <span class="ot">&lt;-</span> next_dose_id <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb22-356"><a href="#cb22-356" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb22-357"><a href="#cb22-357" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-358"><a href="#cb22-358" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(next_dose_id <span class="sc">&lt;</span> <span class="dv">1</span>) <span class="cf">break</span></span>
+<span id="cb22-359"><a href="#cb22-359" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-360"><a href="#cb22-360" aria-hidden="true" tabindex="-1"></a>    current_dose_id <span class="ot">&lt;-</span> next_dose_id</span>
+<span id="cb22-361"><a href="#cb22-361" aria-hidden="true" tabindex="-1"></a>    cohort_time <span class="ot">&lt;-</span> cohort_time <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb22-362"><a href="#cb22-362" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-363"><a href="#cb22-363" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb22-364"><a href="#cb22-364" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-365"><a href="#cb22-365" aria-hidden="true" tabindex="-1"></a>  mtd <span class="ot">&lt;-</span> BOIN<span class="sc">::</span><span class="fu">select.mtd</span>(</span>
+<span id="cb22-366"><a href="#cb22-366" aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> target_dlt_rate,</span>
+<span id="cb22-367"><a href="#cb22-367" aria-hidden="true" tabindex="-1"></a>    <span class="at">npts =</span> dlt_data<span class="sc">$</span>num_patients,</span>
+<span id="cb22-368"><a href="#cb22-368" aria-hidden="true" tabindex="-1"></a>    <span class="at">ntox =</span> dlt_data<span class="sc">$</span>num_toxicities,</span>
+<span id="cb22-369"><a href="#cb22-369" aria-hidden="true" tabindex="-1"></a>    <span class="at">p.tox =</span> high_dlt_rate</span>
+<span id="cb22-370"><a href="#cb22-370" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-371"><a href="#cb22-371" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-372"><a href="#cb22-372" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(</span>
+<span id="cb22-373"><a href="#cb22-373" aria-hidden="true" tabindex="-1"></a>    brms<span class="sc">:::</span><span class="fu">nlist</span>(</span>
+<span id="cb22-374"><a href="#cb22-374" aria-hidden="true" tabindex="-1"></a>      dlt_data,</span>
+<span id="cb22-375"><a href="#cb22-375" aria-hidden="true" tabindex="-1"></a>      cohort_history,</span>
+<span id="cb22-376"><a href="#cb22-376" aria-hidden="true" tabindex="-1"></a>      mtd</span>
+<span id="cb22-377"><a href="#cb22-377" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-378"><a href="#cb22-378" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-379"><a href="#cb22-379" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-380"><a href="#cb22-380" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-381"><a href="#cb22-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-382"><a href="#cb22-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-383"><a href="#cb22-383" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-384"><a href="#cb22-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-385"><a href="#cb22-385" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb22-386"><a href="#cb22-386" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate a trial</span></span>
-<span id="cb22-387"><a href="#cb22-387" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_seed</span>(</span>
-<span id="cb22-388"><a href="#cb22-388" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">1423048045</span>,</span>
-<span id="cb22-389"><a href="#cb22-389" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb22-390"><a href="#cb22-390" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-391"><a href="#cb22-391" aria-hidden="true" tabindex="-1"></a>    sim <span class="ot">&lt;-</span> <span class="fu">simulate_BOIN</span>(</span>
-<span id="cb22-392"><a href="#cb22-392" aria-hidden="true" tabindex="-1"></a>      <span class="at">starting_dose_id =</span> <span class="dv">2</span>,</span>
-<span id="cb22-393"><a href="#cb22-393" aria-hidden="true" tabindex="-1"></a>      <span class="at">provisional_doses =</span> provisional_doses,</span>
-<span id="cb22-394"><a href="#cb22-394" aria-hidden="true" tabindex="-1"></a>      <span class="at">cohort_size =</span> <span class="dv">4</span>,</span>
-<span id="cb22-395"><a href="#cb22-395" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_cohorts =</span> <span class="dv">12</span>,</span>
-<span id="cb22-396"><a href="#cb22-396" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_patients_stop =</span> <span class="dv">13</span>,</span>
-<span id="cb22-397"><a href="#cb22-397" aria-hidden="true" tabindex="-1"></a>      <span class="at">target_dlt_rate =</span> <span class="fl">0.25</span></span>
-<span id="cb22-398"><a href="#cb22-398" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-399"><a href="#cb22-399" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-400"><a href="#cb22-400" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb22-401"><a href="#cb22-401" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-402"><a href="#cb22-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-403"><a href="#cb22-403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-404"><a href="#cb22-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-405"><a href="#cb22-405" aria-hidden="true" tabindex="-1"></a>The output of this call include:</span>
-<span id="cb22-406"><a href="#cb22-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-407"><a href="#cb22-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
-<span id="cb22-408"><a href="#cb22-408" aria-hidden="true" tabindex="-1"></a>sim<span class="sc">$</span>dlt_data <span class="co"># simulated cohort-by-cohort data</span></span>
-<span id="cb22-409"><a href="#cb22-409" aria-hidden="true" tabindex="-1"></a>sim<span class="sc">$</span>mtd <span class="co"># isotonic regression to determine the MTD; p_est shows the result</span></span>
-<span id="cb22-410"><a href="#cb22-410" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-411"><a href="#cb22-411" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-412"><a href="#cb22-412" aria-hidden="true" tabindex="-1"></a>In the BOIN design, the MTD is selected based on isotonic regression of beta-binomial posterior quantiles <span class="co">[</span><span class="ot">(see Yan et al, 2020)</span><span class="co">](https://doi.org/10.18637/jss.v094.i13)</span>.</span>
-<span id="cb22-413"><a href="#cb22-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-414"><a href="#cb22-414" aria-hidden="true" tabindex="-1"></a>Now for the exercise:</span>
-<span id="cb22-415"><a href="#cb22-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-416"><a href="#cb22-416" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Use <span class="in">`brms`</span> to fit a BLRM similar to these data with reference dose $d^* = 16$ and the same prior as described in this section.</span>
-<span id="cb22-417"><a href="#cb22-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-418"><a href="#cb22-418" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>In <span class="in">`brms`</span>, the <span class="in">`mo()`</span> function is used to specify an ordinal covariate with a monotone relationship with the response. Fit a model in which the log odds of DLT (<span class="in">`family = binomial("logit")`</span>) is a monotone function of the <span class="in">`dose_id`</span> variable defined in <span class="in">`dlt_data`</span> (i.e. the covariate is an integer sequence indexing the provisional doses). How do these estimates compare to the estimates from the BLRM?</span>
-<span id="cb22-419"><a href="#cb22-419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-420"><a href="#cb22-420" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Compare the estimates of DLT rate (e.g. posterior means and quantiles) by dose: for the models in #1 and #2, and as estimated by BOIN in <span class="in">`sim$mtd$p_est`</span>. Does the BOIN MTD differ from the MTD that would result from taking the highest dose satisfying EWOC from models #1 and #2?</span>
+<span id="cb22-382"><a href="#cb22-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-383"><a href="#cb22-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-384"><a href="#cb22-384" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb22-385"><a href="#cb22-385" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate a trial</span></span>
+<span id="cb22-386"><a href="#cb22-386" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_seed</span>(</span>
+<span id="cb22-387"><a href="#cb22-387" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="dv">1423048045</span>,</span>
+<span id="cb22-388"><a href="#cb22-388" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb22-389"><a href="#cb22-389" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-390"><a href="#cb22-390" aria-hidden="true" tabindex="-1"></a>    sim <span class="ot">&lt;-</span> <span class="fu">simulate_BOIN</span>(</span>
+<span id="cb22-391"><a href="#cb22-391" aria-hidden="true" tabindex="-1"></a>      <span class="at">starting_dose_id =</span> <span class="dv">2</span>,</span>
+<span id="cb22-392"><a href="#cb22-392" aria-hidden="true" tabindex="-1"></a>      <span class="at">provisional_doses =</span> provisional_doses,</span>
+<span id="cb22-393"><a href="#cb22-393" aria-hidden="true" tabindex="-1"></a>      <span class="at">cohort_size =</span> <span class="dv">4</span>,</span>
+<span id="cb22-394"><a href="#cb22-394" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_cohorts =</span> <span class="dv">12</span>,</span>
+<span id="cb22-395"><a href="#cb22-395" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_patients_stop =</span> <span class="dv">13</span>,</span>
+<span id="cb22-396"><a href="#cb22-396" aria-hidden="true" tabindex="-1"></a>      <span class="at">target_dlt_rate =</span> <span class="fl">0.25</span></span>
+<span id="cb22-397"><a href="#cb22-397" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-398"><a href="#cb22-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-399"><a href="#cb22-399" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb22-400"><a href="#cb22-400" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-401"><a href="#cb22-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-402"><a href="#cb22-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-403"><a href="#cb22-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-404"><a href="#cb22-404" aria-hidden="true" tabindex="-1"></a>The output of this call include:</span>
+<span id="cb22-405"><a href="#cb22-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-406"><a href="#cb22-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE}</span></span>
+<span id="cb22-407"><a href="#cb22-407" aria-hidden="true" tabindex="-1"></a>sim<span class="sc">$</span>dlt_data <span class="co"># simulated cohort-by-cohort data</span></span>
+<span id="cb22-408"><a href="#cb22-408" aria-hidden="true" tabindex="-1"></a>sim<span class="sc">$</span>mtd <span class="co"># isotonic regression to determine the MTD; p_est shows the result</span></span>
+<span id="cb22-409"><a href="#cb22-409" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-410"><a href="#cb22-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-411"><a href="#cb22-411" aria-hidden="true" tabindex="-1"></a>In the BOIN design, the MTD is selected based on isotonic regression of beta-binomial posterior quantiles <span class="co">[</span><span class="ot">(see Yan et al, 2020)</span><span class="co">](https://doi.org/10.18637/jss.v094.i13)</span>.</span>
+<span id="cb22-412"><a href="#cb22-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-413"><a href="#cb22-413" aria-hidden="true" tabindex="-1"></a>Now for the exercise:</span>
+<span id="cb22-414"><a href="#cb22-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-415"><a href="#cb22-415" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Use <span class="in">`brms`</span> to fit a BLRM similar to these data with reference dose $d^* = 16$ and the same prior as described in this section.</span>
+<span id="cb22-416"><a href="#cb22-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-417"><a href="#cb22-417" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>In <span class="in">`brms`</span>, the <span class="in">`mo()`</span> function is used to specify an ordinal covariate with a monotone relationship with the response. Fit a model in which the log odds of DLT (<span class="in">`family = binomial("logit")`</span>) is a monotone function of the <span class="in">`dose_id`</span> variable defined in <span class="in">`dlt_data`</span> (i.e. the covariate is an integer sequence indexing the provisional doses). How do these estimates compare to the estimates from the BLRM?</span>
+<span id="cb22-418"><a href="#cb22-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-419"><a href="#cb22-419" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Compare the estimates of DLT rate (e.g. posterior means and quantiles) by dose: for the models in #1 and #2, and as estimated by BOIN in <span class="in">`sim$mtd$p_est`</span>. Does the BOIN MTD differ from the MTD that would result from taking the highest dose satisfying EWOC from models #1 and #2?</span>
+<span id="cb22-420"><a href="#cb22-420" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-421"><a href="#cb22-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-422"><a href="#cb22-422" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-423"><a href="#cb22-423" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
-<span id="cb22-424"><a href="#cb22-424" aria-hidden="true" tabindex="-1"></a><span class="co"># solution to 1: fit a BLRM</span></span>
-<span id="cb22-425"><a href="#cb22-425" aria-hidden="true" tabindex="-1"></a>ref_dose <span class="ot">&lt;-</span> <span class="dv">16</span></span>
-<span id="cb22-426"><a href="#cb22-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-427"><a href="#cb22-427" aria-hidden="true" tabindex="-1"></a>dlt_data <span class="ot">&lt;-</span> sim<span class="sc">$</span>dlt_data <span class="sc">%&gt;%</span></span>
-<span id="cb22-428"><a href="#cb22-428" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> ref_dose))</span>
-<span id="cb22-429"><a href="#cb22-429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-430"><a href="#cb22-430" aria-hidden="true" tabindex="-1"></a><span class="co"># Model formula in brms</span></span>
-<span id="cb22-431"><a href="#cb22-431" aria-hidden="true" tabindex="-1"></a>blrm_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(num_toxicities <span class="sc">|</span> <span class="fu">trials</span>(num_patients) <span class="sc">~</span> logalpha <span class="sc">+</span> <span class="fu">exp</span>(logbeta) <span class="sc">*</span> std_dose, <span class="at">nl =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb22-432"><a href="#cb22-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lf</span>(logalpha <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb22-433"><a href="#cb22-433" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lf</span>(logbeta <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb22-434"><a href="#cb22-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-435"><a href="#cb22-435" aria-hidden="true" tabindex="-1"></a><span class="co"># Default prior</span></span>
-<span id="cb22-436"><a href="#cb22-436" aria-hidden="true" tabindex="-1"></a>blrm_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="fu">logit</span>(<span class="fl">0.33</span>), <span class="dv">2</span>), <span class="at">nlpar =</span> <span class="st">"logalpha"</span>) <span class="sc">+</span></span>
-<span id="cb22-437"><a href="#cb22-437" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.7</span>), <span class="at">nlpar =</span> <span class="st">"logbeta"</span>)</span>
-<span id="cb22-438"><a href="#cb22-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-439"><a href="#cb22-439" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and fit the model using brms</span></span>
-<span id="cb22-440"><a href="#cb22-440" aria-hidden="true" tabindex="-1"></a>blrm_fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(blrm_model,</span>
-<span id="cb22-441"><a href="#cb22-441" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> dlt_data,</span>
-<span id="cb22-442"><a href="#cb22-442" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">"logit"</span>),</span>
-<span id="cb22-443"><a href="#cb22-443" aria-hidden="true" tabindex="-1"></a>                <span class="at">prior =</span> blrm_prior)</span>
-<span id="cb22-444"><a href="#cb22-444" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-422"><a href="#cb22-422" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
+<span id="cb22-423"><a href="#cb22-423" aria-hidden="true" tabindex="-1"></a><span class="co"># solution to 1: fit a BLRM</span></span>
+<span id="cb22-424"><a href="#cb22-424" aria-hidden="true" tabindex="-1"></a>ref_dose <span class="ot">&lt;-</span> <span class="dv">16</span></span>
+<span id="cb22-425"><a href="#cb22-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-426"><a href="#cb22-426" aria-hidden="true" tabindex="-1"></a>dlt_data <span class="ot">&lt;-</span> sim<span class="sc">$</span>dlt_data <span class="sc">%&gt;%</span></span>
+<span id="cb22-427"><a href="#cb22-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">std_dose =</span> <span class="fu">log</span>(dose <span class="sc">/</span> ref_dose))</span>
+<span id="cb22-428"><a href="#cb22-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-429"><a href="#cb22-429" aria-hidden="true" tabindex="-1"></a><span class="co"># Model formula in brms</span></span>
+<span id="cb22-430"><a href="#cb22-430" aria-hidden="true" tabindex="-1"></a>blrm_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(num_toxicities <span class="sc">|</span> <span class="fu">trials</span>(num_patients) <span class="sc">~</span> logalpha <span class="sc">+</span> <span class="fu">exp</span>(logbeta) <span class="sc">*</span> std_dose, <span class="at">nl =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb22-431"><a href="#cb22-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lf</span>(logalpha <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-432"><a href="#cb22-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lf</span>(logbeta <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb22-433"><a href="#cb22-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-434"><a href="#cb22-434" aria-hidden="true" tabindex="-1"></a><span class="co"># Default prior</span></span>
+<span id="cb22-435"><a href="#cb22-435" aria-hidden="true" tabindex="-1"></a>blrm_prior <span class="ot">&lt;-</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="fu">logit</span>(<span class="fl">0.33</span>), <span class="dv">2</span>), <span class="at">nlpar =</span> <span class="st">"logalpha"</span>) <span class="sc">+</span></span>
+<span id="cb22-436"><a href="#cb22-436" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="fl">0.7</span>), <span class="at">nlpar =</span> <span class="st">"logbeta"</span>)</span>
+<span id="cb22-437"><a href="#cb22-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-438"><a href="#cb22-438" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and fit the model using brms</span></span>
+<span id="cb22-439"><a href="#cb22-439" aria-hidden="true" tabindex="-1"></a>blrm_fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(blrm_model,</span>
+<span id="cb22-440"><a href="#cb22-440" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> dlt_data,</span>
+<span id="cb22-441"><a href="#cb22-441" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">"logit"</span>),</span>
+<span id="cb22-442"><a href="#cb22-442" aria-hidden="true" tabindex="-1"></a>                <span class="at">prior =</span> blrm_prior)</span>
+<span id="cb22-443"><a href="#cb22-443" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-444"><a href="#cb22-444" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-445"><a href="#cb22-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-446"><a href="#cb22-446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-447"><a href="#cb22-447" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
-<span id="cb22-448"><a href="#cb22-448" aria-hidden="true" tabindex="-1"></a><span class="co"># solution to #2: fit a monotone regression</span></span>
-<span id="cb22-449"><a href="#cb22-449" aria-hidden="true" tabindex="-1"></a>mo_fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(num_toxicities <span class="sc">|</span> <span class="fu">trials</span>(num_patients) <span class="sc">~</span> <span class="fu">mo</span>(dose_id),</span>
-<span id="cb22-450"><a href="#cb22-450" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dlt_data,</span>
-<span id="cb22-451"><a href="#cb22-451" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">"logit"</span>))</span>
-<span id="cb22-452"><a href="#cb22-452" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-453"><a href="#cb22-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-454"><a href="#cb22-454" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
-<span id="cb22-455"><a href="#cb22-455" aria-hidden="true" tabindex="-1"></a><span class="co"># solution to #3: compare</span></span>
-<span id="cb22-456"><a href="#cb22-456" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-457"><a href="#cb22-457" aria-hidden="true" tabindex="-1"></a><span class="co"># monotone regression summary</span></span>
-<span id="cb22-458"><a href="#cb22-458" aria-hidden="true" tabindex="-1"></a>est_mo <span class="ot">&lt;-</span> <span class="fu">summarize_draws</span>(<span class="fu">posterior_linpred</span>(mo_fit, <span class="at">transform =</span> <span class="cn">TRUE</span>), <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"quantile_fn"</span>))</span>
-<span id="cb22-459"><a href="#cb22-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-460"><a href="#cb22-460" aria-hidden="true" tabindex="-1"></a><span class="co"># blrm summary</span></span>
-<span id="cb22-461"><a href="#cb22-461" aria-hidden="true" tabindex="-1"></a>est_blrm <span class="ot">&lt;-</span> <span class="fu">summarize_draws</span>(<span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">transform =</span> <span class="cn">TRUE</span>), <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"quantile_fn"</span>))</span>
-<span id="cb22-462"><a href="#cb22-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-463"><a href="#cb22-463" aria-hidden="true" tabindex="-1"></a><span class="co"># BOIN estimate</span></span>
-<span id="cb22-464"><a href="#cb22-464" aria-hidden="true" tabindex="-1"></a>est_boin <span class="ot">&lt;-</span> sim<span class="sc">$</span>mtd<span class="sc">$</span>p_est <span class="sc">%&gt;%</span></span>
-<span id="cb22-465"><a href="#cb22-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
-<span id="cb22-466"><a href="#cb22-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">as.numeric</span>(phat),</span>
-<span id="cb22-467"><a href="#cb22-467" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci =</span> <span class="fu">map</span>(CI, <span class="cf">function</span>(CI) <span class="fu">as_tibble</span>(<span class="fu">setNames</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> <span class="fu">paste0</span>(<span class="st">"list"</span>, CI))), <span class="fu">c</span>(<span class="st">"2.5%"</span>, <span class="st">"97.5%"</span>))))</span>
-<span id="cb22-468"><a href="#cb22-468" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb22-469"><a href="#cb22-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(ci)</span>
-<span id="cb22-470"><a href="#cb22-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-471"><a href="#cb22-471" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize together</span></span>
-<span id="cb22-472"><a href="#cb22-472" aria-hidden="true" tabindex="-1"></a>all_est <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
-<span id="cb22-473"><a href="#cb22-473" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb22-446"><a href="#cb22-446" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
+<span id="cb22-447"><a href="#cb22-447" aria-hidden="true" tabindex="-1"></a><span class="co"># solution to #2: fit a monotone regression</span></span>
+<span id="cb22-448"><a href="#cb22-448" aria-hidden="true" tabindex="-1"></a>mo_fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(num_toxicities <span class="sc">|</span> <span class="fu">trials</span>(num_patients) <span class="sc">~</span> <span class="fu">mo</span>(dose_id),</span>
+<span id="cb22-449"><a href="#cb22-449" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dlt_data,</span>
+<span id="cb22-450"><a href="#cb22-450" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">"logit"</span>))</span>
+<span id="cb22-451"><a href="#cb22-451" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-452"><a href="#cb22-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-453"><a href="#cb22-453" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
+<span id="cb22-454"><a href="#cb22-454" aria-hidden="true" tabindex="-1"></a><span class="co"># solution to #3: compare</span></span>
+<span id="cb22-455"><a href="#cb22-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-456"><a href="#cb22-456" aria-hidden="true" tabindex="-1"></a><span class="co"># monotone regression summary</span></span>
+<span id="cb22-457"><a href="#cb22-457" aria-hidden="true" tabindex="-1"></a>est_mo <span class="ot">&lt;-</span> <span class="fu">summarize_draws</span>(<span class="fu">posterior_linpred</span>(mo_fit, <span class="at">transform =</span> <span class="cn">TRUE</span>), <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"quantile_fn"</span>))</span>
+<span id="cb22-458"><a href="#cb22-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-459"><a href="#cb22-459" aria-hidden="true" tabindex="-1"></a><span class="co"># blrm summary</span></span>
+<span id="cb22-460"><a href="#cb22-460" aria-hidden="true" tabindex="-1"></a>est_blrm <span class="ot">&lt;-</span> <span class="fu">summarize_draws</span>(<span class="fu">posterior_linpred</span>(blrm_fit, <span class="at">transform =</span> <span class="cn">TRUE</span>), <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"quantile_fn"</span>))</span>
+<span id="cb22-461"><a href="#cb22-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-462"><a href="#cb22-462" aria-hidden="true" tabindex="-1"></a><span class="co"># BOIN estimate</span></span>
+<span id="cb22-463"><a href="#cb22-463" aria-hidden="true" tabindex="-1"></a>est_boin <span class="ot">&lt;-</span> sim<span class="sc">$</span>mtd<span class="sc">$</span>p_est <span class="sc">%&gt;%</span></span>
+<span id="cb22-464"><a href="#cb22-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb22-465"><a href="#cb22-465" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">as.numeric</span>(phat),</span>
+<span id="cb22-466"><a href="#cb22-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci =</span> <span class="fu">map</span>(CI, <span class="cf">function</span>(CI) <span class="fu">as_tibble</span>(<span class="fu">setNames</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text =</span> <span class="fu">paste0</span>(<span class="st">"list"</span>, CI))), <span class="fu">c</span>(<span class="st">"2.5%"</span>, <span class="st">"97.5%"</span>))))</span>
+<span id="cb22-467"><a href="#cb22-467" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb22-468"><a href="#cb22-468" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(ci)</span>
+<span id="cb22-469"><a href="#cb22-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-470"><a href="#cb22-470" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize together</span></span>
+<span id="cb22-471"><a href="#cb22-471" aria-hidden="true" tabindex="-1"></a>all_est <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb22-472"><a href="#cb22-472" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb22-473"><a href="#cb22-473" aria-hidden="true" tabindex="-1"></a>    provisional_doses,</span>
 <span id="cb22-474"><a href="#cb22-474" aria-hidden="true" tabindex="-1"></a>    provisional_doses,</span>
-<span id="cb22-475"><a href="#cb22-475" aria-hidden="true" tabindex="-1"></a>    provisional_doses,</span>
-<span id="cb22-476"><a href="#cb22-476" aria-hidden="true" tabindex="-1"></a>    provisional_doses</span>
-<span id="cb22-477"><a href="#cb22-477" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb22-478"><a href="#cb22-478" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb22-479"><a href="#cb22-479" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(est_blrm, <span class="at">method =</span> <span class="st">"BLRM"</span>),</span>
-<span id="cb22-480"><a href="#cb22-480" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(est_mo, <span class="at">method =</span> <span class="st">"Monotone"</span>),</span>
-<span id="cb22-481"><a href="#cb22-481" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(est_boin, <span class="at">method =</span> <span class="st">"BOIN"</span>)</span>
-<span id="cb22-482"><a href="#cb22-482" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb22-483"><a href="#cb22-483" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-484"><a href="#cb22-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-485"><a href="#cb22-485" aria-hidden="true" tabindex="-1"></a>dodge_amount <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb22-486"><a href="#cb22-486" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_est, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> mean, <span class="at">ymin =</span> <span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>, <span class="at">ymax =</span> <span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>,</span>
-<span id="cb22-487"><a href="#cb22-487" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> method, <span class="at">group =</span> method)) <span class="sc">+</span></span>
-<span id="cb22-488"><a href="#cb22-488" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(dodge_amount)) <span class="sc">+</span></span>
-<span id="cb22-489"><a href="#cb22-489" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(dodge_amount)) <span class="sc">+</span></span>
-<span id="cb22-490"><a href="#cb22-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> provisional_doses, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> prob_dlt),</span>
-<span id="cb22-491"><a href="#cb22-491" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb22-492"><a href="#cb22-492" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb22-493"><a href="#cb22-493" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> provisional_doses, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> prob_dlt),</span>
-<span id="cb22-494"><a href="#cb22-494" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
-<span id="cb22-495"><a href="#cb22-495" aria-hidden="true" tabindex="-1"></a>            <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb22-496"><a href="#cb22-496" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-497"><a href="#cb22-497" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-475"><a href="#cb22-475" aria-hidden="true" tabindex="-1"></a>    provisional_doses</span>
+<span id="cb22-476"><a href="#cb22-476" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb22-477"><a href="#cb22-477" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb22-478"><a href="#cb22-478" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(est_blrm, <span class="at">method =</span> <span class="st">"BLRM"</span>),</span>
+<span id="cb22-479"><a href="#cb22-479" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(est_mo, <span class="at">method =</span> <span class="st">"Monotone"</span>),</span>
+<span id="cb22-480"><a href="#cb22-480" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(est_boin, <span class="at">method =</span> <span class="st">"BOIN"</span>)</span>
+<span id="cb22-481"><a href="#cb22-481" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-482"><a href="#cb22-482" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-483"><a href="#cb22-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-484"><a href="#cb22-484" aria-hidden="true" tabindex="-1"></a>dodge_amount <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb22-485"><a href="#cb22-485" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_est, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> mean, <span class="at">ymin =</span> <span class="st">`</span><span class="at">2.5%</span><span class="st">`</span>, <span class="at">ymax =</span> <span class="st">`</span><span class="at">97.5%</span><span class="st">`</span>,</span>
+<span id="cb22-486"><a href="#cb22-486" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> method, <span class="at">group =</span> method)) <span class="sc">+</span></span>
+<span id="cb22-487"><a href="#cb22-487" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(dodge_amount)) <span class="sc">+</span></span>
+<span id="cb22-488"><a href="#cb22-488" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(dodge_amount)) <span class="sc">+</span></span>
+<span id="cb22-489"><a href="#cb22-489" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> provisional_doses, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> prob_dlt),</span>
+<span id="cb22-490"><a href="#cb22-490" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb22-491"><a href="#cb22-491" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb22-492"><a href="#cb22-492" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> provisional_doses, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> prob_dlt),</span>
+<span id="cb22-493"><a href="#cb22-493" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb22-494"><a href="#cb22-494" aria-hidden="true" tabindex="-1"></a>            <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-495"><a href="#cb22-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-496"><a href="#cb22-496" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-497"><a href="#cb22-497" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-498"><a href="#cb22-498" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-499"><a href="#cb22-499" aria-hidden="true" tabindex="-1"></a></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
