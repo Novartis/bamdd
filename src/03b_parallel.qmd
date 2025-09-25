@@ -3,6 +3,11 @@ author:
   - Sebastian Weber - <sebastian.weber@novartis.com>
 ---
 
+```{r, include=FALSE, echo=FALSE, eval=TRUE}
+# configure here
+here::i_am("src/03b_parallel.qmd")
+```
+
 # Parallel computation {#sec-parallel}
 
 For large data-sets MCMC sampling can become very slow. The

@@ -73,14 +73,14 @@ library(dplyr)
 library(tidyr)
 # other utilities
 library(knitr) # used for the "kable" command
-library(here)  # useful to specify path's relative to project
+here::i_am("src/01b_basic_workflow.qmd")  # useful to specify path's relative to project
 # ...
 
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
+dir.create(here::here("_brms-cache"), FALSE)
 
 # set the R random seed of the session for reproducibility
 set.seed(5886935)
@@ -91,8 +91,7 @@ set.seed(5886935)
 #| eval: true 
 #| include: false
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source("setup.R")
+source(here::here("src", "setup.R"))
 ```
 
 As `brms` models are translated to Stan model files, which must be
@@ -112,16 +111,21 @@ preamble:
 ```{r, echo=TRUE, eval=FALSE}
 # use 4 cores for parallel sampling by default - only recommended if
 # model takes > 1 minute to run for each chain otherwise the
-# parallelization introduces substantial overhead
+# parallelization introduces substantial overhead.
 options(mc.cores = 4)
 ```
 
 It is discouraged to run chains always in parallel, since the
 parallelization itself consumes some ressources and is only beneficial
-if the model runtime is at least at the order of minutes. In case the
-model runtime becomes excessivley long, then each chain can itself be
-run with multiple cores as discussed in the section [Parallel
-computation](03b_parallel.qmd). 
+if the model runtime is at least at the order of minutes. This is in
+particular the case if a simulation study is run which itslef is
+repeated many times such that the computational resources are already
+exhausted by the number of replications the simulation study is
+run. In this case the use of any parallelization of the `brms` model
+is not advisable. However, when one develops a model and model
+runtimes become excessivley long, then each chain can itself be run
+with multiple cores as discussed in the section [Parallel
+computation](03b_parallel.qmd).
 
 ## Model formula
 
@@ -211,7 +215,7 @@ the intercept only term is defined. To now define a prior for the
 intercept, we may use the `prior` command as:
 
 ```{r}
-prior_meta_fixed <- prior(normal(0,2), class="Intercept")
+prior_meta_fixed <- prior(normal(0,2), class=Intercept)
 ```
 
 The prior for the random effects model is slightly more complicated as
@@ -230,7 +234,7 @@ the fixed effect case as:
 
 ```{r}
 prior_meta_random <- prior_meta_fixed +
-    prior(normal(0,1), class="sd", coef="Intercept", group="study")
+    prior(normal(0,1), class=sd, coef=Intercept, group=study)
 ```
 
 The logic to defined priors on specifc parameters is to use the
@@ -246,7 +250,7 @@ specific like:
 
 ```{r, eval=FALSE}
 prior_meta_random <- prior_meta_fixed +
-    prior(normal(0,1), class="sd")
+    prior(normal(0, 1), class=sd)
 ```
 
 This statement assign to *all* random effect standard deviations of
@@ -297,7 +301,7 @@ parameter one may use:
 
 ```{r}
 prior_meta_random_alt <- prior_meta_fixed +
-    prior(normal(0,0.5), class="sd", coef="Intercept", group="study")
+    prior(normal(0,0.5), class=sd, coef=Intercept, group=study)
     
 fit_meta_random_alt  <- update(fit_meta_random, prior=prior_meta_random_alt,
                                control=list(adapt_delta=0.95),
@@ -313,7 +317,7 @@ step is avoided, e.g. when looking at data subsets:
 
 ```{r}
 prior_meta_random_alt <- prior_meta_fixed +
-    prior(normal(0,0.5), class="sd", coef="Intercept", group="study")
+    prior(normal(0,0.5), class=sd, coef=Intercept, group=study)
     
 fit_meta_random_alt2  <- update(fit_meta_random, newdata=slice_head(arm_data, n=4),
                                 control=list(adapt_delta=0.95),

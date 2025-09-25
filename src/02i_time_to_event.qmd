@@ -34,7 +34,7 @@ This case study demonstrates:
 To run the R code of this section please ensure to load these
 libraries and options first:
 
-```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -47,19 +47,18 @@ library(simsurv)
 library(RBesT)
 library(survminer)
 library(gt)
-library(here)
+here::i_am("src/02i_time_to_event.qmd")
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("_brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
 # create cache directory if not yet available
-dir.create(here("_brms-cache"), FALSE)
+dir.create(here::here("_brms-cache"), FALSE)
 # allow for wider printouts without line-breaking
 options(width=120)
 ```
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
-# {{< include setup.R >}}
-source(here("src", "setup.R"))
+source(here::here("src", "setup.R"))
 ```
 
 
@@ -153,7 +152,7 @@ Here we will demonstrate the exploration of suitable parametric forms for time-t
 
 --->
 
-## Modeling time-to-event data with `brms` {#sec:tte-model-brms}
+## Modeling time-to-event data with `brms` {#sec-tte-model-brms}
 
 Modeling time to event data of clinical trials is oftentimes run with
 the semi-parametric Cox proportional hazards model. This model avoids
@@ -222,7 +221,7 @@ function by
 
 $$ S_{i}(t) = S_{\mbox{Weibull},0}\left(\frac{t}{\exp(x_i' \, \beta)} \right),$$
 
-which is the defining property of AFT models.  The regression
+which is the defining property of AFT models. The regression
 coefficients $\beta$ are then interpretable as relative
 speedup/slowdown of the process progression. That is, an increased
 time scale (slowdown) leads to a delay of an event. Given that
@@ -410,9 +409,9 @@ later section on the [used priors](#tte-model-prior). The result
 looks reasonable.
 
 ```{r message=FALSE}
-model_weibull_hist <- bf(time | cens(1-status) ~ 1, family=weibull())
+model_weibull_hist <- bf(time | cens(1-status) ~ 1, family=weibull(), center=FALSE)
 
-prior_weibull_hist <- prior(normal(log(6), log(4)/1.64), class=Intercept) +
+prior_weibull_hist <- prior(normal(log(6), log(4)/1.64), coef=Intercept) +
     prior(gamma(3, 2.7), class=shape)
 
 fit_hist_checkmate <- brm(model_weibull_hist,
@@ -547,15 +546,15 @@ simulate_trial <- function(lambda, gamma, lambda_cens, x, betas) {
   cens <- simsurv(lambdas = lambda_cens, gammas = 1, x = x)
   events <- simsurv(lambdas = lambda, gammas = gamma, x = x, betas = betas)
   names(cens) <- paste0(names(cens), "_cens")
-  bind_cols(events, select(cens, -id_cens), select(x, -id)) %>%
-    rename(censtime = eventtime_cens) %>%
+  bind_cols(events, select(cens, -id_cens), select(x, -id)) |>
+    rename(censtime = eventtime_cens) |>
     mutate(
       event = 1L * (eventtime <= censtime),
       y = if_else(event == 1, eventtime, censtime),
       status = NULL,
       status_cens = NULL
-    ) %>%
-    relocate(id, y, event) %>%
+    ) |>
+    relocate(id, y, event) |>
     mutate(
       soc = factor(soc_alt, c(0, 1), c("ChemoA", "ChemoB")),
       trt_ind = trt,
@@ -574,24 +573,21 @@ simulate_trial <- function(lambda, gamma, lambda_cens, x, betas) {
 
 # using shape=1 for simulation (corresponding to exponential survival times)
 sim <- simulate_trial(rate_1, 1, rate_cens, covs, beta)
-hdata1 <- simulate_trial(rate_1, 1, rate_cens, hcovs, beta) %>%
+hdata1 <- simulate_trial(rate_1, 1, rate_cens, hcovs, beta) |>
   mutate(id = id + max(sim$id))
 ```
 
 We can check how the simulated data looks like and its sample size.
 
 ```{r}
-gt_preview(sim) %>% fmt_number(where(is.double), decimals=1)
+gt_preview(sim) |> fmt_number(where(is.double), decimals=1)
 table(sim$arm)
 table(hdata1$arm)
 ```
 
-
-
-
 ## Models
 
-### Model specification
+### Model specification {#sec-tte-model-spec}
 
 Survival data will be fitted by a Bayesian generalized linear model.
 
@@ -657,14 +653,19 @@ To formalize these contrast definitions, we summarize the arms to
 parameter mapping as matrix:
 
 ```{r tb_model1, echo = FALSE}
-tb1 = data.frame(Parameter= c("$\\gamma$", "$\\delta_{\\mbox{EffectAvg}}$",
-                              "$\\delta_{\\mbox{effect}}$$", "$\\delta_{\\mbox{control}}$"),
-                 activeChemoA = c("1/4", "1/2", "1/2", "0"),
-                 controlChemoA = c("1/4", "-1/2", "-1/2", "-1"),
-                 activeChemoB = c("1/4", "1/2", "-1/2", "0"),
-                 controlChemoB = c("1/4", "-1/2", "1/2", "1"))
-colnames(tb1)[2:5] <- paste0("$\\lambda_{\\mbox{", colnames(tb1)[2:5], "}}$")
-gt(tb1) %>% fmt_markdown(everything())
+tb1 <- data.frame(Parameter= c("$\\gamma$", "$\\delta_{\\mbox{EffectAvg}}$",
+                               "$\\delta_{\\mbox{effect}}$", "$\\delta_{\\mbox{control}}$"),
+                  activeChemoA = c("1/4", "1/2", "1/2", "0"),
+                  controlChemoA = c("1/4", "-1/2", "-1/2", "-1"),
+                  activeChemoB = c("1/4", "1/2", "-1/2", "0"),
+                  controlChemoB = c("1/4", "-1/2", "1/2", "1"))
+gt(tb1) |>
+  cols_label(activeChemoA  = md("$\\lambda_{\\mbox{activeChemoA}}$"),
+             controlChemoA = md("$\\lambda_{\\mbox{controlChemoA}}$"),
+             activeChemoB  = md("$\\lambda_{\\mbox{activeChemoB}}$"),
+             controlChemoB = md("$\\lambda_{\\mbox{controlChemoB}}$")
+             ) |>
+  fmt_markdown(everything())
 ```
 
 In this form it is straightforward to derive the definition of a
@@ -726,9 +727,13 @@ tb2 <- data.frame(TreatmentArm = c("activeChemoA", "controlChemoA",
                   effectAvg = c("1/2", "-1/2", "1/2", "-1/2", "-1/2"),
                   effect = c("1", "0", "-1", "0", "0"),
                   control = c("-1/2", "-1/2", "1/2", "1/2", "0"))
-colnames(tb2) <- c("Treatment arm", "$\\gamma$", "$\\delta_{\\mbox{EffectAvg}}$",
-                   "$\\delta_{\\mbox{effect}}$", "$\\delta_{\\mbox{control}}$")
-gt(tb2) %>% fmt_markdown(everything())
+gt(tb2) |>
+  cols_label(TreatmentArm = "Treament arm",
+             intercept = md("$\\gamma$"),
+             effectAvg = md("$\\delta_{\\mbox{EffectAvg}}$"),
+             effect = md("$\\delta_{\\mbox{effect}}$"),
+             control = md("$\\delta_{\\mbox{control}}$")) |>
+  fmt_markdown(everything())
 ```
 
 
@@ -748,7 +753,7 @@ tb2 <- data.frame(Parameter = c("$\\alpha$", "$\\gamma$", "$\\delta_{\\mbox{effe
                             "$\\mbox{Normal}(0, \\frac{\\log(1.25)}{1.64})$",
                             "$\\mbox{Normal}(0, \\frac{\\log(1.8)}{1.64})$",
                             "$\\mbox{Normal}(0, \\frac{\\log(1.8)}{1.64})$"))
-gt(tb2) %>% fmt_markdown(everything())
+gt(tb2) |> fmt_markdown(everything())
 ```
 
 These priors parametrize the central 90% credible interval for the
@@ -761,7 +766,7 @@ doubling or a halving of the progression speed.
 
 The common shape parameter, $\alpha$, is set to have median value of
 unity and it's 90% credible interval is $[0.3, 2.33]$, which admits
-substantial deviation from unity, which is the case of exponential
+substantial deviation from unity, which is the case of an exponential
 survival time distribution.
 
 ```{r prior_dist, echo=FALSE, eval=FALSE, fig.cap="Prior distribution of shape parameter k (inset) with an illustration of the corresponding range of survival curves for a fixed value of $\\lambda$.", out.width = '40%', fig.align = 'center'}
@@ -807,7 +812,7 @@ for a broad range of shapes for the survival curve.
 ### Construct customized coded contrasts
 
 First we define customized contrasts which define the parametrization
-of the model as defined in the *Model sepcification* section.
+of the model as defined in @sec-tte-model-spec.
 
 The mapping of data strata to parameters is:
 
@@ -816,11 +821,11 @@ cc_inv <- matrix(c(1/4,  1/4,  1/4,  1/4,
                    1/2, -1/2,  1/2, -1/2,
                    1/2, -1/2, -1/2,  1/2,
                    0,   -1,    0,    1),
-nrow=4, ncol=4, byrow=TRUE,
-dimnames=list(contrast=c("intercept", "deltaEffectAvg",
-                         "deltaEffect", "deltaControl"),
-              arm=c("activeChemoA", "controlChemoA",
-                    "activeChemoB", "controlChemoB")))
+                 nrow=4, ncol=4, byrow=TRUE,
+                 dimnames=list(contrast=c("intercept", "deltaEffectAvg",
+                                          "deltaEffect", "deltaControl"),
+                               arm=c("activeChemoA", "controlChemoA",
+                                     "activeChemoB", "controlChemoB")))
 MASS::fractions(cc_inv)
 ```
 
@@ -897,7 +902,7 @@ First we define with a call to `bf` the model formula and model
 family. This defines the model's likelihood and the parametrization.
 
 ```{r brms model}
-model_weibull <- bf(y | cens(1-event) ~ 1 + arm, family=weibull())
+model_weibull <- bf(y | cens(1-event) ~ 1 + arm, family=weibull(), center=FALSE)
 ```
 
  The left hand side of the formula, `y | cens(1-event) ~ ...`, denotes
@@ -936,8 +941,8 @@ is centered on $0$. The same is a priori assumed for the `deltaEffect`
 ($\delta_{\mbox{effect}}$) parameter. 
 
 ```{r}
-model_weibull_prior <- prior(normal(meanInter, log(4)/1.64),
-                             class="Intercept") +
+model_weibull_prior <-
+  prior(normal(meanInter, log(4)/1.64), coef=Intercept) +
   prior(normal(0, sdEffectAvg), coef=armdeltaEffectAvg) +
   prior(normal(0, sdDeltaEffect), coef=armdeltaEffect) +
   prior(normal(0, sdDeltaControl), coef=armdeltaControl) +
@@ -1024,7 +1029,7 @@ Now extract posterior coefficients with a 90% credible interval
 
 ```{r}
 post_est <- fixef(fit_weibull, prob=c(0.05, 0.95), robust=TRUE)
-gt(as.data.frame(post_est)) %>% fmt_number(everything(), decimals=2)
+gt(as.data.frame(post_est)) |> fmt_number(everything(), decimals=2)
 ```
 
 Define trial successfull if the `deltaEffectAvg` exceed 0 (which means
@@ -1045,7 +1050,7 @@ study and $0$ otherwise) when specifying the formula for
 meta-analytic-combined (MAC) analysis:
 
 ```{r}
-model_mac_weibull <- bf(y | cens(1-event) ~ 1 + arm + hist1, family=weibull())
+model_mac_weibull <- bf(y | cens(1-event) ~ 1 + arm + hist1, family=weibull(), center=FALSE)
 ```
 
 And `get_prior` function shows that in addition to the priors
@@ -1087,8 +1092,8 @@ comb_data <- bind_rows(sim, hdata1)
 contrasts(comb_data$arm) <- cc[,-1]
 fit_mac_weibull <- brm(model_mac_weibull, data=comb_data,
                        prior=model_weibull_mac_prior,
-                   stanvars=prior_sd + prior_mean + prior_sdHist,
-                   seed=43534, refresh=0)
+                       stanvars=prior_sd + prior_mean + prior_sdHist,
+                       seed=43534, refresh=0)
 ```
 
 And we can compare the results from two models. Inclusion of
@@ -1112,10 +1117,10 @@ contrasts(hdata1$arm) <- cc[,-1]
 fit_mac_prior_weibull <- brm(model_mac_weibull, data=hdata1,
                              prior=model_weibull_mac_prior,
                              drop_unused_levels=FALSE,
-                         stanvars=prior_sd + prior_mean + prior_sdHist,
-                         seed=43534, refresh=0)
+                             stanvars=prior_sd + prior_mean + prior_sdHist,
+                             seed=43534, refresh=0)
 
-gt(as.data.frame(fixef(fit_mac_prior_weibull, robust=TRUE))) %>% fmt_number(everything(), decimals=2)
+gt(as.data.frame(fixef(fit_mac_prior_weibull, robust=TRUE))) |> fmt_number(everything(), decimals=2)
 ```
 
 We see that we essentially sample the prior for most regression
@@ -1162,8 +1167,8 @@ continuous covariates which replaces the use of the categorical
 
 ```{r}
 model_mac_weibull_ind <- bf(y | cens(1-event) ~ 1 + armdeltaEffectAvg +
-                            armdeltaEffect + armdeltaControl + hist1,
-                            family=weibull())
+                              armdeltaEffect + armdeltaControl + hist1,
+                            family=weibull(), center=FALSE)
 ```
 
 And query what prior parameters need to be set
@@ -1178,12 +1183,13 @@ are the same.
 
 ```{r}
 #| message: FALSE
-model_weibull_mac_prior_ind <- prior(normal(meanInter, log(4)/1.64),
-                                     class="Intercept") +
-    prior(normal(0, sdEffectAvg), coef=armdeltaEffectAvg) +
-    prior(normal(0, sdDeltaEffect), coef=armdeltaEffect) +
-    prior(normal(0, sdDeltaControl), coef=armdeltaControl) +
-    prior(normal(0, sdHist), coef=hist1)
+model_weibull_mac_prior_ind <-
+  prior(normal(meanInter, log(4)/1.64), coef=Intercept) +
+  prior(normal(0, sdEffectAvg), coef=armdeltaEffectAvg) +
+  prior(normal(0, sdDeltaEffect), coef=armdeltaEffect) +
+  prior(normal(0, sdDeltaControl), coef=armdeltaControl) +
+  prior(student_t(6, 0, sdHist), coef=hist1) +
+  prior(gamma(3, 2.7), class=shape)
 
 fit_mac_weibull_ind <- brm(model_mac_weibull_ind, data=comb_data_ind,
                            prior=model_weibull_mac_prior_ind,
@@ -1226,7 +1232,7 @@ the first term of the model formula) in order to
 include the new historical data from CheckMate649.
 
 ```{r}
-hdata2_ind <- rename(hdata2, y=time, event=status) %>%
+hdata2_ind <- rename(hdata2, y=time, event=status) |>
   mutate(hist1=0, hist2=1, armdeltaEffectAvg=-0.5,
          armdeltaEffect=0, armdeltaControl=0)
 all_comb_data_ind <- bind_rows(comb_data_ind, hdata2_ind)
@@ -1239,7 +1245,7 @@ as we did for one historical study.
 ```{r}
 model_mac_weibull_ind_all <- bf(y | cens(1-event) ~ 1 + armdeltaEffectAvg +
                               armdeltaEffect + armdeltaControl + hist1+ hist2,
-                              family=weibull())
+                              family=weibull(), center=FALSE)
 model_weibull_mac_prior_all <- model_weibull_mac_prior +
   prior(normal(0, sdHist), coef=hist2)
 ```
@@ -1276,13 +1282,15 @@ the average effect of standard of care.
 ## Exercises
 
 1. In `brms` various families can be used to model time-to-event data.
-Re-fit the model using `exponential` distribution and compare with
-the `weibull` results.
+Consider using the `exponential` distribution instead of the used
+`weibull` distribution. Evaluate first how well the simpler
+`exponential` model describes the historical data using a posterior
+predictive check. Then reconsider the borrowing model presented.
 
 2. Cox regression is implemented in `brms` using M-splines, which is a
 very close approximation to the semi-parametric Cox model. Show that
 the estimates for the covariate effect we get from `brms` are quite
 similar to what we get from `survival` package. Also compare the
 estimate of the overall intercept which needs to account for an offset
-as detailled in section \@ref(sec:tte-model-brms). 
+as detailled in @sec-tte-model-brms. 
 

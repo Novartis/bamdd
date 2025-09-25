@@ -86,7 +86,7 @@ $(OBJS) : $(SRCDIR)/setup.R
 
 PHONY += clean
 clean:
-	# rm -rf $(OUTDIR)/*
+	rm -rf $(OUTDIR)/*
 	rm -rf src/*.html
 	rm -rf brms-cache
 	rm -rf .brms-cache

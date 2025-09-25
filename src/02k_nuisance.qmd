@@ -33,12 +33,12 @@ library(brms)
 library(posterior)
 library(ggrepel)
 library(gt)
-library(here)
+here::i_am("src/02k_nuisance.qmd")
 
 # instruct brms to use cmdstanr as backend and cache all Stan binaries
-options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here("brms-cache"))
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("brms-cache"))
 # create cache directory if not yet available
-dir.create(here("brms-cache"), FALSE)
+dir.create(here::here("brms-cache"), FALSE)
 set.seed(593467)
 ```
 
@@ -46,7 +46,7 @@ We will also use one dataset provided in the `multinma` R package.
 
 ```{r include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader further R session setup
-source(here("src", "setup.R"))
+source(here::here("src", "setup.R"))
 ```
 
 

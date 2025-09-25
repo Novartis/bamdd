@@ -6,7 +6,8 @@ author:
 # Introduction {#sec-introduction}
 
 ```{r, include = FALSE}
-source(here::here("src/setup.R"))
+here::i_am("src/01a_introduction.qmd")
+source(here::here("src", "setup.R"))
 ```
 
 Applied modeling can facilitate interpretation of clinical data and is
