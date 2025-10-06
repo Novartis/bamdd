@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -642,11 +642,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 Chain 1 finished in 0.5 seconds.
 Chain 2 finished in 0.4 seconds.
 Chain 3 finished in 0.3 seconds.
-Chain 4 finished in 0.3 seconds.
+Chain 4 finished in 0.4 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.4 seconds.
-Total execution time: 1.8 seconds.</code></pre>
+Total execution time: 2.0 seconds.</code></pre>
 </div>
 </div>
 <p>As we noted before, there’s at least two ways of performing posterior inference after fitting the model above: 1. inference about the mean effect of the SGLT-2 inhibitors across studies, or 2. inference about the predicted effect in a new study drawn from the same distribution of studies as the studies under analysis. This difference becomes very clear when working in a Bayesian regression setting using <code>brms</code>, but is somewhat obscured when we use standard meta-analysis software.</p>
@@ -716,7 +716,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 0.2 seconds.
-Chain 2 finished in 0.3 seconds.
+Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
 Chain 4 finished in 0.2 seconds.
 
@@ -786,11 +786,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 Chain 1 finished in 0.9 seconds.
 Chain 2 finished in 0.8 seconds.
 Chain 3 finished in 1.0 seconds.
-Chain 4 finished in 0.9 seconds.
+Chain 4 finished in 1.0 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.9 seconds.
-Total execution time: 3.9 seconds.</code></pre>
+Total execution time: 4.0 seconds.</code></pre>
 </div>
 </div>
 <p>As before, we can easily obtain inference about the mean effect of the SGLT-2 inhibitors across studies or the predicted effect in a new study drawn from the same distribution of studies as the studies under analysis.</p>

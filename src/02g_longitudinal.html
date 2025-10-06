@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -660,13 +660,13 @@ window.Quarto = {
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 21.4 seconds.
-Chain 2 finished in 21.5 seconds.
-Chain 3 finished in 21.8 seconds.
-Chain 4 finished in 20.7 seconds.
+Chain 2 finished in 21.4 seconds.
+Chain 3 finished in 22.3 seconds.
+Chain 4 finished in 19.7 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 21.3 seconds.
-Total execution time: 85.8 seconds.</code></pre>
+Mean chain execution time: 21.2 seconds.
+Total execution time: 85.5 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1068,14 +1068,14 @@ HPD interval probability: 0.95 </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 39.4 seconds.
-Chain 2 finished in 55.9 seconds.
-Chain 3 finished in 81.7 seconds.
-Chain 4 finished in 85.8 seconds.
+Chain 1 finished in 35.0 seconds.
+Chain 2 finished in 78.9 seconds.
+Chain 3 finished in 83.3 seconds.
+Chain 4 finished in 59.0 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 65.7 seconds.
-Total execution time: 263.5 seconds.</code></pre>
+Mean chain execution time: 64.0 seconds.
+Total execution time: 257.0 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 10 of 4000 (0.0%) transitions ended with a divergence.
@@ -1109,14 +1109,14 @@ See https://mc-stan.org/misc/warnings for details.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 7.1 seconds.
-Chain 2 finished in 7.7 seconds.
-Chain 3 finished in 6.7 seconds.
-Chain 4 finished in 7.0 seconds.
+Chain 1 finished in 6.9 seconds.
+Chain 2 finished in 7.6 seconds.
+Chain 3 finished in 15.2 seconds.
+Chain 4 finished in 15.6 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 7.1 seconds.
-Total execution time: 29.0 seconds.</code></pre>
+Mean chain execution time: 11.3 seconds.
+Total execution time: 46.0 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>base_quartiles <span class="ot">&lt;-</span> pasi_data <span class="sc">%&gt;%</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SUBJID, BASE) <span class="sc">%&gt;%</span></span>
