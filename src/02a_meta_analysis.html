@@ -1332,7 +1332,7 @@ Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.2 seconds.</code></pre>
+Total execution time: 1.3 seconds.</code></pre>
 </div>
 </div>
 <p>The model is compiled and then run. Occasionally one observes a warning on divergent transitions after warmup reported like:</p>
@@ -1351,14 +1351,14 @@ Total execution time: 1.2 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.3 seconds.
+Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
-Chain 4 finished in 0.2 seconds.
+Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.3 seconds.</code></pre>
+Total execution time: 1.2 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>map_mc_brms_2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1452,7 +1452,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 1 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpbkSL4N/model-275452d1992.stan', line 54, column 4 to column 50)</code></pre>
+<pre><code>Chain 1 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpMuzkaR/model-24f972bcf6ff.stan', line 54, column 4 to column 50)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
@@ -1465,13 +1465,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Chain 1 finished in 1.1 seconds.
-Chain 2 finished in 0.8 seconds.</code></pre>
+Chain 2 finished in 0.7 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Chain 3 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpbkSL4N/model-275452d1992.stan', line 54, column 4 to column 50)</code></pre>
+<pre><code>Chain 3 Exception: binomial_logit_lpmf: Probability parameter[1] is -inf, but must be finite! (in '/tmp/RtmpMuzkaR/model-24f972bcf6ff.stan', line 54, column 4 to column 50)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Chain 3 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</code></pre>
