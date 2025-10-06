@@ -16,21 +16,27 @@ addressed via Bayesian modelling with the `brms` package.
 
 ::: {.content-visible when-profile="public"}
 ::: {.callout-tip}
-## Courses in Graz (Austria) September 14<sup>th</sup> 2025, Paris (France), July 4<sup>th</sup> 2025, Göttingen (Germany), Dec 5/6<sup>th</sup> 2024 and at JSM (Portland, OR), Aug 5<sup>th</sup> 2024
+## Courses in Paris (France) October 8<sup>th</sup> 2025, Graz (Austria) September 14<sup>th</sup> 2025, Paris (France), July 4<sup>th</sup> 2025, Göttingen (Germany), Dec 5/6<sup>th</sup> 2024 and at JSM (Portland, OR), Aug 5<sup>th</sup> 2024
 
 Past course we offered recently:
 
-1. Pre-conference course at the [ROeS Conference
-   2025](https://roes2025.at) on September 14th 2025
-   * [Slides](workshops/graz2025/slides/bamdd_graz2025.html)
-   * [Exercises](workshops/graz2025/exercises/bamdd_graz2025_exercises.html)
-   * [Additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/graz2025)
-2. Tutorial at the ["Stan4PMX
+1. Pre-conference course at the [10th Statistics & Biopharmacy conference](https://snb2025.sciencesconf.org) on October 8th 2025 in Paris
+   * [Slides](workshops/paris2025snb/slides/bamdd_paris2025.html)
+   * [Exercises](workshops/paris2025snb/exercises/bamdd_paris2025_exercises.html)
+   * [Additional material (see
+     readme)](https://github.com/Novartis/bamdd/tree/main/workshops/paris2025snb)
+   * [R setup instructions](workshops/paris2025snb/exercises/bamdd_paris2025_exercises.html#/r-session)
+2. Pre-conference course at the [ROeS Conference
+   2025](https://roes2025.at) on September 14th 2025.  
+   [Slides](workshops/graz2025/slides/bamdd_graz2025.html),
+   [Exercises](workshops/graz2025/exercises/bamdd_graz2025_exercises.html),
+   [Additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/graz2025)
+3. Tutorial at the ["Stan4PMX
    workshop"](https://stan4pmx2025.sciencesconf.org).  
    [Slides](workshops/paris2025/slides/bamdd_paris2025.html), 
    [exercises](workshops/paris2025/exercises/bamdd_paris2025_exercises.html) &
    [additional material (see readme)](https://github.com/Novartis/bamdd/tree/main/workshops/paris2025)
-3. A course at the workshop ["Hierarchical models in preclinical
+4. A course at the workshop ["Hierarchical models in preclinical
    research"](https://www.biometrische-gesellschaft.de/arbeitsgruppen/bayes-methodik/workshops/2024-goettingen.html)
    of the IBS-DR working groups Non-clinical statistics and Bayes
    Methods on December 5/6<sup>th</sup>. The materials are available
@@ -38,7 +44,7 @@ Past course we offered recently:
    [Slides](workshops/goettingen2024/slides/bamdd_goettingen2024.html)
    & [additional material (see
    readme)](https://github.com/Novartis/bamdd/tree/main/workshops/goettingen2024)
-4. A short course at the 2024 Joint Statistical Meetings in Portland
+5. A short course at the 2024 Joint Statistical Meetings in Portland
    on August 5<sup>th</sup>. The materials are available here:
    [Slides](workshops/jsm2024/slides/bamdd_jsm2024.pdf) & [additional
    material (see
