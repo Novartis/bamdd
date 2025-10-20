@@ -21,6 +21,7 @@ dependencies <- c(
 "emmeans",
 "forcats",
 "future",
+"forestplot",
 "GGally",
 "ggdist",
 "ggfortify",
