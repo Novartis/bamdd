@@ -1,0 +1,1117 @@
+---
+author:
+  - Yingying Wang - <yingying.wang@novartis.com>
+  - Sebastian Weber - <sebastian.weber@novartis.com>
+format:
+  html:
+    toc: true
+    number-sections: true
+    html-math-method: katex
+---
+
+# Use of historical control data with a covariate {#sec-use-hist-control-data-cov}
+
+<!-- https://raw.githubusercontent.com/Novartis/bamdd/main/src/_macros.qmd -->
+{{< include _macros.qmd >}}
+
+The use of baseline covariates for trial analysis is frequently
+applied in practice whenever known prognostic factors are relevant in
+the context of the study population. This can complicate the use of
+historical control information in particular for a non-normal endpoint
+for which the respective generalized linear models are often not
+collapsible. This case study demonstrates
+
+- setting up a bi-variate meta-analysis for a binary endpoint to
+  borrow information on the intercept and a baseline covariate effect
+  from historical data
+- how we can make use of incomplete responder data as one often
+  encounters in practice (responder data not given for each level of a
+  categorical covariate)
+- how two different likelihoods can be used with custom Stan code
+  adapting the `brms` generated Stan model
+- how to summarize with a multi-variate normal mixture the MAP prior
+  with covariates
+- how to use the multi-variate normal mixture MAP prior as a prior
+  for the main analysis using `brms`
+
+To run the R code of this section please ensure to load these libraries
+and options first:
+
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE,cache=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(brms)
+library(posterior)
+library(bayesplot)
+library(RBesT)
+here::i_am("src/02ad_meta_analysis_covariate.qmd")
+library(gt)
+theme_set(theme_bw(12))
+# instruct brms to use cmdstanr as backend and cache all Stan binaries
+options(brms.backend="cmdstanr", cmdstanr_write_stan_file_dir=here::here("_brms-cache"))
+# create cache directory if not yet available
+dir.create(here::here("_brms-cache"), FALSE)
+set.seed(57339)
+# allow for wider and prettier printing
+options(width=140, digits=2)
+# make brms less verbose
+options(brms.short_summary = TRUE)
+```
+
+
+
+::: {.content-visible when-profile="dummy"}
+## Overview Video
+
+{{< video videos/brms-20250428-map-binomial-covariate.mp4 >}}
+
+:::
+
+
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
+# invisible to the reader additional setup steps, which are optional
+source(here::here("src", "setup.R"))
+```
+
+## Background
+
+Atopic dermatitis (AD) is an inflammation of the skin. It's prevalence
+is substantial in the population and various treatments have been
+studied to date. Therefore, a substantial amount of data has been
+generated to date on experimental treatments for AD and along with it
+on placebo treated patient data. Given that treatment procedures are
+well standardized the historical data on placebo treatments is
+relevant for future trials in the indication.
+
+One of the standard clinical endpoints is the investigator global
+assessment (IGA) score which ranges from 0 (clear) to 4
+(severe). Changes in this score over a time-span of 16 weeks compared
+to baseline when treatment is initiated is used to evaluate the
+efficacy of treatments. Derived from the IGA score one often considers
+the binary IGA response status defined as an improvement of at least 2
+points and reaching either 0 or 1 (clear or almost clear) IGA
+score. By construction of the score the initial status at baseline
+being moderate or severe is a prognostic factor for reaching IGA
+response by week 16 or not as it is harder to reach response whenever
+one has baseline score 4 (severe) at baseline in comparison to score 3
+(moderate).
+
+As a consequence, patients are often stratified by baseline response
+score into moderate and severe for trials studying this
+population. While most trials report the baseline distribution of
+the number of moderate and severe patients, only a fraction of trials
+report the outcome responder data stratified by baseline response
+data, which is a complication for using this historical data whenever
+one wishes to leverage the historical data.
+
+In the following we illustrate how an informative MAP prior is derived
+in such a situation. Historical data on a placebo treatment for use in
+a future trial is used as we are aiming to reduce the required sample
+size in the placebo arm while maintaining appropiate power to detect a
+treatment effect in a two arm trial.
+
+## Data
+
+```{r data}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| echo: false
+
+hist_pbo <- tibble(study = c("1", "2", "3", "4", "5", "6", "7", "8", 
+"9", "10", "11", "12", "13", "14", "15", "16", "17", "18"),
+compound = c("Dupilumab", 
+"Dupilumab", "Dupilumab", "Tralokinumab", "Tralokinumab", "Rocatinlimab", 
+"Lebrikizumab", "Lebrikizumab", "Lebrikizumab", "Amlitelimab", 
+"Upadacitinib", "Upadacitinib", "Upadacitinib", "Abrocitinib", 
+"Abrocitinib", "Abrocitinib", "Baricitinib", "Baricitinib"), 
+    trial = c("2b", "SOLO 1", "SOLO 2", "ECZTRA 1", "ECZTRA 2", 
+    "2b", "D", "ADvocate1", "ADvocate2", "2a", "2", "Measure Up 1", 
+    "Measure Up 2", "2b", "JADE MONO 2", "JADE MONO 1", "BREEZE-AD1", 
+    "BREEZE-AD2"), n = c(61L, 224L, 236L, 197L, 193L, 57L, 52L, 
+    141L, 146L, 24L, 41L, 281L, 278L, 52L, 78L, 77L, 249L, 244L
+    ), r_ovrall = c(1L, 23L, 20L, 14L, 18L, 1L, 8L, 18L, 16L, 
+    2L, 1L, 24L, 13L, 3L, 7L, 6L, 12L, 11L), n_severe = c(29L, 
+    111L, 115L, 102L, 100L, 26L, 20L, 58L, 51L, 15L, 23L, 125L, 
+    153L, 20L, 26L, 31L, 105L, 121L), r_mod = c(NA, 16L, 17L, 
+    10L, 13L, NA, NA, NA, NA, NA, NA, NA, NA, NA, 6L, 5L, NA, 
+    NA), r_severe = c(NA, 7L, 3L, 4L, 5L, NA, NA, NA, NA, NA, 
+    NA, NA, NA, NA, 1L, 1L, NA, NA), use_for_CMK = c("Yes", "Yes", 
+    "Yes", "No", "No", "No", "Yes", "Yes", "Yes", "No", "Yes", 
+    "Yes", "Yes", "Yes", "No", "Yes", "Yes", "Yes"), start_time = c("2013 May", 
+    "2014 Oct", "2014 Dec", "2017 May", "2017 Jun", "2018", "2018 Jan", 
+    "2019", "2019", "2018 Dec", "2016", "2018", "2018", "2016", 
+    "2017", "2018", "2017", "2018"), oral = c(0L, 0L, 0L, 0L, 
+    0L, 0L, 0L, 0L, 0L, 0L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L)) |>
+  mutate(start_year=as.integer(stringr::str_extract(start_time, "^[0-9]+")),
+         is_complete=1*is.na(r_mod)) |>
+  select(-use_for_CMK) |>
+  relocate(study, compound, trial, start_time, n, n_severe)
+
+# long format
+hist_pbo_long <- hist_pbo |>
+  mutate(n_mod = n - n_severe) |>
+  select(
+    compound,
+    trial,
+    study,
+    start_year,
+    r_total = r_ovrall,
+    n_total = n,
+    r_mod,
+    n_mod,
+    r_severe,
+    n_severe,
+    oral
+  ) |>
+  pivot_longer(c(r_mod, r_severe), names_to = "severe", values_to = "r") |>
+  mutate(
+    severe = if_else(severe == "r_mod", 0L, 1L),
+    n = if_else(severe == 0, n_mod, n_severe),
+    n_mod = NULL,
+    n_severe = NULL,
+    r_tilde = replace_na(r, 0),
+    n_tilde = if_else(is.na(r), 0, n),
+    row = row_number(),
+    is_complete = 1L * !is.na(r)
+  ) |>
+  relocate(study, compound, trial, severe, oral, r, n, is_complete)
+
+```
+
+We consider the planning stage of a potential new trial in the
+indication of AD. Let's assume that an initial search for relevant
+historical control data in the literature lead to the following set of
+identified historical trials:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| echo: false
+
+hist_pbo |>
+  select(-start_year) |>
+  mutate(compound = abbreviate(compound, 6)) |>
+  gt() |>
+  sub_missing() |>
+  fmt_integer() |>
+  grand_summary_rows(
+    c(n, n_severe, r_ovrall, r_mod, r_severe, oral, is_complete),
+    fns = list(
+      min ~ min(., na.rm = TRUE),
+      max ~ max(., na.rm = TRUE),
+      avg ~ mean(., na.rm = TRUE)
+    ),
+    fmt = list(
+      ~ fmt_percent(., columns = c(is_complete, oral), decimals = 1),
+      ~ fmt_number(
+        .,
+        columns = !c(is_complete, oral),
+        use_seps = FALSE,
+        decimals = 1
+      )
+    )
+  )
+
+
+```
+
+A graphical overview of the data as a forest plot showing the
+historical responder data in separate for moderate and severe (when
+available) and as overall number of responders:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| echo: false
+#| fig.height: 6
+
+suppressPackageStartupMessages(library(forestplot))
+
+hist_pbo_forest <- bind_rows(
+  select(hist_pbo_long, study, compound, trial, r, n, case = severe),
+  select(
+    filter(hist_pbo_long, severe == 0),
+    study,
+    compound,
+    trial,
+    r = r_total,
+    n = n_total
+  ) |>
+    mutate(case = 2)
+) |>
+  rowwise() |>
+  mutate(
+    case = factor(case, c(0:2), labels = c("Moderate", "Severe", "Overall")),
+    mean = r / n,
+    lower = BinaryExactCI(r, n)[1],
+    upper = BinaryExactCI(r, n)[2]
+  ) |>
+  ungroup()
+
+hist_pbo_forest <- hist_pbo_forest |>
+  left_join(select(hist_pbo, study, n_total = n, n_severe), by = "study") |>
+  mutate(
+    study = as.numeric(study),
+    percent_severe = round(100 * n_severe / n_total, 0)
+  ) |>
+  arrange(study, case)
+
+
+hist_pbo_forest |>
+  group_by(case) |>
+  forestplot(
+    labeltext = c(trial, compound, n_total, percent_severe),
+    clip = c(0, 0.25),
+    xlab = "Response rate"
+  ) |>
+  fp_set_style(box = c("blue", "red", "black")) |>
+  fp_add_header(
+    compound = c("", "Compound"),
+    trial = c("", "Trial"),
+    n_total = c("", "N"),
+    percent_severe = c("Severe", "[%]")
+  )
+
+```
+
+## Model description
+
+### Trial analysis model
+
+The aim is to decrease the sample size of the placebo arm in a future
+placebo controlled trial. To start, we first define the analysis model
+used for the future trial. We assume that the trial enrolls patients
+with either an IGA score of 3 (moderate) or 4 (severe). The baseline
+severity is a clinically relevant prognostic factor for
+response. Therefore, we assume that the trial analysis accounts for a
+patient's disease status at baseline via an indicator `severe`
+resulting in the analysis model of the binary IGA responder outcome as
+
+$$ r_i|\theta_i \sim \text{Bernoulli}(\theta_i) $$
+
+$$ \text{logit}(\theta_i) = \alpha_0 + I(\text{severe}_i) \, \beta_1 + I(\text{active}_i) \, \beta_2 . $$
+
+
+Our goal is not to derive from the historical data above informative
+priors for the overall intercept $\alpha_0$ *and* the covariate effect
+due to baseline disease status $\beta_1$.
+
+### Historical control data synthesis
+
+Aggregate historical data necessitates adapting the trial analysis
+model in several ways. First, the Bernoulli likelihood for each
+individual patient $i$ is transferred to an equivalent Binomial
+likelihood. Additionally, since each patient is classified as either
+moderate ($l = 0$) or severe ($l = 1$), it becomes
+necessary to introduce a pair of Binomial likelihood terms for each
+historical study ($h$), with one term corresponding to each baseline
+disease severity level.
+
+Furthermore, the inclusion of the covariate effect for baseline
+severity requires deriving a MAP prior for both
+the intercept and the log odds ratio of the covariate effect. If only
+a MAP prior were derived for the intercept while assigning a
+non-informative prior to the covariate effect, the trial analysis
+would borrow information exclusively for the disease severity level
+linked to the reference category of the intercept, leaving the
+covariate effect uninformative.
+
+To address this, the trial analysis model is extended by incorporating
+a hierarchical structure. This hierarchical model assigns
+trial-specific intercepts and slopes for the covariate effect, with
+these parameters being related across trials through an
+exchangeability assumption. This assumption enables partial pooling of
+the available data, allowing the model to share information across
+trials while also capturing trial-specific variability.
+
+$$ r_{h,l}|\theta_{h,l} \sim \text{Binomial}(\theta_{h,l}) $$
+
+$$ \text{logit}(\theta_{h,l}) = \beta_{0,h} + I(\text{severe}_{h,l}) \, \beta_{1,h} + I(\text{oral}_{h}) \, \beta_3 $$
+
+with the usual between-trial heterogeneity on the intercept and the slope:
+
+$$ (\beta_{0,h}, \beta_{1,h})|\mu_0,\mu_1,\tau_0,\tau_1,\rho \sim \text{Normal}((\mu_0, \mu_1), \Sigma) $$
+
+$$\Sigma =
+\begin{pmatrix}
+\tau_0^2 & \tau_0 \, \tau_1 \, \rho \\
+ \tau_0 \, \tau_1 \, \rho & \tau_1^2
+\end{pmatrix}
+$$
+
+However, this model requires for each historical trial the outcome of
+the responders to be given for each baseline disease severity level
+separatley (corresponding to trials marked with "complete"
+information). Thus, this model can only be applied in this form to a
+subset of the data with complete information.
+
+### Modelling explicitly the sum of two binomials (advanced) {#sec-model-partial}
+
+For a number of trials we do not have reported the *complete*
+information needed for the above model. The complete response
+information per trial includes the number of responders
+stratified by disease severity,
+
+- $r_{h,l=0}$ responders with moderate baseline status
+- $r_{h,l=1}$ responders with severe baseline status.
+
+However, we have instead reported the *partial* information reported
+of the overall number of responders, which equals the sum of the two
+random variables abvove:
+
+$$r_h = r_{h,l=0} + r_{h,l=1}$$
+
+In the following we describe how we can use the information on the
+sum while we model the data *as if* we were given the stratified
+response data. That is, we formulate the likelihood on the basis of
+the given sum of responders $r_h$ while using the latent response
+rates $\theta_{h,l=0}$ and $\theta_{h,l=1}$ for which the model for
+the complete data is
+
+$$ r_{h,l=0}|\theta_{h,l=0} \sim \text{Binomial}(\theta_{h,l=0}) $$
+$$ r_{h,l=1}|\theta_{h,l=1} \sim \text{Binomial}(\theta_{h,l=1}) $$
+
+The sum of two Binomial variables is distributed as the discrete
+convolution of the individual Binomial distribution:
+
+$$ P(Y=r) = \sum_{y_1=0}^{r} P_1(y_1) \, P_2(r - y_1)$$
+
+Accounting for the fact that each variable is bounded by $n_1$ and
+$n_2$ respectivley, we can limit the domain of the sum accordingly:
+
+$$ P(Y=r) = \sum_{y_1=\max(0,r-n_2)}^{\min(n_1, r)} P_1(y_1) \, P_2(r - y_1)$$
+
+
+## Implementation
+
+### MAP prior for complete historical data only {#sec-impl-complete-only}
+
+Modelling jointly the complete and partial information from the
+historical trials requires two types of likelihoods in a single model
+depending on the respective case. Here we first model the historical
+trials with complete information only. This can be formulated as a
+hierarchical Binomial regression problem. Thus, we first subset to the
+6 trials for which complete information is available, which we
+reformat into a long format for which each trial contributes one row
+for the moderate and one row for the severe outcome:
+
+```{r, data_long,echo=FALSE}
+hist_pbo_long_complete <- hist_pbo_long |>
+  filter(is_complete==1) |>
+  select(1:7)
+hist_pbo_long_complete |>
+  gt() |>
+  fmt_number(decimals=2) |>
+  fmt_integer() |> 
+  sub_missing() 
+```
+
+In this form, the data can be directly modelled with
+weakly-informative priors in `brms`. The priors are set on the basis
+of the unit information standard deviation. This derives from the
+overall mean response rate of
+`r with(hist_pbo, round(100 * mean(r_ovrall/n)))`%, for which the
+respective binomial variance is transformed to the logit scale.
+
+```{r}
+# bi-variate hierarchical Binomial logistic regression model
+complete_model <- bf(r | trials(n) ~ 1 + severe + oral + (1 + severe | study),
+                     family = binomial, center = FALSE)
+
+complete_prior <- prior(normal(0, 3.5), class = b) + 
+  prior(normal(0, 3.5 / 4), class = sd, coef = Intercept, group=study) +
+  prior(normal(0, 2 * 3.5 / 4), class = sd, coef = severe, group=study) 
+
+complete_mc <- brm(complete_model, data = hist_pbo_long_complete,
+                   prior = complete_prior,
+                   control=list(adapt_delta=0.95),
+                   seed = 4585678,
+                   refresh = 0)
+
+complete_mc
+
+```
+
+The MAP prior is then derived as prediction of the parameters
+(intercept and slope) for a new study. However, most `brms` prediction
+functions are meant to predict new data or response means, which
+involves the linear predictor on the logit scale. Instead, we wish to
+extract the parameters themselves, which one can obtain by considering
+respective levels of the linear predictor:
+
+```{r}
+
+study_new_levels <- data.frame(
+  r = 0,
+  severe = c(0, 1),
+  n = 1,
+  oral = 0,
+  study = "new_study"
+)
+
+# obtain posterior for severe and moderate; note that we must allow to
+# sample new levels of the random effects and also specify to do so
+# using the "gaussian" option (as brms would otherwise bootstrap from
+# existing studies).
+prior_complete_new_study <-
+  rvar(posterior_linpred(
+    complete_mc,
+    newdata = study_new_levels,
+    allow_new_levels = TRUE,
+    sample_new_levels = "gaussian"
+  ))
+
+# we get a posterior for each condition (moderate / severe) - the
+# second column includes the intercept plus the covariate effect due
+# to severity,
+prior_complete_new_study
+
+# which we convert to the log odds ratio estimate
+# only by subtracting the overall intercept in the first column
+prior_complete_new_study[2] <- prior_complete_new_study[2] -
+  prior_complete_new_study[1]
+
+# As we wish to formulate a joint prior on all model parameters of the
+# trial model - including the treatment effect - a weakly-informative
+# prior for the treatment effect is added to the posterior in MC form.
+prior_complete_new_study <- c(
+  prior_complete_new_study,
+  active = rvar_rng(rnorm, 1, 0, 3.5, ndraws = ndraws(prior_complete_new_study))
+)
+names(prior_complete_new_study) <- c("inter", "severe", "active")
+
+# now turn the MC sample of the prior into a parametric representation
+# using functions from RBesT
+map_prior_complete <- mixfit(
+  as_draws_matrix(prior_complete_new_study),
+  type = "mvnorm",
+  Nc = 3
+)
+map_prior_complete
+
+plot(map_prior_complete)$mixpairs
+
+# robustify joint prior
+prior_non_inf <- mixmvnorm(c(1, 0, 0, 0, diag(c(3.5, 3.5, 3.5)^2)))
+rmap_prior_complete <- mixcombine(
+  map_prior_complete,
+  prior_non_inf,
+  weight = c(0.8, 0.2)
+)
+print(rmap_prior_complete, digits = 2)
+
+# For pre-specification of the MAP prior we have to report the MAP
+# prior with a finite precision in the protocol. Thereby, it is
+# recommended to write the MAP prior to disk using the JSON read/write
+# functions from RBesT to store the MAP prior with a defined precision
+# on file in a human readable format as JSON:
+map_complete_new_trial_file <- file.path(here::here(
+  "data",
+  "map_complete_new_trial_json.txt"
+))
+write_mix_json(
+  map_prior_complete,
+  map_complete_new_trial_file,
+  pretty = TRUE,
+  digits = 4
+)
+
+rmap_complete_new_trial_file <- file.path(here::here(
+  "data",
+  "rmap_complete_new__trial_json.txt"
+))
+write_mix_json(
+  rmap_prior_complete,
+  rmap_complete_new_trial_file,
+  pretty = TRUE,
+  digits = 4
+)
+
+cat(readLines(rmap_complete_new_trial_file), sep="\n")
+```
+
+The MAP prior used in the future trial is then the mixture
+prior one obtains by loading the JSON file. In case the rounding to a
+limited number of digits caused that the weights do not exactly sum to
+unity, these will then automatically be rescalled accordingly:
+
+```{r}
+read_mix_json(rmap_complete_new_trial_file, rescale=TRUE)
+
+```
+
+### MAP prior for complete and partial historical data (advanced)
+
+In the previous @sec-impl-complete-only the data of the partially
+reported trials was dropped corresponding to a subset of <!-- ----->
+`r with(hist_pbo, sum(n[!is.na(r_mod)]))` patients such that<!----->
+`r with(hist_pbo, sum(n[is.na(r_mod)]))` were left out, which is
+unsatisfactory. As explained in @sec-model-partial, the data from the
+trials with partial data can be modelled using a latent variable
+approach. Their likelihood contribution for the partially observed
+historical trials is then based on the convolution theorem and
+deviates from the case of a complete data historical trial.
+
+As strategy to model this with `brms` we will extend the previous
+model from @sec-impl-complete-only in two ways
+
+1. include the trials with partial data such that we model their
+   response rate by stratum in a latent manner
+2. add the likelihood for the partially reported data
+
+The first point can be achived by casting all data into a long format
+including the partially observed trials. However, for the partially
+observed trial data the information is missing on the number of
+responses per disease severity. For these trials we state in the data
+to have zero responders and zero patients as
+
+$$
+\tilde{r}_{h,l} =
+\begin{cases}
+r_{h,l} & \text{complete data} \\
+0 & \text{partial data} \\
+\end{cases}
+$$
+
+$$
+\tilde{n}_{h,l} =
+\begin{cases}
+n_{h,l} & \text{complete data} \\
+0 & \text{partial data} \\
+\end{cases}
+$$
+
+We also include a column `is_complete` indicating if a trial is
+reported as complete or partial. Moreover, a column `row` is included
+which is simply the row in the data set, which will be used below.
+
+```{r}
+#| echo: false
+# long format with fake entries of zero responder/patients for
+# partially observed trials
+hist_pbo_long |>
+  select(-start_year) |>
+  gt_preview(12) |>
+  fmt_number(decimals=2) |>
+  fmt_integer() |>
+  sub_missing()
+```
+
+Adding the data for the partially observed trials with responders and
+patients set to zero causes `brms` to include these trials in the
+model and instantiate corresponding random effects for the intercept
+and the slope. However, since no data is effectivley provided (zero
+responders and zero patients), the resulting posterior is not altered
+as can be seen by rerunning the previouse model with the longer data
+including the fake data:
+
+```{r}
+# Here we reuse the previous model fit and "update" it with the longer
+# data. For this to work, we need to align the column names to the
+# model of the complete model fit.
+update(
+  complete_mc,
+  newdata = mutate(hist_pbo_long, r = r_tilde, n = n_tilde),
+  control = list(adapt_delta = 0.95),
+  seed = 645776
+)
+```
+
+To now include the special likelihood term for the partially reported
+historical trials, we use the `stanvar` facilities of `brms`. These
+allow to inject custom Stan code into the model such that we may add
+an additional likelihood for the partially observed historical trial
+data. As each partially observed trial only contributes a single term
+to the likelihood, it is appropiate to recast the previously long
+format into a wide data format such that one data row corresponds to
+just one historical trial. In order to be able to link the wide data
+format with the rows from the moderate and severe rows in the long
+format, the column `row` of the long format is cast into the wide
+format as well:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+hist_pbo_wide <- hist_pbo_long |>
+  select(
+    study,
+    compound,
+    trial,
+    n_total,
+    is_complete,
+    r_total,
+    severe,
+    n,
+    row
+  ) |>
+  pivot_wider(
+    id_cols = c(
+      "study",
+      "compound",
+      "trial",
+      "r_total",
+      "n_total",
+      "is_complete"
+    ),
+    values_from = c("n", "row"),
+    names_from = "severe"
+  )
+
+hist_pbo_wide |>
+  gt_preview(6) |>
+  fmt_number(decimals = 2) |>
+  fmt_integer() |>
+  sub_missing()
+
+```
+
+All columns with a `_0` postfix correspond to the `moderate`
+information available and `_1` to the respective `severe` information.
+
+```{r, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+exact_binomial_sum <- ## first we define the probability density for a sum of two binomials
+  stanvar(
+    name = "binomial_sum_lpmf",
+    scode = "
+  // lpmf of the sum of two binomially distributed random variables
+  real binomial_logit_sum_lpmf(int y, int n1, real alpha1, int n2, real alpha2) {
+    // the discrete convolution here sums over all possible
+    // configurations which lead to a sum of y1+y2==y
+    int y1_min = max(0, y-n2);
+    int y1_max = min(n1, y);
+    int n_terms = y1_max - y1_min + 1;
+    vector[n_terms] log_prob;
+    for(i in y1_min:y1_max)
+      log_prob[i - y1_min + 1] = binomial_logit_lpmf(i | n1, alpha1) + binomial_logit_lpmf(y-i | n2, alpha2);
+    return log_sum_exp(log_prob);
+  }
+",
+    block = "functions"
+  ) +
+  stanvar(
+    name = "marginal_likelihood_sum",
+    scode = "
+    // likelihood on sum of Binomials (exact solution uses a discrete convolution)
+    for(i in 1:n_studies) {
+       if(is_complete[i] == 1)
+         continue;
+       target += binomial_logit_sum_lpmf(r_total[i] | n_0[i], mu[row_0[i]], n_1[i], mu[row_1[i]]);
+    }
+",
+    block = "likelihood",
+    position = "end"
+  )
+
+## needed for brms <= 2.21 and cmdstan > 2.32 to have arrays declared
+## with the newer Stan syntax for arrays
+stanvar_array <- function(data) {
+  name <- deparse(substitute(data))
+  n <- length(data)
+  if (!is.integer(data)) {
+    return(stanvar(data, name = name))
+  }
+  stanvar(data, name = name, scode = glue::glue("array[{n}] int {name};"))
+}
+
+
+model_marginal_data <- with(hist_pbo_wide, {
+  stanvar_array(r_total) +
+    stanvar_array(is_complete) +
+    stanvar_array(n_0) +
+    stanvar_array(n_1) +
+    stanvar_array(row_0) +
+    stanvar_array(row_1) +
+    stanvar(length(row_1), "n_studies")
+})
+
+full_model <- bf(
+  r_tilde | trials(n_tilde) ~ 1 + severe + oral + (1 + severe | study),
+  family = binomial,
+  center = FALSE
+)
+
+# we use the same prior as used for modelling the subset of complete
+# data only
+full_prior <- complete_prior
+
+full_mc <- brm(
+  full_model,
+  data = hist_pbo_long,
+  prior = full_prior,
+  control = list(adapt_delta = 0.99),
+  stanvars = model_marginal_data + exact_binomial_sum,
+  seed = 458678,
+  refresh = 0
+)
+
+full_mc
+
+```
+
+To see how the Stan model has been augmented with the `stanvars`
+argument above the full Stan model code can be obtained with the
+`stancode` command:
+
+```{r}
+#| echo: true
+#| eval: false
+stancode(full_mc)
+```
+
+```{stan, output.var="fullStanModel", code=brms::stancode(full_mc), echo=TRUE}
+#| code-line-numbers: "16-27,90-95"
+#| code-fold: true
+#| code-summary: "Show full Stan model"
+```
+
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| echo: false
+
+study_future <- data.frame(
+  r = 0,
+  r_tilde = 0,
+  severe = c(0, 1),
+  n = 1,
+  n_tilde = 1,
+  oral = 0,
+  study = "new_trial"
+)
+
+# obtain posterior for severe and moderate; note that we must allow to
+# sample new levels of the random effects and also specify to do so
+# using the "gaussian" option (as brms would otherwise bootstrap from
+# existing studies).
+prior_future_study <-
+  rvar(posterior_linpred(
+    full_mc,
+    newdata = study_future,
+    allow_new_levels = TRUE,
+    sample_new_levels = "gaussian"
+  ))
+
+# we get a matrix with dimensions draws x predictions the second
+# column includes the intercept plus the covariate effect due to
+# severity, which we convert to the log odds ratio estimate only by
+# subtracting the overall intercept in the first column
+prior_future_study[2] <- prior_future_study[2] - prior_future_study[1]
+
+# As we wish to formulate a joint prior on all model parameters of the
+# trial model - including the treatment effect - a weakly-informative
+# prior for the treatment effect is added to the posterior in MC form.
+prior_future_study <- c(
+  prior_future_study,
+  active = rvar_rng(rnorm, 1, 0, 3.5, ndraws = ndraws(prior_future_study))
+)
+names(prior_future_study) <- c("inter", "severe", "active")
+
+# now turn the MC sample of the prior into a parametric representation
+# using functions from RBesT
+map_prior <- mixfit(
+  as_draws_matrix(prior_future_study),
+  type = "mvnorm",
+  Nc = 3
+)
+
+plot(map_prior)$mixpairs
+
+## robustify joint prior
+prior_non_inf <- mixmvnorm(c(1, 0, 0, 0, diag(c(3.5, 3.5, 3.5)^2)))
+rmap_prior <- mixcombine(map_prior, prior_non_inf, weight = c(0.8, 0.2))
+
+print(rmap_prior)
+
+# For pre-specification of the MAP prior we have to report the MAP
+# prior with a finite precision in the protocol. Thereby, it is
+# recommended to write the MAP prior to disk using the JSON read/write
+# functions from RBesT to store the MAP prior with a defined precision
+# on file in a human readable format as JSON:
+map_new_trial_file <- file.path(here::here("data", "map_new_trial_json.txt"))
+write_mix_json(map_prior, map_new_trial_file, pretty = TRUE, digits = 4)
+
+rmap_new_trial_file <- file.path(here::here("data", "rmap_new_trial_json.txt"))
+write_mix_json(rmap_prior, rmap_new_trial_file, pretty = TRUE, digits = 4)
+
+```
+
+## Results
+
+At this stage we have derived robust bi-variate MAP priors from the
+subset of the complete historical control data and the full historical
+control data. Now we proceed and illustrate how these priors compare,
+what operating characeristics these imply and how these priors can be
+used in the analysis of the future trial data.
+
+We first load the derived robust MAP priors which are stored as JSON
+files. It is important to emphasize that this constitutes the
+information used as a prior in the new trial. That is, the previous
+hierarchical model for the historical data is no longer needed to
+analyze the future trial given that we have accuratley approximated
+the (robust) MAP density in parametric form.
+
+Nonetheles, the prior must also be made available to `brms` as a prior
+density. This requires the use of `RBesT` mixture priors within
+`brms`. Given that these mixture priors are not known to `brms` per
+se, an adapter function is provided by `RBesT`, the [`mixstanvar`
+adapter](https://opensource.nibr.com/RBesT/reference/mixstanvar.html). Here,
+we illustrate it's use by instantiating a `brms` model, which is used
+to sample from the MAP priors to characerise it's properties.
+
+```{r}
+# load pre-specified prior
+rmap_prior_protocol <- read_mix_json(rmap_new_trial_file, rescale = TRUE)
+
+rmap_prior_complete_protocol <- read_mix_json(
+  rmap_complete_new_trial_file,
+  rescale = TRUE
+)
+
+# model for trial without hierarchical structure
+trial_model <- bf(r ~ 1 + severe + active, family = bernoulli, center = FALSE)
+
+# uses as prior the multi-variate normal prior previously store on
+# file
+trial_model_prior <- prior(mixmvnorm(rmap_w, rmap_m, rmap_sigma_L), class = b)
+
+# insert dummy data for the two strata on control only here
+study_strata <- data.frame(
+  r = 0,
+  severe = c(0, 1),
+  n = 1,
+  active = 0,
+  study = "new_trial"
+)
+
+# sample prior of the model as we like to evaluate operating
+# characteristics
+trail_model_full_mc <- brm(
+  trial_model,
+  data = study_strata,
+  # this is the magic sauce from RBesT which plugs
+  # the multi-variate normal mixture prior into
+  # the brms model
+  prior = trial_model_prior,
+  stanvar = mixstanvar(rmap = rmap_prior_protocol),
+  sample_prior = "only",
+  control = list(adapt_delta = 0.95),
+  seed = 4585678,
+  refresh = 0
+)
+
+trail_model_complete_mc <- brm(
+  trial_model,
+  data = study_strata,
+  prior = trial_model_prior,
+  stanvar = mixstanvar(rmap = rmap_prior_complete_protocol),
+  sample_prior = "only",
+  control = list(adapt_delta = 0.95),
+  seed = 4585678,
+  refresh = 0
+)
+
+# obtain MC sample of trial prior on response scale
+trial_prior_full_rv <- rvar(posterior_linpred(
+  trail_model_full_mc,
+  transform = TRUE
+))
+trial_prior_complete_rv <- rvar(posterior_linpred(
+  trail_model_complete_mc,
+  transform = TRUE
+))
+
+# on the response scale we form the expected response rate which
+# respects the expected percentage of severe patients.
+w_severe <- 0.45
+trial_prior_full_mean_rv <- (1 - w_severe) *
+  trial_prior_full_rv[1] +
+  w_severe * trial_prior_full_rv[2]
+trial_prior_complete_mean_rv <- (1 - w_severe) *
+  trial_prior_complete_rv[1] +
+  w_severe * trial_prior_complete_rv[2]
+
+trial_prior_full_mean <- mixfit(
+  as_draws_matrix(trial_prior_full_mean_rv),
+  type = "beta",
+  Nc = 3
+)
+trial_prior_complete_mean <- mixfit(
+  as_draws_matrix(trial_prior_complete_mean_rv),
+  type = "beta",
+  Nc = 3
+)
+
+summary(trial_prior_full_mean)
+summary(trial_prior_complete_mean)
+
+```
+
+These MAP priors have been derived on the response scale and are
+approximated using Beta mixture priors. These correspond to the
+marginal prior density when assuming the quoted 45% of severe patients
+at baseline in the future trial. In this marginal form we can use the
+commonly used tools to study the trial operating characeristics when
+using an informative MAP prior for the control group. Note that this
+essentially ignores the presence of a covariate, which is a
+commonplace simplification for trial planning and the expectation that
+trial power will increase due to the explicit use of the covariate.
+
+We start by considering the effective sample size of the priors:
+
+```{r}
+
+ess(trial_prior_full_mean)
+ess(trial_prior_complete_mean)
+
+```
+
+And continue with evaluating the operating characteristics of the
+trial, which assume a true response rate for placebo of 9% and use as
+reference case a sample size of 50 per arm (100 total), which is
+considered for a reduction to a 2:1 ratio trial with a total of only
+75 patients:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+success_crit <- decision2S(c(0.9, 0.6), c(0, 0.35), FALSE)
+
+unif_prior <- mixbeta(c(1, 1, 1))
+
+design_noninf_11 <- oc2S(unif_prior, unif_prior, 50, 50, success_crit)
+design_noninf_21 <- oc2S(unif_prior, unif_prior, 50, 25, success_crit)
+design_complete <- oc2S(
+  unif_prior,
+  trial_prior_complete_mean,
+  50,
+  25,
+  success_crit
+)
+design_full <- oc2S(unif_prior, trial_prior_full_mean, 50, 25, success_crit)
+
+ggplot(data.frame(delta = c(0.1, 0.7)), aes(x = delta)) +
+  stat_function(
+    fun = \(x) design_full(0.09 + x, 0.09),
+    aes(linetype = "Full data")
+  ) +
+  stat_function(
+    fun = \(x) design_complete(0.09 + x, 0.09),
+    aes(linetype = "Complete only data")
+  ) +
+  stat_function(
+    fun = \(x) design_noninf_21(0.09 + x, 0.09),
+    aes(linetype = "No prior 50:25")
+  ) +
+  stat_function(
+    fun = \(x) design_noninf_11(0.09 + x, 0.09),
+    aes(linetype = "No prior 50:50")
+  ) +
+  scale_linetype_discrete("Prior") +
+  labs(title = "Power", subtitle = "Assumed placebo response rate of 9%") +
+  xlab("Response rate difference active to placebo") +
+  ylab("Power") +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1)) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +
+  theme(legend.position = "bottom")
+
+```
+
+The MAP priors do improve the power to detect a difference to control
+here. The difference between the full and complete only prior is not
+quite pronounced. This can also be seen by considering the critical
+values tabulated by a given number of responders in the placebo group:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+crit_complete <- decision2S_boundary(
+  unif_prior,
+  trial_prior_complete_mean,
+  50,
+  25,
+  success_crit
+)
+crit_full <- decision2S_boundary(
+  unif_prior,
+  trial_prior_full_mean,
+  50,
+  25,
+  success_crit
+)
+
+tibble(r_placebo = 0:25) |>
+  mutate(
+    min_r_active_complete = crit_complete(0:25) + 1,
+    min_r_active_full = crit_full(0:25) + 1,
+    min_obs_delta_complete = if_else(
+      min_r_active_complete == 0,
+      NA_real_,
+      min_r_active_complete / 50 - r_placebo / 25
+    ),
+    min_obs_delta_full = if_else(
+      min_r_active_full == 0,
+      NA_real_,
+      min_r_active_full / 50 - r_placebo / 25
+    )
+  ) |>
+  gt() |>
+  fmt_integer(c(starts_with("min_r"), starts_with("r_"))) |>
+  fmt_percent(starts_with("min_obs"), decimals = 0) |>
+  tab_spanner(
+    label = html("Minimal active<br>responders"),
+    columns = starts_with("min_r")
+  ) |>
+  tab_spanner(
+    label = html("Minimal observed<br>difference"),
+    columns = starts_with("min_obs")
+  ) |>
+  cols_label(
+    min_r_active_complete = html("Complete<br>only"),
+    min_r_active_full = "Full",
+    min_obs_delta_complete = html("Complete<br>only"),
+    min_obs_delta_full = "Full",
+    r_placebo = html("Responder<br>Placebo")
+  ) |>
+  sub_missing()
+
+
+```
+
+## Conclusion
+
+This case study demonstrates how we may use historical control data
+which requires the use of a baseline covariate. This complicates the
+derivation of a MAP prior in two ways: (i) we are then required to derive an
+informative MAP prior for the intercept and the slope parameters of
+the respective model and (ii) the information we need from the
+historical data may only be given in partial form. This former
+complication can be resolved by a latent variable approach which we
+marginalize for the trials with only partial information such that we
+can make use of the partial data as given. This illustrates how we can
+use two different likelihoods within the very same `brms` model.
+
+We completed the case study by illustrating the operating
+characteristics of a potential future trial in a simplified manner by
+considering the marginalized response rate. These analyses showed that
+there is indeed a benefit to use a MAP prior in this cotext. However,
+the differences between using a MAP prior based on the full and
+complete data only priors are not marked. Still, the ability to use
+the full data set without further assumptions (the distribution of the
+Binomial sum is calculated in an exact manner) is preferable over
+dismissing relevant historical control data.
+
+## Exercises
+
+Use a normal approximation instead of the exact binomial convolution
+for incorporating the partially reported data. Study the differences
+to the case of using the exact Binomial convolution.
+
