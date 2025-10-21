@@ -9,7 +9,7 @@
 <meta name="author" content="Björn Holzhauer - bjoern.holzhauer@novartis.com">
 <meta name="author" content="Sebastian Weber - sebastian.weber@novartis.com">
 
-<title>7&nbsp; Nuisance parameters, expected power and the “significance threshold” – Applied Modelling in Drug Development</title>
+<title>8&nbsp; Nuisance parameters, expected power and the “significance threshold” – Applied Modelling in Drug Development</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -88,7 +88,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../src/02l_single_arm_pos.html" rel="next">
-<link href="../src/02ac_meta_analysis_strata.html" rel="prev">
+<link href="../src/02ad_meta_analysis_covariate.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -184,7 +184,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02k_nuisance.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02k_nuisance.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -280,68 +280,74 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../src/02ad_meta_analysis_covariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Use of historical control data with a covariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../src/02k_nuisance.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02l_single_arm_pos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02b_dose_finding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dose finding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02c_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02cb_tte_dose_escalation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Time-to-event modelling in Oncology dose escalation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02e_multiple_imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Multiple imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02g_longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Longitudinal data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02h_mmrm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Bayesian Mixed effects Model for Repeated Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02i_time_to_event.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Time-to-event data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02j_network_meta_analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Network meta-analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/02m_proportion_difference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -358,13 +364,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
   </div>
 </li>
       </ul>
@@ -379,27 +385,27 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">7.1</span> Introduction</a></li>
-  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model"><span class="header-section-number">7.2</span> Model</a></li>
-  <li><a href="#data-parkinsons-disease-example" id="toc-data-parkinsons-disease-example" class="nav-link" data-scroll-target="#data-parkinsons-disease-example"><span class="header-section-number">7.3</span> Data: Parkinson’s disease example</a></li>
-  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">7.4</span> Implementation</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">8.1</span> Introduction</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model"><span class="header-section-number">8.2</span> Model</a></li>
+  <li><a href="#data-parkinsons-disease-example" id="toc-data-parkinsons-disease-example" class="nav-link" data-scroll-target="#data-parkinsons-disease-example"><span class="header-section-number">8.3</span> Data: Parkinson’s disease example</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">8.4</span> Implementation</a>
   <ul class="collapse">
-  <li><a href="#brms-model-code" id="toc-brms-model-code" class="nav-link" data-scroll-target="#brms-model-code"><span class="header-section-number">7.4.1</span> brms model code</a></li>
-  <li><a href="#choice-of-prior-distributions-for-the-example" id="toc-choice-of-prior-distributions-for-the-example" class="nav-link" data-scroll-target="#choice-of-prior-distributions-for-the-example"><span class="header-section-number">7.4.2</span> Choice of prior distributions for the example</a></li>
-  <li><a href="#predicting-the-variance-for-a-new-study" id="toc-predicting-the-variance-for-a-new-study" class="nav-link" data-scroll-target="#predicting-the-variance-for-a-new-study"><span class="header-section-number">7.4.3</span> Predicting the variance for a new study</a></li>
+  <li><a href="#brms-model-code" id="toc-brms-model-code" class="nav-link" data-scroll-target="#brms-model-code"><span class="header-section-number">8.4.1</span> brms model code</a></li>
+  <li><a href="#choice-of-prior-distributions-for-the-example" id="toc-choice-of-prior-distributions-for-the-example" class="nav-link" data-scroll-target="#choice-of-prior-distributions-for-the-example"><span class="header-section-number">8.4.2</span> Choice of prior distributions for the example</a></li>
+  <li><a href="#predicting-the-variance-for-a-new-study" id="toc-predicting-the-variance-for-a-new-study" class="nav-link" data-scroll-target="#predicting-the-variance-for-a-new-study"><span class="header-section-number">8.4.3</span> Predicting the variance for a new study</a></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">7.5</span> Results</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.6</span> Conclusion</a></li>
-  <li><a href="#excercises" id="toc-excercises" class="nav-link" data-scroll-target="#excercises"><span class="header-section-number">7.7</span> Excercises</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">8.5</span> Results</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8.6</span> Conclusion</a></li>
+  <li><a href="#excercises" id="toc-excercises" class="nav-link" data-scroll-target="#excercises"><span class="header-section-number">8.7</span> Excercises</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Novartis/bamdd/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02k_nuisance.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../src/02_case_studies.html">Case studies</a></li><li class="breadcrumb-item"><a href="../src/02k_nuisance.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-power-expected" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-power-expected" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nuisance parameters, expected power and the “significance threshold”</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -445,22 +451,22 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">593467</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will also use one dataset provided in the <code>multinma</code> R package.</p>
-<section id="introduction" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">7.1</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">8.1</span> Introduction</h2>
 <p>The power for a randomized controlled clinical trial refers to the probability of achieving a statistically significant difference between treatment groups from a frequentist analysis given assumed fixed values for the true treatment effect of the treatment being tested and for nuisance parameters. Nuisance parameters are parameters we are not truly interested in, but which affect the expected uncertainty about the treatment effect after running the trial. Examples include the residual standard deviation in linear regression, and the placebo event rate and dispersion parameter for count data.</p>
 <p>Expected power is the average power we obtain when averaging over the uncertainty for nuisance parameters, but assume a fixed true treatment effect. The closely related concept of assurance<span class="citation" data-cites="OHagan2005assurance">(<a href="02l_single_arm_pos.html#ref-OHagan2005assurance" role="doc-biblioref">O’Hagan, Stevens, and Campbell 2005</a>)</span> additionally aims to take the uncertainty about the true treatment effect into account. Both concepts can be valuable and an in-depth look at the topic is offered by a recent book by <span class="citation" data-cites="Grieve2022power">Grieve (<a href="02l_single_arm_pos.html#ref-Grieve2022power" role="doc-biblioref">2022</a>)</span>. Assurance gives a realistic assessment of the probability that a trial will achieve a statistically significant result given our uncertainty about the treatment effect, but ignoring our uncertainty about nuisance parameters. In contrast, looking at expected power for a given fixed treatment effect has the value that sometimes we may be uncertain about the true treatment effect, but primarily want to ensure an adequate power if the true treatment effect is at least of a meaningful size and do not mind that the power is low otherwise.</p>
 <p>Relatedly, we may wish to know how probable it is that we would obtain a statistically significant result conditional on a given observed point estimate for the treatment difference. The point at which this occurs is sometimes called the “significance threshold”. Given that whatever point estimate is observed in the Phase III trial(s) of a development program will enter into the drugs label after approval and will by many be considered as if it were <strong>THE</strong> true efficacy of the drug, there is some sense in making sure that we achieve statistical significance if and only if a point estimate that would lead to substantial adoption of the drug is observed. This calculation, again, requires prior beliefs about nuisance parameters, but not about the treatment effect. Note also, that there will not usually be a single “significance threshold”, but rather a range of values across which the probability of a statistically significant trial result increases from near zero to near certainty.</p>
 </section>
-<section id="model" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="model"><span class="header-section-number">7.2</span> Model</h2>
+<section id="model" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="model"><span class="header-section-number">8.2</span> Model</h2>
 <p>As pointed out e.g.&nbsp;by <span class="citation" data-cites="Schmidli2017vrmap">Schmidli, Neuenschwander, and Friede (<a href="02l_single_arm_pos.html#ref-Schmidli2017vrmap" role="doc-biblioref">2017</a>)</span>, the sampling distribution of the estimate of the residual variance of an arm in a RCT with <span class="math inline">n</span> patients follows a <span class="math inline">\Gamma(\nu/2, \nu/(2 \sigma^2))</span> distribution, where we would typically use <span class="math inline">\nu = (n-1)</span> when the residual variance is from a linear model with just a treatment term. If the estimate of the residual variance is from a model with more terms, we would correspondingly subtract degrees of freedom. E.g. if the estimate is from a model that also adjusts for a baseline assessment of the primary variable, we would use <span class="math inline">\nu = n-2</span>. Note that we use the parameterization of the <span class="math inline">\Gamma</span>-distribution in terms of a shape and a rate parameter.</p>
 <p>We can re-express estimating <span class="math inline">\sigma^2</span> as doing gamma-regression with only an intercept term, where we fix the shape parameter to be <span class="math inline">\nu/2</span> and model the logarithm of the expectation. Conveniently, <span class="math inline">\nu/2</span> no longer features, because the mean of the sampling distribution is given by <span class="math display">\frac{\text{shape parameter}}{\text{rate parameter}} =
 \frac{\nu/2}{\nu/(2 \sigma^2)} = \sigma^2.</span> Thus, we can just use the regression equation <span class="math display">\log \text{E}(\text{residual variance estimate})
 = \beta_0.</span> Within this framework, we can then look at how estimates of the residual variance for study <span class="math inline">i</span> vary across studies <span class="math inline">i=1,\ldots,I</span> by adding a random study effect to the regression equation that vary across studies according to a hierarchical scale parameter <span class="math inline">\tau</span>. Additionally, we could add other predictor terms to the regression equation, such as whether patients enrolled in a study had mild, moderate or severe disease severity.</p>
 <p>There is also an excellent vignette for the <a href="https://opensource.nibr.com/RBesT/articles/variances_MAP.html"><code>RBesT</code> R package</a> for this application, which approximates the distribution of the log-transformed variances with a normal distribution. With <code>brms</code> we can avoid this approximation and gain some additional flexibility, e.g.&nbsp;for adjusting for trial characteristics and when there are multiple observations per trial.</p>
 </section>
-<section id="data-parkinsons-disease-example" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="data-parkinsons-disease-example"><span class="header-section-number">7.3</span> Data: Parkinson’s disease example</h2>
+<section id="data-parkinsons-disease-example" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="data-parkinsons-disease-example"><span class="header-section-number">8.3</span> Data: Parkinson’s disease example</h2>
 <p>The data we will use is from the supplementary material of <span class="citation" data-cites="Dias2013evsnth">Dias et al. (<a href="02l_single_arm_pos.html#ref-Dias2013evsnth" role="doc-biblioref">2013</a>)</span> and is provided as part of the <code>multinma</code> R package. The data contains mean off-time reduction data from 7 trials in patients with Parkinson’s disease. Off time refers to the number of hours per day (thus, must be between 0 and 24) when patients experience symptoms. In this data, treatment 1 refers to placebo and treatments 2 to 5 are active drugs.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>parkinsons <span class="ot">&lt;-</span> multinma<span class="sc">::</span>parkinsons <span class="sc">|&gt;</span></span>
@@ -1116,10 +1122,10 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="implementation" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">7.4</span> Implementation</h2>
-<section id="brms-model-code" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="brms-model-code"><span class="header-section-number">7.4.1</span> brms model code</h3>
+<section id="implementation" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="implementation"><span class="header-section-number">8.4</span> Implementation</h2>
+<section id="brms-model-code" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="brms-model-code"><span class="header-section-number">8.4.1</span> brms model code</h3>
 <p>We can implement the model described in the preceding section using the code below.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_var <span class="ot">&lt;-</span> <span class="fu">bf</span>(</span>
@@ -1148,13 +1154,13 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.8 seconds.
-Chain 2 finished in 0.5 seconds.
-Chain 3 finished in 0.5 seconds.
-Chain 4 finished in 0.6 seconds.
+Chain 1 finished in 0.6 seconds.
+Chain 2 finished in 0.6 seconds.
+Chain 3 finished in 0.8 seconds.
+Chain 4 finished in 0.8 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.6 seconds.
+Mean chain execution time: 0.7 seconds.
 Total execution time: 3.4 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -1182,14 +1188,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>Note the use of <code>bf()</code> (short for <code>brmsformula()</code>) to combine our model for the logarithm of the expectation, as well as the “model” for the shape parameter (the “model” here is just an offset and no model terms). We specify the log-link for the expectation and an identity link the shape (but we could also have used a log-link, if we had written <code>offset(log(nu/2))</code>).</p>
 </section>
-<section id="choice-of-prior-distributions-for-the-example" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="choice-of-prior-distributions-for-the-example"><span class="header-section-number">7.4.2</span> Choice of prior distributions for the example</h3>
+<section id="choice-of-prior-distributions-for-the-example" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="choice-of-prior-distributions-for-the-example"><span class="header-section-number">8.4.2</span> Choice of prior distributions for the example</h3>
 <p>For setting the prior on the intercept of the model, we considered the likely distribution of the parameter of interest. Since patients enrolled in a clinical trials would be symptomatic, we would expect them to have a few hours of off-time (let’s say 3 to 8 or so), but certainly at least 1 hour. If we assume that off-time is like a negative binomial count of hours with a mean rate of <span class="math inline">\mu</span> and dispersion parameter <span class="math inline">\kappa</span>, then the variance would be <span class="math inline">\mu +
 \kappa \mu^2</span> with values of <span class="math inline">\kappa</span> of, say, 1 to 10. The within study change in off time additional performs a subtraction between two highly correlated quantities of this type (i.e.&nbsp;a patient’s post-baseline and baseline off-time), but very roughly this will not change the order of magnitude of the variance of the variable. So, we would have a quite uncertain prior for the log of the variance centered on, say, <span class="math inline">\log(5 + 2 \times 5^2) \approx 4</span> that needs to be broad enough to still some prior mass at <span class="math inline">\log(1 + 0 \times 1^2) = 0</span> and <span class="math inline">\log(24 + 10 \times 24^2) \approx 8.7</span>.</p>
 <p>For the prior on the hierachical scale parameter, we assume that the population in one study could have very similar off-times or might perhaps have twice (or half) the off-time of another study. So, very low values up to <span class="math inline">\log(2) \approx = 0.69</span> are quite plausible, perhaps still <span class="math inline">\log(4) \approx=1.39</span>. However, it seems implausible that one study will have 10-times (or 1/10th) of the values of another study, so <span class="math inline">\log(10) \approx 2.3</span> is already a very unlikely value for the scale parameter. A <span class="math inline">\text{half-normal}(0, 1)</span> distribution is somewhat vaguer than that.</p>
 </section>
-<section id="predicting-the-variance-for-a-new-study" class="level3" data-number="7.4.3">
-<h3 data-number="7.4.3" class="anchored" data-anchor-id="predicting-the-variance-for-a-new-study"><span class="header-section-number">7.4.3</span> Predicting the variance for a new study</h3>
+<section id="predicting-the-variance-for-a-new-study" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="predicting-the-variance-for-a-new-study"><span class="header-section-number">8.4.3</span> Predicting the variance for a new study</h3>
 <p>When we predict the variance in a new study for sample size purposes, we of course do not want to predict the estimated variance we might observe for a given sample size, which we would obtain using <code>predict</code>. Instead, we want to predict the true variance in a new study without within-study sampling variability. We can do so using the <code>posterior_epred</code> function, but need to supply it a value for <code>nu</code> in the new data (as we would otherwise get an error message, even though <span class="math inline">\nu</span> is not actually used for the predictions). Note also that we need to make sure to use a study identifier not used in the training data of our model, if we wish to predict for a new study.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take sqrt to get the SD and note that we select the first column of</span></span>
@@ -1204,8 +1210,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </section>
 </section>
-<section id="results" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="results"><span class="header-section-number">7.5</span> Results</h2>
+<section id="results" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="results"><span class="header-section-number">8.5</span> Results</h2>
 <p>Here are the percentiles of the predictive distribution of the standard deviation in a new study:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
@@ -1407,13 +1413,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="conclusion" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.6</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.6</span> Conclusion</h2>
 <p>There is usually still a non-negligible degree of uncertainty about nuisance parameters, even if several previous studies are available. This tends to have the effect that instead of, say, 90% power, we will have a lower expected power. This in combination with sampling variation results in greater uncertainty about the observed effect size with which the study would become significant (aka the “significance threshold”) than one would naively expect.</p>
 <p>However, note that when evaluating the probability of success of a trial, it is not just the uncertainty about nuisance parameters that we need to consider, but even more importantly our uncertainty about the true treatment effect for the trial population. Once we combine these two uncertainties, we get a realistic picture of the trial probabiltiy of success. It is important to note that this will routinely be much lower than the power stated in a trial protocol. It is a common trap to think that trials designed for 90% power have a 90% probability to be successful (in the sense of $p ). This number will commonly be in the 40 to 70% range.</p>
 </section>
-<section id="excercises" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="excercises"><span class="header-section-number">7.7</span> Excercises</h2>
+<section id="excercises" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="excercises"><span class="header-section-number">8.7</span> Excercises</h2>
 <p>Predict the standard deviation for HbA1c in a new study with a blood glucose lowering drug in diabetes patients based on the data provided by <span class="citation" data-cites="Senn2013nma">Senn et al. (<a href="02l_single_arm_pos.html#ref-Senn2013nma" role="doc-biblioref">2013</a>)</span>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -1955,13 +1961,13 @@ Senn, Stephen, Francois Gavini, David Magrez, and André Scheen. 2013. <span>“
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../src/02ac_meta_analysis_strata.html" class="pagination-link" aria-label="Use of historical control data with stratification">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Use of historical control data with stratification</span></span>
+      <a href="../src/02ad_meta_analysis_covariate.html" class="pagination-link" aria-label="Use of historical control data with a covariate">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Use of historical control data with a covariate</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../src/02l_single_arm_pos.html" class="pagination-link" aria-label="Probability of success from a single arm trial">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Probability of success from a single arm trial</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
