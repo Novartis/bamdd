@@ -16,6 +16,7 @@ overview <- dplyr::tribble(
                        "@sec-use-hist-control-data", "nested random effects",
                        "@sec-map-treat-effects", "aggregate data modeling & varying exposure times of count data",
                        "@sec-use-hist-control-data-strata", "meta-analysis with covariates & use of mixture priors",
+                       "@sec-use-hist-control-data-cov", "bi-variate meta-analysis with covariates & use of incomplete historical data",
                        "@sec-pos", "prior elicitation and use of RBesT mixtures as priors",
                        "@sec-power-expected", "meta-analysis of variances and accounting for nuisance parameter uncertainty", 
                        "@sec-dose-finding", "non-linear models",
