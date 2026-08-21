@@ -1,7 +1,11 @@
 ## common setup code for each section; enables compilation of each
 ## section on it's own
 
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+## cache.lazy=FALSE avoids knitr's lazy-load database (lazyLoadDBinsertValue),
+## which can fail with "Permission denied" on some network/virtio filesystems;
+## plain save()/load() is used for the cache instead
+knitr::opts_chunk$set(cache.lazy = FALSE)
 
 here::i_am("src/setup.R")
 
