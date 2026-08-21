@@ -42,6 +42,7 @@ dependencies <- c(
 "Matrix",
 "matrixStats",
 "meta",
+"mgcv",
 "mmrm",
 "multinma",
 "mvtnorm",
