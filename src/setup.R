@@ -1,7 +1,11 @@
 ## common setup code for each section; enables compilation of each
 ## section on it's own
 
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+## cache.lazy=FALSE avoids knitr's lazy-load database (lazyLoadDBinsertValue),
+## which can fail with "Permission denied" on some network/virtio filesystems;
+## plain save()/load() is used for the cache instead
+knitr::opts_chunk$set(cache.lazy = FALSE)
 
 here::i_am("src/setup.R")
 
@@ -31,7 +35,7 @@ scale_colour_continuous <- scale_color_continuous <- function(...) {
   viridis::scale_colour_viridis_c(..., option="turbo")
 }
 ggplot2::update_geom_defaults("point", list(size=2))
-ggplot2::update_geom_defaults("line", list(size=1.5))
+ggplot2::update_geom_defaults("line", list(linewidth=1.5))
 # To allow adding label to points e.g. as geom_text_repel(data=. %>% filter(1:n()==n()))
 # update_geom_defaults("text_repel", list(label.size = NA, fill = rgb(0,0,0,0),
 #                                         segment.color = "transparent", size=6))

@@ -110,7 +110,7 @@ week.
 To run the R code of this section please ensure to load these
 libraries and options first:
 
-```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE, cache=FALSE}
 library(lubridate)
 library(tibble)
 library(dplyr)
@@ -142,7 +142,7 @@ gt_format <- function(x) {
 }
 ```
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
 source(here::here("src", "setup.R"))
 ```

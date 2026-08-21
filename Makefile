@@ -50,8 +50,13 @@ PHONY := $(TARGET)
 # enforce that we first setup the web-site and then run the remainder
 # potentially with parallelism. TODO: enforcing the order should
 # actually be possible to do via dependencies.
-$(TARGET):
+website: ## Render the full Quarto website
 	$(MAKE) $(OUTDIR)/$(QUARTO_PROFILE)/bookdown-website
+
+PHONY += help
+help: ## Show this help message
+	@grep -E '^[a-zA-Z_%.-]+:.*##' $(MAKEFILE_LIST) \
+	  | awk 'BEGIN {FS = ":.*## "}; {printf "  \033[36m%-22s\033[0m %s\n", $$1, $$2}'
 
 # $(OUTDIR)/$(QUARTO_PROFILE)/%.html : %.qmd
 # 	@echo running per-document html quarto render $< --profile $(QUARTO_PROFILE)
@@ -85,7 +90,7 @@ $(OBJS) : $(SRCDIR)/setup.R
 #    $(CC) -o $@ $(CFLAGS) -c $< $(INC_DIRS)
 
 PHONY += clean
-clean:
+clean: ## Remove all build outputs and caches
 	rm -rf $(OUTDIR)/*
 	rm -rf src/*.html
 	rm -rf brms-cache
@@ -100,14 +105,13 @@ clean:
 	rm -rf build
 
 PHONY += echoes
-echoes:
+echoes: ## Print INC, SRC, and OBJ file lists
 	@echo "INC files: $(INCS)"
 	@echo "SRC files: $(SRCS)"
 	@echo "OBJ files: $(OBJS)"
 
-##
-# Debug target that allows you to print a variable
-##
-print-%  : ; @echo $* = $($*)
+## Debug target that allows you to print a variable (usage: make print-VARNAME)
+print-%: ## Print the value of a make variable (e.g. make print-SRCS)
+	@echo $* = $($*)
 
 .PHONY = $(PHONY)

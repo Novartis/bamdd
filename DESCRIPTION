@@ -49,6 +49,7 @@ Imports:
   Matrix,
   matrixStats,
   meta,
+  mgcv,
   mmrm,
   multinma,
   mvtnorm,

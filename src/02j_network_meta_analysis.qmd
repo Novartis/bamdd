@@ -17,7 +17,7 @@ This case study covers:
 To run the R code of this section please ensure to load these
 libraries and options first:
 
-```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE, cache=FALSE}
 library(tidyverse)
 library(brms)
 library(posterior)
@@ -36,7 +36,7 @@ options(width=120)
 control_args <- list(adapt_delta=0.95)
 ```
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
 source(here::here("src", "setup.R"))
 ```
@@ -455,7 +455,7 @@ all_contrasts %>%
     ggplot(aes(x=median, y=model, xmin=q5, xmax=q95)) +
     geom_vline(xintercept=0, color="darkred", linetype=2) +
     geom_point() +
-    geom_errorbarh() +
+    geom_errorbar(orientation = "y") +
     xlab("log-odds ratio") +
     facet_wrap(~variable)
 ```

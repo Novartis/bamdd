@@ -18,7 +18,12 @@ addressed via Bayesian modelling with the `brms` package.
 ::: {.callout-tip}
 ## Courses in Paris (France) October 8<sup>th</sup> 2025, Graz (Austria) September 14<sup>th</sup> 2025, Paris (France), July 4<sup>th</sup> 2025, Göttingen (Germany), Dec 5/6<sup>th</sup> 2024 and at JSM (Portland, OR), Aug 5<sup>th</sup> 2024
 
-Past course we offered recently:
+Next upcoming course scheduled to take place in Leiden (Netherlands)
+at the [Bayes Pharma
+conference](https://www.bayes-pharma.org/bayes-2026/) on October
+21<sup>st</sup> 2026.
+
+Past course we offered:
 
 1. Pre-conference course at the [10th Statistics & Biopharmacy conference](https://snb2025.sciencesconf.org) on October 8th 2025 in Paris
    * [Slides](workshops/paris2025snb/slides/bamdd_paris2025.html)
@@ -75,6 +80,9 @@ appropiate. Key changes to the web-site are tracked here:
 
 
 ::: {.content-visible when-profile="public"}
+- 19th August 2026
+  * New case study @sec-rmac
+  * New section on RW priors @sec-mmrm, see @sec-mmrm-rw
 - 8th August 2025: New case studies
   * @sec-power-expected
   * @sec-diffp

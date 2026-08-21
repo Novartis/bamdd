@@ -8,7 +8,7 @@ author:
 
 To run the R code of this section please ensure to load these libraries first:
 
-```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE, cache=FALSE}
 library(tidyverse)
 library(ggrepel)
 library(brms)
@@ -22,7 +22,7 @@ dir.create(here::here("_brms-cache"), FALSE)
 set.seed(979356)
 ```
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
 source(here::here("src", "setup.R"))
 ```
@@ -110,7 +110,7 @@ sglt2_hr %>%
              col=drug, label=drug)) +
   geom_vline(xintercept=1, linewidth=0.25, linetype=2) +
   geom_point(shape=19) +
-  geom_errorbarh(height=0.1) +
+  geom_errorbar(orientation = "y", width=0.1) +
   scale_x_log10() +
   geom_text_repel(data=.%>% filter(studyno %in% c("CANVAS", "DECLARE–TIMI 58",
                                                   "EMPA-REG OUTCOME", "SCORED",
@@ -568,7 +568,7 @@ bind_rows(
   ggplot(aes(x=median, y=method_class, xmin=q5, xmax=q95)) +
   geom_vline(xintercept=1, linetype=2) +
   geom_point(shape=19) +
-  geom_errorbarh(height=0.1) +
+  geom_errorbar(orientation = "y", width=0.1) +
   scale_x_log10() +
   xlab("Hazard ratio for MACE (<1 indicates\nhazard rate reduction vs. placebo)") +
   theme_bw(base_size = 14)
