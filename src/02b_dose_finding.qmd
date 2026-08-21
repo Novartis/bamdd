@@ -511,7 +511,62 @@ cmp_sigmoid <- lapply(prior_sigmoid$nlpar, compare_prior_posterior, fit_sigmoid)
 # merges the different plots into a single one
 Reduce("+", cmp_sigmoid)
 ```
+::: {.callout-note}
+## Empirical support for the Sigmoid Emax model and Pfizer's informative priors
 
+Not only can the Sigmoid Emax model be derived from pharmacological
+receptor occupancy models, it has empirically been able to describe
+the data in historical dose finding studies well with very few
+exceptions [@ThomasRoy2017; @ThomasSweeneySomayaji2014;
+@WuEtAl2018]. Researchers from Pfizer have suggested fitting Sigmoid
+Emax models in a Bayesian framework with priors informed by these
+historical data [@ThomasEtAl2020BayesianEmax] and the **FDA classified
+this approach to be a fit-for-purpose drug development tool**
+[@FDA2022BayesianEmax]. For the parameters in 
+
+$$E_0 + E_\max \times \text{dose}^h / (\text{ED}_{50}^h +
+\text{dose}^h) + \text{covariate terms},$$
+
+the Pfizer researchers suggest an informative joint prior
+distribution informed by the historical dose finding studies for the
+log-Hill parameter and the logarithm of $\text{ED}_{50}$ divided by
+predicted $\text{ED}_{50}$ denoted by $P_{50}$:
+
+$$ \begin{pmatrix}
+\log(h) \\[2pt] \log(\text{ED}_{50}/P_{50}) \end{pmatrix} \sim
+\text{MVT}_{\text{DF}=5}\!\left( \begin{pmatrix} 0 \\[2pt] 0
+\end{pmatrix}, \begin{pmatrix} 0.85^2 & -0.45 \times 0.85 \times 1.73
+\\ -0.45 \times 0.85 \times 1.73 & 1.73^2 \end{pmatrix} \right).$$
+
+Note that $P_{50}$ might come from a number of sources such as
+preclinical data. When such an estimate was not available, they used
+the mid-point between the two lowest non-placebo doses in the first
+dose finding study of a compound. In contrast, for $E_0$ they either
+suggest informative priors based on previous studies, or a quite vague
+weakly informative prior such as
+
+$$E_0 \sim t_{\text{DF}=5}( \text{best guess}, 10 \times \text{ expected residual SD}).$$
+
+In absence of previous studies that provide information about
+$E_\max$, we could use a $\sim t_{\text{DF}=5}(0, 10 \times \text{
+expected residual SD})$ prior. They proposed such a prior on
+$\text{diffTarget} := E_\max \times \text{target dose}^h /
+(\text{target dose}^h + \text{ED}_{50}^h)$. However, for such a vague
+prior, when $\text{target dose}$ is near the dose-response plateau
+(which may often be plausible, especially when $\text{target dose}$
+is our highest dose), our inference will only be minimally affected by
+which parameter we put this prior on. Alternatively, we may have prior
+information about $E_\max$ from a previous study (e.g. Ph2a proof of
+concept study), in which case we can jointly analyze the studies
+(allowing for separate $E_0$ per study) or use the previous data to
+specify a prior down-weighting this prior data (e.g. due to differences
+in population, endpoints or other considerations). While the
+qualification request [@ThomasEtAl2020BayesianEmax] suggested
+performing a frequentist contrast test as in the MCP-Mod approach
+prior to Bayesian dose-response modelling, we could instead assess
+$P(E_\max > 0)$. 
+
+:::
 
 ### Modified beta model with `brms`
 
