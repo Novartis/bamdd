@@ -53,14 +53,6 @@ PHONY := $(TARGET)
 website: ## Render the full Quarto website
 	$(MAKE) $(OUTDIR)/$(QUARTO_PROFILE)/bookdown-website
 
-PHONY += website-public
-website-public: build/docs/public/bookdown-website ## Safely render the public-profile website (fully content-hidden filtered) into build/docs/public
-	@echo "Public website rendered into build/docs/public - safe for external export."
-
-PHONY += public-export
-public-export: build/brms-examples-public.tar.gz ## Safely build the filtered public sources tarball (for updating the public GitHub repo)
-	@echo "Public sources tarball ready: build/brms-examples-public.tar.gz - safe to publish to the public GitHub repo."
-
 PHONY += help
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_%.-]+:.*##' $(MAKEFILE_LIST) \
