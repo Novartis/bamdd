@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,16 @@
 
 <title>9&nbsp; Probability of success from a single arm trial – Applied Modelling in Drug Development</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -90,15 +96,14 @@ div.csl-indent {
 <link href="../src/02k_nuisance.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2d4310337d17b03778a9c93cfd4c37fa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -128,7 +133,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="../resources/mathjax/tex-mml-chtml.js" type="text/javascript"></script>
+  <script defer="" src="../resources/mathjax/tex-mml-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -355,7 +360,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -3286,13 +3291,12 @@ Components of the mixture prior
 </section>
 <section id="references" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-allison2012equip" class="csl-entry" role="listitem">
-Allison, David B., Kishore M. Gadde, William Timothy Garvey, Craig A.
-Peterson, Michael L. Schwiers, Thomas Najarian, Peter Y. Tam, Barbara
-Troupin, and Wesley W. Day. 2012. <span>“Controlled-Release
-Phentermine/Topiramate in Severely Obese Adults: A Randomized Controlled
-Trial (EQUIP).”</span> <em>Obesity</em> 20 (2): 330–42. <a href="https://doi.org/10.1038/oby.2011.330">https://doi.org/10.1038/oby.2011.330</a>.
+Allison, David B., Kishore M. Gadde, William Timothy Garvey, et al.
+2012. <span>“Controlled-Release Phentermine/Topiramate in Severely Obese
+Adults: A Randomized Controlled Trial (EQUIP).”</span> <em>Obesity</em>
+20 (2): 330–42. <a href="https://doi.org/10.1038/oby.2011.330">https://doi.org/10.1038/oby.2011.330</a>.
 </div>
 <div id="ref-ando2010predlikeli" class="csl-entry" role="listitem">
 Ando, Tomohiro, and Ruey Tsay. 2010. <span>“Predictive Likelihood for
@@ -3322,16 +3326,16 @@ Modeling Framework for Pairwise and Network Meta-Analysis of Randomized
 Controlled Trials.”</span> <em>Med. Decis. Making</em> 33 (5): 607–17.
 </div>
 <div id="ref-dias2014" class="csl-entry" role="listitem">
-Dias, S., N. J. Welton, A. J. Sutton, and A. Ades. 2014.
-<span>“<span>NICE DSU</span> Technical Support Document 2: A Generalised
-Linear Modelling Framework for Pairwise and Network Meta-Analysis of
-Randomised Controlled Trials.”</span> Technical report. <span>NICE
-Decision Support Unit</span>. <a href="http://www.nicedsu.org.uk/TSD2%20General%20meta%20analysis%20corrected%2015April2014.pdf">http://www.nicedsu.org.uk/TSD2%20General%20meta%20analysis%20corrected%2015April2014.pdf</a>.
+Dias, S., N. J. Welton, A. J. Sutton, and A. Ades. 2014. <em><span>NICE
+DSU</span> Technical Support Document 2: A Generalised Linear Modelling
+Framework for Pairwise and Network Meta-Analysis of Randomised
+Controlled Trials</em>. Technical report. <span>NICE Decision Support
+Unit</span>. <a href="http://www.nicedsu.org.uk/TSD2%20General%20meta%20analysis%20corrected%2015April2014.pdf">http://www.nicedsu.org.uk/TSD2%20General%20meta%20analysis%20corrected%2015April2014.pdf</a>.
 </div>
 <div id="ref-Gelman2014" class="csl-entry" role="listitem">
 Gelman, Andrew, John B Carlin, Hal S Stern, David B Dunson, Aki Vehtari,
-and Donald B Rubin. 2014. <em>Bayesian Data Analysis</em>. <em>Chapman
-Texts in Statistical Science Series</em>. Third edit. <a href="https://doi.org/10.1007/s13398-014-0173-7.2">https://doi.org/10.1007/s13398-014-0173-7.2</a>.
+and Donald B Rubin. 2014. <em>Bayesian Data Analysis</em>. In
+<em>Chapman Texts in Statistical Science Series</em>, Third edit. <a href="https://doi.org/10.1007/s13398-014-0173-7.2">https://doi.org/10.1007/s13398-014-0173-7.2</a>.
 </div>
 <div id="ref-Gelman2017" class="csl-entry" role="listitem">
 Gelman, Andrew, Daniel Simpson, and Michael Betancourt. 2017. <span>“The
@@ -3347,19 +3351,18 @@ Model Uncertainty.”</span> <em>Biometrical Journal</em> 61 (5): 1141–59.
 <div id="ref-Grieve2022power" class="csl-entry" role="listitem">
 Grieve, Andrew P. 2022. <em>Hybrid Frequentist/Bayesian Power and
 Bayesian Power in Planning Clinical Trials</em>. Chapman &amp; Hall/CRC
-Biostatistics Series. London, England: Taylor &amp; Francis.
+Biostatistics Series. Taylor &amp; Francis.
 </div>
 <div id="ref-Hasselblad1998" class="csl-entry" role="listitem">
 Hasselblad, Vic. 1998. <span>“Meta-Analysis of Multitreatment
 Studies.”</span> <em>Medical Decision Making</em> 18 (1): 37–43. <a href="https://doi.org/10.1177/0272989x9801800110">https://doi.org/10.1177/0272989x9801800110</a>.
 </div>
 <div id="ref-Janjigian2021" class="csl-entry" role="listitem">
-Janjigian, Yelena Y., Kohei Shitara, Markus Moehler, Marcelo Garrido,
-Pamela Salman, Lin Shen, Lucjan Wyrwicz, et al. 2021. <span>“First-Line
-Nivolumab Plus Chemotherapy Versus Chemotherapy Alone for Advanced
-Gastric, Gastro-Oesophageal Junction, and Oesophageal Adenocarcinoma
-(CheckMate 649): A Randomised, Open-Label, Phase 3 Trial.”</span>
-<em>The Lancet</em> 398 (July): 27–40. <a href="https://doi.org/10.1016/S0140-6736(21)00797-2">https://doi.org/10.1016/S0140-6736(21)00797-2</a>.
+Janjigian, Yelena Y., Kohei Shitara, Markus Moehler, et al. 2021.
+<span>“First-Line Nivolumab Plus Chemotherapy Versus Chemotherapy Alone
+for Advanced Gastric, Gastro-Oesophageal Junction, and Oesophageal
+Adenocarcinoma (CheckMate 649): A Randomised, Open-Label, Phase 3
+Trial.”</span> <em>The Lancet</em> 398 (July): 27–40. <a href="https://doi.org/10.1016/S0140-6736(21)00797-2">https://doi.org/10.1016/S0140-6736(21)00797-2</a>.
 </div>
 <div id="ref-Kerman2011" class="csl-entry" role="listitem">
 Kerman, Jouni. 2011. <span>“<span class="nocase">Neutral noninformative
@@ -3368,11 +3371,11 @@ distributions</span>.”</span> <em>Electronic Journal of Statistics</em>
 5 (none): 1450–70. <a href="https://doi.org/10.1214/11-EJS648">https://doi.org/10.1214/11-EJS648</a>.
 </div>
 <div id="ref-Lilienthal2023" class="csl-entry" role="listitem">
-Lilienthal, Jona, Sibylle Sturtz, Christoph Schürmann, Matthias Maiworm,
-Christian Röver, Tim Friede, and Ralf Bender. 2023. <span>“Bayesian
-Random‐effects Meta‐analysis with Empirical Heterogeneity Priors for
-Application in Health Technology Assessment with Very Few
-Studies.”</span> <em>Research Synthesis Methods</em>, December. <a href="https://doi.org/10.1002/jrsm.1685">https://doi.org/10.1002/jrsm.1685</a>.
+Lilienthal, Jona, Sibylle Sturtz, Christoph Schürmann, et al. 2023.
+<span>“Bayesian Random‐effects Meta‐analysis with Empirical
+Heterogeneity Priors for Application in Health Technology Assessment
+with Very Few Studies.”</span> <em>Research Synthesis Methods</em>,
+ahead of print, December. <a href="https://doi.org/10.1002/jrsm.1685">https://doi.org/10.1002/jrsm.1685</a>.
 </div>
 <div id="ref-LuAdes2004" class="csl-entry" role="listitem">
 Lu, G., and A. E. Ades. 2004. <span>“Combination of Direct and Indirect
@@ -3391,8 +3394,8 @@ Controls in Clinical Trials.”</span> <em>Clinical Trials</em> 7
 (February): 5–18. <a href="https://doi.org/10.1177/1740774509356002">https://doi.org/10.1177/1740774509356002</a>.
 </div>
 <div id="ref-Neuenschwander2020" class="csl-entry" role="listitem">
-Neuenschwander, Beat, and Heinz Schmidli. 2020. <span>“Use of Historical
-Data.”</span> <a href="https://CRAN.R-project.org/package=RBesT">https://CRAN.R-project.org/package=RBesT</a>.
+Neuenschwander, Beat, and Heinz Schmidli. 2020. <em>Use of Historical
+Data</em>. <a href="https://CRAN.R-project.org/package=RBesT">https://CRAN.R-project.org/package=RBesT</a>.
 </div>
 <div id="ref-OHagan2005assurance" class="csl-entry" role="listitem">
 O’Hagan, Anthony, John W Stevens, and Michael J Campbell. 2005.
@@ -3416,11 +3419,10 @@ Parametric Models.”</span> <em>Statistics in Medicine</em> 33 (10):
 1646–61. <a href="https://doi.org/10.1002/sim.6052">https://doi.org/10.1002/sim.6052</a>.
 </div>
 <div id="ref-Rover2021" class="csl-entry" role="listitem">
-Röver, Christian, Ralf Bender, Sofia Dias, Christopher H. Schmid, Heinz
-Schmidli, Sibylle Sturtz, Sebastian Weber, and Tim Friede. 2021.
-<span>“On Weakly Informative Prior Distributions for the Heterogeneity
-Parameter in Bayesian Random-Effects Meta-Analysis.”</span> <em>Research
-Synthesis Methods</em> 12 (January): 448–74. <a href="https://doi.org/10.1002/jrsm.1475">https://doi.org/10.1002/jrsm.1475</a>.
+Röver, Christian, Ralf Bender, Sofia Dias, et al. 2021. <span>“On Weakly
+Informative Prior Distributions for the Heterogeneity Parameter in
+Bayesian Random-Effects Meta-Analysis.”</span> <em>Research Synthesis
+Methods</em> 12 (January): 448–74. <a href="https://doi.org/10.1002/jrsm.1475">https://doi.org/10.1002/jrsm.1475</a>.
 </div>
 <div id="ref-schmidli2014robust" class="csl-entry" role="listitem">
 Schmidli, Heinz, Sandro Gsteiger, Satrajit Roychoudhury, Anthony
@@ -3452,7 +3454,7 @@ Principled, Practical Approach to Constructing Priors.”</span>
 <em>Statistical Science</em> 32 (February): 1–28. <a href="https://doi.org/10.1214/16-STS576">https://doi.org/10.1214/16-STS576</a>.
 </div>
 <div id="ref-stanwikiPrior" class="csl-entry" role="listitem">
-Stan. 2024. <span>“Prior Choice Recommendations.”</span> 2024. <a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a>.
+Stan. 2024. <span>“Prior Choice Recommendations.”</span> <a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a>.
 </div>
 <div id="ref-Steingrimsson201718" class="csl-entry" role="listitem">
 Steingrimsson, Jon Arni, Daniel F. Hanley, and Michael Rosenblum. 2017.
@@ -3479,6 +3481,10 @@ Weber, Sebastian, Yue Li, John W Seaman III, Tomoyuki Kakizume, and
 Heinz Schmidli. 2021. <span>“Applying Meta-Analytic-Predictive Priors
 with the r Bayesian Evidence Synthesis Tools.”</span> <em>Journal of
 Statistical Software</em> 100 (November): 1–32. <a href="https://doi.org/10.18637/jss.v100.i19">https://doi.org/10.18637/jss.v100.i19</a>.
+</div>
+<div id="ref-wood2017gam" class="csl-entry" role="listitem">
+Wood, Simon N. 2017. <em>Generalized Additive Models: An Introduction
+with <span>R</span></em>. 2nd ed. Chapman; Hall/CRC. <a href="https://doi.org/10.1201/9781315370279">https://doi.org/10.1201/9781315370279</a>.
 </div>
 <div id="ref-Zhang2022" class="csl-entry" role="listitem">
 Zhang, Yan Dora, Brian P. Naughton, Howard D. Bondell, and Brian J.
@@ -3586,16 +3592,16 @@ Statistical Association</em> 117: 862–74. <a href="https://doi.org/10.1080/016
     }
     function toggleCodeHandler(show) {
       return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
           if (show) {
             details.open = true;
           } else {
             details.removeAttribute("open");
           }
         }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
         const fromCls = show ? "hidden" : "unhidden";
         const toCls = show ? "unhidden" : "hidden";
         for (let i=0; i<cellCodeDivs.length; i++) {
@@ -4004,7 +4010,7 @@ Statistical Association</em> 117: 862–74. <a href="https://doi.org/10.1080/016
 <span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size=</span><span class="dv">18</span>))</span>
 <span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE}</span></span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}</span></span>
 <span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="co"># invisible to the reader additional setup steps, which are optional</span></span>
 <span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"src"</span>, <span class="st">"setup.R"</span>))</span>
 <span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>

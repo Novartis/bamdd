@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,10 +10,16 @@
 
 <title>3&nbsp; Model setup &amp; priors – Applied Modelling in Drug Development</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -60,7 +66,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -90,15 +95,14 @@ div.csl-indent {
 <link href="../src/01b_basic_workflow.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2d4310337d17b03778a9c93cfd4c37fa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -128,7 +132,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="../resources/mathjax/tex-mml-chtml.js" type="text/javascript"></script>
+  <script defer="" src="../resources/mathjax/tex-mml-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -355,7 +359,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -422,7 +426,7 @@ window.Quarto = {
 <p>Within the Bayesian regression modeling in Stan framework <code>brms</code> priors are required to perform inference. This introductory material is intended to provide some pragmatic considerations on how to setup priors and point readers to material to follow-up on. The case studies themselves provide details on setting up priors for the respective problem. By default these priors have been chosen to have minimal impact on the posterior whenever appropriate and also ensure stable numerical inference. As a consequence, the results from the case studies will resemble respective Frequentist model results in most cases. Nonetheless, priors are defined explicitly for all models, since these are an integral part of any Bayesian analysis. This can be easily seen by considering Bayes rule to obtain the posterior:</p>
 <p><span class="math display">\[ p(\theta | y) = \frac{p(y|\theta) \, p(\theta)}{p(y)} \propto p(y|\theta) \, p(\theta)\]</span></p>
 <p>The marginal likelihood term <span class="math inline">\(p(y)\)</span> can be dropped, since this is merely a normalization constant given that we condition the inference on the observed data <span class="math inline">\(y\)</span>. What is left is hence the product of the likelihood <span class="math inline">\(p(y|\theta)\)</span> multiplied by the prior <span class="math inline">\(p(\theta)\)</span>. The posterior information on <span class="math inline">\(\theta\)</span> is hence provided equally by likelihood and prior.</p>
-<p>From a practical perspective one may ask under which circumstances it actually matters which prior we set. In many cases the posterior is dominated by the data, which means that the likelihood term <span class="math inline">\(p(y|\theta)\)</span> is much larger than the prior term <span class="math inline">\(p(\theta)\)</span>. This is the case for most case studies. It is tempting to drop the prior in these cases and not worry about it. However, this is not recommended as it is in many instances of interest to study a model with small sample sizes eventually (by applying the model to subsets, increasing model complexity, etc.). Another practical aspect is the numerical stability and quality of the Markov Chain Monte Carlo (MCMC) sample we obtain from Stan. Without a prior the inference problem becomes much harder to solve. That is, the Markov Chain Monte Carlo (MCMC) sampler Stan has to consider the full sampling space of the prior. Dropping the prior entirely implies an improper prior on the sampling space which becomes un-countably infinitely large. Rather than dropping the prior entirely we strongly recommend to consider so-called weakly informative priors. While no formal definition is given in the literature, these priors aim to identify the <em>scale</em> of parameters. This requires a basic understanding of the parameters for which priors are being defined. Thus, a prior can only be understood in the overall context of the likelihood, parametrization and problem at hand <span class="citation" data-cites="Gelman2017">(see also <a href="02l_single_arm_pos.html#ref-Gelman2017" role="doc-biblioref">Gelman, Simpson, and Betancourt 2017</a>)</span>. For most statistical analyses this means to consider the endpoint and the applied transformations.</p>
+<p>From a practical perspective one may ask under which circumstances it actually matters which prior we set. In many cases the posterior is dominated by the data, which means that the likelihood term <span class="math inline">\(p(y|\theta)\)</span> is much larger than the prior term <span class="math inline">\(p(\theta)\)</span>. This is the case for most case studies. It is tempting to drop the prior in these cases and not worry about it. However, this is not recommended as it is in many instances of interest to study a model with small sample sizes eventually (by applying the model to subsets, increasing model complexity, etc.). Another practical aspect is the numerical stability and quality of the Markov Chain Monte Carlo (MCMC) sample we obtain from Stan. Without a prior the inference problem becomes much harder to solve. That is, the Markov Chain Monte Carlo (MCMC) sampler Stan has to consider the full sampling space of the prior. Dropping the prior entirely implies an improper prior on the sampling space which becomes un-countably infinitely large. Rather than dropping the prior entirely we strongly recommend to consider so-called weakly informative priors. While no formal definition is given in the literature, these priors aim to identify the <em>scale</em> of parameters. This requires a basic understanding of the parameters for which priors are being defined. Thus, a prior can only be understood in the overall context of the likelihood, parametrization and problem at hand <span class="citation" data-cites="Gelman2017">(see also <a href="02l_single_arm_pos.html#ref-Gelman2017" role="doc-biblioref">Gelman et al. 2017</a>)</span>. For most statistical analyses this means to consider the endpoint and the applied transformations.</p>
 <!--
 A notable exception to this are the case studies on the meta
 analytic predictive (MAP) priors. These case studies infer between
@@ -490,7 +494,7 @@ become very popular nowadays.
 </table>
 </div>
 </div>
-<p>Note that we have defined first the model via the <code>bf</code> call. This defines the linear predictor and the likelihood using the <code>family</code> argument of <code>bf</code>. We recommend to always explicitly do this step first as it defines the likelihood and the model parametrization in one step. Choosing these is a critical first step in defining the model and, most importantly, the chosen priors can only be understood in the context of the model (likelihood and parametrization) <span class="citation" data-cites="Gelman2017">(see <a href="02l_single_arm_pos.html#ref-Gelman2017" role="doc-biblioref">Gelman, Simpson, and Betancourt 2017</a>)</span>.</p>
+<p>Note that we have defined first the model via the <code>bf</code> call. This defines the linear predictor and the likelihood using the <code>family</code> argument of <code>bf</code>. We recommend to always explicitly do this step first as it defines the likelihood and the model parametrization in one step. Choosing these is a critical first step in defining the model and, most importantly, the chosen priors can only be understood in the context of the model (likelihood and parametrization) <span class="citation" data-cites="Gelman2017">(see <a href="02l_single_arm_pos.html#ref-Gelman2017" role="doc-biblioref">Gelman et al. 2017</a>)</span>.</p>
 <p>Rather than running the model with no explicit prior definition we encourage users to explicitly define the priors used for the analysis - even if these are simply the default priors:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_def <span class="ot">&lt;-</span> <span class="fu">bf</span>(r <span class="sc">|</span> <span class="fu">trials</span>(n) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">family=</span>binomial)</span>
@@ -748,13 +752,13 @@ Intercept -1.106901 0.1062962 -1.314909 -0.907616</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.2 seconds.
-Chain 2 finished in 0.2 seconds.
-Chain 3 finished in 0.2 seconds.
-Chain 4 finished in 0.2 seconds.
+Chain 1 finished in 0.3 seconds.
+Chain 2 finished in 0.3 seconds.
+Chain 3 finished in 0.3 seconds.
+Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.2 seconds.
+Mean chain execution time: 0.3 seconds.
 Total execution time: 1.5 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_meta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1013,30 +1017,30 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 <!-- -->
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Gelman2014" class="csl-entry" role="listitem">
-Gelman, Andrew, John B Carlin, Hal S Stern, David B Dunson, Aki Vehtari, and Donald B Rubin. 2014. <em>Bayesian Data Analysis</em>. <em>Chapman Texts in Statistical Science Series</em>. Third edit. <a href="https://doi.org/10.1007/s13398-014-0173-7.2">https://doi.org/10.1007/s13398-014-0173-7.2</a>.
+Gelman, Andrew, John B Carlin, Hal S Stern, David B Dunson, Aki Vehtari, and Donald B Rubin. 2014. <em>Bayesian Data Analysis</em>. In <em>Chapman Texts in Statistical Science Series</em>, Third edit. <a href="https://doi.org/10.1007/s13398-014-0173-7.2">https://doi.org/10.1007/s13398-014-0173-7.2</a>.
 </div>
 <div id="ref-Gelman2017" class="csl-entry" role="listitem">
 Gelman, Andrew, Daniel Simpson, and Michael Betancourt. 2017. <span>“The Prior Can Often Only Be Understood in the Context of the Likelihood.”</span> <em>Entropy</em> 19 (October). <a href="https://doi.org/10.3390/e19100555">https://doi.org/10.3390/e19100555</a>.
 </div>
 <div id="ref-Lilienthal2023" class="csl-entry" role="listitem">
-Lilienthal, Jona, Sibylle Sturtz, Christoph Schürmann, Matthias Maiworm, Christian Röver, Tim Friede, and Ralf Bender. 2023. <span>“Bayesian Random‐effects Meta‐analysis with Empirical Heterogeneity Priors for Application in Health Technology Assessment with Very Few Studies.”</span> <em>Research Synthesis Methods</em>, December. <a href="https://doi.org/10.1002/jrsm.1685">https://doi.org/10.1002/jrsm.1685</a>.
+Lilienthal, Jona, Sibylle Sturtz, Christoph Schürmann, et al. 2023. <span>“Bayesian Random‐effects Meta‐analysis with Empirical Heterogeneity Priors for Application in Health Technology Assessment with Very Few Studies.”</span> <em>Research Synthesis Methods</em>, ahead of print, December. <a href="https://doi.org/10.1002/jrsm.1685">https://doi.org/10.1002/jrsm.1685</a>.
 </div>
 <div id="ref-Neuenschwander2020" class="csl-entry" role="listitem">
-Neuenschwander, Beat, and Heinz Schmidli. 2020. <span>“Use of Historical Data.”</span> <a href="https://CRAN.R-project.org/package=RBesT">https://CRAN.R-project.org/package=RBesT</a>.
+Neuenschwander, Beat, and Heinz Schmidli. 2020. <em>Use of Historical Data</em>. <a href="https://CRAN.R-project.org/package=RBesT">https://CRAN.R-project.org/package=RBesT</a>.
 </div>
 <div id="ref-Piironen2017" class="csl-entry" role="listitem">
 Piironen, Juho, and Aki Vehtari. 2017. <span>“Sparsity Information and Regularization in the Horseshoe and Other Shrinkage Priors.”</span> <em>Electronic Journal of Statistics</em> 11 (January): 5018–51. <a href="https://doi.org/10.1214/17-EJS1337SI">https://doi.org/10.1214/17-EJS1337SI</a>.
 </div>
 <div id="ref-Rover2021" class="csl-entry" role="listitem">
-Röver, Christian, Ralf Bender, Sofia Dias, Christopher H. Schmid, Heinz Schmidli, Sibylle Sturtz, Sebastian Weber, and Tim Friede. 2021. <span>“On Weakly Informative Prior Distributions for the Heterogeneity Parameter in Bayesian Random-Effects Meta-Analysis.”</span> <em>Research Synthesis Methods</em> 12 (January): 448–74. <a href="https://doi.org/10.1002/jrsm.1475">https://doi.org/10.1002/jrsm.1475</a>.
+Röver, Christian, Ralf Bender, Sofia Dias, et al. 2021. <span>“On Weakly Informative Prior Distributions for the Heterogeneity Parameter in Bayesian Random-Effects Meta-Analysis.”</span> <em>Research Synthesis Methods</em> 12 (January): 448–74. <a href="https://doi.org/10.1002/jrsm.1475">https://doi.org/10.1002/jrsm.1475</a>.
 </div>
 <div id="ref-Simpson2014" class="csl-entry" role="listitem">
 Simpson, Daniel P., Håvard Rue, Thiago G. Martins, Andrea Riebler, and Sigrunn H. Sørbye. 2014. <span>“Penalising Model Component Complexity: A Principled, Practical Approach to Constructing Priors.”</span> <em>Statistical Science</em> 32 (February): 1–28. <a href="https://doi.org/10.1214/16-STS576">https://doi.org/10.1214/16-STS576</a>.
 </div>
 <div id="ref-stanwikiPrior" class="csl-entry" role="listitem">
-Stan. 2024. <span>“Prior Choice Recommendations.”</span> 2024. <a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a>.
+Stan. 2024. <span>“Prior Choice Recommendations.”</span> <a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a>.
 </div>
 <div id="ref-Turner2015" class="csl-entry" role="listitem">
 Turner, Rebecca M, Dan Jackson, Yinghui Wei, Simon G Thompson, and Julian P T Higgins. 2015. <span>“Predictive Distributions for Between-Study Heterogeneity and Simple Methods for Their Application in Bayesian Meta-Analysis.”</span> <em>Statistics in Medicine</em> 34: 984–98. <a href="https://doi.org/10.1002/sim.6381">https://doi.org/10.1002/sim.6381</a>.
@@ -1139,16 +1143,16 @@ Zhang, Yan Dora, Brian P. Naughton, Howard D. Bondell, and Brian J. Reich. 2022.
     }
     function toggleCodeHandler(show) {
       return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
           if (show) {
             details.open = true;
           } else {
             details.removeAttribute("open");
           }
         }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
         const fromCls = show ? "hidden" : "unhidden";
         const toCls = show ? "unhidden" : "hidden";
         for (let i=0; i<cellCodeDivs.length; i++) {

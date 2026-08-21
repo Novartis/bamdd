@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,10 +10,16 @@
 
 <title>18&nbsp; Difference in proportions from a fitted logistic regression – Applied Modelling in Drug Development</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -60,7 +66,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -90,15 +95,14 @@ div.csl-indent {
 <link href="../src/02j_network_meta_analysis.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-211643d51178a3b3a2246e12448a6b35.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2d4310337d17b03778a9c93cfd4c37fa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -369,7 +373,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">configure here</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -1198,7 +1202,7 @@ window.Quarto = {
 <p>We are interested in comparing the two treatment groups in the RCT in terms of the marginal (population average) difference in the proportion of patients achieving the “responder” definition for each treatment.</p>
 <p>Obtaining pseudo-random samples from the posterior distribution for a difference in proportions after fitting a Bayesian logistic regression in <code>brms</code> is particularly straightforward, if our model only includes treatment. In that case, we simply get posterior MCMC samples for the logit for the treatment and the control group, convert these to probabilities and form the difference per MCMC sample to obtain MCMC samples for the difference in proportions. Unlike with some frequentist methods, the properties of transformed MCMC samples mean that these samples will automatically obey logical constraints (e.g.&nbsp;each proportion must lie in [0, 1], the control group proportion plus the difference in proportions must also result in a proportion for the treatment group in [0, 1] etc.). This makes it extremely simple to obtain a valid point estimate with a sensible credible interval.</p>
 <p>Things become a little bit more complicated, if there are further terms in the model, in the case of our example age and clinical trial site ID. We might include these terms in our model, because randomization was stratified by trial site (“analyze as you randomize”) and age is a known important predictor of response in this disease.</p>
-<p>We now illustrate how we obtain a “standardized” estimator for the marginal (population average or “unconditional”) difference in proportions using the approach discussed by the <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adjusting-covariates-randomized-clinical-trials-drugs-and-biological-products">FDA guidance on adjusting for covariates in randomized clinical trials for drugs and biological products</a> (see also <span class="citation" data-cites="Moore2009">(<a href="02l_single_arm_pos.html#ref-Moore2009" role="doc-biblioref">Moore and Laan 2009</a>)</span> and <span class="citation" data-cites="Steingrimsson201718">(<a href="02l_single_arm_pos.html#ref-Steingrimsson201718" role="doc-biblioref">Steingrimsson, Hanley, and Rosenblum 2017</a>)</span>). The only thing we do differently compared to the mentioned papers is that instead of using a logistic regression model fit with maximum likelihood, we use a Bayesian logistic regression.</p>
+<p>We now illustrate how we obtain a “standardized” estimator for the marginal (population average or “unconditional”) difference in proportions using the approach discussed by the <a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adjusting-covariates-randomized-clinical-trials-drugs-and-biological-products">FDA guidance on adjusting for covariates in randomized clinical trials for drugs and biological products</a> (see also <span class="citation" data-cites="Moore2009">(<a href="02l_single_arm_pos.html#ref-Moore2009" role="doc-biblioref">Moore and Laan 2009</a>)</span> and <span class="citation" data-cites="Steingrimsson201718">(<a href="02l_single_arm_pos.html#ref-Steingrimsson201718" role="doc-biblioref">Steingrimsson et al. 2017</a>)</span>). The only thing we do differently compared to the mentioned papers is that instead of using a logistic regression model fit with maximum likelihood, we use a Bayesian logistic regression.</p>
 <p>In the Bayesian framework the key steps for obtaining the “standardized” estimator of a difference in proportions for a RCT are particularly easy:</p>
 <ol type="1">
 <li>Fit a model (here a Bayesian logistic regression) to the RCT data.</li>
@@ -4283,7 +4287,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span></span>
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We can now illustrate that for a model with an intercept and a term for treatment (but without further covariates) the standardized estimator of <span class="citation" data-cites="Steingrimsson201718">(<a href="02l_single_arm_pos.html#ref-Steingrimsson201718" role="doc-biblioref">Steingrimsson, Hanley, and Rosenblum 2017</a>)</span> gives identical results to what we obtain directly from the model parameters via <span class="math inline">\text{logit}^{-1}(\beta_0 + \beta_1) - \text{logit}^{-1}(\beta_0)</span>, where <span class="math inline">\beta_0</span> is the intercept and <span class="math inline">\beta_1</span> is the coefficient for active drug.</p>
+<p>We can now illustrate that for a model with an intercept and a term for treatment (but without further covariates) the standardized estimator of <span class="citation" data-cites="Steingrimsson201718">(<a href="02l_single_arm_pos.html#ref-Steingrimsson201718" role="doc-biblioref">Steingrimsson et al. 2017</a>)</span> gives identical results to what we obtain directly from the model parameters via <span class="math inline">\text{logit}^{-1}(\beta_0 + \beta_1) - \text{logit}^{-1}(\beta_0)</span>, where <span class="math inline">\beta_0</span> is the intercept and <span class="math inline">\beta_1</span> is the coefficient for active drug.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Different ways of getting marginal proportion difference</summary>
@@ -4844,7 +4848,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </div>
-<p>As we can see, the marginal treatment difference is very similar (in this case slightly attenuated) and the posterior distribution wider when do no adjust for covariates, as we would expect from the literature on the topic such as <span class="citation" data-cites="Moore2009">(<a href="02l_single_arm_pos.html#ref-Moore2009" role="doc-biblioref">Moore and Laan 2009</a>)</span> and <span class="citation" data-cites="Steingrimsson201718">(<a href="02l_single_arm_pos.html#ref-Steingrimsson201718" role="doc-biblioref">Steingrimsson, Hanley, and Rosenblum 2017</a>)</span>. In the absence of additional covariates, it’s equivalent to use “standardized” estimator compared with calculating the difference in proportions from model parameters, but the “standardized” estimator does not require a detailed understanding of the parameterization of the model.</p>
+<p>As we can see, the marginal treatment difference is very similar (in this case slightly attenuated) and the posterior distribution wider when do no adjust for covariates, as we would expect from the literature on the topic such as <span class="citation" data-cites="Moore2009">(<a href="02l_single_arm_pos.html#ref-Moore2009" role="doc-biblioref">Moore and Laan 2009</a>)</span> and <span class="citation" data-cites="Steingrimsson201718">(<a href="02l_single_arm_pos.html#ref-Steingrimsson201718" role="doc-biblioref">Steingrimsson et al. 2017</a>)</span>. In the absence of additional covariates, it’s equivalent to use “standardized” estimator compared with calculating the difference in proportions from model parameters, but the “standardized” estimator does not require a detailed understanding of the parameterization of the model.</p>
 </section>
 </section>
 <section id="conclusions" class="level2" data-number="18.5">
@@ -4899,7 +4903,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 
 <!-- -->
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Kerman2011" class="csl-entry" role="listitem">
 Kerman, Jouni. 2011. <span>“<span class="nocase">Neutral noninformative and informative conjugate beta and gamma prior distributions</span>.”</span> <em>Electronic Journal of Statistics</em> 5 (none): 1450–70. <a href="https://doi.org/10.1214/11-EJS648">https://doi.org/10.1214/11-EJS648</a>.
 </div>
@@ -5006,16 +5010,16 @@ Steingrimsson, Jon Arni, Daniel F. Hanley, and Michael Rosenblum. 2017. <span>�
     }
     function toggleCodeHandler(show) {
       return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
           if (show) {
             details.open = true;
           } else {
             details.removeAttribute("open");
           }
         }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
         const fromCls = show ? "hidden" : "unhidden";
         const toCls = show ? "unhidden" : "hidden";
         for (let i=0; i<cellCodeDivs.length; i++) {
