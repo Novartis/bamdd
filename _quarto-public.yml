@@ -28,6 +28,7 @@ book:
       - src/02i_time_to_event.qmd
       - src/02j_network_meta_analysis.qmd
       - src/02m_proportion_difference.qmd
+      - src/02n_robust_mac.qmd
     - part: "Advanced topics"
       chapters:
       - src/03a_stan_code.qmd
