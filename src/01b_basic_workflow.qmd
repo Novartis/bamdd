@@ -60,7 +60,7 @@ wishes to fit various related models and compare their outputs. With
 this in mind a recommended preamble for an analysis R script may start
 with:
 
-```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE, cache=FALSE}
 library(brms)
 # tools to process model outputs
 library(posterior)

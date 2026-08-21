@@ -59,7 +59,7 @@ While older literature suggests as few as 3 to 5, or maybe 50 imputations, there
 
 We will need the following R packages in this Section:
 
-```{r show_packages_2e, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r show_packages_2e, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE, cache=FALSE}
 library(tidyverse)
 library(brms)
 library(ggrepel)
@@ -75,7 +75,7 @@ set.seed(7894562)
 options(brms.normalize=FALSE)
 ```
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
 source(here::here("src", "setup.R"))
 ```

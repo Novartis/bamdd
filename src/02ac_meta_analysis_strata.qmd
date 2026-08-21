@@ -26,7 +26,7 @@ This case study demonstrates
 To run the R code of this section please ensure to load these libraries
 and options first:
 
-```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE}
+```{r, eval=TRUE,echo=TRUE,message=FALSE,warning=FALSE, cache=FALSE}
 library(ggplot2)
 library(dplyr)
 library(knitr)
@@ -54,7 +54,7 @@ options(width=120, digits=2)
 :::
 
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # invisible to the reader additional setup steps, which are optional
 source(here::here("src", "setup.R"))
 ```

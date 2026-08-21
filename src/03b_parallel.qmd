@@ -3,7 +3,7 @@ author:
   - Sebastian Weber - <sebastian.weber@novartis.com>
 ---
 
-```{r, include=FALSE, echo=FALSE, eval=TRUE}
+```{r, include=FALSE, echo=FALSE, eval=TRUE, cache=FALSE}
 # configure here
 here::i_am("src/03b_parallel.qmd")
 ```
