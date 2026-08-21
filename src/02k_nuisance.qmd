@@ -341,7 +341,7 @@ ggplot(
   power_cases,
   aes(x = delta, y = power, col = variable, label = variable)
 ) +
-  geom_line(size = 2, alpha = 0.7) +
+  geom_line(linewidth = 2, alpha = 0.7) +
   scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, by = 0.1)) +
   scale_x_continuous(breaks = seq(0, 0.75, 0.1)) +
   geom_vline(xintercept = 0.5, col = "red", linetype = 2) +
@@ -452,7 +452,7 @@ lowering drug in diabetes patients based on the data provided by
 #| code-summary: "Show the code"
 
 Senn2013 <- read_delim(
-"Study n Treatment Comment mean_final SD_final
+I("Study n Treatment Comment mean_final SD_final
 De_Fronzo_(1995) 213 metformin Change -1.700 1.459
 De_Fronzo_(1995) 209 placebo Change 0.200 1.446
 Lewin_(2007) 431 metformin Change -0.740 1.106
@@ -505,7 +505,7 @@ Gonzalez-Ortiz_(2004) 37 placebo Change -0.900 1.803
 Stucci_(1996) 28 benfluorex Raw 8.030 1.290
 Stucci_(1996) 30 placebo Raw 8.260 1.350
 Moulin_(2006) 161 benfluorex Change -0.820 1.028
-Moulin_(2006) 156 placebo Change 0.190 1.374",
+Moulin_(2006) 156 placebo Change 0.190 1.374"),
 delim=" ", col_types="ciccdd") |>
   mutate(Study = str_replace_all(Study, "_", " "))
 ```

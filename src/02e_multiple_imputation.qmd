@@ -606,7 +606,7 @@ results %>%
   theme_bw(base_size=16) +
   geom_vline(xintercept=0, linetype=2) +
   geom_point() +
-  geom_errorbarh() +
+  geom_errorbar(orientation = "y") +
   facet_wrap(~Method) +
   scale_x_continuous(limits = c(-0.9, 0)) +
   ylab("Imputation number") +
@@ -699,7 +699,7 @@ final_results %>%
   ggplot(aes(x=exp(logrr), y=Method, xmin=exp(lower), xmax=exp(upper))) +
   geom_vline(xintercept=1, linetype=1) +
   geom_point() +
-  geom_errorbarh(height=0.1) +
+  geom_errorbar(orientation = "y", width=0.1) +
   scale_x_log10(limits=c(0.25, 1.0)) +
   xlab("Rate ratio (drug vs. placebo)\n(values <1.0 favor drug over placebo)")
 ```

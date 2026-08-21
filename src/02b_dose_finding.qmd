@@ -397,7 +397,7 @@ We can also plot the dose response curve for each MCMC sample:
   sample_draws(500) |>
   ggplot(aes(x = dose, y = logRR, group = factor(.draw))) +
   geom_hline(yintercept = 0) +
-  geom_line(col = "darkred", alpha = 0.25, size = 0.25) +
+  geom_line(col = "darkred", alpha = 0.25, linewidth = 0.25) +
   geom_point(data = pathway_deltas |> mutate(.draw = NA_integer_)) +
   geom_errorbar(
     data = pathway_deltas |> mutate(.draw = NA_integer_),
@@ -683,7 +683,7 @@ bma_curve <- dr_sigmoid$data |>
   ) |>
   dplyr::select(-logRR.x, -logRR.y)
 
-dr_bma <- plot_dose_response(fit_sigmoid) %+%
+dr_bma <- plot_dose_response(fit_sigmoid) +
   bma_curve +
   scale_fill_brewer(palette = "Greens") +
   annotate(
@@ -752,7 +752,7 @@ bma_curve_pred <- dr_curve_data |>
   mutate(epred_bma = .epred1 * w_dose[1] + .epred2 * w_dose[2],
          logRR = epred_bma - epred_bma[dose == 0])
 
-dr_bma2 <- plot_dose_response(fit_sigmoid) %+% bma_curve_pred +
+dr_bma2 <- plot_dose_response(fit_sigmoid) + bma_curve_pred +
   scale_fill_brewer(palette = "Greens") +
   annotate("text", x = 300, y = log(0.6), label = "BMA (LOO weights)", color = "darkgreen")
 

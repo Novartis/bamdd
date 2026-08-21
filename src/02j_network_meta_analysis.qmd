@@ -455,7 +455,7 @@ all_contrasts %>%
     ggplot(aes(x=median, y=model, xmin=q5, xmax=q95)) +
     geom_vline(xintercept=0, color="darkred", linetype=2) +
     geom_point() +
-    geom_errorbarh() +
+    geom_errorbar(orientation = "y") +
     xlab("log-odds ratio") +
     facet_wrap(~variable)
 ```

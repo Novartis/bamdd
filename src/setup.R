@@ -35,7 +35,7 @@ scale_colour_continuous <- scale_color_continuous <- function(...) {
   viridis::scale_colour_viridis_c(..., option="turbo")
 }
 ggplot2::update_geom_defaults("point", list(size=2))
-ggplot2::update_geom_defaults("line", list(size=1.5))
+ggplot2::update_geom_defaults("line", list(linewidth=1.5))
 # To allow adding label to points e.g. as geom_text_repel(data=. %>% filter(1:n()==n()))
 # update_geom_defaults("text_repel", list(label.size = NA, fill = rgb(0,0,0,0),
 #                                         segment.color = "transparent", size=6))
