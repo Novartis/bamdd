@@ -11,15 +11,33 @@ author:
 
 This case study covers
 
-* Fitting mixed models for repeated measures using restricted maximum likelihood (REML) in R using the `mmrm` package
-* Fitting Bayesian mixed models for repeated measures using `brms` package
-* Distributional regression `sigma ~ 1 + AVISIT + TRT01P + AVISIT:TRT01P` to allow variances to vary across visits and treatment groups in a MMRM
-* Specifying an unstructured correlation structure for MMRMs using `autocor = ~unstr(time=AVISIT, gr=USUBJID)`
+* Fitting mixed models for repeated measures using restricted maximum
+  likelihood (REML) in R using the `mmrm` package
+* Fitting Bayesian mixed models for repeated measures using `brms`
+  package
+* Distributional regression `sigma ~ 1 + AVISIT + TRT01P +
+  AVISIT:TRT01P` to allow variances to vary across visits and
+  treatment groups in a MMRM
+* Specifying an unstructured correlation structure for MMRMs using
+  `autocor = ~unstr(time=AVISIT, gr=USUBJID)`
 * Estimands addressed by MMRM models
-* Using the `emmeans` package to obtain least-squares means (LS-means), differences in LS-means and custom contrasts with highest posterior density credible intervals, as well as using `hypothesis` as an alternative for complex situations
-* Options for MMRM paramterization including forward difference contrasts for changes between visits using `contrasts(simulated_data$AVISIT) <- MASS::contr.sdif`
-* Meta-analytic combined approach to MMRMs for using historical data and attempts to make the approach more robust against prior-data-conflict
-* Extending MMRMs using covariates with a monotonic effect using `mo()` and non-linear terms
+* Using the `emmeans` package to obtain least-squares means
+  (LS-means), differences in LS-means and custom contrasts with
+  highest posterior density credible intervals, as well as using
+  `hypothesis` as an alternative for complex situations
+* Options for MMRM paramterization including
+  * forward difference contrasts for changes between visits using
+	`contrasts(simulated_data$AVISIT) <- MASS::contr.sdif`
+  * Turning the forward differences into a random walk over visits with
+	a shared scale using an `mgcv` Markov random field smooth `s(AVISIT,
+	bs="mrf")` (including how to rescale the prior for the smoothing
+	parameter such that it refers to the visit-to-visit jump size or to
+	the total change up to the last visit)
+* Meta-analytic combined approach to MMRMs for using historical data
+  and attempts to make the approach more robust against
+  prior-data-conflict
+* Extending MMRMs using covariates with a monotonic effect using
+  `mo()` and non-linear terms
 
 To run the R code of this section please ensure to load these libraries first:
 
@@ -287,7 +305,8 @@ effects) model terms
 
 -   treatment by visit interaction,
 
--   baseline (pre-treatment) value of the continuous endpoint as a continuous covariate, and
+-   baseline (pre-treatment) value of the continuous endpoint as a
+    continuous covariate, and
 
 -   visit by baseline value interaction.
 
@@ -707,7 +726,7 @@ mmrm_model1 <- bf(CHG ~ 1 + AVISIT + BASE + BASE:AVISIT + TRT01P + TRT01P:AVISIT
                   autocor = ~unstr(time=AVISIT, gr=USUBJID),
                   sigma ~ 1 + AVISIT + TRT01P + AVISIT:TRT01P)
 
-# If we manually specify priors by providing out own Stan code via the stanvars 
+# If we manually specify priors by providing our own Stan code via the stanvars 
 # option, we may want to use `center=FALSE` in `bf()`, otherwise not.
 
 # Explicitly specifying quite weak priors (given the variability in the data).
@@ -1032,6 +1051,287 @@ the case study on [time-to-event data](02i_time_to_event.html).
 <!-- the visits) in the way that is the most natural to work with for a particular -->
 <!-- case. This is illustrated in the case study on time-to-event data. -->
 <!-- </div> -->
+
+### Revisiting forward differences: a random walk over visits {#sec-mmrm-rw}
+
+With the forward difference coding `MASS::contr.sdif` in place, the
+visit main effect is parametrized by the visit-to-visit changes
+
+$$\delta_k = \mu_k - \mu_{k-1}, \quad k=2,\ldots,K,$$
+
+where $\mu_k$ is the expected change from baseline at visit $k$ and
+$K$ is the number of visits. So far we assigned to each $\delta_k$ an
+independent $\mathrm{Normal}(0, 1)$ prior. That is a perfectly
+reasonable weakly informative choice, but it fixes the typical size of
+a visit-to-visit jump a-priori to the order of unity (mean absolute
+value of $\approx 0.8$). A more adaptive formulation shares one scale
+$\tau$ between the increments,
+
+$$\delta_k \, | \, \tau \sim \mathrm{Normal}(0, \tau^2), \quad
+  \tau \sim \pi(\tau),$$
+
+which turns this into a hierarchical model equivalent to a first order
+random walk (RW1) prior over the visits. The $\tau$ parameter thus can
+be understood to control smoothing over time as estimated from the
+data: whenever the visit profile is smooth, $\tau$ is shrunk towards
+zero and the visit means borrow strength from each other, whereas a
+wiggly profile supported by the data leads to a large $\tau$ and
+essentially unpenalized visit means. Note that the shrinkage is
+towards a *constant* profile over visits and not towards zero.
+
+Such a random walk over the visits is a Markov random field over the
+"chain" graph in which each visit is connected to the directly
+preceding and following visit. Since `brms` supports any `mgcv`
+smoothing term [@wood2017gam] (also available in R via `gam` in a
+Frequentist framework), we obtain the RW1 prior in `brms` with the
+smooth term
+
+`s(AVISIT, bs="mrf", k=num_visits, xt=list(nb=visit_nb))`,
+
+where `visit_nb` encodes the chain neighbourhood structure as a named
+list of adjacent visits. Only the
+*visit main effect* is replaced by the smooth term; the `BASE:AVISIT`
+and `TRT01P:AVISIT` interactions remain in the forward difference
+parametrization with their `normal(0, 1)` priors.
+
+```{r mrf_setup}
+#| code-fold: false
+#| code-summary: "Show the code"
+visits <- levels(simulated_data$AVISIT)
+num_visits <- length(visits)
+
+# chain graph: each visit neighbours the preceding and the following visit
+visit_nb <- setNames(
+  lapply(seq_len(num_visits),
+         \(i) visits[intersect(c(i-1L, i+1L), seq_len(num_visits))]),
+  visits)
+```
+
+::: {.callout-note collapse="true"}
+## The RW1 prior as a Markov random field
+
+Written for the vector of visit means $\boldsymbol{\mu}$, the RW1 prior
+has the density
+
+$$p(\boldsymbol{\mu}\,|\,\tau) \propto \exp\left(-\frac{1}{2\tau^2}
+  \sum_{k=2}^{K} (\mu_k - \mu_{k-1})^2\right) =
+  \exp\left(-\frac{1}{2\tau^2}\boldsymbol{\mu}^\top
+  \mathbf{L}\, \boldsymbol{\mu}\right),$$
+
+where $\mathbf{L} = \mathbf{D}_1^\top\mathbf{D}_1$ is built from the
+first order difference matrix $\mathbf{D}_1$. For the chain graph of
+visits, $\mathbf{L}$ is the graph Laplacian and hence exactly the
+penalty matrix of a Markov random field smooth as implemented in the R
+package `mgcv` (smoothing class `mrf`). A Markov random field allows
+for an arbitrary adjacency structure as a graph; the chain graph used
+here is the special case which yields the random walk.
+
+Two technical remarks:
+
+* The RW1 prior is *intrinsic*, i.e. it is invariant to adding a
+constant to all $\mu_k$ and hence improper before constraining
+it. `mgcv` (and hence `brms`) resolves this by a sum-to-zero
+constraint on the smooth [see @wood2017gam, section 5.4.1]. The
+constraint is imposed over the *data
+rows*, so that it reads $\sum_k n_k \mu_k = 0$ with $n_k$ being the
+number of observations at visit $k$. Under dropout the $n_k$ differ
+and the constraint - and with it the basis constructed by `mgcv` - is
+weighted towards the earlier visits. This is convenient here, since
+`brms` centers the remaining design matrix by the observed column
+means in the very same way, such that the model intercept refers to
+the expected change from baseline averaged across visits with exactly
+these weights - just as in the `contr.sdif` parametrization used
+above, irrespective of whether the data are balanced or not. Note that
+the constraint only removes the constant, such that the visit-to-visit
+differences - and hence the interpretation of $\tau$ - are unaffected
+by it.
+* Since we only replace the visit main effect, the model is otherwise
+identical to the model `mmrm_model1` used above (one can convince
+oneself of this by comparing the columns of the design matrix returned
+by `make_standata`).
+:::
+
+The smooth term above introduces the single parameter `sds`, which
+plays the role of the random walk scale $\tau$ and is the parameter we
+have to set a prior for. However, `sds` is **not** equal to $\tau$:
+following `mgcv` conventions, the penalty matrix is normalized
+relative to the scale of the basis by a factor `S.scale`, so that
+
+$$\tau = \sqrt{\texttt{S.scale}} \cdot \texttt{sds}.$$
+
+Here `S.scale` is a constant determined by the basis, which is
+extracted as shown in the box below.
+
+::: {.callout-note collapse="true"}
+## Recovering the interpretation of the smoothing parameter
+
+`brms` parametrizes a smooth term as $\mathbf{Z}\,\mathbf{s}$ with
+$\mathbf{s} = \texttt{sds} \cdot \mathbf{z}$ and
+$\mathbf{z} \sim \mathrm{Normal}(0, 1)$. The mismatch between `sds` and
+$\tau$ arises since `mgcv` normalizes the penalty matrix relative to
+the scale of the basis (the `scale.penalty` option of `smoothCon`,
+which is enabled by the defaults used by `brms`). This aims at
+standardizing the scale of smoothing terms to unity such that different
+smoothing splines are penalized on the same scale. The applied scaling
+factor is reported as `S.scale` and undoing it gives
+$\tau = \sqrt{\texttt{S.scale}} \cdot \texttt{sds}$.
+
+As `brms` does not allow to set `S.scale`, we extract its value by
+constructing the smooth exactly as `brms` does it internally:
+
+```{r mrf_scale}
+visit_smooth <- mgcv::smoothCon(s(AVISIT, bs="mrf", k=num_visits, xt=list(nb=visit_nb)),
+                                data=simulated_data,
+                                absorb.cons=TRUE, diagonal.penalty=TRUE)[[1]]
+
+S_scale <- visit_smooth$S.scale
+S_scale
+```
+
+For the chain graph used here, `S.scale` equals $4$ - regardless of the
+number of visits and, in particular, regardless of how unbalanced the
+observed visit counts are due to dropout. Still, it is good practice to
+extract the constant rather than hard-coding it, and to verify the
+resulting calibration by simulating from the prior, which is the
+subject of exercise 4 below.
+:::
+
+Now, the prior for the smoothing parameter can be setup in two
+alternative variants, which differ in whether we reason about the local
+jump size between visits or about a total jump size across multiple
+visits. In both cases any prior scale we have in mind for $\tau$ has to
+be divided by $\sqrt{\texttt{S.scale}} = `r round(sqrt(S_scale), 2)`$
+before it is passed to `brms` as the prior for `sds`.
+
+**Variant 1: a prior on the local visit-to-visit jump size.** If we
+can directly specify a prior for the size of change from one visit to
+the next we consider plausible, say a standard deviation of $\tau$,
+then we have to scale the prior for `sds` accordingly:
+
+```{r mrf_prior_variant1}
+tau_jump <- 1.0  # a-priori plausible visit-to-visit change (sd)
+sds_scale_variant1 <- tau_jump / sqrt(S_scale)
+sds_scale_variant1
+```
+
+that is a `normal` prior for `class=sds` with a scale of
+`r sds_scale_variant1`, which `brms` truncates to the positive domain
+such that it corresponds to a half-normal prior.
+
+**Variant 2: a prior on the total change up to the last visit.** Often
+it is much easier to reason about the total change over the course of
+the trial than about the change between two adjacent visits. Since the
+increments of the random walk are independent given $\tau$, the change
+from the first to the last visit is the sum of $K-1$ increments, so
+that
+
+$$\mathrm{sd}(\mu_K - \mu_1) = \sqrt{K-1}\,\tau
+  \quad\Longleftrightarrow\quad
+  \tau = \frac{\mathrm{sd}(\mu_K - \mu_1)}{\sqrt{K-1}}.$$
+
+Combining this back-calculation with the `S.scale` correction gives the
+prior scale for `sds` as $s_\mathrm{total} / \sqrt{(K-1)\,
+\texttt{S.scale}}$. Staying with the convention of this case study that
+unity is a considerable change, we allow for a total change up to the
+last visit with a standard deviation of $1.5$:
+
+```{r mrf_prior_variant2}
+total_change_sd <- 1.5  # a-priori plausible change from first to last visit (sd)
+tau_total <- total_change_sd / sqrt(num_visits - 1)
+sds_scale <- tau_total / sqrt(S_scale)
+c(tau=tau_total, sds_scale=sds_scale)
+```
+
+This accumulation argument is not specific to the random walk model -
+it is merely what the random walk framework makes explicit. The
+independent `normal(0, 1)` priors on the $\delta_k$ used before can be
+calibrated in exactly the same way, since they imply a standard
+deviation of $\sqrt{K-1} = `r round(sqrt(num_visits-1), 2)`$ for the
+total change up to the last visit. Judged by that yardstick, the prior
+chosen here is somewhat *more* informative than what we used before,
+which is intended: the whole point of the exercise is to express that
+we do not expect the outcome to wander around wildly from visit to
+visit.
+
+Fitting the model then only requires swapping the visit main effect for
+the smooth term and adding the prior for `sds` to the priors we used
+before:
+
+```{r mmrm_rw_brms, results='hide', message=FALSE, warning=FALSE}
+mmrm_model_rw <- bf(CHG ~ 1 + s(AVISIT, bs="mrf", k=num_visits, xt=list(nb=visit_nb)) +
+                      BASE + BASE:AVISIT + TRT01P + TRT01P:AVISIT,
+                    autocor = ~unstr(time=AVISIT, gr=USUBJID),
+                    sigma ~ 1 + AVISIT + TRT01P + AVISIT:TRT01P)
+
+mmrm_prior_rw <- mmrm_prior1 +
+  prior_string(paste0("normal(0, ", sds_scale, ")"), class="sds")
+
+brmfit1rw <- brm(
+  formula = mmrm_model_rw,
+  prior = mmrm_prior_rw,
+  data = simulated_data,
+  seed = 234235,
+  control = control_args,
+  refresh = 0
+)
+```
+
+Since `sds` is not the quantity we specified our prior for, we should
+also report the posterior of the random walk scale $\tau$ on its
+original scale:
+
+```{r mrf_tau_posterior}
+rw_scale <- as_draws_df(brmfit1rw) %>%
+  mutate_variables(tau = sqrt(S_scale) * sds_sAVISIT_1) %>%
+  subset_draws("tau")
+
+summarise_draws(rw_scale, default_summary_measures())
+```
+
+The posterior for the visit-to-visit jump size is considerably smaller
+than what we allowed for a-priori, which reflects that the mean
+outcome in this trial changes only gradually between visits - exactly
+the behaviour we motivated the forward difference parametrization with
+in the first place.
+
+Estimating treatment contrasts works as before, since the smooth term
+enters the model like any other model term (the estimates themselves
+are compared to those of the other models in the results section
+below):
+
+```{r mrf_contrasts}
+#| output: false
+emmeans(brmfit1rw, ~ TRT01P | AVISIT, weights="proportional") %>%
+  contrast(adjust="none", method="trt.vs.ctrl")
+```
+
+::: {.callout-note}
+Note that post-processing (e.g. calling
+`summary()`, `emmeans()` or the like) a model with a smooth term
+requires that the objects referred to in the smooth term (here
+`num_visits` and `visit_nb`) are still available, since `mgcv`
+re-evaluates the smooth specification whenever the model is evaluated
+for new data. It is therefore advisable to store them along with the
+model fit. 
+:::
+
+::: {.callout-note collapse="true"}
+## When does the random walk make a difference?
+
+Since only the visit main effect is
+modelled as a random walk, the shrinkage acts on the (pooled) visit
+profile and not on the treatment differences. For the trial at hand
+with only four visits and a fairly large sample size this hardly
+changes the treatment contrasts (see the comparison of all models
+below). The approach becomes more relevant with many visits and/or
+sparse data per visit, and it can, of course, be applied to the
+treatment-by-visit interaction as well by adding a `by=TRT01P`
+argument to the smooth term - at the price of having to think about
+what a plausible visit-to-visit change of the *treatment effect*
+is. When specifying a factor with `by`, the random walk is fitted for
+each level of the factor such that we endup with different degrees of
+smoothness $\tau$ - one for each level.
+:::
 
 ### Meta-analytic combined (MAC) approach to historical data for MMRMs
 
@@ -1606,8 +1906,8 @@ tried.
 ```{r plotallresults, eval=TRUE, fig.height=7, fig.width=8}
 #| code-fold: true
 #| code-summary: "Show the code"
-map2_dfr(list(brmfit1, brmfit2, macfit, rmacfit),
-         c("BMMRM", "BMMRM (monotonic)", "BMMRM (MAC)", "BMMRM (rMAC)"),
+map2_dfr(list(brmfit1, brmfit1rw, brmfit2, macfit, rmacfit),
+         c("BMMRM", "BMMRM (RW visits)", "BMMRM (monotonic)", "BMMRM (MAC)", "BMMRM (rMAC)"),
          \(x, y) emmeans(x, ~ TRT01P | AVISIT, weights="proportional") %>%
            contrast(adjust="none", method="trt.vs.ctrl", ref=1) %>%
            as_tibble() %>%
@@ -1628,7 +1928,7 @@ map2_dfr(list(brmfit1, brmfit2, macfit, rmacfit),
   dplyr::select(Model, contrast, AVISIT, estimate, lower.HPD, upper.HPD) %>%
   mutate(Model = factor(Model,
                         levels=c("Frequentist MMRM",
-                                 "BMMRM", 
+                                 "BMMRM", "BMMRM (RW visits)",
                                  "BMMRM (MAC)", "BMMRM (rMAC)",
                                  "BMMRM (monotonic)", "BMMRM (non-linear)")),
          contrast = str_remove_all(contrast, "TRT01P")) %>%
@@ -1640,21 +1940,21 @@ map2_dfr(list(brmfit1, brmfit2, macfit, rmacfit),
   theme(legend.position="bottom") +
       guides(color=guide_legend(ncol=2, byrow=TRUE)) +
   coord_flip() +
-  scale_color_manual(values=c("black", "#1b9e77",
+  scale_color_manual(values=c("black", "#1b9e77", "#666666", 
                               "#7570b3", "#e7298a", "#e6ab02", "#d95f02")) +
   facet_wrap(~AVISIT)
 ```
 
-Using a BMMRM in the particular example had without informative prior distributions
-no particular advantage over a MMRM fit with REML. It is possible that there would
-be some advantage to using BMMRM with vague priors with smaller sample sizes.
-However, using historical 
-control group informtion with a MAC (or rMAC) approach 
-narrows the credible intervals. Making stronger assumptions about the dose
-response relationship over time turns out to also have a substantial effect on 
-the width of the credible intervals. Of course, we could also use both prior 
-information about the control group and assumptions about the dose response 
-relationship for the drug.
+Using a BMMRM in the particular example had without informative prior
+distributions no particular advantage over a MMRM fit with REML. It is
+possible that there would be some advantage to using BMMRM with vague
+priors with smaller sample sizes.  However, using historical control
+group informtion with a MAC (or rMAC) approach narrows the credible
+intervals. Making stronger assumptions about the dose response
+relationship over time turns out to also have a substantial effect on
+the width of the credible intervals. Of course, we could also use both
+prior information about the control group and assumptions about the
+dose response relationship for the drug.
 
 Unsurprisingly, putting in more information either in terms of prior
 knowledge about the control group or in terms of the structure of the dose
@@ -1726,6 +2026,24 @@ Rewrite the MAC approach demonstrated above in a MAP framework:
 2. Fit with these obtained priors the current study data.
 3. Why is the MAP approach in this case not equivalent to the MAC
    approach shown in the case study?
+
+### Exercise 4
+
+In the random walk over visits section we claimed that the prior scale
+we set for `sds` implies the intended visit-to-visit and total change
+standard deviations once the `S.scale` correction is applied. Verify
+this by simulating from the prior:
+
+1. Draw $\mathbf{z} \sim \mathrm{Normal}(0, 1)$ and map it through the
+   (constrained) basis of the smooth, which is available as
+   `visit_smooth$X`, to obtain visit profiles implied by `sds = 1`.
+   Alternatively, fit the model with `sample_prior="only"` in `brms`.
+2. Confirm that the visit-to-visit changes of these unscaled profiles
+   have a standard deviation of $\sqrt{\texttt{S.scale}}$ rather than
+   unity, and that multiplication by `sds_scale` recovers the intended
+   jump size `tau_total` and the intended total change of $1.5$.
+3. What total change would you have allowed for a-priori had you
+   ignored the `S.scale` correction?
 
 ## References {.unnumbered}
 
