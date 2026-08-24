@@ -321,6 +321,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02n_robust_mac.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Robust borrowing in the meta-analytic combined approach</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -335,13 +341,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -621,14 +627,14 @@ distribution as the change from baseline in the PRO score for historical studies
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.7 seconds.
-Chain 2 finished in 0.8 seconds.
+Chain 1 finished in 0.8 seconds.
+Chain 2 finished in 0.6 seconds.
 Chain 3 finished in 0.5 seconds.
-Chain 4 finished in 0.5 seconds.
+Chain 4 finished in 0.6 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.6 seconds.
-Total execution time: 3.3 seconds.</code></pre>
+Total execution time: 2.8 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>map_mc_brms</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1304,14 +1310,14 @@ b_active            0.00         0.00         0.02    0.00     1.00</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.3 seconds.
+Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.3 seconds.
 Chain 3 finished in 0.2 seconds.
 Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.3 seconds.
-Total execution time: 1.5 seconds.</code></pre>
+Total execution time: 1.4 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>bfit_stage2_ipd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1324,15 +1330,15 @@ Formula: CHG ~ 1 + age_group + cBASE + active
 
 Regression Coefficients:
            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     -2.34      1.34    -5.28    -0.07 1.00     1913     2394
-age_group1     0.53      0.79    -1.02     2.07 1.00     2533     2788
-age_group3     0.45      0.96    -1.45     2.37 1.00     2767     2695
-cBASE         -0.02      0.07    -0.15     0.13 1.00     2268     2782
-active         3.40      0.93     1.56     5.26 1.00     3243     2598
+Intercept     -2.35      1.32    -5.17    -0.16 1.00     1847     2655
+age_group1     0.56      0.78    -1.01     2.04 1.00     2465     2561
+age_group3     0.47      0.97    -1.44     2.29 1.00     2638     2509
+cBASE         -0.02      0.07    -0.15     0.12 1.00     2367     3017
+active         3.37      0.93     1.52     5.20 1.00     3552     2486
 
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     5.15      0.33     4.55     5.86 1.00     3744     2625
+sigma     5.14      0.32     4.57     5.83 1.00     3698     2182
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential

@@ -320,6 +320,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02n_robust_mac.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Robust borrowing in the meta-analytic combined approach</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -334,13 +340,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -667,14 +673,14 @@ Y_i|(U_i=u_i \text{ and } T_i=t_i) \sim \text{Poisson}(\mu u_i t_i).
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 16.6 seconds.
-Chain 2 finished in 16.5 seconds.
-Chain 3 finished in 19.5 seconds.
-Chain 4 finished in 19.6 seconds.
+Chain 1 finished in 19.1 seconds.
+Chain 2 finished in 19.2 seconds.
+Chain 3 finished in 22.3 seconds.
+Chain 4 finished in 22.2 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 18.1 seconds.
-Total execution time: 73.1 seconds.</code></pre>
+Mean chain execution time: 20.7 seconds.
+Total execution time: 83.4 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictions for missing (lost-to-follow-up) post-treatment values</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Output format is a matrix with each column being a patient record and each row being one imputation</span></span>
@@ -715,14 +721,14 @@ Total execution time: 73.1 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 18.9 seconds.
-Chain 2 finished in 15.8 seconds.
-Chain 3 finished in 14.9 seconds.
-Chain 4 finished in 15.5 seconds.
+Chain 1 finished in 21.2 seconds.
+Chain 2 finished in 18.7 seconds.
+Chain 3 finished in 25.7 seconds.
+Chain 4 finished in 28.7 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 16.3 seconds.
-Total execution time: 65.7 seconds.</code></pre>
+Mean chain execution time: 23.6 seconds.
+Total execution time: 94.7 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>imputations2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(brmfit2, </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata=</span>count_data <span class="sc">%&gt;%</span> </span>
@@ -757,14 +763,14 @@ Total execution time: 65.7 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 24.7 seconds.
-Chain 2 finished in 15.4 seconds.
-Chain 3 finished in 15.0 seconds.
-Chain 4 finished in 28.6 seconds.
+Chain 1 finished in 21.1 seconds.
+Chain 2 finished in 21.9 seconds.
+Chain 3 finished in 29.4 seconds.
+Chain 4 finished in 36.0 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 20.9 seconds.
-Total execution time: 84.2 seconds.</code></pre>
+Mean chain execution time: 27.1 seconds.
+Total execution time: 109.1 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>imputations3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(brmfit3, </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata=</span>count_data <span class="sc">%&gt;%</span> </span>

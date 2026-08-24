@@ -320,6 +320,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02n_robust_mac.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Robust borrowing in the meta-analytic combined approach</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -334,13 +340,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -597,9 +603,9 @@ window.Quarto = {
             [,1]        [,2]      [,3]      [,4]        [,5]        [,6]         [,7]
 [1,]  1.00000000 0.896714971 0.5883171 0.2669088 -0.03659905 -0.05666876 -0.087751306
 [2,]  0.89671497 1.000000000 0.6313654 0.3841036  0.03162521  0.03550198  0.008196384
-[3,]  0.58831712 0.631365431 1.0000000 0.4509002  0.37604603  0.21075194  0.246514616
+[3,]  0.58831712 0.631365431 1.0000000 0.4509002  0.37604603  0.21075194  0.246514615
 [4,]  0.26690877 0.384103637 0.4509002 1.0000000  0.63152510  0.47401182  0.592176181
-[5,] -0.03659905 0.031625213 0.3760460 0.6315251  1.00000000  0.77205541  0.796716238
+[5,] -0.03659905 0.031625213 0.3760460 0.6315251  1.00000000  0.77205541  0.796716237
 [6,] -0.05666876 0.035501982 0.2107519 0.4740118  0.77205541  1.00000000  0.741103610
 [7,] -0.08775131 0.008196384 0.2465146 0.5921762  0.79671624  0.74110361  1.000000000</code></pre>
 </div>
@@ -670,14 +676,14 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 24.8 seconds.
-Chain 2 finished in 40.5 seconds.
-Chain 3 finished in 22.7 seconds.
-Chain 4 finished in 20.5 seconds.
+Chain 1 finished in 25.1 seconds.
+Chain 2 finished in 36.9 seconds.
+Chain 3 finished in 21.6 seconds.
+Chain 4 finished in 18.9 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 27.1 seconds.
-Total execution time: 109.1 seconds.</code></pre>
+Mean chain execution time: 25.6 seconds.
+Total execution time: 103.0 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1069,14 +1075,14 @@ HPD interval probability: 0.95 </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 56.2 seconds.
-Chain 2 finished in 39.9 seconds.
-Chain 3 finished in 38.0 seconds.
-Chain 4 finished in 83.3 seconds.
+Chain 1 finished in 79.7 seconds.
+Chain 2 finished in 50.6 seconds.
+Chain 3 finished in 33.6 seconds.
+Chain 4 finished in 75.2 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 54.3 seconds.
-Total execution time: 217.9 seconds.</code></pre>
+Mean chain execution time: 59.8 seconds.
+Total execution time: 239.7 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear mean model -------------------------------------</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>lm_formula <span class="ot">&lt;-</span> <span class="fu">bf</span>(</span>
@@ -1103,14 +1109,14 @@ Total execution time: 217.9 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 18.9 seconds.
-Chain 2 finished in 19.8 seconds.
-Chain 3 finished in 16.3 seconds.
-Chain 4 finished in 17.2 seconds.
+Chain 1 finished in 12.7 seconds.
+Chain 2 finished in 20.4 seconds.
+Chain 3 finished in 17.9 seconds.
+Chain 4 finished in 18.1 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 18.1 seconds.
-Total execution time: 73.3 seconds.</code></pre>
+Mean chain execution time: 17.3 seconds.
+Total execution time: 70.1 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>base_quartiles <span class="ot">&lt;-</span> pasi_data <span class="sc">%&gt;%</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SUBJID, BASE) <span class="sc">%&gt;%</span></span>

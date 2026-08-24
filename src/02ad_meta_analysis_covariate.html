@@ -335,6 +335,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02n_robust_mac.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Robust borrowing in the meta-analytic combined approach</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -349,13 +355,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -1885,14 +1891,14 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.7 seconds.
-Chain 2 finished in 0.7 seconds.
-Chain 3 finished in 0.6 seconds.
-Chain 4 finished in 0.7 seconds.
+Chain 1 finished in 0.6 seconds.
+Chain 2 finished in 0.6 seconds.
+Chain 3 finished in 0.5 seconds.
+Chain 4 finished in 0.6 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.6 seconds.
-Total execution time: 3.1 seconds.</code></pre>
+Total execution time: 2.7 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>complete_mc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2835,13 +2841,13 @@ n_{h,l} &amp; \text{complete data} \\
 <pre><code>Running MCMC with 4 sequential chains...
 
 Chain 1 finished in 1.1 seconds.
-Chain 2 finished in 1.1 seconds.
-Chain 3 finished in 1.0 seconds.
+Chain 2 finished in 0.9 seconds.
+Chain 3 finished in 1.1 seconds.
 Chain 4 finished in 1.0 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 1.1 seconds.
-Total execution time: 4.6 seconds.</code></pre>
+Mean chain execution time: 1.0 seconds.
+Total execution time: 4.4 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: binomial 
@@ -3558,14 +3564,14 @@ oral         -0.23      0.38    -1.01     0.50 1.00     3894     2264</code></pr
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 9.9 seconds.
-Chain 2 finished in 7.6 seconds.
-Chain 3 finished in 6.0 seconds.
-Chain 4 finished in 6.5 seconds.
+Chain 1 finished in 10.1 seconds.
+Chain 2 finished in 7.8 seconds.
+Chain 3 finished in 5.7 seconds.
+Chain 4 finished in 6.4 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 7.5 seconds.
-Total execution time: 30.4 seconds.</code></pre>
+Total execution time: 30.5 seconds.</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show the code</summary>
@@ -3788,14 +3794,14 @@ rho[x[active],x[severe]] -0.019  0.033  0.031  0.000</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.5 seconds.
-Chain 2 finished in 0.4 seconds.
-Chain 3 finished in 0.7 seconds.
-Chain 4 finished in 0.6 seconds.
+Chain 1 finished in 0.3 seconds.
+Chain 2 finished in 0.3 seconds.
+Chain 3 finished in 0.5 seconds.
+Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.6 seconds.
-Total execution time: 2.8 seconds.</code></pre>
+Mean chain execution time: 0.4 seconds.
+Total execution time: 2.3 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>trail_model_complete_mc <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  trial_model,</span>
@@ -3810,14 +3816,14 @@ Total execution time: 2.8 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.4 seconds.
-Chain 2 finished in 0.3 seconds.
+Chain 1 finished in 0.2 seconds.
+Chain 2 finished in 0.4 seconds.
 Chain 3 finished in 0.5 seconds.
 Chain 4 finished in 0.6 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.5 seconds.
-Total execution time: 2.6 seconds.</code></pre>
+Mean chain execution time: 0.4 seconds.
+Total execution time: 2.2 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain MC sample of trial prior on response scale</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>trial_prior_full_rv <span class="ot">&lt;-</span> <span class="fu">rvar</span>(<span class="fu">posterior_linpred</span>(</span>

@@ -339,6 +339,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02n_robust_mac.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Robust borrowing in the meta-analytic combined approach</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -353,13 +359,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -1336,7 +1342,7 @@ Chain 4 finished in 0.2 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.2 seconds.</code></pre>
+Total execution time: 1.3 seconds.</code></pre>
 </div>
 </div>
 <p>The model is compiled and then run. Occasionally one observes a warning on divergent transitions after warmup reported like:</p>
@@ -1352,14 +1358,14 @@ Total execution time: 1.2 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.3 seconds.
+Chain 1 finished in 0.2 seconds.
 Chain 2 finished in 0.2 seconds.
 Chain 3 finished in 0.2 seconds.
 Chain 4 finished in 0.3 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.2 seconds.
-Total execution time: 1.4 seconds.</code></pre>
+Total execution time: 1.2 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>map_mc_brms_2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1444,16 +1450,16 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>Running MCMC with 4 sequential chains...</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Chain 1 finished in 1.2 seconds.
+<pre><code>Chain 1 finished in 1.0 seconds.
 Chain 2 finished in 0.7 seconds.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Chain 3 finished in 0.7 seconds.
+<pre><code>Chain 3 finished in 0.8 seconds.
 Chain 4 finished in 0.8 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.9 seconds.
-Total execution time: 3.9 seconds.</code></pre>
+Mean chain execution time: 0.8 seconds.
+Total execution time: 3.5 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>post_region_map_mc_brms <span class="ot">&lt;-</span> <span class="fu">posterior_linpred</span>(region_map_mc_brms,</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">newdata=</span>AS_region_new,</span>

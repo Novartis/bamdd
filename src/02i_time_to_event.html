@@ -340,6 +340,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Difference in proportions from a fitted logistic regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/02n_robust_mac.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Robust borrowing in the meta-analytic combined approach</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -354,13 +360,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03a_stan_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Exposing stan code</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../src/03b_parallel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Parallel computation</span></span></a>
   </div>
 </li>
       </ul>
@@ -647,14 +653,14 @@ with `cox(link = "log", bhaz = NULL)`.
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 1.0 seconds.
-Chain 2 finished in 0.9 seconds.
+Chain 1 finished in 0.9 seconds.
+Chain 2 finished in 1.0 seconds.
 Chain 3 finished in 0.9 seconds.
-Chain 4 finished in 0.8 seconds.
+Chain 4 finished in 0.9 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.9 seconds.
-Total execution time: 4.2 seconds.</code></pre>
+Total execution time: 4.1 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit_hist_checkmate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -3612,14 +3618,14 @@ F-statistic: 1.629 on 3 and 196 DF,  p-value: 0.1839</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 0.5 seconds.
-Chain 2 finished in 0.5 seconds.
+Chain 1 finished in 0.8 seconds.
+Chain 2 finished in 0.8 seconds.
 Chain 3 finished in 0.8 seconds.
-Chain 4 finished in 0.8 seconds.
+Chain 4 finished in 0.7 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.7 seconds.
-Total execution time: 3.4 seconds.</code></pre>
+Mean chain execution time: 0.8 seconds.
+Total execution time: 3.8 seconds.</code></pre>
 </div>
 </div>
 <p>When looking at the model summary, it is preferable to use <code>robust=TRUE</code> to get the median estimate of the posterior rather than the mean (which would change due to transforms)</p>
@@ -4784,14 +4790,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 3.5 seconds.
-Chain 2 finished in 3.0 seconds.
-Chain 3 finished in 2.6 seconds.
-Chain 4 finished in 3.2 seconds.
+Chain 1 finished in 3.4 seconds.
+Chain 2 finished in 2.9 seconds.
+Chain 3 finished in 3.3 seconds.
+Chain 4 finished in 2.3 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 3.1 seconds.
-Total execution time: 12.8 seconds.</code></pre>
+Mean chain execution time: 3.0 seconds.
+Total execution time: 12.6 seconds.</code></pre>
 </div>
 </div>
 <p>And we can compare the results from two models. Inclusion of historical data on <code>controlChemoA</code> affect the estimates of coefficients for overall mean and <code>EffectAverage</code>.</p>
@@ -4857,14 +4863,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 5.1 seconds.
-Chain 2 finished in 3.6 seconds.
-Chain 3 finished in 4.4 seconds.
-Chain 4 finished in 4.8 seconds.
+Chain 1 finished in 5.7 seconds.
+Chain 2 finished in 3.7 seconds.
+Chain 3 finished in 3.4 seconds.
+Chain 4 finished in 3.7 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 4.5 seconds.
-Total execution time: 18.5 seconds.</code></pre>
+Mean chain execution time: 4.1 seconds.
+Total execution time: 17.1 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>(<span class="fu">as.data.frame</span>(<span class="fu">fixef</span>(fit_mac_prior_weibull, <span class="at">robust=</span><span class="cn">TRUE</span>))) <span class="sc">|&gt;</span> <span class="fu">fmt_number</span>(<span class="fu">everything</span>(), <span class="at">decimals=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
@@ -6485,14 +6491,14 @@ Total execution time: 18.5 seconds.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 2.8 seconds.
-Chain 2 finished in 2.5 seconds.
-Chain 3 finished in 2.5 seconds.
-Chain 4 finished in 3.0 seconds.
+Chain 1 finished in 2.5 seconds.
+Chain 2 finished in 2.6 seconds.
+Chain 3 finished in 3.0 seconds.
+Chain 4 finished in 3.2 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 2.7 seconds.
-Total execution time: 11.5 seconds.</code></pre>
+Mean chain execution time: 2.8 seconds.
+Total execution time: 11.9 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_mac_weibull, <span class="at">prob=</span><span class="fl">0.9</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -6596,14 +6602,14 @@ controlChemoB    1      -1/2              0         1/2        </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
-Chain 1 finished in 10.4 seconds.
-Chain 2 finished in 11.3 seconds.
-Chain 3 finished in 8.8 seconds.
-Chain 4 finished in 6.1 seconds.
+Chain 1 finished in 13.9 seconds.
+Chain 2 finished in 12.6 seconds.
+Chain 3 finished in 9.1 seconds.
+Chain 4 finished in 7.7 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 9.2 seconds.
-Total execution time: 37.4 seconds.</code></pre>
+Mean chain execution time: 10.8 seconds.
+Total execution time: 43.9 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>fit_mac_weibull_ind</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
