@@ -23,6 +23,12 @@ at the [Bayes Pharma
 conference](https://www.bayes-pharma.org/bayes-2026/) on October
 21<sup>st</sup> 2026.
 
+* [Slides](workshops/leiden2026/slides/bamdd_leiden2026.html)
+* [Exercises](workshops/leiden2026/exercises/bamdd_leiden2026_exercises.html)
+* [Additional material (see
+  readme)](https://github.com/Novartis/bamdd/tree/main/workshops/leiden2026)
+* [R setup instructions](workshops/leiden2026/exercises/bamdd_leiden2026_exercises.html#/r-session)
+
 Past course we offered:
 
 1. Pre-conference course at the [10th Statistics & Biopharmacy conference](https://snb2025.sciencesconf.org) on October 8th 2025 in Paris

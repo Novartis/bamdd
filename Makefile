@@ -25,6 +25,21 @@ SRCS = $(wildcard [0-9][0-9]*.qmd $(foreach fd, $(SRCDIR), $(fd)/[0-9][0-9]*.qmd
 NODIR_SRC = $(notdir $(SRCS))
 OBJS = $(SRCS:qmd=html)
 
+# Quarto's crossref filter maintains one project-scoped index mapping file,
+# $(SRCDIR)/.quarto/xref/INDEX, shared by every per-file `quarto render`
+# call below. It only registers new (qmd, html) keys with a non-atomic
+# read-modify-write; when `make -jN website` runs many of these renders
+# concurrently, the first-ever registration of each file's key races and
+# corrupts INDEX, which then breaks every subsequent render trying to parse
+# it (see src/tools/warm_xref_index.sh for the full explanation). We avoid
+# this by pre-registering every key ourselves in one fast serial pass
+# ($(XREF_WARM), an order-only prerequisite below) before the parallel
+# fan-out starts; after that, every parallel render only *reads* INDEX,
+# which is safe. RENDER_RETRY is a defense-in-depth wrapper that repairs
+# and retries in case a render still hits the same failure signature.
+XREF_WARM = $(SRCDIR)/.quarto/.xref-warmed
+RENDER_RETRY = $(abspath $(SRCDIR))/tools/quarto_render_retry.sh
+
 # OBJS = $(patsubst %.qmd, %.md, $(SRCS))
 
 # set default R and quarto cmd's
@@ -42,9 +57,17 @@ QUARTO_CMD ?= quarto
 
 # tell makefile how to turn a qmd files into things we want
 
-%.html : %.qmd
+# pre-warm the shared crossref INDEX once, serially, before any parallel
+# per-file render starts (see XREF_WARM comment above)
+$(XREF_WARM): $(SRCS)
+	@echo pre-warming crossref index to avoid parallel render race
+	$(SRCDIR)/tools/warm_xref_index.sh $(SRCDIR) $(NODIR_SRC)
+	@mkdir -p $(@D)
+	@touch $@
+
+%.html : %.qmd | $(XREF_WARM)
 	@echo running per-document html quarto render $(<F) --to html --profile $(QUARTO_PROFILE)
-	cd $(@D); $(QUARTO_CMD_PREFIX) $(QUARTO_CMD) render $(<F) --to html --profile $(QUARTO_PROFILE) $(QUARTO_CMD_POSTFIX)
+	cd $(@D); $(QUARTO_CMD_PREFIX) $(RENDER_RETRY) . $(QUARTO_CMD) render $(<F) --to html --profile $(QUARTO_PROFILE) $(QUARTO_CMD_POSTFIX)
 PHONY := $(TARGET)
 
 # enforce that we first setup the web-site and then run the remainder
@@ -66,13 +89,13 @@ help: ## Show this help message
 # Quarto rendering process to be a standalone run. The intended effect
 # is to populate the _cache directory of the respective document which
 # can then get reused when rendering the full web-site
-%.md : %.qmd
+%.md : %.qmd | $(XREF_WARM)
 	@echo running per-document md quarto render $(<F) --to md --output $(@F) --profile $(QUARTO_PROFILE)
-	cd $(@D); $(QUARTO_CMD) render $(<F) --to md --output $(@F) --profile $(QUARTO_PROFILE)
+	cd $(@D); $(RENDER_RETRY) . $(QUARTO_CMD) render $(<F) --to md --output $(@F) --profile $(QUARTO_PROFILE)
 
-%.pdf : %.qmd
+%.pdf : %.qmd | $(XREF_WARM)
 	@echo running per-document pdf quarto render $< --to pdf
-	$(QUARTO_CMD_PREFIX) $(QUARTO_CMD) render $< --to pdf --output $(@F) --profile $(QUARTO_PROFILE) $(QUARTO_CMD_POSTFIX)
+	$(QUARTO_CMD_PREFIX) $(RENDER_RETRY) $(SRCDIR) $(QUARTO_CMD) render $< --to pdf --output $(@F) --profile $(QUARTO_PROFILE) $(QUARTO_CMD_POSTFIX)
 
 $(OUTDIR)/$(QUARTO_PROFILE)/bookdown-website : index.qmd _quarto.yml $(OBJS)
 	@echo Rendering website
