@@ -17,14 +17,14 @@ here::i_am("exercises/bamdd_leiden2026_exercises.R")
 ## -----------------------------------------------------------------------------
 #| eval: false
 # # in case packages are missing, please run:
-# install.packages(c("here", "ggplot2", "dplyr", "knitr", "brms", "posterior", "tidybayes", "RBesT", "ggrepel", "patchwork", "ggdist", "withr", "simsurv", "gt"))
+# install.packages(c("here", "ggplot2", "dplyr", "knitr", "brms", "posterior", "tidybayes", "bayesplot", "RBesT", "ggrepel", "patchwork", "ggdist", "ggthemes", "withr", "simsurv", "gt"))
 
 
 ## -----------------------------------------------------------------------------
 #| eval: false
 # bamdd_zip <- tempfile(fileext=".zip")
 # download.file("https://github.com/Novartis/bamdd/archive/refs/heads/main.zip", bamdd_zip)
-# ## extracts web-site into the users home
+# ## extracts web-site into the user's home
 # unzip(bamdd_zip, exdir=normalizePath("~"))
 # browseURL(normalizePath(file.path("~", "bamdd-main")))
 # # to install all dependencies needed to build the web-site, please run
@@ -37,7 +37,7 @@ here::i_am("exercises/bamdd_leiden2026_exercises.qmd")
 
 ## ----warning = FALSE, message = FALSE-----------------------------------------
 #| cache: false
-# uncomment below and set to the filename of you R file for the
+# uncomment below and set to the filename of your R file for the
 # exercises
 # here::i_am("your-exercise-file.R")
 library(here)
@@ -406,7 +406,7 @@ peanut |>
 #               nl=TRUE)
 # 
 # priors1 <- prior(normal(-2.944, 0.38), nlpar=E0) +
-#            prior(normal(0, 1), nlpar=logh) +
+#            prior(normal(0, log(4)/1.96), nlpar=logh) +
 #            prior(normal(0, 6), nlpar=Emax) +
 #            prior(normal(2.7, 2.5), nlpar=logED50)
 
@@ -425,6 +425,53 @@ peanut |>
 # tibble(dose = seq(0, 300, 1), n=1) |> tidybayes::add_epred_rvars(brmfit1)
 
 
+## ----peanut_cens--------------------------------------------------------------
+challenge_mg <- c(0, 3, 10, 100, 300, 600, 1000)
+
+peanut_cens <- peanut |>
+  mutate(censored = case_when(AVAL == 0 ~ "left",
+                              AVAL == 1000 ~ "right",
+                              TRUE ~ "interval"),
+         # for left-censored rows the response is the upper bound log(3)
+         logAVAL = ifelse(AVAL == 0, log(3), log(AVAL)),
+         logAVALnext = ifelse(censored == "interval",
+                              log(challenge_mg[match(AVAL, challenge_mg) + 1]), NA))
+
+
+## ----peanutmodel2-------------------------------------------------------------
+#| eval: false
+# model2 <- bf( #---- YOUR CODE HERE --- # ~ E0 + Emax * dose^h/(dose^h + ED50^h),
+#               family = #---- YOUR CODE HERE --- # ,
+#               nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)),
+#               E0 ~ 1, logED50 ~ 1, logh ~ 1, Emax ~ 1,
+#               nl=TRUE)
+# 
+# priors2 <- prior( #---- YOUR CODE HERE --- # , nlpar=E0) +
+#            prior(normal(0, log(4)/1.96), nlpar=logh) +
+#            prior( #---- YOUR CODE HERE --- # , nlpar=Emax) +
+#            prior(normal(2.7, 2.5), nlpar=logED50) +
+#            prior( #---- YOUR CODE HERE --- # , class=sigma)
+# 
+# brmfit2 <- brm(formula = model2, prior = priors2, data = peanut_cens)
+
+
+## ----peanutmodel3-------------------------------------------------------------
+#| eval: false
+# model3 <- bf( #---- YOUR CODE HERE --- # ~ Emax * dose^h/(dose^h + ED50^h),
+#               family = #---- YOUR CODE HERE --- # ,
+#               nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)),
+#               logED50 ~ 1, logh ~ 1, Emax ~ 1,
+#               nl=TRUE)
+# 
+# priors3 <- prior(normal(0, log(4)/1.96), nlpar=logh) +
+#            prior(normal(0, 6), nlpar=Emax) +
+#            prior(normal(2.7, 2.5), nlpar=logED50) +
+#            prior( #---- YOUR CODE HERE --- # , class=Intercept)
+# 
+# brmfit3 <- brm(formula = model3, prior = priors3,
+#                data = mutate(peanut, AVAL = ordered(AVAL)))
+
+
 ## ----sol_peanutmodel1---------------------------------------------------------
 #| cache.lazy: false
 model1 <- bf( y | trials(n) ~ E0 + Emax * dose^h/(dose^h + ED50^h),
@@ -434,7 +481,7 @@ model1 <- bf( y | trials(n) ~ E0 + Emax * dose^h/(dose^h + ED50^h),
               nl=TRUE)
 
 priors1 <- prior(normal(-2.944, 0.38), nlpar=E0) +
-           prior(normal(0, 1), nlpar=logh) +
+           prior(normal(0, log(4)/1.96), nlpar=logh) +
            prior(normal(0, 6), nlpar=Emax) +
            prior(normal(2.7, 2.5), nlpar=logED50)
 
@@ -471,53 +518,69 @@ left_join(pr, filter(pr, dose == 0)|>
     xlab("Dose [mg]")
 
 
+## ----sol_peanut_pred_types----------------------------------------------------
+tibble(dose = c(0, 50, 300), n = 50) |>
+  add_linpred_rvars(brmfit1, value = "linpred") |>
+  add_epred_rvars(brmfit1, value = "epred") |>
+  add_predicted_rvars(brmfit1, value = "predicted")
+
+
+## ----sol_blrm_vs_logistic_emax------------------------------------------------
+#| echo: false
+#| fig-width: 6
+#| fig-asp: 0.9
+tibble(Dose = 10^seq(-1, 3, length.out = 201)) |>
+  mutate(`BLRM (h = 1)` = plogis(log(Dose / 15)),
+         `logistic Emax` = plogis(logit_scaled(0.05) + 6 * Dose / (Dose + 15))) |>
+  tidyr::pivot_longer(-Dose, names_to = "model", values_to = "p") |>
+  ggplot(aes(Dose, p, colour = model)) +
+  geom_line(linewidth = 2) +
+  geom_hline(yintercept = plogis(logit_scaled(0.05) + c(0, 6)), linetype = "dashed",
+             colour = "darkorange") +
+  scale_x_log10("Dose [mg] (log scale)", labels = scales::label_number(drop0trailing = TRUE, big.mark = "")) +
+  scale_y_continuous("Probability", labels = scales::percent, limits = c(0, 1)) +
+  scale_colour_manual(NULL, values = c("#011f4b", "darkorange")) +
+  labs(caption = "logistic Emax: E0 = logit(0.05), Emax = 6, ED50 = 15, h = 1") +
+  theme(legend.position = "bottom")
+
+
 ## ----sol_lognormal------------------------------------------------------------
 #| cache: false
-model2 <- bf( logAVAL | cens("interval", logAVALnext) ~ E0 + Emax * dose^h/(dose^h + ED50^h),
+model2 <- bf( logAVAL | cens(censored, logAVALnext) ~ E0 + Emax * dose^h/(dose^h + ED50^h),
               family = gaussian(),
               nlf(h ~ exp(logh)), nlf(ED50 ~ exp(logED50)),
               E0 ~ 1, logED50 ~ 1, logh ~ 1, Emax ~ 1, 
               nl=TRUE )
 
-priors2 <- prior(normal(0, 5), nlpar=E0) + # centered on 1 mg, but
-    # very uncertain
-    prior(normal(0, 1), nlpar=logh) + # No particular reason
-    # to change prior (dose
-    # response could be
-    # just as steep here as
-    # for binomial outcome)
-    prior(normal(0, 6.5), nlpar=Emax) + # decent prior probability
-    # for >= 1000 mg, still conceivable could reach 300000 No
-    # particular reason to change prior here (ED50 could be same as
-    # for binomial outcome)
-    prior(normal(2.7, 2.5), nlpar=logED50) + # Additional parameter: residual SD, clearly a decent amount of
-    # variability, want to
-    # allow large SD on
-    # the log-scale
-    prior(lognormal(5, 10), class=sigma) 
+priors2 <- prior(normal(0, 5), nlpar=E0) +             # centered on 1 mg, very uncertain
+           prior(normal(0, log(4)/1.96), nlpar=logh) + # same shape as for binomial outcome
+           prior(normal(0, 6.5), nlpar=Emax) +         # >= 1000 mg plausible, 300000 conceivable
+           prior(normal(2.7, 2.5), nlpar=logED50) +    # ED50 as for binomial outcome
+           prior(lognormal(5, 10), class=sigma)        # new: between-patient SD on log scale
 
 brmfit2 <- brm(
   formula = model2,
   prior = priors2,
-  data = peanut |> 
-    mutate(logAVAL = ifelse(AVAL==0, -28, log(AVAL)),
-           logAVALnext = case_when(AVAL==0 ~ log(3),
-                                   AVAL==3 ~ log(10),
-                                   AVAL==10 ~ log(100),
-                                   AVAL==100 ~ log(300),
-                                   AVAL==300 ~ log(600),
-                                   AVAL==600 ~ log(1000),
-                                   TRUE ~ log(30000))),
+  data = peanut_cens,
   refresh=0
   )
 
 summary(brmfit2)
 
 
+## ----sol_lognormal_interpret--------------------------------------------------
+#| cache: false
+as_draws_df(brmfit2) |>
+  mutate_variables(median_pbo_mg = exp(b_E0_Intercept),
+                   max_fold_increase = exp(b_Emax_Intercept),
+                   ED50_mg = exp(b_logED50_Intercept)) |>
+  subset_draws(variable = c("median_pbo_mg", "max_fold_increase", "ED50_mg", "sigma")) |>
+  summarise_draws(median, ~quantile2(.x, probs = c(0.025, 0.975)))
+
+
 ## ----sol_ordinal--------------------------------------------------------------
 #| cache: false
-# Note that we omit E0 from the model, because the expected placebo outcome
-# is already described by the intercept parameters of the distribution
+# no E0: the thresholds (Intercept[1], ..., Intercept[6]) describe the placebo outcome
 model3 <- bf(AVAL ~ Emax * dose^h/(dose^h + ED50^h),
              family = cumulative(link = "logit", threshold = "flexible"),
              nlf(h ~ exp(logh)),
@@ -527,17 +590,9 @@ model3 <- bf(AVAL ~ Emax * dose^h/(dose^h + ED50^h),
              Emax ~ 1, 
              nl=TRUE)
 
-priors3 <- prior(normal(0, 1), nlpar=logh) + # No particular reason to
-                                             # change prior here
-           prior(normal(0, 6), nlpar=Emax) + # Prior could be
-                                             # different (odds from
-                                             # one category to the
-                                             # next not necessarily
-                                             # the same as for top two
-                                             # vs. rest)
-           prior(normal(2.7, 2.5), nlpar=logED50) + # No particular
-                                                    # reason to change
-                                                    # prior here
+priors3 <- prior(normal(0, log(4)/1.96), nlpar=logh) +
+           prior(normal(0, 6), nlpar=Emax) +
+           prior(normal(2.7, 2.5), nlpar=logED50) +
            prior(student_t(3, 0, 2.5), class=Intercept) +
            prior(student_t(3, -0.2, 1), class=Intercept, coef=1) +
            prior(student_t(3, 2.197, 1), class=Intercept, coef=5)
@@ -550,4 +605,84 @@ brmfit3 <- brm(
   )
 
 summary(brmfit3)
+
+
+## ----sol_ordinal_placebo------------------------------------------------------
+#| cache: false
+tibble(dose = 0) |> add_epred_rvars(brmfit3) |> pull(.epred)
+
+peanut |> filter(dose == 0) |> count(AVAL) |> mutate(observed = n / sum(n)) |> kable(digits = 2)
+
+
+## ----sol_ordinal_ppc----------------------------------------------------------
+#| cache: false
+#| message: false
+#| fig-width: 12
+#| fig-height: 7
+pp_check(brmfit3, type = "bars_grouped", group = "dose", ndraws = 200) +
+  scale_x_continuous("Highest amount tolerated (mg)", breaks = 1:7,
+                     labels = levels(ordered(peanut$AVAL))) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+## ----sol_compare--------------------------------------------------------------
+#| cache: false
+#| fig-width: 12
+#| fig-height: 5
+dose_grid <- tibble(dose = seq(0, 300, 1), n = 1)
+
+p600 <- bind_rows(
+  "1: binomial" = add_epred_rvars(dose_grid, brmfit1) |> transmute(dose, p600 = .epred),
+  "2a: censored" = add_linpred_rvars(dose_grid, brmfit2, dpar = TRUE) |>
+    transmute(dose, p600 = 1 - rdo(pnorm((log(600) - mu) / sigma))),
+  "2b: ordinal" = add_epred_rvars(dose_grid, brmfit3) |>
+    transmute(dose, p600 = .epred[, "600"] + .epred[, "1000"]),
+  .id = "model")
+
+ggplot(p600, aes(x = dose, ydist = p600)) +
+  stat_lineribbon() +
+  scale_fill_brewer(palette = "Blues") +
+  facet_wrap(~model, nrow = 1) +
+  ylab("P(tolerate >= 600 mg)") +
+  xlab("Dose [mg]")
+
+p600 |>
+  filter(dose %in% c(0, 50, 300)) |>
+  mutate(mean = mean(p600), sd = sd(p600)) |>
+  select(dose, model, mean, sd) |>
+  arrange(dose, model) |>
+  kable(digits = 3)
+
+
+## ----sol_sigma_prior----------------------------------------------------------
+qlnorm(c(0.05, 0.5, 0.95), meanlog = 5, sdlog = 10)
+plnorm(10, meanlog = 5, sdlog = 10, lower.tail = FALSE)
+
+
+## ----sol_sigma_refit----------------------------------------------------------
+#| cache: false
+priors2_new <- priors2[priors2$class != "sigma", ] + prior(normal(0, 3), class = sigma)
+brmfit2_new <- update(brmfit2, prior = priors2_new, refresh = 0)
+
+compare_fits <- function(fits, variable) {
+  lapply(fits, \(fit) summarise_draws(as_draws_df(fit, variable = variable),
+                                      mean, sd, ~quantile2(.x, probs = c(0.025, 0.975)))) |>
+    bind_rows(.id = "fit") |>
+    arrange(variable)
+}
+
+compare_fits(list(original = brmfit2, `half-normal` = brmfit2_new),
+             c("b_E0_Intercept", "b_Emax_Intercept", "sigma")) |>
+  kable(digits = 2)
+
+
+## ----sol_threshold_refit------------------------------------------------------
+#| cache: false
+priors3_new <- priors3[!(priors3$class == "Intercept" & priors3$coef == "5"), ] +
+  prior(student_t(3, 2.944, 1), class = Intercept, coef = 5)
+brmfit3_new <- update(brmfit3, prior = priors3_new, refresh = 0)
+
+compare_fits(list(original = brmfit3, `5% responders` = brmfit3_new),
+             c("b_Intercept[5]", "b_Emax_Intercept")) |>
+  kable(digits = 2)
 

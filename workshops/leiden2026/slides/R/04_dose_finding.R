@@ -130,6 +130,38 @@ pathway |>
   guides(color = "none")
 
 
+## ----blrm_is_sigemax----------------------------------------------------------
+#| echo: false
+#| fig-width: 6
+#| fig-asp: 0.9
+blrm_par <- list(log_alpha = logit_scaled(0.17), beta = 2, dref = 4)
+td50 <- with(blrm_par, dref * exp(-log_alpha / beta))
+blrm_vs_emax <- tibble(Dose = seq(0, 20, length.out = 201)) |>
+  mutate(BLRM = with(blrm_par, plogis(log_alpha + beta * log(Dose / dref))),
+         `sigmoid Emax` = Dose^blrm_par$beta / (Dose^blrm_par$beta + td50^blrm_par$beta))
+stopifnot(isTRUE(all.equal(blrm_vs_emax$BLRM, blrm_vs_emax$`sigmoid Emax`)))
+
+ggplot(blrm_vs_emax, aes(Dose)) +
+  geom_line(aes(y = BLRM, colour = "BLRM"), linewidth = 2) +
+  geom_point(aes(y = `sigmoid Emax`, colour = "Emax"),
+             data = slice(blrm_vs_emax, seq(1, 201, by = 10)), size = 3) +
+  geom_vline(xintercept = c(blrm_par$dref, td50), linetype = c("dashed", "dotted")) +
+  geom_hline(yintercept = c(0.17, 0.5), linetype = c("dashed", "dotted")) +
+  annotate("text", x = c(blrm_par$dref, td50) + 0.3, y = 0.95, hjust = 0, size = 6,
+           label = c("d[ref]", "TD[50]"), parse = TRUE) +
+  scale_y_continuous("P(DLT)", labels = scales::percent, limits = c(0, 1)) +
+  scale_colour_manual(
+    NULL, values = c(BLRM = "#011f4b", Emax = "darkorange"),
+    labels = c(BLRM = "BLRM", Emax = expression("sigmoid" ~ E[max])),
+    guide = guide_legend(override.aes = list(linetype = c("solid", "blank"),
+                                             shape = c(NA, 16)))
+  ) +
+  theme_bw(base_size = 24) +
+  theme(legend.position = "inside", legend.position.inside = c(0.97, 0.04),
+        legend.justification = c(1, 0), legend.key.width = unit(2.5, "lines"),
+        legend.background = element_rect(colour = "grey70"))
+
+
 ## ----sigemax_plots------------------------------------------------------------
 #| echo: FALSE
 #| fig-height: 6
@@ -200,14 +232,15 @@ expand_grid(
 ) |>
   mutate(
     `Dose response` = E0 + Emax * Dose^h / (Dose^h + ED50^h),
-    id = paste0(ED50, "-", h)
+    id = paste0(ED50, "-", h),
+    slope = cut(h, c(0, 1 / 4, 4, Inf), labels = c("h < 1/4 (flat)", "1/4 to 4", "h > 4 (step)"))
   ) |>
-  ggplot(aes(x = Dose, y = `Dose response`, group = id)) +
+  ggplot(aes(x = Dose, y = `Dose response`, group = id, colour = slope)) +
   theme_bw(base_size = 24) +
-  geom_line(lwd = 0.5, alpha = 0.05) +
+  geom_line(lwd = 0.5, alpha = 0.1) +
   scale_y_continuous(labels = scales::percent(seq(0, 1, 0.25))) +
-  scale_color_brewer(palette = "Dark2") +
-  theme(legend.position = "none")
+  scale_colour_manual(NULL, values = c("orange", "darkgreen", "red"), drop = FALSE) +
+  guides(colour = guide_legend(override.aes = list(alpha = 1, lwd = 2)))
 
 
 ## ----sigemax_prior_wide-------------------------------------------------------
@@ -225,14 +258,15 @@ expand_grid(
 ) |>
   mutate(
     `Dose response` = E0 + Emax * Dose^h / (Dose^h + ED50^h),
-    id = paste0(ED50, "-", h)
+    id = paste0(ED50, "-", h),
+    slope = cut(h, c(0, 1 / 4, 4, Inf), labels = c("h < 1/4 (flat)", "1/4 to 4", "h > 4 (step)"))
   ) |>
-  ggplot(aes(x = Dose, y = `Dose response`, group = id)) +
+  ggplot(aes(x = Dose, y = `Dose response`, group = id, colour = slope)) +
   theme_bw(base_size = 24) +
-  geom_line(lwd = 0.5, alpha = 0.05) +
+  geom_line(lwd = 0.5, alpha = 0.1) +
   scale_y_continuous(labels = scales::percent(seq(0, 1, 0.25))) +
-  scale_color_brewer(palette = "Dark2") +
-  theme(legend.position = "none")
+  scale_colour_manual(NULL, values = c("orange", "darkgreen", "red"), drop = FALSE) +
+  guides(colour = guide_legend(override.aes = list(alpha = 1, lwd = 2)))
 
 
 ## -----------------------------------------------------------------------------
